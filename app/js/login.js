@@ -35,7 +35,7 @@ const Login=()=> {
       {ok?<Redirect to="/"/>:''}
       <div id="contenido">
         <div className="crop">
-        <img src="../img/login-header.png" alt=""/>
+        <img src="bienes-raices/img/login-header.png" alt=""/>
 
         </div>
         <h2>Inicio de sesión</h2>
