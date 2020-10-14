@@ -23,12 +23,12 @@ const Tree = () => {
     <BrowserRouter>
             <Switch>
                 <Route exact path='/bienes-raices' component={Home} />
-                <Route exact path='/buscar' component={Buscar}/>
-                <Route exact path='/documentos' component={Documentos}/>
-                <Route exact path='/login' component={Login}/>
-                <Route exact path='/visor' component={Visor}/>
-                <Route exact path='/reportes' component={Reportes}/>
-                <Route exact path='/asignar' component={Asignar}/>
+                <Route exact path='/bienes-raices/buscar' component={Buscar}/>
+                <Route exact path='/bienes-raices/documentos' component={Documentos}/>
+                <Route exact path='/bienes-raices/login' component={Login}/>
+                <Route exact path='/bienes-raices/visor' component={Visor}/>
+                <Route exact path='/bienes-raices/reportes' component={Reportes}/>
+                <Route exact path='/bienes-raices/asignar' component={Asignar}/>
                 
                 <Route exact path="/predio/:id" component={Predio} />
                 <Route  component={() => <p>No funciona</p>} />
