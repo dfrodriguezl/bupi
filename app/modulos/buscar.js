@@ -45,7 +45,18 @@ const [filtro, setFiltro] = useState("");
                     <p className="item_titulo"> {el.id_expediente}</p>
                     <p className="item_des">Proyecto: {el.id_proyecto}</p>
                     <p className="item_des">Nombre: {el.nom_proy}</p>
-                    <a  className="button" href={"bienes-raices/predio/"+el.id_expediente} >Ver Expediente</a>
+                      <a >
+
+                      <Link to={"bienes-raices/predio/" + el.id_expediente}>
+                        
+                        <p>Ver expediente</p>
+                        </Link>
+                        
+                      </a>
+                      
+                      
+
+
                   </div>
                 </div>
                 ))}
