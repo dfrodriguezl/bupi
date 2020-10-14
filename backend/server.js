@@ -204,7 +204,7 @@ app
 .route('/bienes-raices/backend')
 .post(consulta)
 
-app.post('/bienes-raices/login',(request,response) => {
+app.post('/login',(request,response) => {
 
   var data=request.body;
   var id_consulta=request.body.id_consulta;
