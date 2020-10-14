@@ -201,7 +201,7 @@ function get_sql(id_consulta){
 }  
 
 app
-.route('/bienes-raices/backend')
+.route('/backend')
 .post(consulta)
 
 app.post('/login',(request,response) => {
@@ -239,7 +239,7 @@ app.post('/logout', function(req, res){
 
 
 //cargue de documentos
-app.post('/bienes-raices/upload/:id', (req, res) => {
+app.post('/upload/:id', (req, res) => {
   
   let EDFile = req.files.file
   var id = req.params.id;
@@ -277,7 +277,7 @@ app.post('/bienes-raices/upload/:id', (req, res) => {
 
 });
 
-app.get('/bienes-raices/descargar', function(req, res){
+app.get('/descargar', function(req, res){
   
   var folder=req.query.id_expediente
   var archivo=req.query.archivo
@@ -454,7 +454,7 @@ app.get('/hola', (req,res) =>{
 //servicio de vector tiles para mapas
 
 
-app.get("/bienes-raices/vector-tile/:layer/:x/:y/:z", function(req, res) {
+app.get("/vector-tile/:layer/:x/:y/:z", function(req, res) {
   let bbox = mercator.bbox(req.params.x, req.params.y, req.params.z)
   console.log(bbox.join(", "))
 
@@ -487,7 +487,7 @@ app.get("/bienes-raices/vector-tile/:layer/:x/:y/:z", function(req, res) {
   })
 })
 
-app.get('/bienes-raices/props/:layer/:id', (req, res) => {
+app.get('/props/:layer/:id', (req, res) => {
 
   var layer = req.params.layer;
   var id = req.params.id;
@@ -529,7 +529,7 @@ app.get('/bienes-raices/props/:layer/:id', (req, res) => {
 
 
 
-app.get('/bienes-raices/descargar/:ruta', function(req, res){
+app.get('/descargar/:ruta', function(req, res){
   
   var ruta=req.params.ruta;
 
