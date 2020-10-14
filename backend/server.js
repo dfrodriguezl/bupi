@@ -372,7 +372,7 @@ app.get('/hola', (req,res) =>{
   });
 
 
-  app.get('/bienes-raices/excel/:id_consulta', function(request, response){
+  app.get('/excel/:id_consulta', function(request, response){
 
     var data = "";
     console.log(request.params.id_consulta)
