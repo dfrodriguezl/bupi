@@ -88,7 +88,7 @@ module.exports = {
           test: /\.(ttf|otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?|(jpg|gif)$/,
           loader: "file-loader?name=img/[name].[ext]"
         },
-        {test: /\.(png|jpg)$/, loader: "file-loader?name=img/[name].[ext]"}
+        {test: /\.(png|jpg)$/, loader: "file-loader?name=bienes-raices/img/[name].[ext]"}
     ]
   },
   plugins: [
