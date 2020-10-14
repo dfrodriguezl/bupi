@@ -3,7 +3,7 @@ import React, { useState } from "react";
 //import {Info} from './estadisticas'
 
 import { servidorPost } from '../js/request.js'
- 
+import { Link } from 'react-router-dom';
 
 const Busqueda=()=>{
   
