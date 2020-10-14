@@ -329,6 +329,9 @@ app.get('/bienes-raices', (req,res) =>{
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
+app.get('/bienes-raices/login', (req,res) =>{
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
 
   //backend en el puerto 3000
   app.listen(3000, function () {
