@@ -45,9 +45,9 @@ const [filtro, setFiltro] = useState("");
                     <p className="item_titulo"> {el.id_expediente}</p>
                     <p className="item_des">Proyecto: {el.id_proyecto}</p>
                     <p className="item_des">Nombre: {el.nom_proy}</p>
-                      <button className="primmary" >
+                      <button >
 
-                      <Link to={"/predio/" + el.id_expediente}>
+                      <Link to={"predio/" + el.id_expediente}>
                         
                         <p>Ver expediente</p>
                         </Link>
