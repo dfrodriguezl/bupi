@@ -22,7 +22,7 @@ const Tree = () => {
     return (
     <BrowserRouter>
             <Switch>
-                <Route exact path='/web' component={Home} />
+                <Route exact path='/' component={Home} />
                 <Route exact path='/bienes-raices/web/buscar' component={Buscar}/>
                 <Route exact path='/bienes-raices/web/documentos' component={Documentos}/>
                 <Route exact path='/bienes-raices/web/login' component={Login}/>
