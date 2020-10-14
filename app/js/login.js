@@ -32,7 +32,7 @@ const Login=()=> {
   
   return (
     <div id="login">
-      {ok?<Redirect to="/"/>:''}
+      {ok?<Redirect to="/bienes-raices"/>:''}
       <div id="contenido">
         <div className="crop">
         <img src="bienes-raices/img/login-header.png" alt=""/>
