@@ -322,7 +322,8 @@ app.get('*', (req,res) =>{
 
 //app.use("/", expressStaticGzip(DIST_DIR));
 var DIST_DIR = path.join(__dirname, "../dist/");
-app.use( '/bienes-raices',expressStaticGzip(DIST_DIR));
+
+app.use( '/',expressStaticGzip(DIST_DIR));
 
 
 app.get('*', (req,res) =>{
