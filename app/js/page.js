@@ -29,38 +29,38 @@ const Estructura = ({children}) => {
       </div>
           <div id="items-nav">
           <div className="elemento">
-        <Link to="/">
+        <Link to="/bienes-raices/">
           <div className="gg-browser"></div>
           <p>Inicio</p>
         </Link>
       </div>
         <div className="elemento">
-            <Link to="/buscar">
+            <Link to="/bienes-raices/buscar">
               <div className="gg-search"></div>
               <p>Buscador</p>
             </Link>
         </div>
        <div className="elemento">
-        <Link to="/documentos">
+        <Link to="/bienes-raices/documentos">
           <div className="gg-file-document"></div>
            <p>Documentos</p>
         </Link>
        </div>
        <div className="elemento">
-        <Link to="/visor">
+        <Link to="/bienes-raices/visor">
           <div className="gg-image"></div>
           <p>Visor geográfico</p>
         </Link>
       </div>
       <div className="elemento">
-        <Link to="/reportes">
+        <Link to="/bienes-raices/reportes">
           <div className="gg-file-add"></div>
           <p>Reportes</p>
         </Link>
       </div>
 
       <div className="elemento">
-        <Link to="/asignar">
+        <Link to="/bienes-raices/asignar">
           <div className="gg-external"></div>
           <p>Asignar</p>
         </Link>
@@ -75,7 +75,7 @@ const Estructura = ({children}) => {
             
             <div className="gg-boy"></div>
             <p>{session.usuario_nombre}</p>
-        <Link to="/login">
+        <Link to="/bienes-raices/login">
             <div id="exit"><i className="gg-log-off"></i></div>
         </Link>
         

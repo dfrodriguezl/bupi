@@ -30,7 +30,7 @@ const Tree = () => {
                 <Route exact path='/bienes-raices/reportes' component={Reportes}/>
                 <Route exact path='/bienes-raices/asignar' component={Asignar}/>
                 
-                <Route exact path="/predio/:id" component={Predio} />
+                <Route exact path="/bienes-raices/predio/:id" component={Predio} />
                 <Route  component={() => <p>No funciona</p>} />
             </Switch>
     </BrowserRouter>
