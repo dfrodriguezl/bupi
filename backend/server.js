@@ -326,7 +326,7 @@ var DIST_DIR = path.join(__dirname, "../dist/");
 app.use( '/',expressStaticGzip(DIST_DIR));
 
 
-app.get('/bienes-raices/*', (req,res) =>{
+app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
@@ -447,7 +447,7 @@ app.get('/bienes-raices/*', (req,res) =>{
 //servicio de vector tiles para mapas
 
 
-app.get("/vector-tile/:layer/:x/:y/:z.pbf", function(req, res) {
+app.get("/vector-tile/:layer/:x/:y/:z", function(req, res) {
   let bbox = mercator.bbox(req.params.x, req.params.y, req.params.z)
   console.log(bbox.join(", "))
 

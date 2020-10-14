@@ -123,7 +123,7 @@ for (var i = 0; i <= 8; ++i) {
 const tileUrlFunction1=(tileCoord) =>{
 
     return (
-      url+'/vector-tile/geometria.'+variables.layer1.capa+'/{x}/{y}/{z}.pbf'
+      url+'/vector-tile/geometria.'+variables.layer1.capa+'/{x}/{y}/{z}'
     )
       .replace('{z}', String(tileCoord[0] * 2 - 1))
       .replace('{x}', String(tileCoord[1]))
@@ -132,7 +132,7 @@ const tileUrlFunction1=(tileCoord) =>{
   const tileUrlFunction2=(tileCoord) =>{
 
       return (
-        url+'/vector-tile/geometria.'+variables.layer2.capa+'/{x}/{y}/{z}.pbf'
+        url+'/vector-tile/geometria.'+variables.layer2.capa+'/{x}/{y}/{z}'
       )
         .replace('{z}', String(tileCoord[0] * 2 - 1))
         .replace('{x}', String(tileCoord[1]))
@@ -141,7 +141,7 @@ const tileUrlFunction1=(tileCoord) =>{
     const tileUrlFunction3=(tileCoord) =>{
 
       return (
-        url+'/vector-tile/geometria.'+variables.layer3.capa+'/{x}/{y}/{z}.pbf'
+        url+'/vector-tile/geometria.'+variables.layer3.capa+'/{x}/{y}/{z}'
       )
         .replace('{z}', String(tileCoord[0] * 2 - 1))
         .replace('{x}', String(tileCoord[1]))
@@ -151,7 +151,7 @@ const tileUrlFunction1=(tileCoord) =>{
  const tileUrlFunction4=(tileCoord) =>{
 
   return (
-    url+'/vector-tile/geometria.'+variables.layer4.capa+'/{x}/{y}/{z}.pbf'
+    url+'/vector-tile/geometria.'+variables.layer4.capa+'/{x}/{y}/{z}'
   )
     .replace('{z}', String(tileCoord[0] * 2 - 1))
     .replace('{x}', String(tileCoord[1]))
