@@ -334,7 +334,7 @@ app.get('/web/*', (req,res) =>{
 });
 
 app.get('/hola', (req,res) =>{
-  console.log("hola")
+  res.status(200).send({'hola':'servicio ok'})
 });
 
 
