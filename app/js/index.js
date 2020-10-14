@@ -4,6 +4,7 @@ import '../css/styles.scss';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 
 import Documentos from './documentos'
@@ -22,7 +23,7 @@ const Tree = () => {
     return (
     <BrowserRouter>
             <Switch>
-                <Route exact path='/' component={Home} />
+                <Route exact path='/bienes-raices/web/' component={Home} />
                 <Route exact path='/bienes-raices/web/buscar' component={Buscar}/>
                 <Route exact path='/bienes-raices/web/documentos' component={Documentos}/>
                 <Route exact path='/bienes-raices/web/login' component={Login}/>
@@ -31,7 +32,7 @@ const Tree = () => {
                 <Route exact path='/bienes-raices/web/asignar' component={Asignar}/>
                 
                 <Route exact path="/bienes-raices/web/predio/:id" component={Predio} />
-                <Route  component={() => <p>No funciona</p>} />
+                <Route  component={() => <p>No funciona  </p>} />
             </Switch>
     </BrowserRouter>
 

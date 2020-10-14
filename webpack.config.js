@@ -23,10 +23,10 @@ module.exports = {
   // Path and filename of your result bundle.
   // Webpack will bundle all JavaScript into this file
   output: {
-    //publicPath: '/',
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    publicPath: "/bienes-raices"
+    //publicPath: "/bienes-raices"
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
