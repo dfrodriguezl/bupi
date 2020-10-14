@@ -33,7 +33,7 @@ types.setTypeParser(1082, str => str)
 
 
 //local
-/*
+
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -42,7 +42,10 @@ const pool = new Pool({
   port: 5432,
   timezone: 'utc'
 })
-*/
+
+
+//produccion
+/*
 const opciones = {
   host: 'postgis',
   port:5432
@@ -58,7 +61,7 @@ const pool = new Pool({
   port: opciones.port,//5432
   timezone: 'utc'
 })
-
+*/
 
 
 
@@ -198,10 +201,10 @@ function get_sql(id_consulta){
 }  
 
 app
-.route('/backend')
+.route('/bienes-raices/backend')
 .post(consulta)
 
-app.post('/login',(request,response) => {
+app.post('/bienes-raices/login',(request,response) => {
 
   var data=request.body;
   var id_consulta=request.body.id_consulta;
@@ -235,7 +238,7 @@ app.post('/logout', function(req, res){
 
 
 //cargue de documentos
-app.post('/upload/:id', (req, res) => {
+app.post('/bienes-raices/upload/:id', (req, res) => {
   
   let EDFile = req.files.file
   var id = req.params.id;
@@ -273,7 +276,7 @@ app.post('/upload/:id', (req, res) => {
 
 });
 
-app.get('/descargar', function(req, res){
+app.get('/bienes-raices/descargar', function(req, res){
   
   var folder=req.query.id_expediente
   var archivo=req.query.archivo
@@ -326,10 +329,12 @@ var DIST_DIR = path.join(__dirname, "../dist/");
 app.use( '/',expressStaticGzip(DIST_DIR));
 
 
-app.get('*', (req,res) =>{
+app.get('/bienes-raices/web/*', (req,res) =>{
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
-
+app.get('/hola', (req,res) =>{
+  console.log("hola")
+});
 
 
   //backend en el puerto 3000
@@ -366,7 +371,7 @@ app.get('*', (req,res) =>{
   });
 
 
-  app.get('/excel/:id_consulta', function(request, response){
+  app.get('/bienes-raices/excel/:id_consulta', function(request, response){
 
     var data = "";
     console.log(request.params.id_consulta)
@@ -447,7 +452,7 @@ app.get('*', (req,res) =>{
 //servicio de vector tiles para mapas
 
 
-app.get("/vector-tile/:layer/:x/:y/:z", function(req, res) {
+app.get("/bienes-raices/vector-tile/:layer/:x/:y/:z", function(req, res) {
   let bbox = mercator.bbox(req.params.x, req.params.y, req.params.z)
   console.log(bbox.join(", "))
 
@@ -480,7 +485,7 @@ app.get("/vector-tile/:layer/:x/:y/:z", function(req, res) {
   })
 })
 
-app.get('/props/:layer/:id', (req, res) => {
+app.get('/bienes-raices/props/:layer/:id', (req, res) => {
 
   var layer = req.params.layer;
   var id = req.params.id;
@@ -522,7 +527,7 @@ app.get('/props/:layer/:id', (req, res) => {
 
 
 
-app.get('/descargar/:ruta', function(req, res){
+app.get('/bienes-raices/descargar/:ruta', function(req, res){
   
   var ruta=req.params.ruta;
 
