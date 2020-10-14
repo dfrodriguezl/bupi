@@ -295,8 +295,8 @@ app.get('*', (req,res) =>{
 //var DIST_DIR = path.join(__dirname, "../dist/");
 
 //app.use("/", expressStaticGzip(DIST_DIR));
-
-app.use(express.static(path.join(__dirname, '../dist/')));
+var DIST_DIR = path.join(__dirname, "../dist/");
+app.use( expressStaticGzip(DIST_DIR));
 
 
 app.get('*', (req,res) =>{
