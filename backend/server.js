@@ -329,9 +329,10 @@ var DIST_DIR = path.join(__dirname, "../dist/");
 app.use( '/',expressStaticGzip(DIST_DIR));
 
 
-app.get('/bienes-raices/web/*', (req,res) =>{
+app.get('/web/*', (req,res) =>{
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
+
 app.get('/hola', (req,res) =>{
   console.log("hola")
 });
