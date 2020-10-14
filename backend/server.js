@@ -33,7 +33,7 @@ types.setTypeParser(1082, str => str)
 
 
 //local
-
+/*
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -42,10 +42,10 @@ const pool = new Pool({
   port: 5432,
   timezone: 'utc'
 })
-
+*/
 
 //produccion
-/*
+
 const opciones = {
   host: 'postgis',
   port:5432
@@ -61,7 +61,7 @@ const pool = new Pool({
   port: opciones.port,//5432
   timezone: 'utc'
 })
-*/
+
 
 
 
@@ -215,6 +215,7 @@ app.post('/login',(request,response) => {
   
   pool.query(query_text,data, (error, results) => {
     if (error) {
+      response.status(404).json({'error:':'servicio'})
       throw error
     }
 
