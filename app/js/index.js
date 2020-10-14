@@ -31,7 +31,7 @@ const Tree = () => {
                 <Route exact path='/asignar' component={Asignar}/>
                 
                 <Route exact path="/predio/:id" component={Predio} />
-
+                <Route  component={() => <p>No funciona</p>} />
             </Switch>
     </BrowserRouter>
 
