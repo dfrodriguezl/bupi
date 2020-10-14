@@ -1,13 +1,11 @@
 const axios = require('axios');
 
 
-//const destino="https://nowsoft.app/apra";
-//const desarrollo=destino;
 
 
+//const destino = "http://localhost:3000"
 
-const destino = "http://localhost:3000"
-const desarrollo="http://localhost:9000"
+const destino="https://nowsoft.app/bienes-raices";
 
 
 

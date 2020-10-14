@@ -30,6 +30,10 @@ const accessTokenSecret = 's1ka2te3';
 
 types.setTypeParser(1082, str => str)
 
+
+
+//local
+/*
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -38,6 +42,28 @@ const pool = new Pool({
   port: 5432,
   timezone: 'utc'
 })
+*/
+const opciones = {
+  host: 'postgis',
+  port:5432
+}
+
+
+
+const pool = new Pool({
+  user: 'docker',
+  host: opciones.host,
+  database: 'acueducto_bienes_raices',
+  password: 'docker',
+  port: opciones.port,//5432
+  timezone: 'utc'
+})
+
+
+
+
+
+
 named.patch(pool);
 
 
