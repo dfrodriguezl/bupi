@@ -1,0 +1,34 @@
+version: "2"
+
+networks:
+    dbnet:
+      external:
+        name: dbnet
+
+services:
+
+  #db:
+   # container_name: "psql"
+    #image: kartoza/postgis
+    #ports:
+    #  - "49155:5432"
+    #environment:
+    #  POSTGRES_USER: docker
+    #  POSTGRES_PASS: docker
+    #volumes:
+     # - pg_data:/var/lib/postgresql
+
+  web:
+    container_name: "eaab-containner"
+    build: .
+    ports:
+        - "3005:3000"
+    #links:
+     #   - postgis
+    #depends_on:
+    #    - db
+    networks:
+        - dbnet
+
+volumes:
+    pg_data:
