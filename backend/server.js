@@ -344,7 +344,6 @@ app.get('/descargar/:ruta', function(req, res){
     var filestream = fs.createReadStream(file);
     filestream.pipe(res); 
     
-  
   })
 
 });
