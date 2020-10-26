@@ -140,7 +140,7 @@ const CargueDocumentos = () => {
             <p id="descripcion_seccion">En esta sección usted puede cargar el expeediente que debe estar digitalizado en formato PDF y nombrado correctamente</p>
 
             <div className="img-descripcion">
-                <img  src="../img/documento-explicacion.svg" alt=""/>
+                <img  src="bienes-raices/img/documento-explicacion.svg" alt=""/>
             </div>
 
             {permiso ?
