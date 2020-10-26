@@ -32,7 +32,7 @@ types.setTypeParser(1082, str => str)
 
 
 
-//local
+//produccion
 
 const pool = new Pool({
   user: 'docker',
@@ -43,6 +43,20 @@ const pool = new Pool({
   timezone: 'utc'
 })
 
+
+
+
+//local
+/*
+const pool = new Pool({
+  user: 'postgres',//docker
+  host: 'localhost',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: '123456',//docker
+  port: 5432,//5432
+  timezone: 'utc'
+})
+*/
 
 //produccion
 /*
@@ -259,13 +273,16 @@ app.post('/upload/:id', (req, res) => {
         var ruta = path.join(__dirname, `../repositorio/${id}`)
         var archivo=path.join(__dirname, `../repositorio/${id}/${EDFile.name}`)
         
-        var existe = false;
+        
         if (!fs.existsSync(ruta)){
           fs.mkdirSync(ruta,{ recursive: true });
-        } else {
-          existe=true
         }
       
+        var existe = false;
+        if (fs.existsSync(archivo)) {
+          existe=true
+        } 
+
         
 
         EDFile.mv(archivo,err => {
@@ -275,7 +292,7 @@ app.post('/upload/:id', (req, res) => {
           
           if (!existe) {
             
-          
+
             pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6)", [uuid.v1(),id,archivo,EDFile.name,datetime,usuario], (error, results) => {
               if (error) {
                 console.log(error)
@@ -285,6 +302,7 @@ app.post('/upload/:id', (req, res) => {
               return res.status(200).send({ message : 'File upload' })
             })
           } else {
+  
             pool.query(" UPDATE documentos set fecha=$1, usuario=$2 where nombre=$3", [datetime,usuario,EDFile.name], (error, results) => {
               if (error) {
                 console.log(error)
