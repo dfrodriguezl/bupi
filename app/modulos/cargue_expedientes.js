@@ -142,7 +142,7 @@ const CargueDocumentos = () => {
             <div className="img-descripcion">
                 <img  src="bienes-raices/img/documento-explicacion.svg" alt=""/>
             </div>
-
+            <Line percent={progreso} strokeWidth="1" strokeColor="#035B93" trailColor="#fff" />
             {permiso ?
                 <>
             <div >
@@ -178,7 +178,7 @@ const CargueDocumentos = () => {
             
             )
             }
-                <Line percent={progreso} strokeWidth="1" strokeColor="#035B93" trailColor="#fff" />
+                
                 </>
         :<p className="no-permiso">No cuentas con permisos para usar esta herramienta</p>}
         </div>
