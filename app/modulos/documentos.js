@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import {url, servidorPost } from '../js/request.js'
 import { useParams } from 'react-router-dom'
 
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 const Documentos=()=>{
   
   const [info, setInfo] = React.useState([]);
@@ -58,7 +60,7 @@ const download=( id)=> {
                   <p>{e.nombre}</p>
                   <p>{e.usuario}</p>
                   <p>{e.fecha}</p>
-                  <i class="gg-software-download" onClick={()=>download(e.id)}></i>
+                  <VisibilityIcon onClick={()=>download(e.id)}></VisibilityIcon>
                 </div>
               ))}
              </div>
