@@ -324,20 +324,28 @@ app.post('/upload/:id', (req, res) => {
 
 });
 
-app.get('/descargar', function(req, res){
+app.get('/descargar/:ruta', function(req, res){
   
-  var folder=req.query.id_expediente
-  var archivo=req.query.archivo
-  var file = 'C:/Users/Ivan Carrillo/Desktop/repositorio/'+folder+'/'+archivo;
+  var ruta=req.params.ruta;
 
-  var filename = path.basename(file);
-  var mimetype = mime.getType(file);
+  pool.query("SELECT * from documentos where id=$1", [ruta], (error, results) => {
+    if (error) {
+      return res.status(500).send({ message : error })
+    }
 
-  res.setHeader('Content-disposition', 'inline; filename=' + filename);
-  res.setHeader('Content-type', mimetype);
+    var file = results.rows[0].ruta;
 
-  var filestream = fs.createReadStream(file);
-  filestream.pipe(res); 
+    var filename = path.basename(file);
+    var mimetype = mime.lookup(file);
+  
+    res.setHeader('Content-disposition', 'inline; filename=' + filename);
+    res.setHeader('Content-type', mimetype);
+  
+    var filestream = fs.createReadStream(file);
+    filestream.pipe(res); 
+    
+  
+  })
 
 });
 
