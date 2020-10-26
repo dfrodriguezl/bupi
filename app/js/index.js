@@ -22,18 +22,19 @@ const Tree = () => {
     
     return (
     <BrowserRouter>
-            <Switch>
-                <Route exact path='/bienes-raices/web' component={Home} />
-                <Route exact path='/bienes-raices/web/buscar' component={Buscar}/>
-                <Route exact path='/bienes-raices/web/documentos' component={Documentos}/>
-                <Route exact path='/bienes-raices/web/login' component={Login}/>
-                <Route exact path='/bienes-raices/web/visor' component={Visor}/>
-                <Route exact path='/bienes-raices/web/reportes' component={Reportes}/>
-                <Route exact path='/bienes-raices/web/asignar' component={Asignar}/>
-                
-                <Route exact path="/bienes-raices/web/predio/:id" component={Predio} />
-                <Route  component={() => <p>No funciona  </p>} />
-            </Switch>
+        <Switch>
+        <BrowserRouter basename='/bienes-raices/web'>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/buscar' component={Buscar}/>
+            <Route exact path='/documentos' component={Documentos}/>
+            <Route exact path='/login' component={Login}/>
+            <Route exact path='/visor' component={Visor}/>
+            <Route exact path='/reportes' component={Reportes}/>
+            <Route exact path='/asignar' component={Asignar}/>
+            <Route exact path="/predio/:id" component={Predio} />
+            <Route component={() => <p>.</p>} />
+        </BrowserRouter>
+        </Switch>
     </BrowserRouter>
 
     )

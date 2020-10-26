@@ -1,9 +1,9 @@
 version: "2"
 
 networks:
-    dbnet:
+    db-net-eaab:
       external:
-        name: dbnet
+        name: db-net-eaab
 
 services:
 
@@ -22,13 +22,15 @@ services:
     container_name: "eaab-containner"
     build: .
     ports:
-        - "3005:3000"
+        - "3000:3000"
     #links:
      #   - postgis
     #depends_on:
     #    - db
     networks:
-        - dbnet
+        - db-net-eaab
+    volumes:
+       - repositorio:/app/repositorio
 
 volumes:
-    pg_data:
+    repositorio:

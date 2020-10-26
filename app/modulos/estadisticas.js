@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-import { servidorPost } from '../js/request'
+import { servidorPost,redireccionar } from '../js/request'
 
 const Estadistica = (props) => {
   
@@ -21,8 +21,8 @@ const Estadistica = (props) => {
       console.log(datos)
       setInfo(datos)
 
-  }).catch((error) => {
-    servidor.redireccionar(error)
+    }).catch((error) => {
+      redireccionar(error)
   });
     
     

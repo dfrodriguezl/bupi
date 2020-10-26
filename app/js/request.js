@@ -3,9 +3,9 @@ const axios = require('axios');
 
 
 
-//const destino = "http://localhost:3000/bienes-raices"
+const destino = "http://localhost:3000"
 
-const destino="https://nowsoft.app/bienes-raices";
+//const destino="https://nowsoft.app/bienes-raices";
 
 
 
@@ -29,11 +29,29 @@ export function servidorGet(uri){
 
 export function redireccionar(error){
     if(error.response.status==403){
-        window.location.href = destino+'/html/login.html';
+        window.location.href = '/login';
     }
 }
 
+export function servidorDocs(uri, datos) {
 
+    console.log(datos)
+    
+    return axios({
+        method: 'post',
+        url: destino+uri,
+        data: datos,
+        withCredentials: true,
+        responseType: 'blob',
+        }).then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download','reporte.xlsx'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+    });
+}
 
 
 export const url = destino;

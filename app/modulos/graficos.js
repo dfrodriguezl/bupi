@@ -238,6 +238,7 @@ class Date extends React.Component {
                     array.push(elemento)
   
             }
+            console.log(array)
             
               
                 this.setState({

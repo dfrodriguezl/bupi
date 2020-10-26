@@ -7,11 +7,20 @@ import {servidorPost} from '../js/request.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+
+
+
+
+
 const Asignacion = () => {
   
   const [doc, setdoc] = React.useState([]);
   const[user,setUser]=React.useState([]);
   const[responsable,setResponsable]=React.useState();
+  
+
+
 
   React.useEffect(() => {
       var datos={"id_consulta":"get_usuarios_rol_tecnico",}
@@ -19,6 +28,8 @@ const Asignacion = () => {
           const data = response.data;
           setUser(data)
       });
+     
+    
   }, []);  
 
 const onChange=e=>{

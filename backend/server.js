@@ -33,19 +33,19 @@ types.setTypeParser(1082, str => str)
 
 
 //local
-/*
+
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
+  user: 'docker',
+  host: 'pg-acueducto',//'pg-acueducto',
   database: 'acueducto_bienes_raices',
-  password: '123456',
-  port: 5432,
+  password: 'docker',
+  port: 5432,//5432
   timezone: 'utc'
 })
-*/
+
 
 //produccion
-
+/*
 const opciones = {
   host: 'postgis',
   port:5432
@@ -61,7 +61,7 @@ const pool = new Pool({
   port: opciones.port,//5432
   timezone: 'utc'
 })
-
+*/
 
 
 
@@ -220,7 +220,7 @@ app.post('/login',(request,response) => {
     }
 
     const accessToken = jwt.sign({ usuario_usuario: usuario_usuario}, accessTokenSecret);
-    response.cookie('jwt',accessToken, { httpOnly: true, secure: false, maxAge: 3600000 })
+    response.cookie('jwt',accessToken, { httpOnly: false, secure: false, maxAge: 3600000 })
     response.status(200).json(results.rows)
   });
   
@@ -241,36 +241,83 @@ app.post('/logout', function(req, res){
 //cargue de documentos
 app.post('/upload/:id', (req, res) => {
   
-  let EDFile = req.files.file
-  var id = req.params.id;
-  console.log(id)
-  
-  var ruta = path.join(__dirname, `../repositorio/${id}`)
-  var archivo=path.join(__dirname, `../repositorio/${id}/${EDFile.name}`)
-  
-  if (!fs.existsSync(ruta)){
-    fs.mkdirSync(ruta,{ recursive: true });
+
+
+  var token=req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });    
+      } else {
+        var usuario = decoded.usuario_usuario;
+
+        let EDFile = req.files.file
+        var id = req.params.id;
+        console.log(id)
+        
+        var ruta = path.join(__dirname, `../repositorio/${id}`)
+        var archivo=path.join(__dirname, `../repositorio/${id}/${EDFile.name}`)
+        
+        var existe = false;
+        if (!fs.existsSync(ruta)){
+          fs.mkdirSync(ruta,{ recursive: true });
+        } else {
+          existe=true
+        }
+      
+        
+
+        EDFile.mv(archivo,err => {
+            if(err) return res.status(500).send({ message : err })
+      
+          var datetime = new Date();
+          
+          if (!existe) {
+            
+          
+            pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6)", [uuid.v1(),id,archivo,EDFile.name,datetime,usuario], (error, results) => {
+              if (error) {
+                console.log(error)
+                return res.status(500).send({ message : error })
+              }
+              
+              return res.status(200).send({ message : 'File upload' })
+            })
+          } else {
+            pool.query(" UPDATE documentos set fecha=$1, usuario=$2 where nombre=$3", [datetime,usuario,EDFile.name], (error, results) => {
+              if (error) {
+                console.log(error)
+                return res.status(500).send({ message : error })
+              }
+              
+              return res.status(200).send({ message : 'File upload' })
+            })
+          }
+          
+            
+        })
+
+
+       
+
+
+
+      }
+    });
+  }else{
+    response.status(403).json({ mensaje: 'sin permisos' });
   }
 
-  
-  console.log(archivo)
-  
-  EDFile.mv(archivo,err => {
-      if(err) return res.status(500).send({ message : err })
 
-      var datetime = new Date();
-      pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6)", [uuid.v1(),id,archivo,EDFile.name,datetime,'idcarrillod'], (error, results) => {
-        if (error) {
-          console.log(error)
-          return res.status(500).send({ message : error })
-        }
-        
-        return res.status(200).send({ message : 'File upload' })
-      })
-    
-    
-      
-  })
+
+
+
+
+
+
+
+
 
 
 
@@ -322,27 +369,7 @@ app.get('*', (req,res) =>{
 */
 
 
-//var DIST_DIR = path.join(__dirname, "../dist/");
 
-//app.use("/", expressStaticGzip(DIST_DIR));
-var DIST_DIR = path.join(__dirname, "../dist/");
-
-app.use( '/',expressStaticGzip(DIST_DIR));
-
-
-app.get('/web/*', (req,res) =>{
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
-
-app.get('/hola', (req,res) =>{
-  res.status(200).send({'hola':'servicio ok'})
-});
-
-
-  //backend en el puerto 3000
-  app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-  });
 
 
   app.post('/correo', function(req, res){
@@ -556,4 +583,97 @@ app.get('/descargar/:ruta', function(req, res){
 
 
 
+});
+
+
+
+app.post('/excel', function(request, response){
+
+  var data=request.body;
+  var id_consulta=request.body.id_consulta;
+
+  var query_text=get_sql(id_consulta);
+
+  var token = request.cookies.jwt;
+  
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });    
+      } else {
+        request.decoded = decoded;   
+        console.log(decoded)
+        
+
+        pool.query(query_text,data, (error, results) => {
+          if (error) {
+            response.status(403).json({ mensaje: 'error de consulta' });
+            throw error
+          }
+
+          var jsn=results.rows
+          var data = []
+          var result=[]
+          for (var j in jsn[0]) {
+            result.push(j);
+          }
+          data.push(result)
+      
+          for (var i = 0; i < jsn.length; i++){
+            var obj = jsn[i];
+            var result=[]
+            for (var j in obj) {
+              result.push(obj[j]);
+            }
+            data.push(result)
+        }
+
+          var buffer = xlsx.build([{ data: data }]); // Returns a buffer
+      
+          response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
+          
+          response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+       
+         response.end(Buffer.from(buffer));
+
+        })
+
+      }
+    });
+  }else{
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+  
+
+
+
+
+  /*
+ res.setHeader('Content-type', "text/csv");
+
+ res.setHeader('Content-disposition', 'attachment; filename=file.xls');
+ 
+ res.send(text);
+  */
+
+  
+});
+
+
+//var DIST_DIR = path.join(__dirname, "../dist/");
+
+//app.use("/", expressStaticGzip(DIST_DIR));
+var DIST_DIR = path.join(__dirname, "../dist/");
+
+app.use( '/',expressStaticGzip(DIST_DIR));
+
+
+app.get('/web/*', (req,res) =>{
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
+});
+
+
+//backend en el puerto 3000
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
 });

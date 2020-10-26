@@ -26,7 +26,7 @@ module.exports = {
     //publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    publicPath: "/bienes-raices"
+    publicPath: "/bienes-raices/web"
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -126,7 +126,7 @@ module.exports = {
         filename: 'css/[name].css',
         template: './app/css/styles.scss'
       }),
-      new CompressionPlugin()
+      //new CompressionPlugin()
   ],
   node: {
     fs: "empty"
@@ -136,5 +136,5 @@ module.exports = {
   // Depending on mode Webpack will apply different things
   // on final bundle. For now we don't need production's JavaScript 
   // minifying and other thing so let's set mode to development
-  mode: 'production'
+  mode: 'development'
 };

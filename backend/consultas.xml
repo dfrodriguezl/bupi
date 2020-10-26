@@ -89,11 +89,26 @@
 
     <Consulta id="get_proyectos">
         <sql>
-        select * from info1_general_proyecto 
+        select ig.id_expediente,id_proyecto,nom_proy,chip_cat,dir_act,bar_ver from info1_general_proyecto ig inner join info2_general_predio ip
+        on ig.id_expediente=ip.id_expediente
         where 
-        id_Expediente like  '%' || $filtro || '%'
+        upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
         or 
-        id_proyecto like '%' || $filtro || '%'
+        upper(id_proyecto) like  upper('%' || $filtro || '%') 
+        or 
+        upper(nom_proy) like upper('%' || $filtro || '%') 
+        or 
+        upper(chip_cat) like upper('%' || $filtro || '%') 
+        or 
+        upper(num_mi) like upper('%' || $filtro || '%')
+        or 
+        upper(cod_cat) like upper('%' || $filtro || '%')
+        or 
+        upper(bar_ver) like upper('%' || $filtro || '%')
+        or 
+        upper(upz_upr) like upper('%' || $filtro || '%')
+        or 
+        upper(dir_act) like upper('%' || $filtro || '%')
         limit 50
         </sql>
     </Consulta>
@@ -434,8 +449,16 @@
         select * from tareas
         </sql>
     </Consulta> 
-
-
+    <Consulta id="reporte_documentos">
+        <sql>
+        select * from documentos
+        </sql>
+    </Consulta> 
+    <Consulta id="reporte_seguimiento_expedientes">
+        <sql>
+        select * from seguimiento_expedientes
+        </sql>
+    </Consulta> 
     <Consulta id="estadistica1">
         <sql>
         select count(*) as estadistica from info2_general_predio
@@ -482,12 +505,29 @@
     <Consulta id="grafico4">
         <sql>
             select action_tstamp::date as grupo, count(action_tstamp::date)as cuenta from audit.logged_actions 
-            where action_tstamp::date is not null group by action_tstamp::date
+            where action_tstamp::date is not null group by action_tstamp::date order by action_tstamp::date
+        </sql>
+    </Consulta>
+    <Consulta id="get_metadata">
+        <sql>
+            select * from doc_grupo
         </sql>
     </Consulta>
 
 
 
-
+    <Consulta id="get_permisos">
+        <sql>
+           select jsonb_agg(id_permiso)as permisos
+            from(
+            select p.id_permiso
+            from usuario u
+            inner join rol_permisos r
+            on r.id_rol=u.usuario_rol
+            inner join permisos p
+            on r.id_permiso=p.id_permiso
+            where usuario_usuario=token	)As s
+        </sql>
+    </Consulta>
 
 </Consultas>
