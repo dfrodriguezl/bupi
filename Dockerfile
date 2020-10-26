@@ -4,6 +4,7 @@ WORKDIR /app
 
 RUN npm install pm2 -g
 
+
 COPY dist dist
 COPY backend backend
 COPY repositorio repositorio
