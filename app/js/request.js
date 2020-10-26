@@ -29,7 +29,7 @@ export function servidorGet(uri){
 
 export function redireccionar(error){
     if(error.response.status==403){
-        window.location.href = '/login';
+        window.location.href = 'bienes-raices/web/login';
     }
 }
 

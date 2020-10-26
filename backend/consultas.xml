@@ -89,7 +89,7 @@
 
     <Consulta id="get_proyectos">
         <sql>
-        select ig.id_expediente,id_proyecto,nom_proy,chip_cat,dir_act,bar_ver from info1_general_proyecto ig inner join info2_general_predio ip
+        select ig.id_expediente,id_proyecto,nom_proy,chip_cat,dir_act,bar_ver from info1_general_proyecto ig left join info2_general_predio ip
         on ig.id_expediente=ip.id_expediente
         where 
         upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
