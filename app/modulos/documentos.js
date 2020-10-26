@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import {url, servidorPost } from '../js/request.js'
 import { useParams } from 'react-router-dom'
 
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 const Documentos=()=>{
   
@@ -60,7 +60,7 @@ const download=( id)=> {
                   <p>{e.nombre}</p>
                   <p>{e.usuario}</p>
                   <p>{e.fecha}</p>
-                  <VisibilityIcon onClick={()=>download(e.id)}></VisibilityIcon>
+                  <FindInPageIcon onClick={()=>download(e.id)}></FindInPageIcon>
                 </div>
               ))}
              </div>
