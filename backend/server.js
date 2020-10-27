@@ -290,30 +290,16 @@ app.post('/upload/:id', (req, res) => {
       
           var datetime = new Date();
           
-          if (!existe) {
+          pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT(nombre) DO UPDATE set fecha=$5", [uuid.v1(),id,archivo,EDFile.name,datetime,usuario], (error, results) => {
+            if (error) {
+              console.log(error)
+              return res.status(500).send({ message : error })
+            }
             
-
-            pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6)", [uuid.v1(),id,archivo,EDFile.name,datetime,usuario], (error, results) => {
-              if (error) {
-                console.log(error)
-                return res.status(500).send({ message : error })
-              }
-              
-              return res.status(200).send({ message : 'File upload' })
-            })
-          } else {
-  
-            pool.query(" UPDATE documentos set fecha=$1, usuario=$2 where nombre=$3", [datetime,usuario,EDFile.name], (error, results) => {
-              if (error) {
-                console.log(error)
-                return res.status(500).send({ message : error })
-              }
-              
-              return res.status(200).send({ message : 'File upload' })
-            })
-          }
+            
+          })
           
-            
+          return res.status(200).send({ message : 'File upload' })
         })
 
 

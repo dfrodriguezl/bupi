@@ -99,7 +99,7 @@ const CargueDocumentos = () => {
     
 
     const upload = (e) => {
-
+        var k = 0;
        
         for (var i = 0; i < doc.length; i++){
 
@@ -112,9 +112,11 @@ const CargueDocumentos = () => {
 
                 var id=doc[i].name.split("-")
                 
+                
                 servidorPost('/upload/' + id[0], formData).then((response) => {
                     console.log(response)
-                    setProgreso(((i+1)/(doc.length))*100)
+                    setProgreso(((k + 1) / (doc.length)) * 100)
+                    k = k + 1;
                 })
 
             } else {
