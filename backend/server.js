@@ -284,7 +284,6 @@ app.post('/upload/:id', (req, res) => {
         } 
 
         
-
         EDFile.mv(archivo,err => {
             if(err) return res.status(500).send({ message : err })
       
