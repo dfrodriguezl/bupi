@@ -278,11 +278,6 @@ app.post('/upload/:id', (req, res) => {
           fs.mkdirSync(ruta,{ recursive: true });
         }
       
-        var existe = false;
-        if (fs.existsSync(archivo)) {
-          existe=true
-        } 
-
         
         EDFile.mv(archivo,err => {
             if(err) return res.status(500).send({ message : err })
@@ -294,11 +289,12 @@ app.post('/upload/:id', (req, res) => {
               console.log(error)
               return res.status(500).send({ message : error })
             }
-            
+
+            return res.status(200).send({ message : 'File upload' })
             
           })
           
-          return res.status(200).send({ message : 'File upload' })
+          
         })
 
 
