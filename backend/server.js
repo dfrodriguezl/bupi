@@ -312,19 +312,61 @@ app.post('/upload/:id', (req, res) => {
   }
 
 
+});
+
+//borrar documentos
+app.post('/delete/:nombre', (req, res) => {
+  
+  var token=req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });    
+      } else {
+        
+        var nombre = req.params.nombre;
+        var id=nombre.split('-')[0]
+        console.log(nombre)
+        console.log(id)
+        
+        var archivo=path.join(__dirname, `../repositorio/${id}/${nombre}`)
+        
+        
+        if (fs.existsSync(archivo)) {
+          
+          fs.unlink(archivo,function(err){
+            if(err) return res.status(500).send({ message : err })
+            
+            pool.query("DELETE from documentos where nombre=$1", [nombre], (error, results) => {
+              if (error) {
+                console.log(error)
+                return res.status(500).send({ message : error })
+              }
+  
+              return res.status(200).send({ message : 'File deleted' })
+              
+            })
 
 
+          }); 
+
+        }
+      
+        
 
 
-
-
-
-
-
-
+      }
+    });
+  }else{
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
 
 
 });
+
+
+
 
 app.get('/descargar/:ruta', function(req, res){
   

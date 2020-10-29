@@ -20,7 +20,7 @@ const CargueDocumentos = () => {
 
     const[meta,setMeta]=React.useState([]);
     const[permiso,setpermiso]=React.useState(false);
-
+    const[load,setLoad]=React.useState(0)
 
     React.useEffect(() => {
         
@@ -117,6 +117,7 @@ const CargueDocumentos = () => {
                     console.log(response)
                     setProgreso(((k + 1) / (doc.length)) * 100)
                     k = k + 1;
+                    setLoad(k)
                 })
 
             } else {
@@ -144,7 +145,7 @@ const CargueDocumentos = () => {
             <div className="img-descripcion">
                 <img  src="bienes-raices/img/documento-explicacion.svg" alt=""/>
             </div>
-            <Line percent={progreso} strokeWidth="1" strokeColor="#035B93" trailColor="#fff" />
+            
             {permiso ?
                 <>
             <div >
@@ -158,6 +159,10 @@ const CargueDocumentos = () => {
             <p>Se Cargarán: {doc.reduce(function(sum, d) {
                 return sum + d.valido;
             }, 0)} Documentos de {doc.length}</p>
+
+            <Line percent={progreso} strokeWidth="1" strokeColor="#035B93" trailColor="#fff" />
+            <p className="enfasis">Documentos subidos: {load} </p>
+                    
 
             {doc.map((item,key)=>
      

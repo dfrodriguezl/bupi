@@ -7,10 +7,14 @@ import { useParams } from 'react-router-dom'
 
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 
+import {Modal} from './popup'
+
+
 const Documentos=()=>{
   
   const [info, setInfo] = React.useState([]);
   const [meta, setMeta] = React.useState([]);
+  const [refresh, setRefresh] = React.useState(false);
   
   let { id } = useParams();
   
@@ -38,7 +42,7 @@ const Documentos=()=>{
   })
     
     
-}, []);
+}, [refresh]);
 
 const download=( id)=> {
 
@@ -64,6 +68,8 @@ const download=( id)=> {
     
     return <p>{tipo_documento}</p>
   }
+
+
     
         return (
 
@@ -71,13 +77,18 @@ const download=( id)=> {
             
             <div id="titulo_seccion">Documentos</div>
             <p id="descripcion_seccion">Sección para visualizar los documentos escaneados</p>
+
+            <p className="enfasis">Total de documentos: {info.length}</p>
              
+            
+
             <div id="documentos">
             <div className="item head" >
                   <p>Documento</p>
                   <p>Descripcion</p>
                   <p>Responsable</p>
-                  <p>Fecha de cargue</p>
+                <p>Fecha de cargue</p>
+                <p>Borrar</p>
                   <p>Ver</p>
                 </div>
               {info.map((e,i) => (
@@ -86,6 +97,7 @@ const download=( id)=> {
                   <p>{hola(e.nombre)}</p>
                   <p>{e.usuario}</p>
                   <p>{e.fecha}</p>
+                  <Modal  nombre={e.nombre} refresh={setRefresh}/>
                   <FindInPageIcon onClick={()=>download(e.id)}></FindInPageIcon>
                 </div>
               ))}
