@@ -48,7 +48,7 @@ const Graficos = () => {
   
   return(
     <div className="estadistica">
-      <Estadistica titulo="Número de predios" consulta="estadistica1" clase="green"/>
+      <Estadistica titulo="Expedientes escaneados" consulta="estadistica1" clase="green"/>
       <Estadistica titulo="Documentos en el sistema" consulta="estadistica2" clase="red"/>
       <Estadistica titulo="Predios aprobados técnico" consulta="estadistica3" clase="orange" />
       <Estadistica titulo="Transacciones en el sistema" consulta="estadistica4" clase="green"/>

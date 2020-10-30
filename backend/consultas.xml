@@ -461,7 +461,7 @@
     </Consulta> 
     <Consulta id="estadistica1">
         <sql>
-        select count(*) as estadistica from info2_general_predio
+        SELECT COUNT(*) as estadistica FROM (SELECT DISTINCT identificador FROM documentos) AS temp;
         </sql>
     </Consulta>
     <Consulta id="estadistica2">
