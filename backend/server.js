@@ -35,7 +35,7 @@ moment.locale('es');
 //types.setTypeParser(1114, str => moment.utc(str).format("dddd, MMMM D YYYY, h:mm:ss a"));
 
 //produccion
-/*
+
 const pool = new Pool({
   user: 'docker',
   host: 'pg-acueducto',//'pg-acueducto',
@@ -44,7 +44,7 @@ const pool = new Pool({
   port: 5432,//5432
   timezone: 'utc'
 })
-*/
+
 
 
 
@@ -60,23 +60,6 @@ const pool = new Pool({
 })
 */
 
-//produccion
-
-const opciones = {
-  host: 'postgis',
-  port:5432
-}
-
-
-
-const pool = new Pool({
-  user: 'docker',
-  host: opciones.host,
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: opciones.port,//5432
-  timezone: 'utc'
-})
 
 
 
