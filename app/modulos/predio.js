@@ -160,11 +160,13 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
         if (str) {
             var parts = /\/(.*)\/(.*)/.exec(str);
             var restoredRegex = new RegExp(parts[1], parts[2]);
+            console.log(restoredRegex)
             return restoredRegex;
 
         } else {
             return str;
         }
+        
     }
 
 
@@ -320,7 +322,7 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                                         isClearable
                                         
                                         control={control}
-                                        defaultValue={defecto ? i.doc.enum.filter(option => parseInt(option.value) === parseInt(fields.info[i.doc.field])) : ''}
+                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === (fields.info[i.doc.field])) : ''}
                                         onChange={(e)=>change(e,i.doc.field)}
 
                                         />

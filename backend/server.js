@@ -32,7 +32,7 @@ types.setTypeParser(1082, str => str)
 
 moment.locale('es');
 
-//types.setTypeParser(1114, str => moment.utc(str).format("dddd, MMMM D YYYY, h:mm:ss a"));
+types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
