@@ -322,7 +322,7 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                                         isClearable
                                         
                                         control={control}
-                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === (fields.info[i.doc.field])) : ''}
+                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                         onChange={(e)=>change(e,i.doc.field)}
 
                                         />
