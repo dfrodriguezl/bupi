@@ -81,19 +81,39 @@ export const notificacion=(data)=> {
             
     }
     else if (ruta===1 || ruta==7) {//el tecnico se desprende de su tarea
-        data.id_consulta = "tarea_intermedio";
-        
-        (async () => {
-            var result = await back(data)
-            if (result.data == 2) {
-                
-                data.id_consulta = "insertar_notificacion"
-                data.tarea_next = 5;
-                data.ruta_destino = 3;
+       
+        //alert();
 
-                await back(data)
+        (async () => {
+
+
+            var post = {
+                id_consulta: "tarea_intermedio",
+                id_expediente: data.id_expediente
+            }
+
+            var resultado = await back(post)
+
+            console.log(resultado)
+
+            if (resultado.data[0].control === 2) {
+                
+                //alert("enviando tarea sup. tecnico");
+
+                var post2 = {
+                    id_consulta: "insertar_notificacion",
+                    tarea_next: 5,
+                    ruta_destino: 3,
+                    opcion: 1,
+                    id_expediente:data.id_expediente
+                }
+
+
+                await back(post2)
 
             }
+
+
             
         })()
 

@@ -378,7 +378,7 @@ group by dominio) as d
     <Consulta id="insertar_notificacion">
         <sql>
         insert into tareas.tareas values(
-            default,
+            (select max (id)+1 from tareas.tareas),
             $id_expediente,
             $ruta_destino,
             token,

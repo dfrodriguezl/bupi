@@ -48,10 +48,10 @@ const Modal = ({nombre,id,refresh,tareacod}) => {
                   notificacion(datos)
 
                   
-
+                   /* 
                   toast.success("Tarea resuelta satisfactoriamente",{
                     toastId: id
-                  })
+                  })*/
 
                   
 
