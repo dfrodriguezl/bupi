@@ -165,18 +165,53 @@ body{
     background-color: #ECECEC;
     border-radius: 5px;
     max-height: calc(100vh - 55px);
+    min-width: 300px;
     overflow-y: scroll;
     .grupo{
         background-color: white;
         padding: 5px;
         margin: 3px;
         border-radius: 5px;
+        .titulo{
+            font-weight: 500;
+            font-size: 1.2em;
+        }
+    }
+    .success{
+        border-left: 5px solid $color3;
+    }
+    .warning{
+        border-left: 5px solid #F1E305;
+    }
+    .danger{
+        border-left: 5px solid #CE3800;
     }
     p{
         margin:0px;
         font-size: 10pt;
         color:black;
     }
+    .form-input{
+        padding: 5px;
+    }
+    #listado-header{
+        padding: 5px;
+        background-color: #fff;
+    }
+    h3{
+        font-weight: 500;
+        margin: 0px;
+        margin-bottom: 5px;
+        color: $color1;
+        font-size: 1.3em;
+    }
+
+    .leyenda{
+        display: grid;
+        grid-template-columns: repeat(6,auto);
+        padding: 5px;
+    }
+
 }
 .documento{
     display: grid;
@@ -230,6 +265,9 @@ button{
     border-radius: 3px;
     padding:5px;
     margin-top: 5px;
+    a{
+        text-decoration: none;
+    }
 }
 button:hover{
     cursor:pointer;
@@ -395,8 +433,11 @@ input[type="file"] {
       max-height: 700px;
       padding: 5px;
       overflow-y: scroll;
+      background-color: #F7F7F7;
+      border-radius: 10px;
+
     .item{
-    
+        border-radius: 10px;
         background-color: #fff;
         padding: 10px;
     }
@@ -428,7 +469,7 @@ input[type="file"] {
     background: #f1f1f1; 
   }
   ::-webkit-scrollbar-thumb {
-    background: $color3; 
+    background: #606060; 
   }
 
   /*estilos para mensajes */
@@ -625,3 +666,67 @@ input[type="file"] {
     border: 1px solid #cfcece;
     outline: none;
   }
+
+  .grupo-formularios{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      column-gap: 20px;
+      row-gap: 5px;
+      .active{
+          background-color: $color3;
+          color: #fff;
+      }
+  }
+
+  .msg-error{
+      color:#E3584F;
+  }
+
+  .upload_file{
+      display: grid;
+      grid-template-columns: auto  min-content 1fr;
+      column-gap: 5px;
+      align-items: center;
+      .label-input{
+          background-color: $color5;
+ 
+          border: none;
+      }
+  }
+
+.grupo-multiple{
+    display:grid;
+    grid-template-columns: 150px min-content;
+    align-items: center;
+}
+
+.form-big{
+    border: 1px solid $color1;
+    border-radius: 5px;
+    padding: 3px;
+    margin-top: 10px;
+
+}
+
+
+.react-flow{
+    height: 300px !important;
+}
+.header-help-form{
+    margin-top: 10px;
+    font-size: 1.1em;
+    div{
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 5px;
+        p:nth-child(2) {
+            font-weight: 400;
+        }
+    }
+    
+}
+
+.static{
+    overflow-y: auto;
+    max-height: 250px;
+}

@@ -5,6 +5,8 @@ import { servidorPost } from './request'
 
 import { Home,Search,InsertDriveFile,Public,AttachFile,GroupAdd,EmojiPeople,ExitToApp} from '@material-ui/icons';
 
+import FaceIcon from '@material-ui/icons/Face';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import {Notifi} from '../modulos/encabezado'
 
@@ -99,6 +101,13 @@ const Estructura = ({children}) => {
           <p>Asignar</p>
         </Link>
       </div>
+      <div className="elemento">
+        <Link to="/personal">
+          <FaceIcon/>
+          <p>Usuario</p>
+        </Link>
+      </div>           
+
       </div>
     </div>
         <div id="panel_superior">

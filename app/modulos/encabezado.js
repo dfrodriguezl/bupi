@@ -5,7 +5,7 @@ import { Tarea } from './tareas.js'
 const servidor = require('../js/request.js')
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
-import CloseIcon from '@material-ui/icons/Close';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import FaceIcon from '@material-ui/icons/Face';
 
 
@@ -14,6 +14,9 @@ const Notifi = () => {
   const [panel, setPanel] = React.useState(false);
   const [tarea, setTarea] = React.useState(0);
   const [session, setSession] = React.useState(0);
+
+  const [refresh, setRefresh] = React.useState(false);
+
 
   function toggleButton() {
     if (!panel) setPanel(true);
@@ -41,10 +44,20 @@ const Notifi = () => {
     });
 
 
-  }, []);
+  }, [refresh]);
 
   const updateStars = (star) => {
     setTarea(star);
+  }
+  const logout = () => {
+    
+    function delete_cookie(name) {
+      document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+
+    delete_cookie('jwt')
+
+
   }
 
 
@@ -54,11 +67,11 @@ const Notifi = () => {
       <div onClick={toggleButton} className="user">
       <p>{session.usuario_nombre}</p> <FaceIcon/> <p>{tarea}</p>
       </div>
-      <Link to="/login">
-          <CloseIcon/>
+      <Link to="/login" onClick={()=>logout()}>
+          <ExitToAppIcon/>
       </Link>
       <div id="tareas">
-        {panel ? <Tarea /> : null}
+        {panel ? <Tarea refresh_number={ setRefresh} /> : null}
       </div>
     </div>
   );

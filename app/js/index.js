@@ -15,6 +15,7 @@ import Home from './home'
 import Predio from './predio'
 import Buscar from './buscar'
 import Asignar from './asignar'
+import User from './usuario'
 
 
 
@@ -32,7 +33,8 @@ const Tree = () => {
             <Route exact path='/reportes' component={Reportes}/>
             <Route exact path='/asignar' component={Asignar}/>
             <Route exact path="/predio/:id" component={Predio} />
-            <Route component={() => <p>.</p>} />
+            <Route exact path='/personal' component={User}/>
+                    
         </BrowserRouter>
         </Switch>
     </BrowserRouter>

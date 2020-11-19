@@ -2,7 +2,17 @@
 <Consultas>
     <Consulta id="get_usuario">
         <sql>
-        SELECT usuario_id from usuario where usuario_usuario=$usuario_usuario and usuario_pwd=$usuario_pwd
+        SELECT usuario_id from usuario where usuario_usuario=$usuario_usuario and usuario_pwd=md5($usuario_pwd)
+        </sql>
+    </Consulta>
+    <Consulta id="validate_user">
+        <sql>
+        SELECT usuario_id from usuario where usuario_usuario=token and usuario_pwd=md5($usuario_pwd)
+        </sql>
+    </Consulta>
+    <Consulta id="update_clave">
+        <sql>
+        update usuario set usuario_pwd=md5($usuario_pwd_new) where usuario_usuario=token returning usuario_id
         </sql>
     </Consulta>
     <Consulta id="info1_general_proyecto">
@@ -32,22 +42,22 @@
     </Consulta>
     <Consulta id="info6_propietario_anterior_juridico">
         <sql>
-        select * from info6_propietario_anterior_juridico where id_expediente=$id_expediente
+        select * from info6_propietario_anterior_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info7_propietario_catastral">
         <sql>
-        select * from info7_propietario_catastral where id_expediente=$id_expediente
+        select * from info7_propietario_catastral where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info8_propietario_juridico">
         <sql>
-        select * from info8_propietario_juridico where id_expediente=$id_expediente
+        select * from info8_propietario_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info9_zmpa">
         <sql>
-        select * from info9_zmpa where id_expediente=$id_expediente
+        select * from info9_zmpa where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info10_infraestructura">
@@ -77,7 +87,7 @@
     </Consulta>
     <Consulta id="info15_saneamiento_juridico">
         <sql>
-        select * from info15_saneamiento_juridico where id_expediente=$id_expediente
+        select * from info15_saneamiento_juridico where id_expediente=$id_expediente 
         </sql>
     </Consulta>
     <Consulta id="info16_tributaria">
@@ -86,6 +96,31 @@
         </sql>
     </Consulta>
 
+    <Consulta id="info17_documentos_requeridos">
+        <sql>
+        select * from info17_documentos_requeridos where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info18_municipios_intersectados">
+        <sql>
+        select * from info18_municipios_intersectados where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info19_mutacion_predial">
+        <sql>
+        select * from info19_mutacion_predial where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info20_documentos_requeridos_juridico">
+        <sql>
+        select * from info20_documentos_requeridos_juridico where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info21_juridicos">
+        <sql>
+        select * from info21_juridicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -102,7 +137,7 @@
         or 
         upper(num_mi) like upper('%' || $filtro || '%')
         or 
-        upper(cod_cat) like upper('%' || $filtro || '%')
+        upper(ced_cat) like upper('%' || $filtro || '%')
         or 
         upper(bar_ver) like upper('%' || $filtro || '%')
         or 
@@ -114,7 +149,7 @@
     </Consulta>
     <Consulta id="update_info1_general_proyecto">
         <sql>
-            update info1_general_proyecto set upd_query_alpaca where id_proyecto=$id_proyecto RETURNING id_proyecto
+            update info1_general_proyecto set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info2_general_predio">
@@ -139,22 +174,22 @@
     </Consulta>
     <Consulta id="update_info6_propietario_anterior_juridico">
         <sql>
-            update info6_propietario_anterior_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info6_propietario_anterior_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info7_propietario_catastral">
         <sql>
-            update info7_propietario_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info7_propietario_catastral set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info8_propietario_juridico">
         <sql>
-            update info8_propietario_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info8_propietario_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info9_zmpa">
         <sql>
-            update info9_zmpa set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info9_zmpa set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info10_infraestructura">
@@ -194,6 +229,34 @@
             update info16_tributaria set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info17_documentos_requeridos">
+        <sql>
+            update info17_documentos_requeridos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info18_municipios_intersectados">
+        <sql>
+            update info18_municipios_intersectados set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info19_mutacion_predial">
+        <sql>
+            update info19_mutacion_predial set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info20_documentos_requeridos_juridico">
+        <sql>
+            update info20_documentos_requeridos_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info21_juridicos">
+        <sql>
+            update info21_juridicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+
+
+
 
     <Consulta id="get_campos_repositorio">
         <sql>
@@ -249,6 +312,11 @@
         select usuario_nombre,usuario_usuario from usuario where usuario_rol in(7,9)
         </sql>
     </Consulta>
+    <Consulta id="get_usuarios_rol_juridico">
+        <sql>
+        select usuario_nombre,usuario_usuario from usuario where usuario_rol=10
+        </sql>
+    </Consulta>
     <Consulta id="get_usuarios">
         <sql>
         select usuario_nombre,usuario_usuario from usuario
@@ -259,17 +327,20 @@
         select
         json_build_object(
             'field',field,
+            'form',form,
             'label', label,
             'type', type,
             'size', size,
             'helper',helper,
-            'enum',d.enum::int[],
-            'optionLabels',d.labels,
-            'editable',editable
+            'enum',d.enum,
+            'editable',editable,
+            'regex',regex,
+            'message',message
             ) as doc
-        from modulos m left join (select dominio,string_to_array(string_agg(valor, ','),',')  as enum,
-        string_to_array(string_agg(descripcion, ','),',') as labels
-        from dominios group by dominio) as d
+        from modulos m left join (select dominio,
+								  json_agg(json_build_object('value',valor,'label',descripcion)) as enum
+								  from dominios
+group by dominio) as d
         on m.enum=d.dominio
         where tabla=$tabla order by orden
         </sql>
@@ -281,58 +352,125 @@
         where usuario_usuario=token
         </sql>
     </Consulta>
-    <Consulta id="insertar_tarea">
+
+    <Consulta id="insertar_asignacion">
         <sql>
-        insert into tareas values(
+        insert into tareas.asignacion values (
             $id_expediente,
-            $codigo_tarea,
-            token,
-            (select usuario_usuario from usuario 
-                where usuario_rol=(select rol_encargado from tareas_listado where id_tarea=$codigo_tarea)
-                and grupo in (0,$codigo_grupo)),
-            now(),
-            null,
-            1,
-            $observaciones,
-            $codigo_grupo
-        )ON CONFLICT DO NOTHING RETURNING usuario_responsable
+            $id_tarea,
+            (select usuario from tareas.grupos 
+            where id_tarea=$id_tarea and id_grupo=(select id_grupo from usuario where usuario_usuario=$usuario_responsable))
+        )
+        ON CONFLICT DO NOTHING;
         </sql>
     </Consulta>
-    <Consulta id="regresar_tarea">
+    <Consulta id="insertar_asignacion_tecnico">
         <sql>
-        insert into tareas values(
+        insert into tareas.asignacion values (
             $id_expediente,
-            $codigo_tarea,
+            $id_tarea,
+            $usuario_responsable
+        )
+        ON CONFLICT DO NOTHING;
+        </sql>
+    </Consulta>
+
+    <Consulta id="insertar_notificacion">
+        <sql>
+        insert into tareas.tareas values(
+            default,
+            $id_expediente,
+            $ruta_destino,
             token,
-            $usuario_responsable,
+            (select usuario from tareas.asignacion 
+            where id_expediente=$id_expediente and id_tarea= $tarea_next),
             now(),
             null,
             1,
-            $observaciones,
-            $codigo_grupo
+            true
         )ON CONFLICT DO NOTHING RETURNING usuario_responsable
         </sql>
     </Consulta>
 
+    <Consulta id="tarea_intermedio">
+        <sql>
+        insert into tareas.intermedio values(
+            $id_expediente,
+            1
+        )ON CONFLICT(id_expediente) DO UPDATE set control=tareas.intermedio.control+1 RETURNING control
+        </sql>
+    </Consulta>
+    <Consulta id="regresar_tecnico">
+        <sql>
+        select regresar from info12_control_calidad_tecnico 
+        where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="aprobado_juridico">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT aprobado
+            from info13_control_calidad_juridico 
+            where id_expediente=$id_expediente
+        )
+        THEN
+            (select CASE WHEN aprobado=1 THEN true
+                    ELSE false
+            END
+        from info13_control_calidad_juridico 
+        where id_expediente=$id_expediente)
+        ELSE
+            false
+        END as aprobado
+        </sql>
+    </Consulta>
+    <Consulta id="aprobado_tecnico">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT aprobado
+            from info12_control_calidad_tecnico 
+            where id_expediente=$id_expediente
+        )
+        THEN
+            (select CASE WHEN aprobado=1 THEN true
+                    ELSE false
+            END
+        from info12_control_calidad_tecnico 
+        where id_expediente=$id_expediente)
+        ELSE
+            false
+        END as aprobado
+        </sql>
+    </Consulta>
+
+
+    <Consulta id="update_intermedio">
+        <sql>
+             update tareas.intermedio set control=$control returning control;
+        </sql>
+    </Consulta>
+
+
     <Consulta id="get_tareas">
         <sql>
         select *,
-        (select descripcion from tareas_listado as tl where
-        tl.id_tarea=t.codigo_tarea), 
+        (select descripcion from tareas.flujo as tf where
+        tf.ruta=t.ruta), 
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_asigna)as usuario_nombre,
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_responsable)as usuario_responsable
-        from tareas as t
+        from tareas.tareas as t
         where
-        usuario_responsable=token and estado=1
+        usuario_responsable=token and estado=1 and visible=true
         </sql>
     </Consulta>
 
     <Consulta id="update_tareas_estado">
         <sql>
-        update tareas set estado=2
-        where id_expediente=$id_expediente and codigo_tarea=$codigo_tarea
+        update tareas.tareas set estado=2, fecha_solucion=now() 
+        where id=$id 
         returning id_expediente
         </sql>
     </Consulta>
@@ -340,7 +478,7 @@
 
     <Consulta id="get_numero_tareas">
         <sql>
-        select count(*) from tareas 
+        select count(*) from tareas.tareas 
         where usuario_responsable=token and estado=1
         </sql>
     </Consulta>
@@ -439,19 +577,19 @@
     <Consulta id="expediente_asignado">
         <sql>
         select exists (
-        select id_expediente from tareas 
+        select id_expediente from tareas.tareas 
         where usuario_responsable=token and estado=1 and id_expediente=$id_expediente)
         </sql>
     </Consulta>   
 
     <Consulta id="reporte_general">
         <sql>
-        select * from tareas
+        select * from tareas.tareas
         </sql>
     </Consulta> 
     <Consulta id="reporte_documentos">
         <sql>
-        select * from documentos
+select * from geometria.lote_catastro limit 18000
         </sql>
     </Consulta> 
     <Consulta id="reporte_seguimiento_expedientes">
@@ -477,7 +615,7 @@
     </Consulta>
     <Consulta id="estadistica4">
         <sql>
-        select count(*) as estadistica from audit.logged_actions
+        select count(*) as estadistica from auditoria
         </sql>
     </Consulta>
 
@@ -497,15 +635,15 @@
     </Consulta>
     <Consulta id="grafico3">
         <sql>
-            select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
-            select tipologia_impuesto as grupo, count(tipologia_impuesto)as cuenta from info3_areas_usos 
-            where tipologia_impuesto is not null group by tipologia_impuesto)sub
+        select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
+        select tipologia_impuesto_2020 as grupo, count(tipologia_impuesto_2020)as cuenta from info3_areas_usos
+        where tipologia_impuesto_2020 is not null group by tipologia_impuesto_2020)sub	
         </sql>
     </Consulta>
     <Consulta id="grafico4">
         <sql>
-            select action_tstamp::date as grupo, count(action_tstamp::date)as cuenta from audit.logged_actions 
-            where action_tstamp::date is not null group by action_tstamp::date order by action_tstamp::date
+            select fecha::date as grupo, count(fecha::date)as cuenta from auditoria 
+            group by fecha::date order by fecha::date
         </sql>
     </Consulta>
     <Consulta id="get_metadata">
@@ -529,5 +667,91 @@
             where usuario_usuario=token	)As s
         </sql>
     </Consulta>
+
+
+    <Consulta id="get_flujo">
+        <sql>
+            select 
+                t.ruta,
+                id_tarea_next,
+                path,
+                (select usuario_nombre from usuario where usuario_usuario=t.usuario_responsable),
+                f.descripcion as descripcion,
+                ta.descripcion as perfil,
+                estado,
+                fecha_asignacion
+            from tareas.tareas t left join (
+            select id_tarea_next,concat(id_tarea,'-',id_tarea_next)as path,ruta,descripcion
+            from tareas.flujo
+            ) f
+            on t.ruta=f.ruta 
+            inner join tareas.actividades ta on f.id_tarea_next=ta.id_tarea
+            where id_expediente=$id_expediente order by fecha_asignacion
+        </sql>
+    </Consulta>
+
+
+    <Consulta id="insertar_vacio">
+        <sql>
+           
+           insert into insert-dinamico(id_expediente) values ($id_expediente)
+            returning id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_consecutivos">
+        <sql>
+           
+           select consecutivo from insert-dinamico where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+
+
+
+    <Consulta id="tengo_predio">
+        <sql>
+        select exists(
+           select * from tareas.tareas
+            where id_expediente=$id_expediente 
+            and usuario_responsable=token and estado=1)
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_soportes">
+        <sql>
+        select * from documentos where identificador=$identificador	  
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_consecutivo">
+        <sql>
+
+       insert into insert-dinamico(id_expediente,consecutivo)
+        values ($id_expediente,coalesce((select max(consecutivo)+1 
+		from insert-dinamico where id_expediente=$id_expediente),1)
+	  	)returning id_expediente
+
+
+        </sql>
+    </Consulta>
+
+    <Consulta id="delete_consecutivo">
+        <sql>
+
+        delete from insert-dinamico where id_expediente=$id_expediente and consecutivo=$consecutivo returning id_expediente
+
+
+        </sql>
+    </Consulta>
+
+    <Consulta id="info_header_form">
+        <sql>
+
+        select chip_cat,num_mi,cod_predial from info2_general_predio
+        where id_expediente=$id_expediente
+
+
+        </sql>
+    </Consulta>
+
 
 </Consultas>

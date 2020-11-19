@@ -22,7 +22,7 @@ export function servidorPost(uri,datos){
 }
 
 export function servidorGet(uri){
-        return axios.get(uri).then(resp => {
+        return axios.get(destino+uri,{withCredentials: true}).then(resp => {
         return(resp.data);
     });
 }

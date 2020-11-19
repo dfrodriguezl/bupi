@@ -15,7 +15,7 @@ const xlsx =require('node-xlsx');
 var uuid = require('uuid');
 var path = require('path');
 var mime = require('mime');
-
+var moment = require('moment');
 //para el servicio de mapas
 const SphericalMercator = require("@mapbox/sphericalmercator")
 const mercator = new SphericalMercator()
@@ -30,10 +30,12 @@ const accessTokenSecret = 's1ka2te3';
 
 types.setTypeParser(1082, str => str)
 
+moment.locale('es');
 
+//types.setTypeParser(1114, str => moment.utc(str).format("dddd, MMMM D YYYY, h:mm:ss a"));
 
 //produccion
-
+/*
 const pool = new Pool({
   user: 'docker',
   host: 'pg-acueducto',//'pg-acueducto',
@@ -42,7 +44,7 @@ const pool = new Pool({
   port: 5432,//5432
   timezone: 'utc'
 })
-
+*/
 
 
 
@@ -59,7 +61,7 @@ const pool = new Pool({
 */
 
 //produccion
-/*
+
 const opciones = {
   host: 'postgis',
   port:5432
@@ -75,7 +77,7 @@ const pool = new Pool({
   port: opciones.port,//5432
   timezone: 'utc'
 })
-*/
+
 
 
 
@@ -119,29 +121,28 @@ const consulta = (request, response) => {
           
           //logica para la actualizacion de datos
           if(query_text.includes("upd_query_alpaca")){
-            query_text=query_text.replace("upd_query_alpaca", data.upd);
+            query_text = query_text.replace("upd_query_alpaca", data.upd);
+            var usuario = decoded.usuario_usuario;
+            auditoria(data,usuario)
           }else if(query_text.includes("token")){
-            query_text=query_text.replace("token","'"+decoded.usuario_usuario+"'");
+            query_text=query_text.replace(/token/g,"'"+decoded.usuario_usuario+"'");
+          }
+          else if(query_text.includes("insert-dinamico")){
+            query_text=query_text.replace(/insert-dinamico/g,data.tabla);
           }
           
 
           console.log(query_text)
-          var temp_sql = query_text;
-
-          for (key in data){
-            
-            temp_sql=temp_sql.replace('$'+key,"'"+data[key]+"'")
-            
-
-          }
-          console.log(temp_sql)
 
           try {
-            pool.query(query_text, data, (error, results, fields) => {
+            pool.query(query_text, data, (error, results) => {
               if (error) {
                 console.log(err)
                 response.status(200).json("error")
+                throw error
               }
+              
+              
               response.status(200).json(results.rows)
              
             });
@@ -166,6 +167,25 @@ const consulta = (request, response) => {
 
 
   }
+
+const auditoria = (data,user) => {
+  
+  var datetime = new Date();
+
+  pool.query("insert into auditoria values(default,$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+    if (error) {
+      console.log(error)
+      throw error
+    }
+        
+    console.log(results.rows)
+   
+  });
+
+
+}
+
+
 
   app.use(function (req, res, next) {
 
@@ -237,7 +257,7 @@ app.post('/login',(request,response) => {
     }
 
     const accessToken = jwt.sign({ usuario_usuario: usuario_usuario}, accessTokenSecret);
-    response.cookie('jwt',accessToken, { httpOnly: false, secure: false, maxAge: 3600000 })
+    response.cookie('jwt',accessToken, { httpOnly: false, secure: false, maxAge: 317125598072  })
     response.status(200).json(results.rows)
   });
   
@@ -246,13 +266,15 @@ app.post('/login',(request,response) => {
 
 
 
+/*
+app.get('/logout', function (req, res) {
 
-app.post('/logout', function(req, res){
-  cookie = req.cookies;
-  res.setHeader('set-cookie', 'jwt=; max-age=0');
-  res.status(200).json({mensaje:'logout'})
+  var token=req.cookies.jwt;
+  jwt.destroy(token)
+
+  console.log("hola")
 });
-
+*/
 
 
 //cargue de documentos
@@ -525,7 +547,31 @@ app.get('*', (req,res) =>{
     
   });
 
+  app.get('/help/:file', function(req, res){
 
+
+    var token=req.cookies.jwt;
+
+    if (token) {
+      jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+        if (err) {
+          res.json({ mensaje: 'Token inválida' });    
+        } else {
+
+
+          const file = path.join(__dirname, `../help/${req.params.file}`)
+          res.download(file); // Set disposition and send it.
+
+
+        }
+      });
+    }else{
+      res.status(403).json({ mensaje: 'sin permisos' });
+    }
+
+
+    
+  });
 
 
 

@@ -12,6 +12,9 @@ import CheckIcon from '@material-ui/icons/Check';
 
 import { getPermisos } from '../variables/permisos'
 
+import Help from './help'
+
+
 const CargueDocumentos = () => {
     
     const [doc, setdoc] = React.useState([]);
@@ -33,7 +36,7 @@ const CargueDocumentos = () => {
         })
 
         getPermisos().then((response) => {
-            setpermiso(response.some(r=> [3].includes(r)))
+            setpermiso(response.some(r=> [3,7,6,1,2,4,5,8].includes(r)))
         })
 
 
@@ -141,6 +144,8 @@ const CargueDocumentos = () => {
         <div id="seccion">
             <div id="titulo_seccion">Cargue de documentos</div>
             <p id="descripcion_seccion">En esta sección usted puede cargar el expeediente que debe estar digitalizado en formato PDF y nombrado correctamente</p>
+
+            <Help titulo="Metadata" doc='METADATA.xlsx' />
 
             <div className="img-descripcion">
                 <img  src="bienes-raices/img/documento-explicacion.svg" alt=""/>

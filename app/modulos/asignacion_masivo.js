@@ -8,17 +8,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+import { getPermisos } from '../variables/permisos'
+import { notificacion } from '../variables/notificaciones'
 
-
+import Help from './help'
 
 
 
 const Asignacion = () => {
   
   const [doc, setdoc] = React.useState([]);
-  const[user,setUser]=React.useState([]);
+  const [user, setUser] = React.useState([]);
+  const[juridico,setJuridico]=React.useState([]);
+  
   const[responsable,setResponsable]=React.useState();
   
+  const[permiso,setpermiso]=React.useState(false);
 
 
 
@@ -28,7 +33,18 @@ const Asignacion = () => {
           const data = response.data;
           setUser(data)
       });
+    
+      var datos={"id_consulta":"get_usuarios_rol_juridico",}
+      servidorPost('/backend',datos).then((response) =>{
+          const data = response.data;
+          setJuridico(data)
+      });
      
+
+      getPermisos().then((response) => {
+        setpermiso(response.some(r=> [1,2].includes(r)))
+    })
+    
     
   }, []);  
 
@@ -67,24 +83,20 @@ const asignar=e=>{
       for (var i = 0; i < doc.length; i++){
         
         var datos={
-          "id_consulta":"regresar_tarea",
           "id_expediente":doc[i].id_expediente,
-          "codigo_tarea":1,
-          "usuario_responsable":usuario_responsable,
-          "estado": 1,
-          "observaciones": "se asigna expediente",
-          "codigo_grupo":1
+          "ruta": 0,
+          "usuario_responsable":usuario_responsable
         }
       
-        var h=await servidorPost('/backend',datos).then(response =>{
-          console.log(response)
-        });
-    
+        notificacion(datos)
+
+
+
 
       }
 
-   
-      toast.success('Se han asignado '+doc.length+' Expedientes a '+usuario_responsable);
+      toast.success("Expedientes asignados correctamente");
+      
       setdoc([])
 
     }
@@ -106,20 +118,31 @@ const select=e=>{
   setResponsable(resp)
 }
 
-
   return (
     <div id="seccion">
       <div id="titulo_seccion">Asignar masivamente</div>
       <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el usuario al cual le asignará los expedientes y luego seleccione el archivo csv con la asignación.</p>
     
+
+      {permiso ? <>
+      
+        <Help titulo="Modelo" doc='guia_asignar_masivo.csv' />
+
+        <br/>
+      <div>
       <select  onChange={select}>
       <option value="">Seleccione...</option>     
       {user.map((el,key) => (
 
           <option value={el.usuario_usuario} key={key}>{el.usuario_nombre} </option>
 
-        ))}
+      ))}
+        
       </select>
+      </div>
+        <div>
+    
+      </div>  
       <div >
           <label htmlFor="file1" className="label-input" >Selecionar csv
           <input type="file" id="file1"onChange={onChange} className="input" /> 
@@ -140,6 +163,9 @@ const select=e=>{
       )
    }
 
+    </>
+      :<p className="no-permiso">No cuentas con permisos para usar esta herramienta</p>}
+      
   </div>
   )
   }
