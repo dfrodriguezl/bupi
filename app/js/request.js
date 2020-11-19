@@ -7,8 +7,6 @@ const axios = require('axios');
 
 const destino="https://nowsoft.app/bienes-raices";
 
-
-
 export function servidorPost(uri,datos){
 
 
