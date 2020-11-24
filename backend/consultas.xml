@@ -392,20 +392,7 @@ group by dominio) as d
         </sql>
     </Consulta>
 
-    <Consulta id="tarea_intermedio">
-        <sql>
-        insert into tareas.intermedio values(
-            $id_expediente,
-            1
-        )ON CONFLICT(id_expediente) DO UPDATE set control=tareas.intermedio.control+1 RETURNING control
-        </sql>
-    </Consulta>
-    <Consulta id="regresar_tecnico">
-        <sql>
-        select regresar from info12_control_calidad_tecnico 
-        where id_expediente=$id_expediente
-        </sql>
-    </Consulta>
+
 
     <Consulta id="aprobado_juridico">
         <sql>
@@ -445,11 +432,6 @@ group by dominio) as d
     </Consulta>
 
 
-    <Consulta id="update_intermedio">
-        <sql>
-             update tareas.intermedio set control=$control returning control;
-        </sql>
-    </Consulta>
 
 
     <Consulta id="get_tareas">
@@ -464,6 +446,7 @@ group by dominio) as d
         from tareas.tareas as t
         where
         usuario_responsable=token and estado=1 and visible=true
+        order by fecha_asignacion desc
         </sql>
     </Consulta>
 

@@ -87,38 +87,22 @@ export const notificacion=(data)=> {
         (async () => {
 
 
-            var post = {
-                id_consulta: "tarea_intermedio",
-                id_expediente: data.id_expediente
+            var post2 = {
+                id_consulta: "insertar_notificacion",
+                tarea_next: 5,
+                ruta_destino: 3,
+                opcion: 1,
+                id_expediente:data.id_expediente
             }
 
-            var resultado = await back(post)
 
-            console.log(resultado)
-
-            if (resultado.data[0].control === 2) {
-                
-                //alert("enviando tarea sup. tecnico");
-
-                var post2 = {
-                    id_consulta: "insertar_notificacion",
-                    tarea_next: 5,
-                    ruta_destino: 3,
-                    opcion: 1,
-                    id_expediente:data.id_expediente
-                }
-
-
-                await back(post2)
-
-            }
-
+            await back(post2)
 
             
         })()
 
     }
-    else if (ruta===2 || ruta==5 || ruta==8) {//el juridico se desprende de su tarea
+    else if (ruta===2 || ruta==5 ) {//el juridico se desprende de su tarea
         
         data.id_consulta = "insertar_notificacion";
         data.tarea_next = 4;
@@ -140,59 +124,29 @@ export const notificacion=(data)=> {
 
             console.log(result);
 
-            if (result.data[0].aprobado) {//se encuentra aprobado el estudio juridico
+            if (!result.data[0].aprobado) {//se encuentra aprobado el estudio juridico
                 
-                //alert("aprobado");
+                //alert("NO aprobado");
                 
-                (async () => {
-
-                    //alert()
-
-                    var post = {
-                        id_consulta: "tarea_intermedio",
-                        id_expediente: data.id_expediente
-                    }
-
-                    var resultado = await back(post)
-
-                    console.log(resultado)
-
-                    if (resultado.data[0].control === 2) {
-                        
-                        //alert("enviando tarea sup. tecnico");
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 5,
-                            ruta_destino: 6,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-
-        
-                        await back(post2)
-        
-                    }
-                    
-                })()
-
-                
-
-            } else {
-
-                //alert("no aprobado")
                 data.id_consulta = "insertar_notificacion"
                 data.tarea_next = 3;
                 data.ruta_destino = 5;
 
                 await back(data)
+
+                
+
+            } else {
+
+                //ESTUDIO APROBADO, NO PASA NADA
+                
             }
             
         })()
 
     } 
     
-    else if (ruta == 6) {// tarea a cargo del sup tecnico
+    else if (ruta == 3) {// tarea a cargo del sup tecnico
         
 
         data.id_consulta = "aprobado_tecnico";
@@ -210,88 +164,14 @@ export const notificacion=(data)=> {
 
                     //alert()
 
-                    var post = {
-                        id_consulta: "regresar_tecnico",
-                        id_expediente: data.id_expediente
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 2,
+                        ruta_destino: 7,
+                        opcion: 1,
+                        id_expediente:data.id_expediente
                     }
-
-                    var resultado = await back(post)
-
-                    console.log(resultado)
-
-                    if (resultado.data[0].regresar === 1) {
-                        
-                        //alert("enviando tarea al tecnico");
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 2,
-                            ruta_destino: 7,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-                        await back(post2)
-
-                        var upd_inter={id_consulta:'update_intermedio',control:1}
-                        await back(upd_inter)
-                    }
-                    else if (resultado.data[0].regresar === 2) {
-                        
-                        //alert("enviando tarea al juridico");
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 3,
-                            ruta_destino: 8,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-                        await back(post2)
-
-                        var upd_inter={id_consulta:'update_intermedio',control:1}
-                        await back(upd_inter)
-                    }
-                    else if (resultado.data[0].regresar === 3) {
-                        
-                        //alert("enviando tarea al tecnico y juridico");
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 2,
-                            ruta_destino: 7,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-                        await back(post2)
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 3,
-                            ruta_destino: 8,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-                        await back(post2)
-
-                        var upd_inter={id_consulta:'update_intermedio',control:0}
-                        await back(upd_inter)
-        
-                    } else {
-                        //alert("enviando tarea al tecnico por default");
-
-                        var post2 = {
-                            id_consulta: "insertar_notificacion",
-                            tarea_next: 2,
-                            ruta_destino: 7,
-                            opcion: 1,
-                            id_expediente:data.id_expediente
-                        }
-                        await back(post2)
-
-                        var upd_inter={id_consulta:'update_intermedio',control:1}
-                        await back(upd_inter)
-
-                    }
+                    await back(post2)
 
 
                     

@@ -196,8 +196,15 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                 console.log(item)
 
                 if (item[0] === "select") {
-                    console.log(data[key][0].value)
+                    
+                    if (data[key][0]===null) {
+                        data[key]=null
+                        
+                    } else {
+                        console.log(data[key][0].value)
                     data[key]=data[key][0].value
+                        
+                    }
                 }
                 else if (item[0] === "select_multiple") {
                     
@@ -317,9 +324,10 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                                             i.doc.enum
                                         }
                                         
+                                                
                                         isDisabled={lectura}
                                         name={i.doc.field}
-                                        isClearable
+                                        isClearable={true}
                                         
                                         control={control}
                                         defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
@@ -606,7 +614,7 @@ const FormMultiple=({tbl,index,titulo})=>{
        })
 
         
-        if ([18,6,7,8,9,12,13,21].includes(index)) {
+        if ([18,6,7,8,9,21].includes(index)) {
             setMultiple(true)
            
 
