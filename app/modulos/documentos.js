@@ -9,15 +9,20 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 import {Modal} from './popup'
 
+import SearchBar from "material-ui-search-bar";
+
 
 const Documentos=()=>{
   
   const [info, setInfo] = React.useState([]);
-  const [meta, setMeta] = React.useState([]);
   const [refresh, setRefresh] = React.useState(false);
+  const [filtro, setFiltro] = React.useState([]);
   
   let { id } = useParams();
   
+
+  var meta;
+
   React.useEffect(() => {
        
     
@@ -27,19 +32,31 @@ const Documentos=()=>{
     
     if (response.data.length > 0) {
       var datos = response.data
-      console.log(datos)
-      setInfo(datos)
+     
+
+      var data={"id_consulta":"get_metadata"}
+      servidorPost('/backend/', data).then((response) => {
+          
+          console.log(response.data)
+          meta=response.data
+          
+          datos = datos.map((e,i) => ({"descripcion":hola(e.nombre),...e}));
+
+          setInfo(datos)
+          setFiltro(datos)
+        
+        
+      })
+
+
+
+
+
     }
     
   });
     
-  var data={"id_consulta":"get_metadata"}
-  servidorPost('/backend/', data).then((response) => {
-      
-      console.log(response.data)
-      setMeta(response.data)
-      
-  })
+
     
     
 }, [refresh]);
@@ -55,20 +72,29 @@ const download=( id)=> {
 
   const hola = (name) => {
 
-
+    console.log(name)
     var nombre = name;
     var tipo=nombre.split('-')[1]  
-    var tipo_documento=""
-      meta.map((item, e) => {
+    var tipo_documento = ""
+
+    meta.map((item, e) => {
+        
         if (item.cod_grupo==tipo) {
-            tipo_documento = item.nombre
+          tipo_documento = item.nombre
             return
         }
       })
     
-    return <p>{tipo_documento}</p>
+    return tipo_documento
   }
 
+  const filtrar = (valor) => {
+    const filtro = valor.toUpperCase();
+
+    var arr=info.filter(e => e.descripcion.includes(filtro));
+    setFiltro(arr)
+
+  }
 
     
         return (
@@ -80,6 +106,12 @@ const download=( id)=> {
 
             <p className="enfasis">Total de documentos: {info.length}</p>
              
+            <SearchBar
+              placeholder="Filtrar"
+              onChange={(newValue) => filtrar(newValue)}
+              onRequestSearch={() => console.log("hola")}
+            />
+            
             
 
             <div id="documentos">
@@ -91,10 +123,10 @@ const download=( id)=> {
                 <p>Borrar</p>
                   <p>Ver</p>
                 </div>
-              {info.map((e,i) => (
+              {filtro.map((e,i) => (
                 <div className="item" key={e.id}>
                   <p>{e.nombre}</p>
-                  <p>{hola(e.nombre)}</p>
+                  <p>{e.descripcion}</p>
                   <p>{e.usuario}</p>
                   <p>{e.fecha}</p>
                   <Modal  nombre={e.nombre} refresh={setRefresh}/>

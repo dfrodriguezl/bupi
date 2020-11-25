@@ -565,21 +565,104 @@ group by dominio) as d
         </sql>
     </Consulta>   
 
-    <Consulta id="reporte_general">
+    <Consulta id="reporte_tareas">
         <sql>
-        select * from tareas.tareas
+        select * from tareas.tareas where usuario_responsable=token
         </sql>
     </Consulta> 
     <Consulta id="reporte_documentos">
         <sql>
-select * from geometria.lote_catastro limit 18000
+            select * from documentos
         </sql>
     </Consulta> 
-    <Consulta id="reporte_seguimiento_expedientes">
+    <Consulta id="reporte_info1">
         <sql>
-        select * from seguimiento_expedientes
+        select * from info1_general_proyecto
         </sql>
     </Consulta> 
+    <Consulta id="reporte_info2">
+        <sql>
+        select * from info2_general_predio
+        </sql>
+    </Consulta> 
+    <Consulta id="reporte_info3">
+        <sql>
+        select * from info3_areas_usos
+        </sql>
+    </Consulta> 
+    <Consulta id="reporte_info4">
+        <sql>
+        select * from info4_avaluos
+        </sql>
+    </Consulta> 
+    <Consulta id="reporte_info5">
+        <sql>
+        select * from info5_juridicos
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info6">
+        <sql>
+        select * from info6_propietario_anterior_juridico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info7">
+        <sql>
+        select * from info7_propietario_catastral
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info8">
+        <sql>
+        select * from info8_propietario_juridico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info9">
+        <sql>
+        select * from info9_zmpa
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info10">
+        <sql>
+        select * from info10_infraestructura
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info11">
+        <sql>
+        select * from info11_estudios_detallados
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info12">
+        <sql>
+        select * from info12_control_calidad_tecnico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info13">
+        <sql>
+        select * from info13_control_calidad_juridico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info14">
+        <sql>
+        select * from info14_saneamiento_basico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info15">
+        <sql>
+        select * from info15_saneamiento_juridico
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info18">
+        <sql>
+        select * from info18_municipios_intersectados
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info21">
+        <sql>
+        select * from info21_juridicos
+        </sql>
+    </Consulta>
+
+
+
     <Consulta id="estadistica1">
         <sql>
         SELECT COUNT(*) as estadistica FROM (SELECT DISTINCT identificador FROM documentos) AS temp;
@@ -647,7 +730,15 @@ select * from geometria.lote_catastro limit 18000
             on r.id_rol=u.usuario_rol
             inner join permisos p
             on r.id_permiso=p.id_permiso
-            where usuario_usuario=token	)As s
+
+            where usuario_usuario=token
+            union 
+            select id_permiso
+            from usuario u
+            natural join usr_permisos up
+            where usuario_usuario=token
+
+            )As s
         </sql>
     </Consulta>
 

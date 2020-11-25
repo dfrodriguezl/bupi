@@ -463,7 +463,7 @@ app.get('*', (req,res) =>{
     var id_consulta=request.params.id_consulta;
 
     var query_text=get_sql(id_consulta);
-
+    
     var token=request.cookies.jwt;
 
     if (token) {
@@ -472,7 +472,7 @@ app.get('*', (req,res) =>{
           response.json({ mensaje: 'Token inválida' });    
         } else {
           request.decoded = decoded;   
-          console.log(decoded)
+          
           
           
           console.log(query_text)
@@ -684,6 +684,11 @@ app.post('/excel', function(request, response){
         request.decoded = decoded;   
         console.log(decoded)
         
+        if (query_text.includes("token")) {
+          
+          query_text=query_text.replace(/token/g,"'"+decoded.usuario_usuario+"'");
+        }
+
 
         pool.query(query_text,data, (error, results) => {
           if (error) {
@@ -691,11 +696,12 @@ app.post('/excel', function(request, response){
             throw error
           }
 
-          var jsn=results.rows
+          var jsn = results.rows
           var data = []
           var result=[]
           for (var j in jsn[0]) {
             result.push(j);
+            
           }
           data.push(result)
       
@@ -703,7 +709,13 @@ app.post('/excel', function(request, response){
             var obj = jsn[i];
             var result=[]
             for (var j in obj) {
-              result.push(obj[j]);
+              if (moment.isMoment(obj[j])) {
+                result.push(moment.utc(obj[j]).format("YYYY-MM-DD"));
+                
+              } else {
+                result.push(obj[j]);
+              }
+              
             }
             data.push(result)
         }

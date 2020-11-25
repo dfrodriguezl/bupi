@@ -22,7 +22,8 @@ const [filtro, setFiltro] = useState("");
     });
 
     
-    }
+  }
+  
     const onChangeHandler = e => {
         setFiltro(e.target.value);
     };

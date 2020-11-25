@@ -125,7 +125,19 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
                 getPermisos().then((response) => {
                     console.log(response)
-                    setpermiso(response.some(r=> [tipo_permiso].includes(r)))
+                    if (response.some(r=> r==10)) {
+                        setpermiso(true)
+                        setLectura(false)
+                    } else {
+                        setpermiso(response.some(r => [tipo_permiso].includes(r)))
+                        
+                        var data = { id_consulta: 'tengo_predio', id_expediente: id }
+                
+                        servidorPost('/backend', data).then((response) => {
+                            setLectura(!response.data[0].exists)
+                        });
+
+                    }
                })
 
 
@@ -137,10 +149,8 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                     setView(false)
                 }
 
-                var data={id_consulta:'tengo_predio',id_expediente:id}
-                servidorPost('/backend', data).then((response) => {
-                    setLectura(!response.data[0].exists)
-                })
+               
+
                 
 
             })
