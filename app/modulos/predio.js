@@ -36,15 +36,23 @@ import CargueDocumentos from './cargue_expedientes'
 
 const gestionPermisos = (index) => {
     
-    var tipo_permiso = 0;
-    if ([2,3,4,7,10,11,14,17,19].includes(index)) {
-        tipo_permiso = 6;//editar formulario técnico  
-    } else if ([5,6,8,15,16,17,19,20,21].includes(index)) {
-        tipo_permiso = 7;//editar formulario juridico  
+   
+    var tipo_permiso = [0];
+    if (index == 17) {
+        tipo_permiso = [6,7];
+    } else if (index==19) {
+        tipo_permiso = [6,7];
+    }
+    else if ([2, 3, 4, 7, 10, 11, 14].includes(index)) {
+        
+        tipo_permiso = [6];//editar formulario técnico  
+    } else if ([5,6,8,15,16,20,21].includes(index)) {
+       
+        tipo_permiso = [7];//editar formulario juridico  
     } else if ([12].includes(index)) {
-        tipo_permiso = 4;//editar formulario juridico    
+        tipo_permiso = [4];//editar formulario juridico    
     } else if ([13].includes(index)) {
-        tipo_permiso = 5;//editar formulario juridico    
+        tipo_permiso = [5];//editar formulario juridico    
     }
     return tipo_permiso;
 
@@ -124,17 +132,23 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
 
                 getPermisos().then((response) => {
-                    console.log(response)
-                    if (response.some(r=> r==10)) {
+              
+                    if (response.some(r => r == 10)) {
+                        
                         setpermiso(true)
                         setLectura(false)
                     } else {
-                        setpermiso(response.some(r => [tipo_permiso].includes(r)))
+                        setpermiso(response.some(r => tipo_permiso.includes(r)))
+
+                        
+
                         
                         var data = { id_consulta: 'tengo_predio', id_expediente: id }
                 
                         servidorPost('/backend', data).then((response) => {
                             setLectura(!response.data[0].exists)
+                            console.log("lectura")
+                            console.log(response.data[0].exists)
                         });
 
                     }
@@ -451,10 +465,10 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
         {view ? '' :
             <>
-                    {permiso &&!lectura ? <>
-                        <p>Este expediente aún no tiene un registro para esta tabla, debe crear uno primero</p>
-                        <button onClick={crear_registro}>Crear registro</button>
-                    </>:<p>Este expediente aún no tiene un registro para esta tabla</p>} 
+            {permiso && !lectura ? <>
+                <p>Este expediente aún no tiene un registro para esta tabla, debe crear uno primero</p>
+                <button onClick={crear_registro}>Crear registro</button>
+            </>:<p>Este expediente aún no tiene un registro para esta tabla</p>} 
             </>
             }
 
@@ -619,7 +633,7 @@ const FormMultiple=({tbl,index,titulo})=>{
             console.log(response)
             console.log(tipo_permiso)
 
-            setPermiso(response.some(r => [tipo_permiso].includes(r)))
+            setPermiso(response.some(r => tipo_permiso.includes(r)))
             console.log(permiso)
        })
 
