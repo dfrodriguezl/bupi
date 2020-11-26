@@ -624,7 +624,7 @@ const FormMultiple=({tbl,index,titulo})=>{
        })
 
         
-        if ([18,6,7,8,9,21].includes(index)) {
+        if ([17,18,6,7,8,9,21].includes(index)) {
             setMultiple(true)
            
 

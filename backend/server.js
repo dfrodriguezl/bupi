@@ -6,6 +6,7 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser')
+var schedule = require('node-schedule');
 
 var expressStaticGzip = require("express-static-gzip");
 const nodemailer = require("nodemailer");// para enviar emails
@@ -155,7 +156,7 @@ const auditoria = (data,user) => {
   
   var datetime = new Date();
 
-  pool.query("insert into auditoria values(default,$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+  pool.query("insert into auditoria values((select max(id)+1 from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
     if (error) {
       console.log(error)
       throw error
@@ -750,6 +751,104 @@ app.post('/excel', function(request, response){
 
   
 });
+
+
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [1, new schedule.Range(2, 5)];
+rule.hour = [8,10,12,14,16,18,20];
+rule.minute = 0;
+ 
+var j = schedule.scheduleJob(rule, function(){
+
+  console.log("tarea programada")
+  var esquemas = ['public', 'tareas'];
+
+
+  esquemas.forEach(myFunction); 
+
+  function myFunction(schema, index) 
+  { 
+      
+    var file = moment().format('YYYY-MM-DD-HH-mm-ss');
+
+
+    var command = `pg_dump --dbname=postgresql://docker:docker@159.203.180.99:25432/acueducto_bienes_raices -n ${schema} --file ./backups/${schema}_${file}.sql`;
+       
+      
+      const exec = require('child_process').exec;
+  
+      function os_func() {
+          this.execCommand = function(cmd, callback) {
+              exec(cmd, (error, stdout, stderr) => {
+                  if (error) {
+                      console.error(`exec error: ${error}`);
+                      return;
+                  }
+      
+                  callback(stdout);
+              });
+          }
+      }
+      var os = new os_func();
+      
+      os.execCommand(command, function (returnvalue) {
+        
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          secure: false,
+          auth: {
+            user: 'ivancho4321@gmail.com',
+            pass: 's1ka2te3'
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+        
+        var mailOptions = {
+          from: 'ivancho4321@gmail.com',
+          to: 'ivancho4321@gmail.com',
+          subject: `Backup Bienes Raices -${schema}`,
+          text: `Backup del esquema ${schema} con fecha de: ${file}`,
+          attachments: [
+            {
+              path:`./backups/${schema}_${file}.sql`
+            }
+          ]
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            
+            console.log({ mensaje: error })
+            
+          } else {
+           
+            console.log({ mensaje: info.response  })
+          }
+        });
+    
+  
+      });
+  
+
+
+  }
+
+
+
+  
+
+
+
+
+  
+
+
+});
+
+
+
 
 
 //var DIST_DIR = path.join(__dirname, "../dist/");

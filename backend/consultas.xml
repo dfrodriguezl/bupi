@@ -99,6 +99,7 @@
     <Consulta id="info17_documentos_requeridos">
         <sql>
         select * from info17_documentos_requeridos where id_expediente=$id_expediente
+        and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info18_municipios_intersectados">
@@ -231,7 +232,7 @@
     </Consulta>
     <Consulta id="update_info17_documentos_requeridos">
         <sql>
-            update info17_documentos_requeridos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info17_documentos_requeridos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info18_municipios_intersectados">
