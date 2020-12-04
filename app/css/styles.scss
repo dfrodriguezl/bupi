@@ -730,3 +730,8 @@ input[type="file"] {
     overflow-y: auto;
     max-height: 250px;
 }
+
+.cargando{
+    display: grid;
+    justify-items: center;
+}

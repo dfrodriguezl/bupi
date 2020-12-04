@@ -330,15 +330,20 @@ const Form=()=>{
 
 return(
 <>
-  <div id="seccion">
-    <Barras id_consulta="grafico1" titulo="Número de predios por zona" paleta="palette2"/>
+    <div id="seccion" className="sec2">
+      
+      
+
+      <Barras id_consulta="grafico1" titulo="Número de predios por zona" paleta="palette10" />
+    <Barras id_consulta="grafico5" titulo="Número de predios por prioridad" paleta="palette10"/>
+      
     </div>
 
     <div id="seccion" className="sec2">
 
-      <Dona id_consulta="grafico2" titulo="Número de predios por clase de suelo" paleta="palette2" />
+      <Dona id_consulta="grafico2" titulo="Número de predios por clase de suelo" paleta="palette10" />
       
-    <Dona id_consulta="grafico3" titulo="Tipologia del impuesto" paleta="palette2"/>
+    <Dona id_consulta="grafico3" titulo="Tipologia del impuesto" paleta="palette10"/>
        
     </div>
     <div id="seccion">

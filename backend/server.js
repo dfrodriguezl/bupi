@@ -457,13 +457,51 @@ app.get('*', (req,res) =>{
   });
 
 
-  app.get('/excel/:id_consulta', function(request, response){
+  app.post('/todoreport', function(request, response){
 
     var data = "";
-    console.log(request.params.id_consulta)
-    var id_consulta=request.params.id_consulta;
-
-    var query_text=get_sql(id_consulta);
+    
+    var consultas = [
+       'reporte_info1' ,
+       'reporte_info2' ,
+       'reporte_info3' ,
+       'reporte_info4' ,
+       'reporte_info5' ,
+       'reporte_info6' ,
+       'reporte_info7' ,
+       'reporte_info8' ,
+       'reporte_info9' ,
+       'reporte_info10' ,
+       'reporte_info11' ,
+       'reporte_info12' ,
+       'reporte_info13' ,
+       'reporte_info14' ,
+       'reporte_info15' ,
+       'reporte_info18' ,
+      'reporte_info21',
+      'reporte_actividades' 
+    ]
+    var names = [
+       'GENERAL_PROYECTO' ,
+       'GENERAL_PREDIO' ,
+       'AREAS_Y_USOS' ,
+       'AVALUOS' ,
+       'JURIDICO' ,
+       'PROPIETARIO_ANTERIOR_JURIDICO' ,
+       'PROPIETARIO_CATASTRAL' ,
+       'PROPIETARIO_JURIDICO' ,
+       'ZMPA' ,
+       'INFRAESTRUCTURA' ,
+       'ESTUDIOS_DETALLADOS' ,
+       'CONTROL_CALIDAD_TECNICO' ,
+       'CONTROL_CALIDAD_JURIDICO' ,
+       'SANEAMIENTO_BASICO' ,
+       'SANEAMIENTO_JURIDICO' ,
+       'MUNICIPIOS_INTERSECTADOS' ,
+      'ADQUISICIÓN',
+       'ACTIVIDADES'       
+    ]
+    
     
     var token=request.cookies.jwt;
 
@@ -474,41 +512,85 @@ app.get('*', (req,res) =>{
         } else {
           request.decoded = decoded;   
           
-          
-          
-          console.log(query_text)
 
-          pool.query(query_text,data, (error, results) => {
-            if (error) {
-              response.status(403).json({ mensaje: 'error de consulta' });
-              throw error
-            }
+          var informacion = [];
 
-            var jsn=results.rows
-            var data = []
-            var result=[]
-            for (var j in jsn[0]) {
-              result.push(j);
-            }
-            data.push(result)
-        
-            for (var i = 0; i < jsn.length; i++){
-              var obj = jsn[i];
+
+
+
+          async function processTasks() {
+
+            let k = 0;
+            for (const  id_consulta of consultas){
+              
+              
+
+              var query_text=get_sql(id_consulta);
+  
+
+              const { rows } = await pool.query(query_text)
+
+              var jsn = rows
+              var data = []
               var result=[]
-              for (var j in obj) {
-                result.push(obj[j]);
+              for (var j in jsn[0]) {
+                result.push(j);
+                
               }
               data.push(result)
-          }
-        
-            var buffer = xlsx.build([{ data: data }]); // Returns a buffer
-        
-            response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
-            response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
-         
-           response.end(new Buffer(buffer, 'base64'));
+          
+              for (var i = 0; i < jsn.length; i++){
+                var obj = jsn[i];
+                var result=[]
+                for (var j in obj) {
+                  if (moment.isMoment(obj[j])) {
+                    result.push(moment.utc(obj[j]).format("YYYY-MM-DD"));
+                    
+                  } else {
+                    result.push(obj[j]);
+                  }
+                  
+                }
+                data.push(result)
+            }
+  
+              var info={name:names[k],data:data}
+  
+              informacion.push(info)
+  
+              k = k + 1;
+  
+  
+            };
 
-          })
+
+
+            console.log("tarea:"+"all")
+
+          }
+
+
+          async function tarea() {
+            await processTasks()
+            console.log('Completed!!!');
+
+
+          var buffer = xlsx.build(informacion); // Returns a buffer
+        
+          response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
+          response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+       
+         response.end(new Buffer(buffer, 'base64'));
+
+
+          }
+
+          tarea()
+          
+
+          
+
+
 
         }
       });
@@ -517,16 +599,6 @@ app.get('*', (req,res) =>{
     }
     
   
-
-
-
-    /*
-   res.setHeader('Content-type', "text/csv");
-
-   res.setHeader('Content-disposition', 'attachment; filename=file.xls');
-   
-   res.send(text);
-    */
 
     
   });

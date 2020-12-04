@@ -578,7 +578,7 @@ group by dominio) as d
     </Consulta> 
     <Consulta id="reporte_info1">
         <sql>
-        select * from info1_general_proyecto
+        select * from info1_general_proyecto 
         </sql>
     </Consulta> 
     <Consulta id="reporte_info2">
@@ -662,6 +662,152 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="reporte_actividades">
+        <sql>
+
+select i.id_expediente,
+sub.fecha_asignacion,
+sub1.dep_tec,sub1.f_tec,
+sub2.dep_jur,sub2.f_jur,
+sub3.dep_sup_tec,sub3.f_sup_tec,
+sub4.dep_sup_jur,sub4.f_sup_jur,
+sub9.aprobado_tecnico,sub9.fecha_aprob_tecnico,
+sub10.aprobado_juridico,sub10.fecha_aprob_juridico,
+tecnico,juridico,sup_tecnico,sup_juridico
+from info1_general_proyecto i
+
+left join
+(
+	
+select id_expediente,fecha_asignacion
+from tareas.tareas
+where ruta=1
+union
+select id_expediente,fecha_asignacion
+from tareas.tareas
+where ruta=2
+	
+)sub
+on i.id_expediente=sub.id_expediente
+
+left join
+(
+select id_expediente,'SI' as dep_tec,max(fecha_solucion) as f_tec
+from tareas.tareas
+where estado=2 and ruta=1
+group by id_expediente
+union
+select id_expediente,'PENDIENTE' as dep_tec,max(fecha_solucion) as f_tec
+from tareas.tareas
+where estado=1 and ruta=1
+group by id_expediente
+)sub1
+on i.id_expediente=sub1.id_expediente
+
+left join
+(
+select id_expediente,'SI' as dep_jur,max(fecha_solucion) as f_jur
+from tareas.tareas
+where estado=2 and ruta=2
+group by id_expediente
+union
+select id_expediente,'PENDIENTE' as dep_jur,max(fecha_solucion) as f_jur
+from tareas.tareas
+where estado=1 and ruta=2
+group by id_expediente
+)sub2
+on i.id_expediente=sub2.id_expediente
+
+left join
+(
+select id_expediente,'SI' as dep_sup_tec,max(fecha_solucion) as f_sup_tec
+from tareas.tareas
+where estado=2 and ruta=3
+group by id_expediente
+union
+select id_expediente,'PENDIENTE' as dep_sup_tec ,max(fecha_solucion) as f_sup_tec
+from tareas.tareas
+where estado=1 and ruta=3
+group by id_expediente
+)sub3
+on i.id_expediente=sub3.id_expediente
+
+left join
+(
+select id_expediente,'SI' as dep_sup_jur,max(fecha_solucion) as f_sup_jur
+from tareas.tareas
+where estado=2 and ruta=4
+group by id_expediente
+union
+select id_expediente,'PENDIENTE' as dep_sup_jur,max(fecha_solucion) as f_sup_jur
+from tareas.tareas
+where estado=1 and ruta=4
+group by id_expediente
+)sub4
+on i.id_expediente=sub4.id_expediente
+
+left join
+(
+select id_expediente,usuario as tecnico
+from tareas.asignacion
+where id_tarea=2
+)sub5
+on i.id_expediente=sub5.id_expediente
+
+left join
+(
+select id_expediente,usuario as juridico
+from tareas.asignacion
+where id_tarea=3
+)sub6
+on i.id_expediente=sub6.id_expediente
+
+left join
+(
+select id_expediente,usuario as sup_tecnico
+from tareas.asignacion
+where id_tarea=5
+)sub7
+on i.id_expediente=sub7.id_expediente
+
+left join
+(
+select id_expediente,usuario as sup_juridico
+from tareas.asignacion
+where id_tarea=4
+)sub8
+on i.id_expediente=sub8.id_expediente
+
+left join
+(
+select id_expediente,'SI'as aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico 
+from info12_control_calidad_tecnico
+where aprobado=1
+union
+select id_expediente,'NO'as aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico 
+from info12_control_calidad_tecnico
+where aprobado!=1
+)sub9
+on i.id_expediente=sub9.id_expediente
+
+left join
+(
+select id_expediente,'SI'as aprobado_juridico,fecha_aprob as fecha_aprob_juridico 
+from info13_control_calidad_juridico
+where aprobado=1
+union
+select id_expediente,'NO'as aprobado_juridico,fecha_aprob as fecha_aprob_juridico 
+from info13_control_calidad_juridico
+where aprobado!=1
+)sub10
+on i.id_expediente=sub10.id_expediente
+
+
+
+        </sql>
+    </Consulta>
+
+
 
 
     <Consulta id="estadistica1">
@@ -677,7 +823,7 @@ group by dominio) as d
     <Consulta id="estadistica3">
         <sql>
         select count(*) as estadistica from info12_control_calidad_tecnico
-        where aprobado is not null
+        where aprobado =1
         </sql>
     </Consulta>
     <Consulta id="estadistica4">
@@ -685,6 +831,31 @@ group by dominio) as d
         select count(*) as estadistica from auditoria
         </sql>
     </Consulta>
+    <Consulta id="estadistica5">
+        <sql>
+        select count(*) as estadistica from info13_control_calidad_juridico
+        where aprobado =1
+        </sql>
+    </Consulta>
+    <Consulta id="estadistica6">
+        <sql>
+        select count(*) as estadistica from info14_saneamiento_basico
+        </sql>
+    </Consulta>
+    <Consulta id="estadistica7">
+        <sql>
+        select count(*) as estadistica from info15_saneamiento_juridico
+        </sql>
+    </Consulta>
+    <Consulta id="estadistica8">
+        <sql>
+        select count(*) as estadistica from info9_zmpa
+        </sql>
+    </Consulta>
+
+
+
+
 
     <Consulta id="grafico1">
         <sql>
@@ -713,6 +884,14 @@ group by dominio) as d
             group by fecha::date order by fecha::date
         </sql>
     </Consulta>
+    <Consulta id="grafico5">
+        <sql>
+        select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
+            select nivel_prior as grupo, count(nivel_prior)as cuenta from info2_general_predio 
+            where nivel_prior is not null group by nivel_prior)sub
+        </sql>
+    </Consulta>
+
     <Consulta id="get_metadata">
         <sql>
             select * from doc_grupo
