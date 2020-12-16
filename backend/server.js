@@ -498,8 +498,9 @@ app.get('*', (req,res) =>{
        'CONTROL_CALIDAD_JURIDICO' ,
        'SANEAMIENTO_BASICO' ,
        'SANEAMIENTO_JURIDICO' ,
+       'DOCUMENTOS_REQUERIDOS' ,
        'MUNICIPIOS_INTERSECTADOS' ,
-      'ADQUISICIÓN',
+       'ADQUISICIÓN',
        'ACTIVIDADES'       
     ]
     
