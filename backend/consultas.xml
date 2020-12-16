@@ -651,6 +651,11 @@ group by dominio) as d
         select * from info15_saneamiento_juridico
         </sql>
     </Consulta>
+        <Consulta id="reporte_info17">
+        <sql>
+        select * from info17_documentos_requeridos
+        </sql>
+    </Consulta>
     <Consulta id="reporte_info18">
         <sql>
         select * from info18_municipios_intersectados
@@ -671,137 +676,123 @@ sub1.dep_tec,sub1.f_tec,
 sub2.dep_jur,sub2.f_jur,
 sub3.dep_sup_tec,sub3.f_sup_tec,
 sub4.dep_sup_jur,sub4.f_sup_jur,
-sub9.aprobado_tecnico,sub9.fecha_aprob_tecnico,
-sub10.aprobado_juridico,sub10.fecha_aprob_juridico,
-tecnico,juridico,sup_tecnico,sup_juridico
+sub9.aprobado_tecnico,sub9.fecha_aprob_tecnico,sub9.mot_dev_tec,
+sub10.aprobado_juridico,sub10.fecha_aprob_juridico,sub10.mot_dev_jur,
+tecnico,juridico,sup_tecnico,sup_juridico,
+NIVEL_PRIOR as nivel_prioridad
 from info1_general_proyecto i
-
+left join
+(
+select id_expediente,NIVEL_PRIOR from info2_general_predio 
+)subx
+on i.id_expediente=subx.id_expediente	  
+	 
+	  	  
 left join
 (
 	
-select id_expediente,fecha_asignacion
+select id_expediente,min(fecha_asignacion) as fecha_asignacion
 from tareas.tareas
-where ruta=1
-union
-select id_expediente,fecha_asignacion
-from tareas.tareas
-where ruta=2
+where ruta in(1,2)
+group by id_expediente
 	
 )sub
 on i.id_expediente=sub.id_expediente
 
 left join
 (
-select id_expediente,'SI' as dep_tec,max(fecha_solucion) as f_tec
-from tareas.tareas
-where estado=2 and ruta=1
-group by id_expediente
-union
-select id_expediente,'PENDIENTE' as dep_tec,max(fecha_solucion) as f_tec
-from tareas.tareas
-where estado=1 and ruta=1
-group by id_expediente
+	
+select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_tec,fecha_solucion as f_tec
+from tareas.tareas t
+where ruta=1 and fecha_asignacion= 
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
+
 )sub1
 on i.id_expediente=sub1.id_expediente
 
 left join
 (
-select id_expediente,'SI' as dep_jur,max(fecha_solucion) as f_jur
-from tareas.tareas
-where estado=2 and ruta=2
-group by id_expediente
-union
-select id_expediente,'PENDIENTE' as dep_jur,max(fecha_solucion) as f_jur
-from tareas.tareas
-where estado=1 and ruta=2
-group by id_expediente
+	
+	
+select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_jur,fecha_solucion as f_jur
+from tareas.tareas t
+where ruta=2 and fecha_asignacion= 
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
+	
 )sub2
 on i.id_expediente=sub2.id_expediente
-
+  
 left join
 (
-select id_expediente,'SI' as dep_sup_tec,max(fecha_solucion) as f_sup_tec
-from tareas.tareas
-where estado=2 and ruta=3
-group by id_expediente
-union
-select id_expediente,'PENDIENTE' as dep_sup_tec ,max(fecha_solucion) as f_sup_tec
-from tareas.tareas
-where estado=1 and ruta=3
-group by id_expediente
+select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_sup_tec,fecha_solucion as f_sup_tec
+from tareas.tareas t
+where ruta=3 and fecha_asignacion= 
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
 )sub3
 on i.id_expediente=sub3.id_expediente
 
 left join
 (
-select id_expediente,'SI' as dep_sup_jur,max(fecha_solucion) as f_sup_jur
-from tareas.tareas
-where estado=2 and ruta=4
-group by id_expediente
-union
-select id_expediente,'PENDIENTE' as dep_sup_jur,max(fecha_solucion) as f_sup_jur
-from tareas.tareas
-where estado=1 and ruta=4
-group by id_expediente
+	
+select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_sup_jur,fecha_solucion as f_sup_jur
+from tareas.tareas t
+where ruta=4 and fecha_asignacion= 
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)	
+
 )sub4
 on i.id_expediente=sub4.id_expediente
 
 left join
 (
-select id_expediente,usuario as tecnico
-from tareas.asignacion
+select id_expediente,(select usuario_nombre from usuario where usuario_usuario=t.usuario) as tecnico
+from tareas.asignacion t
 where id_tarea=2
 )sub5
 on i.id_expediente=sub5.id_expediente
 
 left join
 (
-select id_expediente,usuario as juridico
-from tareas.asignacion
+select id_expediente,(select usuario_nombre from usuario where usuario_usuario=t.usuario) as juridico
+from tareas.asignacion t
 where id_tarea=3
 )sub6
 on i.id_expediente=sub6.id_expediente
 
 left join
 (
-select id_expediente,usuario as sup_tecnico
-from tareas.asignacion
+select id_expediente,(select usuario_nombre from usuario where usuario_usuario=t.usuario) as sup_tecnico
+from tareas.asignacion t
 where id_tarea=5
 )sub7
 on i.id_expediente=sub7.id_expediente
 
 left join
 (
-select id_expediente,usuario as sup_juridico
-from tareas.asignacion
+select id_expediente,(select usuario_nombre from usuario where usuario_usuario=t.usuario) as sup_juridico
+from tareas.asignacion t
 where id_tarea=4
 )sub8
 on i.id_expediente=sub8.id_expediente
 
 left join
 (
-select id_expediente,'SI'as aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico 
-from info12_control_calidad_tecnico
-where aprobado=1
-union
-select id_expediente,'NO'as aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico 
-from info12_control_calidad_tecnico
-where aprobado!=1
+SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' ELSE 'NO' END)AS aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico, array_agg(J.descripcion)as mot_dev_tec 
+FROM info12_control_calidad_tecnico I 
+LEFT JOIN (select * from dominios where dominio='Dom_Mot_Dev_Tec') J 
+ON J.valor = ANY(I.mot_dev_tec) 	
+GROUP BY id_expediente,fecha_aprob
 )sub9
 on i.id_expediente=sub9.id_expediente
 
 left join
 (
-select id_expediente,'SI'as aprobado_juridico,fecha_aprob as fecha_aprob_juridico 
-from info13_control_calidad_juridico
-where aprobado=1
-union
-select id_expediente,'NO'as aprobado_juridico,fecha_aprob as fecha_aprob_juridico 
-from info13_control_calidad_juridico
-where aprobado!=1
+SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' ELSE 'NO' END)AS aprobado_juridico  ,fecha_aprob as fecha_aprob_juridico, array_agg(J.descripcion)as mot_dev_jur 
+FROM info13_control_calidad_juridico I 
+LEFT JOIN (select * from dominios where dominio='Dom_Mot_Dev_Juc') J 
+ON J.valor = ANY(I.mot_dev_jur) 	
+GROUP BY id_expediente,fecha_aprob
 )sub10
 on i.id_expediente=sub10.id_expediente
-
 
 
         </sql>

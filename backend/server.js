@@ -477,6 +477,7 @@ app.get('*', (req,res) =>{
        'reporte_info13' ,
        'reporte_info14' ,
        'reporte_info15' ,
+       'reporte_info17',
        'reporte_info18' ,
       'reporte_info21',
       'reporte_actividades' 
@@ -844,7 +845,7 @@ var j = schedule.scheduleJob(rule, function(){
     var file = moment().format('YYYY-MM-DD-HH-mm-ss');
 
 
-    var command = `pg_dump --dbname=postgresql://docker:docker@159.203.180.99:25432/acueducto_bienes_raices -n ${schema} --file ./backups/${schema}_${file}.sql`;
+    var command = `pg_dump --dbname=postgresql://docker:docker@159.203.180.99:25432/acueducto_bienes_raices -n ${schema} -Fc --file ./backups/${schema}_${file}.sql`;
        
       
       const exec = require('child_process').exec;

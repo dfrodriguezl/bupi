@@ -260,8 +260,8 @@ var base = new TileLayer({
       if (feature) {
         
 
-        servidorGet(url+'/props/' + feature.get("layer") + '/' + feature.get("id")).then((response) => {
-         
+        servidorGet('/props/' + feature.get("layer") + '/' + feature.get("id")).then((response) => {
+          console.log("hi")
           var datos = response[0];
           
           mensaje = ""
