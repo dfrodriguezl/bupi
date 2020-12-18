@@ -579,93 +579,286 @@ group by dominio) as d
     <Consulta id="reporte_info1">
         <sql>
         select * from info1_general_proyecto 
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta> 
     <Consulta id="reporte_info2">
         <sql>
         select * from info2_general_predio
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta> 
     <Consulta id="reporte_info3">
         <sql>
         select * from info3_areas_usos
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta> 
     <Consulta id="reporte_info4">
         <sql>
         select * from info4_avaluos
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta> 
     <Consulta id="reporte_info5">
         <sql>
         select * from info5_juridicos
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info6">
         <sql>
         select * from info6_propietario_anterior_juridico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info7">
         <sql>
         select * from info7_propietario_catastral
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info8">
         <sql>
         select * from info8_propietario_juridico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info9">
         <sql>
         select * from info9_zmpa
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info10">
         <sql>
         select * from info10_infraestructura
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info11">
         <sql>
         select * from info11_estudios_detallados
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info12">
         <sql>
         select * from info12_control_calidad_tecnico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info13">
         <sql>
         select * from info13_control_calidad_juridico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info14">
         <sql>
         select * from info14_saneamiento_basico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info15">
         <sql>
         select * from info15_saneamiento_juridico
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
         <Consulta id="reporte_info17">
         <sql>
         select * from info17_documentos_requeridos
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info18">
         <sql>
         select * from info18_municipios_intersectados
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
     <Consulta id="reporte_info21">
         <sql>
         select * from info21_juridicos
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
         </sql>
     </Consulta>
+    <Consulta id="get_asignacion">
+        <sql>
+            select id_tarea,usuario_nombre,usuario_cargo
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+
+
+
+
 
     <Consulta id="reporte_actividades">
         <sql>

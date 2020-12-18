@@ -735,3 +735,17 @@ input[type="file"] {
     display: grid;
     justify-items: center;
 }
+
+.grupo-detalle-predio{
+    display: grid;
+    grid-template-columns: min-content 120px auto;
+    column-gap: 10px;
+    align-items: center;
+    .cargo{
+        font-size: 1.1em;
+        color: $color3;
+    }
+    .usuario{
+        
+    }
+}

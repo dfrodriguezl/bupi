@@ -37,6 +37,7 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
+
 const pool = new Pool({
   user: 'docker',
   host: 'pg-acueducto',//'pg-acueducto',

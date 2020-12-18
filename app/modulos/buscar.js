@@ -10,7 +10,8 @@ import SearchIcon from '@material-ui/icons/Search';
 const Busqueda=()=>{
   
   const [data, setData] = useState([]);
-const [filtro, setFiltro] = useState("");
+  const [filtro, setFiltro] = useState("");
+  const [vacio, setVacio] = useState(0);
     
   const ver_expediente = e => {
     
@@ -18,7 +19,13 @@ const [filtro, setFiltro] = useState("");
 
     servidorPost('/backend',datos).then((response) =>{
         console.log(response)
-        setData(response.data)
+      setData(response.data)
+      if (response.data.length>0) {
+        setVacio(0)
+      }
+      else {
+        setVacio(1) 
+      }
     });
 
     
@@ -66,6 +73,7 @@ const [filtro, setFiltro] = useState("");
                   </div>
                 </div>
                 ))}
+              {vacio==1?<p>Sin resultados</p>:''}
                 </div>
             </div>
           );

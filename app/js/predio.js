@@ -6,11 +6,13 @@ import Pred from '../modulos/predio'
 import Mapa from '../modulos/visor_individual'
 import Documentos from '../modulos/documentos'
 import {CustomizedTimeline} from '../modulos/flujo'
+import DetallePredio from '../modulos/detalle_predio'
 
 const Predio = () => {
     
     return (
         <Estructura>
+            <DetallePredio/>
             <CustomizedTimeline/>
             <Pred />
             <Mapa />
