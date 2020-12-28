@@ -480,7 +480,6 @@ app.get('*', (req,res) =>{
        'reporte_info15' ,
        'reporte_info17',
        'reporte_info18' ,
-      'reporte_info21',
       'reporte_actividades' 
     ]
     var names = [
@@ -501,7 +500,6 @@ app.get('*', (req,res) =>{
        'SANEAMIENTO_JURIDICO' ,
        'DOCUMENTOS_REQUERIDOS' ,
        'MUNICIPIOS_INTERSECTADOS' ,
-       'ADQUISICIÓN',
        'ACTIVIDADES'       
     ]
     

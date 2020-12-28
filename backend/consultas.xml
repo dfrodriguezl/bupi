@@ -586,9 +586,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta> 
     <Consulta id="reporte_info2">
@@ -601,9 +605,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta> 
     <Consulta id="reporte_info3">
@@ -616,9 +624,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta> 
     <Consulta id="reporte_info4">
@@ -631,14 +643,19 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta> 
     <Consulta id="reporte_info5">
         <sql>
         select * from info5_juridicos
+        natural join info21_juridicos
         natural join(
         SELECT *
         FROM crosstab(
@@ -646,9 +663,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info6">
@@ -661,9 +682,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info7">
@@ -676,9 +701,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info8">
@@ -691,9 +720,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info9">
@@ -706,9 +739,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info10">
@@ -721,9 +758,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info11">
@@ -736,9 +777,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info12">
@@ -751,9 +796,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info13">
@@ -766,9 +815,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info14">
@@ -781,9 +834,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info15">
@@ -796,9 +853,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
         <Consulta id="reporte_info17">
@@ -811,9 +872,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="reporte_info18">
@@ -826,24 +891,13 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente'
+            order by id_expediente,id_tarea'
         ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
-        </sql>
-    </Consulta>
-    <Consulta id="reporte_info21">
-        <sql>
-        select * from info21_juridicos
-        natural join(
-        SELECT *
-        FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
-            from tareas.asignacion t 
-            left join usuario u
-            on t.usuario=u.usuario_usuario
-            order by id_expediente'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
         </sql>
     </Consulta>
     <Consulta id="get_asignacion">
@@ -872,7 +926,8 @@ sub4.dep_sup_jur,sub4.f_sup_jur,
 sub9.aprobado_tecnico,sub9.fecha_aprob_tecnico,sub9.mot_dev_tec,
 sub10.aprobado_juridico,sub10.fecha_aprob_juridico,sub10.mot_dev_jur,
 tecnico,juridico,sup_tecnico,sup_juridico,
-NIVEL_PRIOR as nivel_prioridad
+NIVEL_PRIOR as nivel_prioridad,
+sub11.estrato_tecnico,sub11.estrato_juridico,sub11.muestra_tecnica,sub11.muestra_juridica
 from info1_general_proyecto i
 left join
 (
@@ -898,11 +953,13 @@ left join
 select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_tec,fecha_solucion as f_tec
 from tareas.tareas t
 where ruta=1 and fecha_asignacion= 
-(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
-
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=1)
+	
 )sub1
 on i.id_expediente=sub1.id_expediente
 
+
+	  
 left join
 (
 	
@@ -910,17 +967,19 @@ left join
 select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_jur,fecha_solucion as f_jur
 from tareas.tareas t
 where ruta=2 and fecha_asignacion= 
-(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=2)
 	
 )sub2
 on i.id_expediente=sub2.id_expediente
+  
   
 left join
 (
 select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_sup_tec,fecha_solucion as f_sup_tec
 from tareas.tareas t
 where ruta=3 and fecha_asignacion= 
-(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=3)
+
 )sub3
 on i.id_expediente=sub3.id_expediente
 
@@ -930,7 +989,7 @@ left join
 select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_sup_jur,fecha_solucion as f_sup_jur
 from tareas.tareas t
 where ruta=4 and fecha_asignacion= 
-(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente)	
+(select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=4)	
 
 )sub4
 on i.id_expediente=sub4.id_expediente
@@ -969,7 +1028,7 @@ on i.id_expediente=sub8.id_expediente
 
 left join
 (
-SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' ELSE 'NO' END)AS aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico, array_agg(J.descripcion)as mot_dev_tec 
+SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' WHEN aprobado=2 THEN 'NO' WHEN aprobado=3 THEN 'PENDIENTE' ELSE '' END)AS aprobado_tecnico,fecha_aprob as fecha_aprob_tecnico, array_agg(J.descripcion)as mot_dev_tec 
 FROM info12_control_calidad_tecnico I 
 LEFT JOIN (select * from dominios where dominio='Dom_Mot_Dev_Tec') J 
 ON J.valor = ANY(I.mot_dev_tec) 	
@@ -979,14 +1038,18 @@ on i.id_expediente=sub9.id_expediente
 
 left join
 (
-SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' ELSE 'NO' END)AS aprobado_juridico  ,fecha_aprob as fecha_aprob_juridico, array_agg(J.descripcion)as mot_dev_jur 
+SELECT id_expediente,(CASE WHEN aprobado=1 THEN 'SI' WHEN aprobado=2 THEN 'NO' WHEN aprobado=3 THEN 'PENDIENTE' ELSE '' END)AS aprobado_juridico  ,fecha_aprob as fecha_aprob_juridico, array_agg(J.descripcion)as mot_dev_jur 
 FROM info13_control_calidad_juridico I 
 LEFT JOIN (select * from dominios where dominio='Dom_Mot_Dev_Juc') J 
 ON J.valor = ANY(I.mot_dev_jur) 	
 GROUP BY id_expediente,fecha_aprob
 )sub10
 on i.id_expediente=sub10.id_expediente
-
+	  
+left join estrato sub11
+on i.id_expediente=sub11.id_expediente
+	  
+order by id_expediente
 
         </sql>
     </Consulta>

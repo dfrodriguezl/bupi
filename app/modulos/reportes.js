@@ -152,8 +152,6 @@ const Report = () => {
 
       <Excel titulo="Reporte General municipios intersectados" descripcion="Reporte completo relacionado a los municipios que intersectán los predios" data={{ 'id_consulta': 'reporte_info18' }} /> 
       
-      <Excel titulo="Reporte General adquisición" descripcion="Reporte completo relacionado a la adquisición de los predios" data={{ 'id_consulta': 'reporte_info21' }} /> 
-
 
 
     </div>
