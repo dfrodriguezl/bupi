@@ -356,6 +356,13 @@ return(
        
     </div>
 
+    <div id="seccion">
+      <p><b>En revisión:</b> Expedientes que los tiene el supervisor en su bandeja de entrada para su revisión.</p>
+      <p><b>En gestión:</b> Expedientes que los tiene el técnico ó jurídico para su trabajo, estos expedientes ya tienen 13 campos diligenciados en el caso del componente técnico y 14 campos en el caso del componente jurídico.</p>
+      <p><b>Asignado:</b> Expedientes que los tiene el técnico ó jurídico para su trabajo de depuración pero que no tienen los 13 campos diligenciados en el componente técnico ó los 14 campos diligenciados en el componente jurídico.</p>
+      <p><b>SI:</b> Expedientes que ya han sido aprobados por el supervisor técnico ó jurídico.</p>
+    </div>
+    
 
     <div id="seccion">
 

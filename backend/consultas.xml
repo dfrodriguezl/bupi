@@ -951,8 +951,11 @@ on i.id_expediente=sub.id_expediente
 
 left join
 (
+
 select sub1.id_expediente,
-(case when aprobado=1 then 'SI' ELSE (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as dep_tec
+(case when aprobado=1 then 'SI' 
+ ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+ END) as dep_tec
 from (	  
 select
 I.id_expediente,
@@ -978,7 +981,14 @@ LEFT JOIN info10_infraestructura L
 on I.id_expediente=L.id_expediente
 )sub1
 LEFT JOIN info12_control_calidad_tecnico sub2
-on sub1.id_expediente=sub2.id_expediente
+on sub1.id_expediente=sub2.id_expediente	
+LEFT JOIN (
+select distinct id_expediente 
+from tareas.tareas
+where estado=1 and ruta=3
+)sub3
+on sub1.id_expediente=sub3.id_expediente	 
+
 )sub12
 on i.id_expediente=sub12.id_expediente
 	  
@@ -996,8 +1006,10 @@ on i.id_expediente=sub1.id_expediente
 left join
 (
 select sub1.id_expediente,
-(case when aprobado=1 then 'SI' ELSE (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as dep_jur
-from(
+(case when aprobado=1 then 'SI' 
+ ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+ END) as dep_jur
+from (
 select 
 I.id_expediente,
 (case when coalesce(ESTADO_FOLIO,0) = 0 then 0 else 1 end)+
@@ -1021,7 +1033,13 @@ LEFT JOIN (select * from info6_propietario_anterior_juridico where consecutivo=1
 on I.id_expediente=L.id_expediente
 )sub1
 LEFT JOIN info13_control_calidad_juridico sub2
-on sub1.id_expediente=sub2.id_expediente	  
+on sub1.id_expediente=sub2.id_expediente
+LEFT JOIN (
+select distinct id_expediente 
+from tareas.tareas
+where estado=1 and ruta=4
+)sub3
+on sub1.id_expediente=sub3.id_expediente	  
 	  
 )sub13
 on i.id_expediente=sub13.id_expediente
@@ -1124,7 +1142,7 @@ order by id_expediente
             I.id_expediente,
             CHIP_CAT,
             NUM_MI,
-            (select descripcion AS MPIO from dominios where dominio='TABLA_MUNICIPIO' and valor=I.MPIO),
+            (select split_part(descripcion,'-',2) AS MPIO from dominios where dominio='TABLA_MUNICIPIO' and valor=I.MPIO),
             DEST_IGAC,
             DEST_CAT,
             CED_CAT,
@@ -1268,9 +1286,13 @@ order by id_expediente
     <Consulta id="grafico6">
         <sql>
         select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
-        select caso as grupo, count(caso)as cuenta from (select sub1.id_expediente,
-        (case when aprobado=1 then 'SI' ELSE (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as caso
-        from(
+        select caso as grupo, count(caso)as cuenta from (
+
+        select sub1.id_expediente,
+        (case when aprobado=1 then 'SI' 
+        ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+        END) as caso
+        from (
         select 
         I.id_expediente,
         (case when coalesce(ESTADO_FOLIO,0) = 0 then 0 else 1 end)+
@@ -1294,7 +1316,15 @@ order by id_expediente
         on I.id_expediente=L.id_expediente
         )sub1
         LEFT JOIN info13_control_calidad_juridico sub2
-        on sub1.id_expediente=sub2.id_expediente)sub1
+        on sub1.id_expediente=sub2.id_expediente
+        LEFT JOIN (
+        select distinct id_expediente 
+        from tareas.tareas
+        where estado=1 and ruta=4
+        )sub3
+        on sub1.id_expediente=sub3.id_expediente
+
+        )sub1
         group by caso)sub	  
         </sql>
     </Consulta>
@@ -1307,7 +1337,9 @@ order by id_expediente
             select caso as grupo, count(caso)as cuenta from
             (
             select sub1.id_expediente,
-            (case when aprobado=1 then 'SI' ELSE (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as caso
+            (case when aprobado=1 then 'SI' 
+            ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+            END) as caso
             from (	  
             select
             I.id_expediente,
@@ -1334,6 +1366,12 @@ order by id_expediente
             )sub1
             LEFT JOIN info12_control_calidad_tecnico sub2
             on sub1.id_expediente=sub2.id_expediente	
+            LEFT JOIN (
+            select distinct id_expediente 
+            from tareas.tareas
+            where estado=1 and ruta=3
+            )sub3
+            on sub1.id_expediente=sub3.id_expediente		
             )sub1
             group by caso)sub
         </sql>
