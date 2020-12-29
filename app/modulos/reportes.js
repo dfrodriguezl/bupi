@@ -57,7 +57,7 @@ function Excel({titulo,descripcion,data}) {
   
 
 
-function ExcelAll({titulo,descripcion,data}) {
+function ExcelAll({titulo,descripcion,data,reporte}) {
   // Declara una nueva variable de estado, la cual llamaremos “count”
   const [show, setShow] = useState(false);
 
@@ -65,7 +65,7 @@ function ExcelAll({titulo,descripcion,data}) {
 
 const download=() => {
   setShow(true)
-  servidorDocs('/todoreport').then(response => {
+  servidorDocs('/todoreport/'+reporte).then(response => {
     setShow(false)
   })
 
@@ -113,8 +113,9 @@ const Report = () => {
       <p id="descripcion_seccion">Sección para la descarga de los reportes del sistema.</p>
 
 
-      <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema"  />
+      <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" />
 
+      <ExcelAll titulo="Reporte Tributario" descripcion="Reporte de la información tributaria" reporte="tributaria" />
 
       <Excel titulo="Reporte Tareas" descripcion="Reporte completo de las tareas asignadas en el sistema" data={{ 'id_consulta': 'reporte_tareas' }} />
       <Excel titulo="Reporte Documentos" descripcion="Reporte completo de los documentos cargados al sistema" data={{ 'id_consulta': 'reporte_documentos' }} />

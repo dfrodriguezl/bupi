@@ -458,50 +458,62 @@ app.get('*', (req,res) =>{
   });
 
 
-  app.post('/todoreport', function(request, response){
+  app.post('/todoreport/:reporte', function(request, response){
+
+
+    var reporte = request.params.reporte;
 
     var data = "";
     
-    var consultas = [
-       'reporte_info1' ,
-       'reporte_info2' ,
-       'reporte_info3' ,
-       'reporte_info4' ,
-       'reporte_info5' ,
-       'reporte_info6' ,
-       'reporte_info7' ,
-       'reporte_info8' ,
-       'reporte_info9' ,
-       'reporte_info10' ,
-       'reporte_info11' ,
-       'reporte_info12' ,
-       'reporte_info13' ,
-       'reporte_info14' ,
-       'reporte_info15' ,
-       'reporte_info17',
-       'reporte_info18' ,
-      'reporte_actividades' 
-    ]
-    var names = [
-       'GENERAL_PROYECTO' ,
-       'GENERAL_PREDIO' ,
-       'AREAS_Y_USOS' ,
-       'AVALUOS' ,
-       'JURIDICO' ,
-       'PROPIETARIO_ANTERIOR_JURIDICO' ,
-       'PROPIETARIO_CATASTRAL' ,
-       'PROPIETARIO_JURIDICO' ,
-       'ZMPA' ,
-       'INFRAESTRUCTURA' ,
-       'ESTUDIOS_DETALLADOS' ,
-       'CONTROL_CALIDAD_TECNICO' ,
-       'CONTROL_CALIDAD_JURIDICO' ,
-       'SANEAMIENTO_BASICO' ,
-       'SANEAMIENTO_JURIDICO' ,
-       'DOCUMENTOS_REQUERIDOS' ,
-       'MUNICIPIOS_INTERSECTADOS' ,
-       'ACTIVIDADES'       
-    ]
+    if (reporte == 'all') {
+      var consultas = [
+         'reporte_info1' ,
+         'reporte_info2' ,
+         'reporte_info3' ,
+         'reporte_info4' ,
+         'reporte_info5' ,
+         'reporte_info6' ,
+         'reporte_info7' ,
+         'reporte_info8' ,
+         'reporte_info9' ,
+         'reporte_info10' ,
+         'reporte_info11' ,
+         'reporte_info12' ,
+         'reporte_info13' ,
+         'reporte_info14' ,
+         'reporte_info15' ,
+         'reporte_info17',
+         'reporte_info18' ,
+        'reporte_actividades' 
+      ]
+      var names = [
+         'GENERAL_PROYECTO' ,
+         'GENERAL_PREDIO' ,
+         'AREAS_Y_USOS' ,
+         'AVALUOS' ,
+         'JURIDICO' ,
+         'PROPIETARIO_ANTERIOR_JURIDICO' ,
+         'PROPIETARIO_CATASTRAL' ,
+         'PROPIETARIO_JURIDICO' ,
+         'ZMPA' ,
+         'INFRAESTRUCTURA' ,
+         'ESTUDIOS_DETALLADOS' ,
+         'CONTROL_CALIDAD_TECNICO' ,
+         'CONTROL_CALIDAD_JURIDICO' ,
+         'SANEAMIENTO_BASICO' ,
+         'SANEAMIENTO_JURIDICO' ,
+         'DOCUMENTOS_REQUERIDOS' ,
+         'MUNICIPIOS_INTERSECTADOS' ,
+         'ACTIVIDADES'       
+      ]
+    } else if (reporte == 'tributaria') {
+      
+      var consultas = ['tributaria_principal','tributaria_zmpa','tributaria_juridico'];
+      var names=['TRIBUTARIA','ACTADM_ZMPA','PORCENTAJE_DE_PROPIEDAD']
+
+    }
+
+
     
     
     var token=request.cookies.jwt;

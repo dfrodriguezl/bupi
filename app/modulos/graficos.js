@@ -346,6 +346,17 @@ return(
     <Dona id_consulta="grafico3" titulo="Tipologia del impuesto" paleta="palette10"/>
        
     </div>
+
+    <div id="seccion" className="sec2">
+
+      <Dona id_consulta="grafico6" titulo="Depuración jurídica" paleta="palette10" />
+      
+      <Dona id_consulta="grafico7" titulo="Depuración técnica" paleta="palette10" />
+
+       
+    </div>
+
+
     <div id="seccion">
 
   <Date id_consulta="grafico4" titulo="Número de transacciones" />

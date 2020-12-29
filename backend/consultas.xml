@@ -919,8 +919,10 @@ group by dominio) as d
 
 select i.id_expediente,
 sub.fecha_asignacion,
-sub1.dep_tec,sub1.f_tec,
-sub2.dep_jur,sub2.f_jur,
+sub12.dep_tec,
+sub1.f_tec,
+sub13.dep_jur,
+sub2.f_jur,
 sub3.dep_sup_tec,sub3.f_sup_tec,
 sub4.dep_sup_jur,sub4.f_sup_jur,
 sub9.aprobado_tecnico,sub9.fecha_aprob_tecnico,sub9.mot_dev_tec,
@@ -949,8 +951,41 @@ on i.id_expediente=sub.id_expediente
 
 left join
 (
+select sub1.id_expediente,
+(case when aprobado=1 then 'SI' ELSE (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as dep_tec
+from (	  
+select
+I.id_expediente,
+(case when coalesce(ID_PROYECTO,'') = '' then 0 else 1 end)+
+(case when coalesce(PORCENTAJE_AREA_EN_DUP,0) = 0 then 0 else 1 end)+  
+(case when coalesce(AREA_EN_DUP,0) = 0 then 0 else 1 end)+	 
+(case when coalesce(NOM_PROY,'') = '' then 0 else 1 end)+
+(case when coalesce(CHIP_CAT,'') = '' then 0 else 1 end)+
+(case when coalesce(NUM_MI,'') = '' then 0 else 1 end)+
+(case when coalesce(DIR_ACT,'') = '' then 0 else 1 end)+
+(case when coalesce(DEST_ECONO,0) = 0 then 0 else 1 end)+
+(case when coalesce(DEST_USO_EAAB,0) = 0 then 0 else 1 end)+
+(case when coalesce(NIVEL_PRIOR,0) = 0 then 0 else 1 end)+
+(case when coalesce(OBS_ESPECIFICAS,'') = '' then 0 else 1 end)+
+(case when coalesce(AVAL,0) = 0 then 0 else 1 end)+
+(case when coalesce(TIP_INFRA,'{}') = '{}' then 0 else 1 end) as sum	  
+from info1_general_proyecto I
+LEFT JOIN info2_general_predio J
+on I.id_expediente=J.id_expediente
+LEFT JOIN info4_avaluos	K
+on I.id_expediente=K.id_expediente	
+LEFT JOIN info10_infraestructura L
+on I.id_expediente=L.id_expediente
+)sub1
+LEFT JOIN info12_control_calidad_tecnico sub2
+on sub1.id_expediente=sub2.id_expediente
+)sub12
+on i.id_expediente=sub12.id_expediente
+	  
+left join
+(
 	
-select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_tec,fecha_solucion as f_tec
+select t.id_expediente,fecha_solucion as f_tec
 from tareas.tareas t
 where ruta=1 and fecha_asignacion= 
 (select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=1)
@@ -958,13 +993,42 @@ where ruta=1 and fecha_asignacion=
 )sub1
 on i.id_expediente=sub1.id_expediente
 
-
+left join
+(
+select sub1.id_expediente,
+(case when aprobado=1 then 'SI' ELSE (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as dep_jur
+from(
+select 
+I.id_expediente,
+(case when coalesce(ESTADO_FOLIO,0) = 0 then 0 else 1 end)+
+(case when coalesce(PRED_ADQ,0) = 0 then 0 else 1 end)+
+(case when coalesce(DOC_NUM,0) = 0 then 0 else 1 end)+
+(case when coalesce(DOC_FECHA,now()) = now() then 0 else 1 end)+
+(case when coalesce(K.NOM_PROP_MI,'') = '' then 0 else 1 end)+
+(case when coalesce(K.TIPO_DOC_PROP,'') = '' then 0 else 1 end)+
+(case when coalesce(K.NUM_DOC_PROP,'') = '' then 0 else 1 end)+
+(case when coalesce(K.PORCENT_COPROP,0) = 0 then 0 else 1 end)+
+(case when coalesce(L.NOM_ANTE_PROP,'') = '' then 0 else 1 end)+
+(case when coalesce(L.TIPO_DOC_PROP,'') = '' then 0 else 1 end)+
+(case when coalesce(L.NUM_DOC_PROP,'') = '' then 0 else 1 end)+
+(case when coalesce(L.PORCENT_COPROP,0) = 0 then 0 else 1 end) AS sum
+from info5_juridicos I
+LEFT JOIN (select * from info21_juridicos where consecutivo=1) J
+on I.id_expediente=J.id_expediente
+LEFT JOIN (select * from info8_propietario_juridico where consecutivo=1) K
+on I.id_expediente=K.id_expediente
+LEFT JOIN (select * from info6_propietario_anterior_juridico where consecutivo=1) L
+on I.id_expediente=L.id_expediente
+)sub1
+LEFT JOIN info13_control_calidad_juridico sub2
+on sub1.id_expediente=sub2.id_expediente	  
+	  
+)sub13
+on i.id_expediente=sub13.id_expediente
 	  
 left join
 (
-	
-	
-select t.id_expediente,(case when estado=2 then 'SI' ELSE 'PENDIENTE' END ) as dep_jur,fecha_solucion as f_jur
+select t.id_expediente,fecha_solucion as f_jur
 from tareas.tareas t
 where ruta=2 and fecha_asignacion= 
 (select max(fecha_asignacion) from tareas.tareas tt where tt.id_expediente=t.id_expediente and tt.ruta=2)
@@ -1054,6 +1118,68 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="tributaria_principal">
+        <sql>
+        select
+            I.id_expediente,
+            CHIP_CAT,
+            NUM_MI,
+            (select descripcion AS MPIO from dominios where dominio='TABLA_MUNICIPIO' and valor=I.MPIO),
+            DEST_IGAC,
+            DEST_CAT,
+            CED_CAT,
+            DIR_ACT,
+            FISCAL,
+            COD_DUP,
+            FECHA_ACTADM,
+            OBJET_RES,
+            AREAT_PREDIO,
+            AREA_EP,
+            AREA_CAT,
+            AREA_FMI,
+            AT_GEO,
+            AREA_DEFINITIVA_DEPURACION,
+            AREA_EN_ZMPA,
+            AREA_FUERA_EN_ZMPA,
+            K.TIPOLOGIA_IMPUESTO_2020 AS TIPOLOGIA_ZMPA_2020,
+            K.TIPOLOGIA_IMPUESTO_2021 AS TIPOLOGIA_ZMPA_2021,
+            L.TIPOLOGIA_IMPUESTO_2020 AS TIPOLOGIA_IMPUESTOS_VIGENCIA_2020,
+            L.TIPOLOGIA_IMPUESTO_2021 AS TIPOLOGIA_IMPUESTOS_VIGENCIA_2021,
+            VAL_TOT_AV_CAT
+            from info2_general_predio I 
+            LEFT JOIN info1_general_proyecto J 
+            on I.id_expediente=J.id_expediente
+            LEFT JOIN info3_areas_usos K
+            on I.id_expediente=K.id_expediente	  
+            LEFT JOIN info5_juridicos L
+            on I.id_expediente=L.id_expediente
+            LEFT JOIN info4_avaluos M	  
+            on I.id_expediente=M.id_expediente
+            order by id_expediente
+        </sql>
+    </Consulta>
+
+
+    <Consulta id="tributaria_zmpa">
+        <sql>
+        select
+        id_expediente,
+        consecutivo,
+        ACTADM_ZMPA 
+        from info9_zmpa
+        order by id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="tributaria_juridico">
+        <sql>
+        select 
+        id_expediente,
+        consecutivo,
+        porcent_prop 
+        from info21_juridicos
+        order by id_expediente
+        </sql>
+    </Consulta>
 
 
 
@@ -1138,6 +1264,83 @@ order by id_expediente
             where nivel_prior is not null group by nivel_prior)sub
         </sql>
     </Consulta>
+
+    <Consulta id="grafico6">
+        <sql>
+        select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
+        select caso as grupo, count(caso)as cuenta from (select sub1.id_expediente,
+        (case when aprobado=1 then 'SI' ELSE (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as caso
+        from(
+        select 
+        I.id_expediente,
+        (case when coalesce(ESTADO_FOLIO,0) = 0 then 0 else 1 end)+
+        (case when coalesce(PRED_ADQ,0) = 0 then 0 else 1 end)+
+        (case when coalesce(DOC_NUM,0) = 0 then 0 else 1 end)+
+        (case when coalesce(DOC_FECHA,now()) = now() then 0 else 1 end)+
+        (case when coalesce(K.NOM_PROP_MI,'') = '' then 0 else 1 end)+
+        (case when coalesce(K.TIPO_DOC_PROP,'') = '' then 0 else 1 end)+
+        (case when coalesce(K.NUM_DOC_PROP,'') = '' then 0 else 1 end)+
+        (case when coalesce(K.PORCENT_COPROP,0) = 0 then 0 else 1 end)+
+        (case when coalesce(L.NOM_ANTE_PROP,'') = '' then 0 else 1 end)+
+        (case when coalesce(L.TIPO_DOC_PROP,'') = '' then 0 else 1 end)+
+        (case when coalesce(L.NUM_DOC_PROP,'') = '' then 0 else 1 end)+
+        (case when coalesce(L.PORCENT_COPROP,0) = 0 then 0 else 1 end) AS sum
+        from info5_juridicos I
+        LEFT JOIN (select * from info21_juridicos where consecutivo=1) J
+        on I.id_expediente=J.id_expediente
+        LEFT JOIN (select * from info8_propietario_juridico where consecutivo=1) K
+        on I.id_expediente=K.id_expediente
+        LEFT JOIN (select * from info6_propietario_anterior_juridico where consecutivo=1) L
+        on I.id_expediente=L.id_expediente
+        )sub1
+        LEFT JOIN info13_control_calidad_juridico sub2
+        on sub1.id_expediente=sub2.id_expediente)sub1
+        group by caso)sub	  
+        </sql>
+    </Consulta>
+
+
+
+    <Consulta id="grafico7">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
+            select caso as grupo, count(caso)as cuenta from
+            (
+            select sub1.id_expediente,
+            (case when aprobado=1 then 'SI' ELSE (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) END) as caso
+            from (	  
+            select
+            I.id_expediente,
+            (case when coalesce(ID_PROYECTO,'') = '' then 0 else 1 end)+
+            (case when coalesce(PORCENTAJE_AREA_EN_DUP,0) = 0 then 0 else 1 end)+  
+            (case when coalesce(AREA_EN_DUP,0) = 0 then 0 else 1 end)+	 
+            (case when coalesce(NOM_PROY,'') = '' then 0 else 1 end)+
+            (case when coalesce(CHIP_CAT,'') = '' then 0 else 1 end)+
+            (case when coalesce(NUM_MI,'') = '' then 0 else 1 end)+
+            (case when coalesce(DIR_ACT,'') = '' then 0 else 1 end)+
+            (case when coalesce(DEST_ECONO,0) = 0 then 0 else 1 end)+
+            (case when coalesce(DEST_USO_EAAB,0) = 0 then 0 else 1 end)+
+            (case when coalesce(NIVEL_PRIOR,0) = 0 then 0 else 1 end)+
+            (case when coalesce(OBS_ESPECIFICAS,'') = '' then 0 else 1 end)+
+            (case when coalesce(AVAL,0) = 0 then 0 else 1 end)+
+            (case when coalesce(TIP_INFRA,'{}') = '{}' then 0 else 1 end) as sum	  
+            from info1_general_proyecto I
+            LEFT JOIN info2_general_predio J
+            on I.id_expediente=J.id_expediente
+            LEFT JOIN info4_avaluos	K
+            on I.id_expediente=K.id_expediente	
+            LEFT JOIN info10_infraestructura L
+            on I.id_expediente=L.id_expediente
+            )sub1
+            LEFT JOIN info12_control_calidad_tecnico sub2
+            on sub1.id_expediente=sub2.id_expediente	
+            )sub1
+            group by caso)sub
+        </sql>
+    </Consulta>
+
+
+
 
     <Consulta id="get_metadata">
         <sql>
