@@ -576,82 +576,10 @@ group by dominio) as d
             select * from documentos
         </sql>
     </Consulta> 
-    <Consulta id="reporte_info1">
-        <sql>
-        select * from info1_general_proyecto 
-        natural join(
-        SELECT *
-        FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
-            from tareas.asignacion t 
-            left join usuario u
-            on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub
-        natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
-        )sub1
-        order by id_expediente
-        </sql>
-    </Consulta> 
-    <Consulta id="reporte_info2">
-        <sql>
-        select * from info2_general_predio
-        natural join(
-        SELECT *
-        FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
-            from tareas.asignacion t 
-            left join usuario u
-            on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub
-        natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
-        )sub1
-        order by id_expediente
-        </sql>
-    </Consulta> 
-    <Consulta id="reporte_info3">
-        <sql>
-        select * from info3_areas_usos
-        natural join(
-        SELECT *
-        FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
-            from tareas.asignacion t 
-            left join usuario u
-            on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub
-        natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
-        )sub1
-        order by id_expediente
-        </sql>
-    </Consulta> 
-    <Consulta id="reporte_info4">
-        <sql>
-        select * from info4_avaluos
-        natural join(
-        SELECT *
-        FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
-            from tareas.asignacion t 
-            left join usuario u
-            on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub
-        natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
-        )sub1
-        order by id_expediente
-        </sql>
-    </Consulta> 
+    
+    
+    
+    
     <Consulta id="reporte_info5">
         <sql>
         select * from info5_juridicos
@@ -917,6 +845,16 @@ group by dominio) as d
     <Consulta id="reporte_actividades">
         <sql>
 
+
+select * from (
+
+select * from info1_general_proyecto 
+natural join info2_general_predio
+natural join info3_areas_usos
+natural join info4_avaluos
+)b1
+natural join 
+(
 select i.id_expediente,
 sub.fecha_asignacion,
 sub12.dep_tec,
@@ -954,6 +892,7 @@ left join
 
 select sub1.id_expediente,
 (case when aprobado=1 then 'SI' 
+  when aprobado=2 then 'DEVUELTO'
  ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
  END) as dep_tec
 from (	  
@@ -1007,6 +946,7 @@ left join
 (
 select sub1.id_expediente,
 (case when aprobado=1 then 'SI' 
+ when aprobado=2 then 'DEVUELTO' 
  ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
  END) as dep_jur
 from (
@@ -1130,9 +1070,8 @@ on i.id_expediente=sub10.id_expediente
 	  
 left join estrato sub11
 on i.id_expediente=sub11.id_expediente
-	  
+)b2
 order by id_expediente
-
         </sql>
     </Consulta>
 
@@ -1290,6 +1229,7 @@ order by id_expediente
 
         select sub1.id_expediente,
         (case when aprobado=1 then 'SI' 
+         when aprobado=2 then 'DEVUELTO'
         ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
         END) as caso
         from (
@@ -1338,6 +1278,7 @@ order by id_expediente
             (
             select sub1.id_expediente,
             (case when aprobado=1 then 'SI' 
+             when aprobado=2 then 'DEVUELTO'
             ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
             END) as caso
             from (	  
