@@ -37,7 +37,7 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
-
+/*
 const pool = new Pool({
   user: 'docker',
   host: 'pg-acueducto',//'pg-acueducto',
@@ -46,12 +46,12 @@ const pool = new Pool({
   port: 5432,//5432
   timezone: 'utc'
 })
-
+*/
 
 
 
 //local
-/*
+
 const pool = new Pool({
   user: 'postgres',//docker
   host: 'localhost',//'pg-acueducto',
@@ -60,7 +60,7 @@ const pool = new Pool({
   port: 5432,//5432
   timezone: 'utc'
 })
-*/
+
 
 
 
@@ -832,99 +832,7 @@ app.post('/excel', function(request, response){
 });
 
 
-var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [1, new schedule.Range(2, 5)];
-rule.hour = [8,10,12,14,16,18,20];
-rule.minute = 0;
- 
-var j = schedule.scheduleJob(rule, function(){
 
-  console.log("tarea programada")
-  var esquemas = ['public', 'tareas'];
-
-
-  esquemas.forEach(myFunction); 
-
-  function myFunction(schema, index) 
-  { 
-      
-    var file = moment().format('YYYY-MM-DD-HH-mm-ss');
-
-
-    var command = `pg_dump --dbname=postgresql://docker:docker@159.203.180.99:25432/acueducto_bienes_raices -n ${schema} -Fc --file ./backups/${schema}_${file}.sql`;
-       
-      
-      const exec = require('child_process').exec;
-  
-      function os_func() {
-          this.execCommand = function(cmd, callback) {
-              exec(cmd, (error, stdout, stderr) => {
-                  if (error) {
-                      console.error(`exec error: ${error}`);
-                      return;
-                  }
-      
-                  callback(stdout);
-              });
-          }
-      }
-      var os = new os_func();
-      
-      os.execCommand(command, function (returnvalue) {
-        
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          secure: false,
-          auth: {
-            user: 'ivancho4321@gmail.com',
-            pass: 's1ka2te3'
-          },
-          tls: {
-            rejectUnauthorized: false
-          }
-        });
-        
-        var mailOptions = {
-          from: 'ivancho4321@gmail.com',
-          to: 'ivancho4321@gmail.com',
-          subject: `Backup Bienes Raices -${schema}`,
-          text: `Backup del esquema ${schema} con fecha de: ${file}`,
-          attachments: [
-            {
-              path:`./backups/${schema}_${file}.sql`
-            }
-          ]
-        };
-        
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            
-            console.log({ mensaje: error })
-            
-          } else {
-           
-            console.log({ mensaje: info.response  })
-          }
-        });
-    
-  
-      });
-  
-
-
-  }
-
-
-
-  
-
-
-
-
-  
-
-
-});
 
 
 

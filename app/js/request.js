@@ -3,9 +3,9 @@ const axios = require('axios');
 
 
 
-//const destino = "http://localhost:3000"
+const destino = "http://localhost:3000"
 
-const destino="https://nowsoft.app/bienes-raices";
+//const destino="https://nowsoft.app/bienes-raices";
 
 export function servidorPost(uri,datos){
 
