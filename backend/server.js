@@ -27,6 +27,7 @@ const csvtojson = require('csvtojson');
 var sess;
 //conexión a la base de datos en postgresql
 const { Pool, types } = require('pg')
+
 const accessTokenSecret = 's1ka2te3';
 
 types.setTypeParser(1082, str => str)
@@ -37,16 +38,25 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
-/*
-const pool = new Pool({
-  user: 'docker',
-  host: 'pg-acueducto',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: 5432,//5432
-  timezone: 'utc'
-})
-*/
+
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'pg-acueducto',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 5432,//5432
+//   timezone: 'utc'
+// })
+
+// const pool = new Pool({
+//   user: 'docker',
+//   host: '159.203.180.99',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 25432,//5432
+//   timezone: 'utc'
+// })
+
 
 
 
@@ -56,9 +66,9 @@ const pool = new Pool({
   user: 'postgres',//docker
   host: 'localhost',//'pg-acueducto',
   database: 'acueducto_bienes_raices',
-  password: '123456',//docker
-  port: 5432,//5432
-  timezone: 'utc'
+  password: 'postgres',//docker
+  port: 5433,//5432
+  // timezone: 'utc'
 })
 
 
@@ -226,7 +236,26 @@ app
 .route('/backend')
 .post(consulta)
 
+
+app.get('/test',(request,response) => {
+
+  pool.query("select 1", (error, results) => {
+    if (error) {
+      console.log(error)
+      response.status(404).json({'error:':'servicio'})
+      throw error
+    }
+    
+    console.log(results)
+  });
+
+
+})
+
+
 app.post('/login',(request,response) => {
+
+  console.log("hola")
 
   var data=request.body;
   var id_consulta=request.body.id_consulta;
@@ -235,15 +264,19 @@ app.post('/login',(request,response) => {
   const usuario_usuario = request.body.usuario_usuario;
 
   
+
   pool.query(query_text,data, (error, results) => {
     if (error) {
+      console.log(error)
       response.status(404).json({'error:':'servicio'})
       throw error
     }
+    console.log(results.rows)
 
     const accessToken = jwt.sign({ usuario_usuario: usuario_usuario}, accessTokenSecret);
     response.cookie('jwt',accessToken, { httpOnly: false, secure: false, maxAge: 317125598072  })
     response.status(200).json(results.rows)
+
   });
   
  
@@ -585,7 +618,7 @@ app.get('*', (req,res) =>{
           var buffer = xlsx.build(informacion); // Returns a buffer
         
           response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
-          response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+          // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
        
          response.end(new Buffer(buffer, 'base64'));
 
@@ -715,7 +748,6 @@ app.get('/props/:layer/:id', (req, res) => {
 
 
 
-
 app.get('/descargar/:ruta', function(req, res){
   
   var ruta=req.params.ruta;
@@ -804,7 +836,7 @@ app.post('/excel', function(request, response){
       
           response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
           
-          response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+          // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
        
          response.end(Buffer.from(buffer));
 
@@ -855,3 +887,4 @@ app.get('/web/*', (req,res) =>{
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
+

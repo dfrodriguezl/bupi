@@ -41,6 +41,7 @@
     "webpack-provide-global-plugin": "0.0.1"
   },
   "dependencies": {
+    "@babel/compat-data": "^7.13.12",
     "@babel/runtime": "^7.9.2",
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@mapbox/sphericalmercator": "^1.1.0",
@@ -82,7 +83,7 @@
     "node-xlsx": "^0.15.0",
     "nodemailer": "^6.4.6",
     "ol": "^6.4.3",
-    "pg": "^7.18.2",
+    "pg": "^8.5.1",
     "pg-promise": "^10.4.4",
     "progressbar.js": "^1.1.0",
     "proj4": "^2.6.1",

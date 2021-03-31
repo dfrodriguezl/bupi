@@ -59,7 +59,8 @@ const CargueDocumentos = () => {
         var separators = ['-', '\\.'];
         var estruc = nombre.split(new RegExp(separators.join('|'), 'g'));
 
-            
+        // console.log(estruc)
+
         if (estruc.length == 6) {
             
             console.log(estruc[4].length)
@@ -106,6 +107,7 @@ const CargueDocumentos = () => {
        
         for (var i = 0; i < doc.length; i++){
 
+            // console.log(doc[i])
 
             if (doc[i].valido) {
 
