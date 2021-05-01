@@ -188,7 +188,7 @@ const tileUrlFunction1=(tileCoord) =>{
     }
 
 
-    var token = "pk.eyJ1IjoiaXZhbjEyMzQ1Njc4IiwiYSI6ImNqc2ZkOTNtMjA0emgzeXQ3N2ppMng4dXAifQ.2k-OLO6Do2AoH5GLOWt-xw"
+    var token = "pk.eyJ1IjoiZGZyb2RyaWd1ZXpsIiwiYSI6ImNqeTRyYjB3MjAwMnMzZnB2dXVmdmNwOHoifQ.jZhX17AepTfhI8xoPOpvvg"
 
 var base = new TileLayer({
   source: new XYZ({

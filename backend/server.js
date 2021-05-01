@@ -41,7 +41,7 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 // const pool = new Pool({
 //   user: 'docker',
-//   host: 'pg-acueducto',//'pg-acueducto',
+//   host: 'pg_acueducto',//'pg-acueducto',
 //   database: 'acueducto_bienes_raices',
 //   password: 'docker',
 //   port: 5432,//5432
@@ -68,7 +68,7 @@ const pool = new Pool({
   database: 'acueducto_bienes_raices',
   password: 'postgres',//docker
   port: 5433,//5432
-  // timezone: 'utc'
+  timezone: 'utc'
 })
 
 
@@ -325,9 +325,17 @@ app.post('/upload/:id', (req, res) => {
         EDFile.mv(archivo,err => {
             if(err) return res.status(500).send({ message : err })
       
-          var datetime = new Date();
+          var datetime = new Date()
+          var datetimeTime = datetime.getTime();
+
+          var localOffset = datetime.getTimezoneOffset()*60000;
+          var utc = datetimeTime + localOffset;
+          var localTime = utc - (3600000*5);
+          var newDate = new Date(localTime);
+          // console.log(datetime)
+          // console.log(newDate);
           
-          pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT(nombre) DO UPDATE set fecha=$5", [uuid.v1(),id,archivo,EDFile.name,datetime,usuario], (error, results) => {
+          pool.query("INSERT INTO documentos(id,identificador,ruta,nombre,fecha,usuario) VALUES ($1,$2,$3,$4,$5,$6) ON CONFLICT(nombre) DO UPDATE set fecha=$5", [uuid.v1(),id,archivo,EDFile.name,newDate,usuario], (error, results) => {
             if (error) {
               console.log(error)
               return res.status(500).send({ message : error })
