@@ -30,7 +30,7 @@ services:
     networks:
         - db-net-eaab
     volumes:
-       - repositorio:/app/repositorio
+       - /app/repositorio/data_:/app/repositorio
 
 volumes:
     repositorio:
