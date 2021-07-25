@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload')
 const jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser')
 var schedule = require('node-schedule');
+// var compression = require('compression');
 
 var expressStaticGzip = require("express-static-gzip");
 const nodemailer = require("nodemailer");// para enviar emails
@@ -39,14 +40,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-// const pool = new Pool({
-//   user: 'docker',
-//   host: 'pg_acueducto',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
-//   password: 'docker',
-//   port: 5432,//5432
-//   timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'docker',
+  host: 'pg_acueducto',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: 'docker',
+  port: 5432,//5432
+  timezone: 'utc'
+})
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -62,14 +63,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //local
 
-const pool = new Pool({
-  user: 'postgres',//docker
-  host: 'localhost',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'postgres',//docker
-  port: 5433,//5432
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'postgres',//docker
+//   host: 'localhost',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'postgres',//docker
+//   port: 5433,//5432
+//   timezone: 'utc'
+// })
 
 
 
@@ -82,6 +83,7 @@ named.patch(pool);
 
 
 app.use(cors({credentials: true, origin: 'http://localhost:9000'}));
+// app.use(compression());
 
 app.use(cookieParser());
 app.use(fileUpload())
@@ -196,6 +198,8 @@ const auditoria = (data,user) => {
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
+
+    res.setHeader('Cache-Control', 'no-cache');
 
     // Pass to next layer of middleware
     next();

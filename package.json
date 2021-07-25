@@ -58,6 +58,7 @@
     "bootstrap-datetimepicker-npm": "^4.17.37-npm",
     "bootstrap-fileinput": "^5.0.8",
     "busy-load": "^0.1.2",
+    "compression": "^1.7.4",
     "compression-webpack-plugin": "^6.0.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
