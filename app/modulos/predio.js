@@ -209,18 +209,10 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
         Object.keys(data).forEach(function (key) {
             
-            // if (data[key] == "") {
-            //     console.log(key)
-            //     delete data[key];
-            // }
-
-            var item = fields.data.filter(item => item.doc.field == key).map(item => {
+                    var item = fields.data.filter(item => item.doc.field == key).map(item => {
                 return item.doc.form
             });
-            console.log(item)
-
-            console.log(key)
-            console.log(data[key])
+            
             
             if(data[key] != ""){
                 if (Array.isArray(data[key])) {
