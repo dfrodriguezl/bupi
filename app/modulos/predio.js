@@ -208,37 +208,56 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
 
         Object.keys(data).forEach(function (key) {
-            if (data[key] == "") {
-                delete data[key];
+            
+            // if (data[key] == "") {
+            //     console.log(key)
+            //     delete data[key];
+            // }
+
+            var item = fields.data.filter(item => item.doc.field == key).map(item => {
+                return item.doc.form
+            });
+            console.log(item)
+
+            console.log(key)
+            console.log(data[key])
+            
+            if(data[key] != ""){
+                if (Array.isArray(data[key])) {
+                    console.log("array")
+                    // var item = fields.data.filter(item => item.doc.field == key).map(item => {
+                    //     return item.doc.form
+                    // });
+                    // console.log(item)
+    
+                    
+    
+                    if (item[0] === "select") {
+                        
+                        if (data[key][0]===null) {
+                            data[key]=null
+                            
+                        } else {
+                            console.log(data[key][0].value)
+                        data[key]=data[key][0].value
+                            
+                        }
+                    }
+                    else if (item[0] === "select_multiple") {
+                        
+                        var arr = data[key].map(item => { return item.value });
+     
+                        data[key] = arr;
+    
+                    }
+    
+                }
+            }else{
+                if(item == "select" || item == "fecha" || item == "numero"){
+                    data[key] = null
+                }
             }
             
-            if (Array.isArray(data[key])) {
-                console.log("array")
-                var item = fields.data.filter(item => item.doc.field == key).map(item => {
-                    return item.doc.form
-                });
-                console.log(item)
-
-                if (item[0] === "select") {
-                    
-                    if (data[key][0]===null) {
-                        data[key]=null
-                        
-                    } else {
-                        console.log(data[key][0].value)
-                    data[key]=data[key][0].value
-                        
-                    }
-                }
-                else if (item[0] === "select_multiple") {
-                    
-                    var arr = data[key].map(item => { return item.value });
- 
-                    data[key] = arr;
-
-                }
-
-            }
             if (typeof data[key] === 'undefined') {
                 delete data[key];
             }

@@ -40,14 +40,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'pg_acueducto',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: 5432,//5432
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'pg_acueducto',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 5432,//5432
+//   timezone: 'utc'
+// })
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -63,14 +63,14 @@ const pool = new Pool({
 
 //local
 
-// const pool = new Pool({
-//   user: 'postgres',//docker
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
-//   password: 'postgres',//docker
-//   port: 5433,//5432
-//   timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'postgres',//docker
+  host: 'localhost',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: 'postgres',//docker
+  port: 5433,//5432
+  // timezone: 'utc'
+})
 
 
 
@@ -130,6 +130,7 @@ const consulta = (request, response) => {
           
 
           console.log(query_text)
+          console.log(data)
 
           try {
             pool.query(query_text, data, (error, results) => {

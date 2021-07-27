@@ -2,35 +2,17 @@ const axios = require('axios');
 
 
 
-const destino = "http://localhost:3000";
-// const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
+// const destino = "http://localhost:3000";
+const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
 
 //const destino="https://nowsoft.app/bienes-raices";
 
 export function servidorPost(uri,datos){
 
-    let data = {};
-    Object.keys(datos).forEach((d,i) => {
-        // console.log(datos[d]);
-        // console.log(d)
-        // console.log(i)
-        var value = datos[d].toString();
-        // var vr = value.replace("%","\%");
-        // console.log(value)
-        // console.log(vr)
-        // if(datos[d].includes("%")){
-        //     datos[d].replace("%","\%");
-        // }
-        data[d] = value;
-    })
-
-    // console.log(data);
-
-
     return axios({
         method: 'post',
         url: destino+uri,
-        data: data,
+        data: datos,
         withCredentials: true
         })
 
