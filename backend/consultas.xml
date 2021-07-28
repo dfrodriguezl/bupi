@@ -837,7 +837,23 @@ group by dominio) as d
             where id_expediente=$id_expediente
         </sql>
     </Consulta>
-
+    <Consulta id="get_tipologia">
+        <sql>
+            select descripcion
+            from info5_juridicos ij
+            left join tabla_dominios d on ij.tipologia_impuesto_2021::text = d.valor
+            and d.dominio = 'Tip_Impuestos_V'
+            where ij.id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="get_estados_depuracion">
+        <sql>
+             select t.id_expediente, dep_tec, f_tec, dep_jur, f_jur
+            from estado_aprobacion_tecnico t
+            join estado_aprobacion_juridico j on t.id_expediente = j.id_expediente
+            where t.id_expediente=$id_expediente
+        </sql>
+    </Consulta>
 
 
 

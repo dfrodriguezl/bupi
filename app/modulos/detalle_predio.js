@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, Fragment } from "react";
 
 //import {Info} from './estadisticas'
 
@@ -16,6 +16,8 @@ const DetallePredio=()=>{
   const [data, setData] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [expediente, setExpediente] = useState(id);
+  const [tipologia, setTopologia] = useState({});
+  const [estadoTecnico, setEstadoTecnico] = useState({});
     
  
 
@@ -24,9 +26,21 @@ const DetallePredio=()=>{
     var datos={"id_consulta":"get_asignacion","id_expediente":id}
 
     servidorPost('/backend',datos).then((response) =>{
-        console.log(response)
-      setData(response.data)
+        setData(response.data)
+    });
 
+    var datosTipologia ={"id_consulta":"get_tipologia","id_expediente":id}
+
+    servidorPost('/backend',datosTipologia).then((response) =>{
+      // console.log(response.data[0])
+      setTopologia(response.data[0])
+    });
+
+    var datosTecnico ={"id_consulta":"get_estados_depuracion","id_expediente":id}
+
+    servidorPost('/backend',datosTecnico).then((response) =>{
+      // console.log(response.data[0])
+      setEstadoTecnico(response.data[0])
     });
 
   },[])
@@ -36,7 +50,18 @@ const DetallePredio=()=>{
 
           <div id="seccion">
             
-            <div id="titulo_seccion">{expediente}</div>
+            <div id="titulo_seccion">{expediente}
+              {tipologia.descripcion?
+              <Fragment>
+                  <br/>Tipología impuesto 2021: {tipologia.descripcion}
+              </Fragment>:null
+              }
+              <Fragment>
+                <p id="title-estados">Estado depuración Técnica: {estadoTecnico?estadoTecnico.dep_tec:null}</p>
+                <p id="title-estados">Estado depuración Jurídica: {estadoTecnico?estadoTecnico.dep_jur:null}</p>
+              </Fragment>
+                
+            </div>
 
             {data.map((i, e) => (
               <div className="grupo-detalle-predio">
@@ -45,10 +70,11 @@ const DetallePredio=()=>{
                 <p className="usuario">{i.usuario_nombre}</p>
               </div>
             ))}
-            <div><p>Estado depuración Técnica: </p></div>
-            <div><p>Estado depuración Jurídica: </p></div>
-            
-
+              {/* <div id="estados">
+                <br/>
+                <div><p>Estado depuración Técnica: {estadoTecnico?estadoTecnico.dep_tec:null}</p></div><br/>
+                <div><p>Estado depuración Jurídica: {estadoTecnico?estadoTecnico.dep_jur:null}</p></div>
+              </div> */}
             </div>
           );
     
