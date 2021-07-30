@@ -1247,7 +1247,8 @@ order by id_expediente
 
         select sub1.id_expediente,
         (case when aprobado=1 then 'APROBADO' 
-         when aprobado=2 then 'DEVUELTO'
+         when aprobado=2 then 
+            CASE WHEN COALESCE(sub3.id_expediente, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
         ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
         END) as caso
         from (
@@ -1296,7 +1297,8 @@ order by id_expediente
             (
             select sub1.id_expediente,
             (case when aprobado=1 then 'APROBADO' 
-             when aprobado=2 then 'DEVUELTO'
+             when aprobado=2 then 
+                CASE WHEN COALESCE(sub3.id_expediente, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
             ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
             END) as caso
             from (	  
