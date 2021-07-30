@@ -12,7 +12,7 @@ const Modal = ({nombre,refresh}) => {
         close();
 
         servidorPost('/delete/' + nombre).then((response) => {
-            console.log(response)
+            // console.log(response)
 
             if (response.status) {
 

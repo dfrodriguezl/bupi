@@ -6,6 +6,7 @@ import { servidorPost } from './request'
 import { Home,Search,InsertDriveFile,Public,AttachFile,GroupAdd,EmojiPeople,ExitToApp} from '@material-ui/icons';
 
 import FaceIcon from '@material-ui/icons/Face';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import {Notifi} from '../modulos/encabezado'
@@ -106,7 +107,13 @@ const Estructura = ({children}) => {
           <FaceIcon/>
           <p>Usuario</p>
         </Link>
-      </div>           
+      </div>       
+      <div className="elemento">
+        <Link to="/admin">
+          <SupervisorAccountIcon/>
+          <p>Administracion</p>
+        </Link>
+      </div>      
 
       </div>
     </div>

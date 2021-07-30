@@ -1456,5 +1456,38 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="get_dominios">
+        <sql>
+        select distinct dominio
+        from dominios
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_valores_dominios">
+        <sql>
+        select *
+            from dominios
+            where dominio = $dominio
+            order by valor
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_valor_dominios">
+        <sql>
+        INSERT INTO dominios
+            VALUES ($dominio, $valor,$descripcion)
+            returning dominio
+        </sql>
+    </Consulta>
+
+     <Consulta id="update_valor_dominios">
+        <sql>
+            UPDATE dominios
+            SET descripcion = $descripcion
+            WHERE dominio = $dominio and valor = $valor
+            returning dominio
+        </sql>
+    </Consulta>
+
 
 </Consultas>
