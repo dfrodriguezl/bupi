@@ -415,7 +415,7 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                                     {i.doc.form == 'numero' ?
 
                                         <input type="number"
-                                            step="0.0001"
+                                            step="0.00000000001"
                                             className='form_input'
                                             name={i.doc.field}
                                             disabled={lectura}
