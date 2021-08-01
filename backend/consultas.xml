@@ -1489,5 +1489,14 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="reporte_dominios">
+        <sql>
+        select *
+        from dominios
+        where dominio = $dominio
+        order by valor
+        </sql>
+    </Consulta>
+
 
 </Consultas>

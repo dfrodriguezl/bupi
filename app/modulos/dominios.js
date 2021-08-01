@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState} from 'react';
-import { servidorPost } from '../js/request.js'
+import { servidorPost, servidorDocs } from '../js/request.js'
 import Select from 'react-select';
 import EditIcon from '@material-ui/icons/Edit';
 import Popup from 'reactjs-popup';
@@ -31,6 +31,28 @@ const Dominios = () => {
         getDominios();
     },[])
 
+
+
+//   const download=(data) => {
+//     setShow(true)
+//     servidorDocs('/excel', data).then(response => {
+//         console.log(response)
+//     //   setShow(false)
+//     })
+
+//   }
+
+  const clickDescarga = () => {
+      let data = {
+          id_consulta: "reporte_dominios",
+          dominio: dominio
+      }
+
+    servidorDocs('/excel', data).then(response => {
+        console.log(response)
+    })
+  }
+
     const onChangeSelect = (e) => {
         let dom = e.dominio;
         setDominio(dom);
@@ -50,8 +72,11 @@ const Dominios = () => {
 
         return (
             <Fragment>
-                
-                <ModalCreate open={<button>Crear valor</button>}></ModalCreate>
+                <div>
+                    <ModalCreate open={<button style={{display: "inline"}}>Crear valor</button>}></ModalCreate>
+                    <button style={{display: "inline", float: 'right', marginRight: 10}} onClick={clickDescarga}>Descargar valores (csv)</button>
+                    <button style={{display: "inline", float: 'right', marginRight: 10}}>Actualizar dominios masivo (csv)</button>
+                </div>
                 <br/>
                 <div id="documentos">            
                     <div className="item head" >
