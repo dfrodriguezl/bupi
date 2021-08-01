@@ -1476,15 +1476,8 @@ order by id_expediente
         <sql>
         INSERT INTO dominios
             VALUES ($dominio, $valor,$descripcion)
-            returning dominio
-        </sql>
-    </Consulta>
-
-     <Consulta id="update_valor_dominios">
-        <sql>
-            UPDATE dominios
+            ON CONFLICT (dominio, valor) DO UPDATE
             SET descripcion = $descripcion
-            WHERE dominio = $dominio and valor = $valor
             returning dominio
         </sql>
     </Consulta>
