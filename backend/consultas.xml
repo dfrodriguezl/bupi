@@ -1491,5 +1491,31 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="get_tipologias">
+        <sql>
+        select *
+        from doc_grupo
+        order by cod_grupo
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_valor_tipologia">
+        <sql>
+        INSERT INTO doc_grupo
+            VALUES ($cod_grupo, $nombre, $componente, $formato, $responsable)
+            ON CONFLICT (cod_grupo) DO UPDATE
+            SET nombre = $nombre, componente = $componente, formato = $formato, responsable = $responsable
+            returning doc_grupo
+        </sql>
+    </Consulta>
+
+    <Consulta id="reporte_tipologias">
+        <sql>
+        select *
+        from doc_grupo
+        order by cod_grupo
+        </sql>
+    </Consulta>
+
 
 </Consultas>
