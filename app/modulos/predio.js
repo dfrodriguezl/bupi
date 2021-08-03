@@ -132,7 +132,7 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
 
 
                 getPermisos().then((response) => {
-              
+                    
                     if (response.some(r => r == 10)) {
                         
                         setpermiso(true)
