@@ -515,36 +515,36 @@ app.get('*', (req,res) =>{
       var consultas = [
         'reporte_actividades',
          'reporte_info5' ,
-         'reporte_info6' ,
-         'reporte_info7' ,
-         'reporte_info8' ,
+        'reporte_info7' ,
+        'reporte_info8' ,
+         'reporte_info6' ,  
          'reporte_info9' ,
          'reporte_info10' ,
-         'reporte_info11' ,
+        'reporte_info14' ,
+        'reporte_info15' ,
+        'reporte_info18',
+        'reporte_info19',  
+        'reporte_info11' ,
+        'reporte_info17',
          'reporte_info12' ,
-         'reporte_info13' ,
-         'reporte_info14' ,
-         'reporte_info15' ,
-         'reporte_info17',
-         'reporte_info18' 
-         
+         'reporte_info13' ,     
       ]
       var names = [
          'TÉCNICO',
          'JURIDICO' ,
+        'PROPIETARIO_CATASTRAL' ,
+        'PROPIETARIO_JURIDICO' ,
          'PROPIETARIO_ANTERIOR_JURIDICO' ,
-         'PROPIETARIO_CATASTRAL' ,
-         'PROPIETARIO_JURIDICO' ,
          'ZMPA' ,
          'INFRAESTRUCTURA' ,
+        'SANEAMIENTO_BASICO' ,
+        'SANEAMIENTO_JURIDICO' ,
+        'MUNICIPIOS_INTERSECTADOS',
+        'MUTACION PREDIAL',
          'ESTUDIOS_DETALLADOS' ,
+        'DOCUMENTOS_REQUERIDOS' , 
          'CONTROL_CALIDAD_TECNICO' ,
-         'CONTROL_CALIDAD_JURIDICO' ,
-         'SANEAMIENTO_BASICO' ,
-         'SANEAMIENTO_JURIDICO' ,
-         'DOCUMENTOS_REQUERIDOS' ,
-         'MUNICIPIOS_INTERSECTADOS' ,
-                
+         'CONTROL_CALIDAD_JURIDICO'          
       ]
     } else if (reporte == 'tributaria') {
       

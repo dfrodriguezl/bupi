@@ -14,8 +14,6 @@ const Tipologias = () => {
 
     const [tipologiasList, setTipologiasList] = useState(["Seleccione el dominio..."]);
     const [isLoading, setIsLoading] = useState(true)
-    const [dominio, setDominio] = useState("")
-    const [valores, setValores] = useState([])
     const { register, handleSubmit } = useForm();
 
     const getTipologias = () => {
@@ -39,14 +37,6 @@ const Tipologias = () => {
         servidorDocs('/excel', data).then(response => {
             console.log(response)
         })
-    }
-
-    const getValores = (domi) => {
-        var datos={"id_consulta":"get_valores_dominios",dominio:domi}
-        
-        servidorPost('/backend',datos).then((response) =>{
-            setValores(response.data)
-        });
     }
 
     const TablaValores = ({values}) => {
