@@ -13,6 +13,7 @@ import MUIDataTable from 'mui-datatables'
 const Usuarios = () => {
 
     const [usuariosList, setUsuariosList] = useState([]);
+    const [rolesList, setRolesList] = useState([]);
     
     const { register, handleSubmit } = useForm();
 
@@ -24,10 +25,19 @@ const Usuarios = () => {
         });
     }
 
+    const getRoles = () => {
+        var datos={"id_consulta":"get_roles_lista"}
+
+        servidorPost('/backend',datos).then((response) =>{
+            setRolesList(response.data)
+            
+        });
+    }
     
 
     useEffect(() => {
         getUsuarios();
+        getRoles();
     },[])
 
     const clickDescarga = () => {
@@ -40,7 +50,7 @@ const Usuarios = () => {
         })
     }
 
-    const TablaValores = ({values}) => {
+    const TablaValores = ({values,roles}) => {
 
         const columns = ["Usuario","Rol","Nombres","Correo","Cargo","Contrato","Editar"];
 
@@ -84,7 +94,7 @@ const Usuarios = () => {
 
         const vals = values.map((v) => {
             let row = [v.username,v.rol,v.nombre,v.correo,v.cargo,v.contrato
-                ,<ModalForm open={<EditIcon/>} valueEdit={v} register={register} handleSubmit={handleSubmit}></ModalForm>
+                ,<ModalForm open={<EditIcon/>} valueEdit={v} register={register} handleSubmit={handleSubmit} roles={roles}></ModalForm>
             ];
             return row;
         }, [])
@@ -124,18 +134,8 @@ const Usuarios = () => {
         return (
             <Fragment>
                 <div>
-                    {/* <ModalCreate open={<button style={{display: "inline"}}>Crear valor</button>}></ModalCreate> */}
-                    <button style={{display: "inline"}}>Crear valor</button>
-                    {/* <div className="upload_file" style={{display: "inline", float: 'right', marginRight: 10}}>
-                        <div >
-                            <label htmlFor="domains" className="label-input" >Actualizar dominios masivo (xlsx)
-                                <input type="file" id="domains" className="input" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={upload}/> 
-                            </label> 
-                        </div>
-                    </div> */}
-                        <button style={{display: "inline", float: 'right', marginRight: 10}} onClick={clickDescarga}>Descargar usuarios (xlsx)
-                            {/* <input type="file" id="file_domains"  className="input" />  */}
-                        </button>
+                    <ModalCreate open={<button style={{display: "inline"}}>Crear usuario</button>} roles={roles} handleSubmit={handleSubmit} register={register}></ModalCreate>
+                        <button style={{display: "inline", float: 'right', marginRight: 10}} onClick={clickDescarga}>Descargar usuarios (xlsx)</button>
                 </div>
                 <br/>
                 <MUIDataTable
@@ -150,27 +150,16 @@ const Usuarios = () => {
         )
     }
     
-    const ModalForm = ({open,valueEdit,register,handleSubmit}) => {
+    const ModalForm = ({open,valueEdit,register,handleSubmit,roles}) => {
 
-        const [rolesList, setRolesList] = useState([]);
-        const [rolSelected, setRolSelected] = useState({});
+        
+        const [rolSelected, setRolSelected] = useState(roles.filter((r) => r.id_rol === valueEdit.id_rol));
     
         const submitFormEdit = (datos) => { 
             createValue(datos,"insert_valor_usuario","ind",rolSelected.id_rol)
         }
 
-        const getRoles = () => {
-            var datos={"id_consulta":"get_roles_lista"}
-    
-            servidorPost('/backend',datos).then((response) =>{
-                setRolesList(response.data)
-                setRolSelected(response.data.filter((r) => r.id_rol === valueEdit.id_rol))
-            });
-        }
-
-        useEffect(()=> {
-            getRoles()
-        },[])
+        
     
         return (
             <Popup
@@ -203,7 +192,7 @@ const Usuarios = () => {
                             classNamePrefix="select"
                             isSearchable={true}
                             name="usuario_rol"
-                            options={rolesList}
+                            options={roles}
                             getOptionLabel={(option) => option.descripcion}
                             getOptionValue={(option) => option.id_rol}
                             placeholder="Seleccione el rol..."
@@ -237,61 +226,75 @@ const Usuarios = () => {
         )
     }
     
-    // const ModalCreate = ({open}) => {
+    const ModalCreate = ({open,roles,handleSubmit,register}) => {
     
     
+        const [rolSelected, setRolSelected] = useState([]);
         
-    //     const submitFormCreate = (datos) => { 
-    //         createValue(datos,"insert_valor_tipologia","ind")
-    //     }
+        const submitFormCreate = (datos) => { 
+            createValue(datos,"insert_valor_usuario","ind",rolSelected.id_rol)
+        }
     
     
-    //     return (
-    //         <Popup
-    //         trigger={open}
-    //         modal
-    //         nested
-    //       >               
-    //            <div className="modal">
-    //            <div id="seccion">       
-    //                <div id="titulo_seccion">Crear tipología</div>
-    //                <p id="descripcion_seccion">Ingrese los datos de la nueva tipología</p>
+        return (
+            <Popup
+            trigger={open}
+            modal
+            nested
+          >               
+               <div className="modal">
+               <div id="seccion">       
+                   <div id="titulo_seccion">Crear usuario</div>
+                   <p id="descripcion_seccion">Ingrese los datos para crear usuario</p>
                
-    //            <form className="form-container" onSubmit={handleSubmit(submitFormCreate)} >
-    //                <div className="formulario">
-    //                     <p className="form_title">Código</p>
-    //                     <input type="text"
-    //                         className='form_input'
-    //                         name="cod_grupo"
-    //                         ref={register}/>
-    //                     <p className="form_title">Nombre</p>
-    //                     <input type="text"
-    //                         className='form_input'
-    //                         name="nombre"
-    //                         ref={register}/>
-    //                     <p className="form_title">Componente</p>
-    //                     <input type="text"
-    //                         className='form_input'
-    //                         name="componente"
-    //                         ref={register}/>
-    //                     <p className="form_title">Formato</p>
-    //                     <input type="text"
-    //                         className='form_input'
-    //                         name="formato"
-    //                         ref={register}/>
-    //                     <p className="form_title">Responsable</p>
-    //                     <input type="text"
-    //                         className='form_input'
-    //                         name="responsable"
-    //                         ref={register}/>
-    //                     <button className='primmary' type="submit">Guardar</button>
-    //                 </div>                     
-    //            </form>
-    //          </div>
-    //          </div>
-    //         </Popup>
-    //     )
-    // }
+               <form className="form-container" onSubmit={handleSubmit(submitFormCreate)} >
+                   <div className="formulario">
+                   <p className="form_title">Usuario</p>
+                        <input type="text"
+                            className='form_input'
+                            name="usuario_usuario"
+                            ref={register}/>
+                        <p className="form_title">Nombres</p>
+                        <input type="text"
+                            className='form_input'
+                            name="usuario_nombre"
+                            ref={register}/>
+                        <p className="form_title">Rol</p>
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            isSearchable={true}
+                            name="usuario_rol"
+                            options={roles}
+                            getOptionLabel={(option) => option.descripcion}
+                            getOptionValue={(option) => option.id_rol}
+                            placeholder="Seleccione el rol..."
+                            onChange={setRolSelected}
+                            value={rolSelected}
+                        />
+                        <p className="form_title">Correo</p>
+                        <input type="text"
+                            className='form_input'
+                            name="usuario_correo"
+                            ref={register}/>
+                        <p className="form_title">Cargo</p>
+                        <input type="text"
+                            className='form_input'
+                            name="usuario_cargo"
+                            ref={register}/>
+                        <p className="form_title">Contrato</p>
+                        <input type="text"
+                            className='form_input'
+                            name="usuario_contrato"
+                            ref={register}/>
+                        <button className='primmary' type="submit">Guardar</button>
+                    </div>                     
+               </form>
+             </div>
+             </div>
+            </Popup>
+        )
+    }
 
     const createValue = (datos,consulta,tipo, id_rol) => {
         
@@ -327,7 +330,7 @@ const Usuarios = () => {
             <p>A continuación puede editar o agregar usuarios</p>
             <div>
                 <br/>
-                <TablaValores values={usuariosList} />
+                <TablaValores values={usuariosList} roles={rolesList}/>
             </div>
             <ToastContainer/>
         </Fragment> 
