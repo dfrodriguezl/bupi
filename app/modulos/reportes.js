@@ -117,7 +117,7 @@ const Report = () => {
 
       <ExcelAll titulo="Reporte Tributario" descripcion="Reporte de la información tributaria" reporte="tributaria" />
 
-      <Excel titulo="Reporte Tareas" descripcion="Reporte completo de las tareas asignadas en el sistema" data={{ 'id_consulta': 'reporte_tareas' }} />
+      {/* <Excel titulo="Reporte Tareas" descripcion="Reporte completo de las tareas asignadas en el sistema" data={{ 'id_consulta': 'reporte_tareas' }} />
       <Excel titulo="Reporte Documentos" descripcion="Reporte completo de los documentos cargados al sistema" data={{ 'id_consulta': 'reporte_documentos' }} />
       <Excel titulo="Reporte General del proyecto" descripcion="Reporte completo relacionado a la información general del proyecto" data={{ 'id_consulta': 'reporte_info1' }} />
 
@@ -151,7 +151,7 @@ const Report = () => {
 
       <Excel titulo="Reporte General saneamiento jurídico" descripcion="Reporte completo relacionado al saneamiento jurídico" data={{ 'id_consulta': 'reporte_info15' }} /> 
 
-      <Excel titulo="Reporte General municipios intersectados" descripcion="Reporte completo relacionado a los municipios que intersectán los predios" data={{ 'id_consulta': 'reporte_info18' }} /> 
+      <Excel titulo="Reporte General municipios intersectados" descripcion="Reporte completo relacionado a los municipios que intersectán los predios" data={{ 'id_consulta': 'reporte_info18' }} />  */}
       
 
 
