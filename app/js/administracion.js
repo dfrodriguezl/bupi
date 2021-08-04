@@ -5,6 +5,7 @@ import Estructura from './page'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dominios from '../modulos/dominios'
 import Tipologias from '../modulos/tipologias'
+import Usuarios from '../modulos/usuarios'
 import Pred from '../modulos/predio'
 import Mapa from '../modulos/visor_individual'
 import Documentos from '../modulos/documentos'
@@ -26,12 +27,16 @@ const Administracion = () => {
                     <TabList>
                         <Tab>Dominios</Tab>
                         <Tab>Tipologías documentales</Tab>
+                        <Tab>Usuarios</Tab>
                     </TabList>
                     <TabPanel>
                         <Dominios/>
                     </TabPanel>
                     <TabPanel>
                         <Tipologias/>
+                    </TabPanel>
+                    <TabPanel>  
+                        <Usuarios/>
                     </TabPanel>
                 </Tabs>
             </div>      
