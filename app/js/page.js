@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch,Link } from 'react-router-dom';
 
 import { servidorPost } from './request'
@@ -12,10 +12,13 @@ import PublishIcon from '@material-ui/icons/Publish';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Notifi} from '../modulos/encabezado'
 
+import { getPermisos } from '../variables/permisos'
+
 
 const Estructura = ({children}) => {
     
   const [session, setSession] = React.useState(0);
+  const [isAdmin, setIsAdmin] = React.useState(false);
   
   React.useEffect(() => {
 
@@ -25,6 +28,14 @@ const Estructura = ({children}) => {
   
     var datos = response.data[0]
     setSession(datos)
+
+  });
+
+  getPermisos().then((response) => {
+                    
+    if (response.some(r => r == 10)) {
+      setIsAdmin(true)
+    }
 
   });
     
@@ -96,32 +107,35 @@ const Estructura = ({children}) => {
           <p>Reportes</p>
         </Link>
       </div>
-
-      <div className="elemento">
-        <Link to="/asignar">
-          <GroupAdd/>
-          <p>Asignar</p>
-        </Link>
-      </div>
-      <div className="elemento">
-        <Link to="/actualizar">
-          <PublishIcon/>
-          <p>Actualizar</p>
-        </Link>
-      </div>
       <div className="elemento">
         <Link to="/personal">
           <FaceIcon/>
           <p>Usuario</p>
         </Link>
-      </div>       
-      <div className="elemento">
-        <Link to="/admin">
-          <SupervisorAccountIcon/>
-          <p>Administracion</p>
-        </Link>
-      </div>      
-
+      </div> 
+      {isAdmin?
+        <Fragment>
+          <div className="elemento">
+            <Link to="/asignar">
+              <GroupAdd/>
+              <p>Asignar</p>
+            </Link>
+          </div>
+          <div className="elemento">
+            <Link to="/actualizar">
+              <PublishIcon/>
+              <p>Actualizar</p>
+            </Link>
+          </div> 
+          <div className="elemento">
+            <Link to="/admin">
+              <SupervisorAccountIcon/>
+              <p>Administracion</p>
+            </Link>
+          </div> 
+        </Fragment>:null
+    }
+           
       </div>
     </div>
         <div id="panel_superior">
