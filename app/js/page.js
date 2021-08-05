@@ -7,6 +7,7 @@ import { Home,Search,InsertDriveFile,Public,AttachFile,GroupAdd,EmojiPeople,Exit
 
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import PublishIcon from '@material-ui/icons/Publish';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import {Notifi} from '../modulos/encabezado'
@@ -100,6 +101,12 @@ const Estructura = ({children}) => {
         <Link to="/asignar">
           <GroupAdd/>
           <p>Asignar</p>
+        </Link>
+      </div>
+      <div className="elemento">
+        <Link to="/actualizar">
+          <PublishIcon/>
+          <p>Actualizar</p>
         </Link>
       </div>
       <div className="elemento">

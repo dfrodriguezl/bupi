@@ -386,7 +386,9 @@ group by dominio) as d
             $id_tarea,
             $usuario_responsable
         )
-        ON CONFLICT DO NOTHING;
+        ON CONFLICT (id_expediente,id_tarea) DO UPDATE
+            SET usuario = $usuario_responsable
+            returning id_expediente
         </sql>
     </Consulta>
 
@@ -1558,9 +1560,54 @@ order by id_expediente
             ON CONFLICT (usuario_usuario) DO UPDATE
             SET usuario_rol = $usuario_rol, usuario_nombre = $usuario_nombre, usuario_correo = $usuario_correo,
             usuario_cargo = $usuario_cargo, usuario_contrato = $usuario_contrato
-            returning usuario_usuario
+            returning usuario_id
         </sql>
     </Consulta>
 
+    <Consulta id="insert_rol_admin">
+        <sql>
+        INSERT INTO usr_permisos
+            VALUES ($id_usuario,10)
+            ON CONFLICT (usuario_id,id_permiso) DO UPDATE
+            SET id_permiso = 10
+            returning usuario_id
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_calidad_tecnico">
+        <sql>
+        INSERT INTO info12_control_calidad_tecnico
+            VALUES ($id_expediente,$aprobado, null,$obs, null, now())
+            ON CONFLICT (id_expediente) DO UPDATE
+            SET aprobado = $aprobado, obs = $obs, fecha_aprob = now()
+            returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_calidad_juridico">
+        <sql>
+        INSERT INTO info13_control_calidad_juridico
+            VALUES ($id_expediente,$aprobado, null,$obs, null, now())
+            ON CONFLICT (id_expediente) DO UPDATE
+            SET aprobado = $aprobado, obs = $obs, fecha_aprob = now()
+            returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_tareas_calidad_tecnico">
+        <sql>
+        UPDATE tareas.tareas
+            SET estado = 2,fecha_solucion = now(),visible=false
+            WHERE id_expediente = $id_expediente and ruta = 3
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_tareas_calidad_juridico">
+        <sql>
+        UPDATE tareas.tareas
+            SET estado = 2,fecha_solucion = now(),visible=false
+            WHERE id_expediente = $id_expediente and ruta = 4
+        </sql>
+    </Consulta>
 
 </Consultas>

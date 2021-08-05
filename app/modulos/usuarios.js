@@ -99,36 +99,36 @@ const Usuarios = () => {
             return row;
         }, [])
 
-        const upload = e=> {
+        // const upload = e=> {
         
-            const files = e.target.files
-            let f = files[0];
-            let reader = new FileReader();
-            reader.onload = function(e){
-                const bstr = e.target.result;
-                const wb = XLSX.read(bstr,{type:'binary'});
-                const wsname = wb.SheetNames[0];
-                const ws = wb.Sheets[wsname];
-                const data = XLSX.utils.sheet_to_json(ws,{header:0});
+        //     const files = e.target.files
+        //     let f = files[0];
+        //     let reader = new FileReader();
+        //     reader.onload = function(e){
+        //         const bstr = e.target.result;
+        //         const wb = XLSX.read(bstr,{type:'binary'});
+        //         const wsname = wb.SheetNames[0];
+        //         const ws = wb.Sheets[wsname];
+        //         const data = XLSX.utils.sheet_to_json(ws,{header:0});
                 
-                data.map((d) => {
-                    const datos = {
-                        cod_grupo: d.cod_grupo,
-                        nombre: d.nombre,
-                        componente: d.componente,
-                        formato: d.formato,
-                        responsable: d.responsable
-                    }
+        //         data.map((d) => {
+        //             const datos = {
+        //                 cod_grupo: d.cod_grupo,
+        //                 nombre: d.nombre,
+        //                 componente: d.componente,
+        //                 formato: d.formato,
+        //                 responsable: d.responsable
+        //             }
 
-                    createValue(datos,"insert_valor_tipologia")
-                })
+        //             createValue(datos,"insert_valor_tipologia")
+        //         })
 
-                getTipologias()
-            }
+        //         getTipologias()
+        //     }
 
-            reader.readAsBinaryString(f);
+        //     reader.readAsBinaryString(f);
     
-        }
+        // }
 
 
         return (
@@ -152,7 +152,8 @@ const Usuarios = () => {
     
     const ModalForm = ({open,valueEdit,register,handleSubmit,roles}) => {
 
-        
+        // console.log(roles)
+        // console.log(valueEdit)
         const [rolSelected, setRolSelected] = useState(roles.filter((r) => r.id_rol === valueEdit.id_rol));
     
         const submitFormEdit = (datos) => { 
@@ -197,7 +198,8 @@ const Usuarios = () => {
                             getOptionValue={(option) => option.id_rol}
                             placeholder="Seleccione el rol..."
                             onChange={setRolSelected}
-                            value={rolSelected}
+                            defaultValue={roles.filter((r) => r.id_rol === valueEdit.id_rol)}
+                            
                         />
                         <p className="form_title">Correo</p>
                         <input type="text"
@@ -298,7 +300,6 @@ const Usuarios = () => {
 
     const createValue = (datos,consulta,tipo, id_rol) => {
         
-        // console.log(datos)
         var data = {
             "id_consulta": consulta,
             "usuario_usuario": datos.usuario_usuario,
@@ -309,12 +310,21 @@ const Usuarios = () => {
             "usuario_contrato":datos.usuario_contrato,
         }
 
-        console.log(data)
-
-      
+     
         servidorPost('/backend', data).then((response) => { 
             if (response.data.length > 0) {
                 toast.success("Registro creado satisfactoriamente");
+                if(id_rol === 3){
+                    console.log(response.data)
+                    let dataAdmin = {
+                        id_consulta: "insert_rol_admin",
+                        id_usuario: response.data[0].usuario_id
+                    }
+                    
+                    servidorPost('/backend', dataAdmin).then((response) => { 
+                        console.log(response)
+                    })
+                }
                 getUsuarios();
             }else{
                 toast.error("Ya existe el registro")

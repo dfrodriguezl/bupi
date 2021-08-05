@@ -15,7 +15,7 @@ import Help from './help'
 
 
 
-const Asignacion = () => {
+const Aprobacion = () => {
   
   const [doc, setdoc] = React.useState([]);
   const [user, setUser] = React.useState([]);
@@ -48,7 +48,7 @@ const Asignacion = () => {
     
   }, []);  
 
-const onChange=e=>{
+const onChange = (e) =>{
 
   const yourFile = e.target.files[0]
   const formData = new FormData();
@@ -107,12 +107,97 @@ const asignar=e=>{
   toast.error("Seleccione un usuario ");
 }
 
-
-  
-
-
-
 }
+
+const sendRequest = (data) => {
+  return servidorPost('/backend',data);
+}
+
+const aprobar = (e) => {
+
+    // var usuario_asigna='dangarita';
+    // var usuario_responsable=responsable;
+    
+    // if (usuario_responsable != null) {
+
+    // console.log(doc);
+    // console.log(doc.length);
+
+    for(var i = 0; i < doc.length; i++){
+      let tec = doc[i].tec
+      let jur = doc[i].jur
+      let expediente = doc[i].id_expediente
+
+      let datos = {}
+      datos.id_expediente = expediente
+      datos.aprobado = 1
+      datos.obs = 'APROBACIÓN MASIVA'
+
+      if(tec === "SI"){ 
+        datos.id_consulta = "insert_calidad_tecnico"
+        sendRequest(datos).then((response) => {
+          // console.log(response)
+          let datosClose = {
+            id_expediente: expediente,
+            id_consulta: 'update_tareas_calidad_tecnico'
+          }
+          sendRequest(datosClose).then((res) => {
+            toast.success("Expediente " + expediente + " aprobado técnico");
+          })
+        })
+      }
+
+      if(jur === "SI"){
+        datos.id_consulta = "insert_calidad_juridico"
+        sendRequest(datos).then((response) => {
+          console.log(response)
+          let datosClose = {
+            id_expediente: expediente,
+            id_consulta: 'update_tareas_calidad_juridico'
+          }
+          sendRequest(datosClose).then((res) => {
+            toast.success("Expediente " + expediente + " aprobado jurídico");
+          })
+        })
+
+      }
+    }
+    
+   
+    //   envio();
+  
+    //   async function envio() {
+  
+  
+    //     for (var i = 0; i < doc.length; i++){
+          
+    //       var datos={
+    //         "id_expediente":doc[i].id_expediente,
+    //         "ruta": 0,
+    //         "usuario_responsable":usuario_responsable
+    //       }
+        
+    //       notificacion(datos)
+  
+  
+  
+  
+    //     }
+  
+    //     toast.success("Expedientes asignados correctamente");
+        
+    //     setdoc([])
+  
+    //   }
+  
+  
+  
+//   }else{
+//     toast.error("Seleccione un usuario ");
+//   }
+  
+  }
+
 const select=e=>{
   const resp=e.target.value;
   setResponsable(resp)
@@ -120,17 +205,17 @@ const select=e=>{
 
   return (
     <div id="seccion">
-      <div id="titulo_seccion">Asignar masivamente</div>
-      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el usuario al cual le asignará los expedientes y luego seleccione el archivo csv con la asignación.</p>
+      <div id="titulo_seccion">Aprobar masivamente</div>
+      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los expedientes a aprobar según la guia.</p>
     
 
       {permiso ? <>
       
-        <Help titulo="Modelo" doc='guia_asignar_masivo.csv' />
+        <Help titulo="Modelo" doc='guia_aprobacion_masiva.csv' />
 
         <br/>
       <div>
-      <select  onChange={select}>
+      {/* <select  onChange={select}>
       <option value="">Seleccione...</option>     
       {user.map((el,key) => (
 
@@ -138,7 +223,7 @@ const select=e=>{
 
       ))}
         
-      </select>
+      </select> */}
       </div>
         <div>
     
@@ -149,11 +234,11 @@ const select=e=>{
           </label> 
       </div>
 
-      <button type="button" className="primmary" onClick={asignar}>Asignar expedientes</button>
+      <button type="button" className="primmary" onClick={aprobar}>Aprobar expedientes</button>
 
       <ToastContainer/>
    
-    <p>Se asignarán: {Object.keys(doc).length} Expedientes</p>
+    {/* <p>Se asignarán: {Object.keys(doc).length} Expedientes</p>
    
       {doc.map((item,key)=>
           <div className="col-12 mb-1" key={key}>
@@ -161,7 +246,7 @@ const select=e=>{
           </div>
         
       )
-   }
+   } */}
 
     </>
       :<p className="no-permiso">No cuentas con permisos para usar esta herramienta</p>}
@@ -171,7 +256,7 @@ const select=e=>{
   }
 
 
-export default Asignacion;
+export default Aprobacion;
 
 
 

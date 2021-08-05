@@ -13,26 +13,26 @@ export const notificacion=(data)=> {
     const ruta = data.ruta;
     data.opcion = 1;
 
-
+    console.log(data)
    
 
     if (ruta===0) {
 
         //alert(ruta);
         var info = {
-            id_consulta: "insertar_asignacion",
+            id_consulta: "insertar_asignacion_tecnico",
             id_expediente: data.id_expediente,
             id_tarea: 3,
             usuario_responsable: data.usuario_responsable
         };
         var info1 = {
-            id_consulta: "insertar_asignacion",
+            id_consulta: "insertar_asignacion_tecnico",
             id_expediente: data.id_expediente,
             id_tarea: 4,
             usuario_responsable: data.usuario_responsable
         };
         var info2 = {
-            id_consulta: "insertar_asignacion",
+            id_consulta: "insertar_asignacion_tecnico",
             id_expediente: data.id_expediente,
             id_tarea: 5,
             usuario_responsable: data.usuario_responsable
