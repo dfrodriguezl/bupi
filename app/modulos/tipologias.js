@@ -44,6 +44,7 @@ const Tipologias = () => {
         const columns = ["Cód grupo","Nombre","Componente","Formato","Responsable","Editar"];
 
         const options = {
+            selectableRows: "none",
             textLabels: {
                 body: {
                     noMatch: 'No se encontraron resultados',
