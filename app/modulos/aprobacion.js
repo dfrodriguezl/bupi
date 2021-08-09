@@ -128,36 +128,56 @@ const aprobar = (e) => {
       let jur = doc[i].jur
       let expediente = doc[i].id_expediente
 
-      let datos = {}
-      datos.id_expediente = expediente
-      datos.aprobado = 1
-      datos.obs = 'APROBACIÓN MASIVA'
+      // let datos = {}
+      // datos.id_expediente = expediente
+      
 
       if(tec === "SI"){ 
-        datos.id_consulta = "insert_calidad_tecnico"
-        sendRequest(datos).then((response) => {
-          // console.log(response)
-          let datosClose = {
-            id_expediente: expediente,
-            id_consulta: 'update_tareas_calidad_tecnico'
+        let datosTec = {
+          id_expediente: expediente,
+          id_consulta: "update_tareas_calidad_tecnico"
+        }
+        // datos.id_consulta = "update_tareas_calidad_tecnico"
+        console.log(datosTec)
+        sendRequest(datosTec).then((response) => {
+          console.log(response)
+          if(response.data.length > 0){
+            let datosClose = {
+              id_expediente: expediente,
+              id_consulta: 'insert_calidad_tecnico',
+              aprobado: 1,
+              obs: 'APROBACIÓN MASIVA'
+            }
+
+            sendRequest(datosClose).then((res) => {
+              toast.success("Expediente " + expediente + " aprobado técnico");
+            })
           }
-          sendRequest(datosClose).then((res) => {
-            toast.success("Expediente " + expediente + " aprobado técnico");
-          })
+          
         })
       }
 
       if(jur === "SI"){
-        datos.id_consulta = "insert_calidad_juridico"
-        sendRequest(datos).then((response) => {
+        let datosJur = {
+          id_expediente: expediente,
+          id_consulta: "update_tareas_calidad_juridico"
+        }
+        // datos.id_consulta = "update_tareas_calidad_juridico"
+        console.log(datosJur)
+        sendRequest(datosJur).then((response) => {
           console.log(response)
-          let datosClose = {
-            id_expediente: expediente,
-            id_consulta: 'update_tareas_calidad_juridico'
+          if(response.data.length > 0){
+            let datosClose = {
+              id_expediente: expediente,
+              id_consulta: 'insert_calidad_juridico',
+              aprobado: 1,
+              obs: 'APROBACIÓN MASIVA'
+            }
+            sendRequest(datosClose).then((res) => {
+              toast.success("Expediente " + expediente + " aprobado jurídico");
+            })
           }
-          sendRequest(datosClose).then((res) => {
-            toast.success("Expediente " + expediente + " aprobado jurídico");
-          })
+          
         })
 
       }

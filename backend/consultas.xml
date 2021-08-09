@@ -1597,16 +1597,18 @@ order by id_expediente
     <Consulta id="update_tareas_calidad_tecnico">
         <sql>
         UPDATE tareas.tareas
-            SET estado = 2,fecha_solucion = now(),visible=false
-            WHERE id_expediente = $id_expediente and ruta = 3
+            SET estado = 2,fecha_solucion = now()
+            WHERE id_expediente = $id_expediente and ruta = 3 and estado = 1
+            returning id_expediente
         </sql>
     </Consulta>
 
     <Consulta id="update_tareas_calidad_juridico">
         <sql>
         UPDATE tareas.tareas
-            SET estado = 2,fecha_solucion = now(),visible=false
-            WHERE id_expediente = $id_expediente and ruta = 4
+            SET estado = 2,fecha_solucion = now()
+            WHERE id_expediente = $id_expediente and ruta = 4 and estado = 1
+            returning id_expediente
         </sql>
     </Consulta>
 
