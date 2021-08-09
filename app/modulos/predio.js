@@ -414,9 +414,8 @@ const Form = ({ tbl, index,refresh,consecutivo }) => {
                                     }
                                     {i.doc.form == 'numero' ?
 
-                                        <input type="number"
-                                            step="0.00000000001"
-                                            className='form_input'
+                                        <input type="text"
+                                            pattern="[0-9.]+"
                                             name={i.doc.field}
                                             disabled={lectura}
                                             defaultValue={defecto ? fields.info[i.doc.field] : ''}
