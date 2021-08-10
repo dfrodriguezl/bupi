@@ -122,6 +122,11 @@
         select * from info21_juridicos where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info22_factura_municipio">
+        <sql>
+        select * from info22_factura_municipio where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -253,6 +258,11 @@
     <Consulta id="update_info21_juridicos">
         <sql>
             update info21_juridicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info22_factura_municipio">
+        <sql>
+            update info22_factura_municipio set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
 

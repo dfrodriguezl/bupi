@@ -46,7 +46,7 @@ const gestionPermisos = (index) => {
     else if ([2, 3, 4, 7, 10, 11, 14].includes(index)) {
         
         tipo_permiso = [6];//editar formulario técnico  
-    } else if ([5,6,8,15,16,20,21].includes(index)) {
+    } else if ([5,6,8,15,16,20,21,22].includes(index)) {
        
         tipo_permiso = [7];//editar formulario juridico  
     } else if ([12].includes(index)) {
@@ -648,7 +648,7 @@ const FormMultiple=({tbl,index,titulo})=>{
        })
 
         
-        if ([17,18,6,7,8,9,21].includes(index)) {
+        if ([17,18,6,7,8,9,21,22].includes(index)) {
             setMultiple(true)
            
 
@@ -916,6 +916,9 @@ const Predio = () => {
                             control de calidad técnico
             </button>
 
+            <button onClick={() => getForm(22, "info22_factura_municipio","Factura municipio")} className={active == 22 ? 'active' : ''} >
+                            Factura municipio
+            </button>
                         
                         
                     </div>
