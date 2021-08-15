@@ -48,6 +48,10 @@ const Asignacion = () => {
     
   }, []);  
 
+  const sendRequest = (data) => {
+    return servidorPost('/backend',data);
+  }
+
 const onChange=e=>{
 
   const yourFile = e.target.files[0]
@@ -56,7 +60,7 @@ const onChange=e=>{
 
   servidorPost('/xls',formData).then((response) =>{
     const data = response.data;
-    console.log(data.json[0])
+    // console.log(data.json[0])
     if( typeof  data.json[0].id_expediente!="undefined"){
       setdoc(data.json)
     }else{
@@ -81,14 +85,66 @@ const asignar=e=>{
 
 
       for (var i = 0; i < doc.length; i++){
-        
-        var datos={
-          "id_expediente":doc[i].id_expediente,
-          "ruta": 0,
-          "usuario_responsable":usuario_responsable
+
+        console.log(doc[i])
+        let tec = doc[i].tec;
+        let jur = doc[i].jur;
+        let sup_tec = doc[i].sup_tec;
+        let sup_jur = doc[i].sup_jur;
+        let expediente = doc[i].id_expediente;
+
+        let datos = {};
+        datos.id_expediente = expediente;
+        datos.id_consulta = 'insertar_asignacion_tecnico';
+
+        if(tec != ''){
+          let dataTec ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 2,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataTec);
         }
+
+        if(jur != ''){
+          let dataJur ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 3,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataJur);
+        }
+
+        if(sup_jur != ''){
+          let dataSupJur ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 4,
+            usuario_responsable: doc[i].sup_jur
+          }
+          sendRequest(dataSupJur);
+        }
+
+        if(sup_tec != ''){
+          let dataSupTec ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 5,
+            usuario_responsable: doc[i].sup_tec
+          }
+
+          sendRequest(dataSupTec);
+        }
+        
+        // var datos={
+        //   "id_expediente":doc[i].id_expediente,
+        //   "ruta": 0,
+        //   "usuario_responsable":usuario_responsable
+        // }
       
-        notificacion(datos)
+        // notificacion(datos)
 
 
 
@@ -113,7 +169,7 @@ const asignar=e=>{
 
 
 
-}
+
 const select=e=>{
   const resp=e.target.value;
   setResponsable(resp)
