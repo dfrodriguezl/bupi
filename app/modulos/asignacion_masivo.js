@@ -72,7 +72,7 @@ const asignar=e=>{
   var usuario_asigna='dangarita';
   var usuario_responsable=responsable;
   
-  if (usuario_responsable != null) {
+  // if (usuario_responsable != null) {
   
  
     envio();
@@ -103,9 +103,10 @@ const asignar=e=>{
 
 
 
-}else{
-  toast.error("Seleccione un usuario ");
 }
+// else{
+//   toast.error("Seleccione un usuario ");
+// }
 
 
   
@@ -128,8 +129,8 @@ const select=e=>{
       
         <Help titulo="Modelo" doc='guia_asignar_masivo.csv' />
 
-        <br/>
-      <div>
+        {/* <br/> */}
+      {/* <div>
       <select  onChange={select}>
       <option value="">Seleccione...</option>     
       {user.map((el,key) => (
@@ -139,7 +140,7 @@ const select=e=>{
       ))}
         
       </select>
-      </div>
+      </div> */}
         <div>
     
       </div>  
