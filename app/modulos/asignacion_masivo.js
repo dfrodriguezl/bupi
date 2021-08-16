@@ -105,6 +105,22 @@ const asignar=e=>{
             usuario_responsable: doc[i].tec
           }
           sendRequest(dataTec);
+
+          let dataNotTec = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 1,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataNotTec);
+
+          let dataNotTec2 = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 7,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataNotTec2);
         }
 
         if(jur != ''){
@@ -115,6 +131,22 @@ const asignar=e=>{
             usuario_responsable: doc[i].jur
           }
           sendRequest(dataJur);
+
+          let dataNotJur = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 2,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataNotJur);
+
+          let dataNotJur2 = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 5,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataNotJur2);
         }
 
         if(sup_jur != ''){
@@ -125,6 +157,14 @@ const asignar=e=>{
             usuario_responsable: doc[i].sup_jur
           }
           sendRequest(dataSupJur);
+
+          let dataNotSupJur = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 4,
+            usuario_responsable: doc[i].sup_jur
+          }
+          sendRequest(dataNotSupJur);
         }
 
         if(sup_tec != ''){
@@ -136,6 +176,14 @@ const asignar=e=>{
           }
 
           sendRequest(dataSupTec);
+
+          let dataNotSupTec = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 3,
+            usuario_responsable: doc[i].sup_tec
+          }
+          sendRequest(dataNotSupTec);
         }
         
         // var datos={

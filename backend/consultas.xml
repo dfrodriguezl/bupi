@@ -391,6 +391,14 @@ group by dominio) as d
             returning id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_notificacion">
+        <sql>
+        update tareas.tareas
+        set fecha_asignacion = now(), usuario_responsable = $usuario_responsable
+        where ruta = $ruta and id_expediente = $id_expediente and estado = 1
+        returning id_expediente;
+        </sql>
+    </Consulta>
 
     <Consulta id="insertar_notificacion">
         <sql>
