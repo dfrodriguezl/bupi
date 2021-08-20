@@ -1620,4 +1620,31 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="borrar_tarea">
+        <sql>
+        DELETE from tareas.tareas
+        WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[])
+        returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="cerrar_tarea">
+        <sql>
+        UPDATE tareas.tareas
+            SET estado = 2,fecha_solucion = now()
+            WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[]) and estado = 1
+            returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="abrir_tarea">
+        <sql>
+        UPDATE tareas.tareas
+            SET estado = 1,fecha_solucion = null
+            WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[]) and estado = 2
+            returning id_expediente
+        </sql>
+    </Consulta>
+
+
 </Consultas>

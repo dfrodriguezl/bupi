@@ -13,6 +13,53 @@ import { notificacion } from '../variables/notificaciones'
 
 import Help from './help'
 
+const estadosTecnico ={
+  asignado: {
+    ruta: 1,
+    rutas_next : [3,7,9]
+  },
+  "en gestion": {
+    ruta: 1,
+    rutas_next : [3,7,9]
+  },
+  "en revision": {
+    ruta: 3,
+    rutas_next: [7,9],
+    rutas_before: [1]
+  },
+  devuelto: {
+    ruta: 7,
+    rutas_next: [9],
+    rutas_before: [1,3]
+  },
+  aprobado:{
+
+  }
+}
+
+const estadosJuridico ={
+  asignado: {
+    ruta: 2,
+    rutas_next : [4,5]
+  },
+  "en gestion": {
+    ruta: 2,
+    rutas_next : [4,5]
+  },
+  "en revision": {
+    ruta: 4,
+    rutas_next: [5],
+    rutas_before: [2]
+  },
+  devuelto: {
+    ruta: 5,
+    rutas_before: [2,4]
+  },
+  aprobado: {
+
+  }
+}
+
 
 
 const Aprobacion = () => {
@@ -128,60 +175,205 @@ const aprobar = (e) => {
       let jur = doc[i].jur
       let expediente = doc[i].id_expediente
 
+      // console.log(tec)
+      if(tec !== ''){
+        let datosTec = {
+          id_expediente: expediente
+        }
+        let rutas = estadosTecnico[tec.toLowerCase()];
+        // console.log(rutas);
+
+        if(tec.toLowerCase() != "aprobado"){
+          let datosClose = {
+                    id_expediente: expediente,
+                    id_consulta: 'insert_calidad_tecnico',
+                    aprobado: null,
+                    obs: 'CAMBIO DE ESTADO'
+                  }
+
+            sendRequest(datosClose).then((res) => {
+              // console.log(datosClose)
+            })
+        }else if(tec.toLowerCase() == "aprobado"){
+          let datosTec = {
+                id_expediente: expediente,
+                id_consulta: "update_tareas_calidad_tecnico"
+              }
+              // datos.id_consulta = "update_tareas_calidad_tecnico"
+              // console.log(datosTec)
+              sendRequest(datosTec).then((response) => {
+                // console.log(response)
+                if(response.data.length > 0){
+                  let datosClose = {
+                    id_expediente: expediente,
+                    id_consulta: 'insert_calidad_tecnico',
+                    aprobado: 1,
+                    obs: 'APROBACIÓN MASIVA'
+                  }
+      
+                  sendRequest(datosClose).then((res) => {
+                    toast.success("Expediente " + expediente + " aprobado técnico");
+                  })
+                }
+                
+              })
+        }
+        // console.log(rutas)
+        if(rutas.rutas_next){
+          let datosDel = {
+            id_consulta: 'borrar_tarea',
+            ruta_close: rutas.rutas_next,
+            id_expediente: expediente
+          }
+
+          sendRequest(datosDel).then((response) => {
+            datosTec.id_consulta = 'abrir_tarea';
+            datosTec.ruta_close = [rutas.ruta];
+            sendRequest(datosTec).then((response2) => { 
+              console.log(response2)
+            })
+          })
+        }
+
+        if(rutas.rutas_before){
+          datosTec.id_consulta = 'cerrar_tarea';
+          datosTec.ruta_close = rutas.rutas_before;
+          // console.log(datosTec)
+          sendRequest(datosTec).then((response) => {
+            console.log(response)
+        })
+        }
+
+      }
+
+      if(jur !== ''){
+        let datosJur = {
+          id_expediente: expediente
+        }
+        let rutas = estadosJuridico[jur.toLowerCase()];
+
+        if(jur.toLowerCase() != "aprobado"){
+          let datosClose = {
+                    id_expediente: expediente,
+                    id_consulta: 'insert_calidad_juridico',
+                    aprobado: null,
+                    obs: 'CAMBIO DE ESTADO'
+                  }
+
+            sendRequest(datosClose).then((res) => {
+              console.log(datosClose)
+            })
+        }else if(jur.toLowerCase() == "aprobado"){
+          let datosJur = {
+                id_expediente: expediente,
+                id_consulta: "update_tareas_calidad_juridico"
+              }
+              // datos.id_consulta = "update_tareas_calidad_tecnico"
+              console.log(datosJur)
+              sendRequest(datosJur).then((response) => {
+                console.log(response)
+                if(response.data.length > 0){
+                  let datosClose = {
+                    id_expediente: expediente,
+                    id_consulta: 'insert_calidad_juridico',
+                    aprobado: 1,
+                    obs: 'APROBACIÓN MASIVA'
+                  }
+      
+                  sendRequest(datosClose).then((res) => {
+                    toast.success("Expediente " + expediente + " aprobado jurídico");
+                  })
+                }
+                
+              })
+        }
+        // console.log(rutas)
+        if(rutas.rutas_next){
+          let datosDel = {
+            id_consulta: 'borrar_tarea',
+            ruta_close: rutas.rutas_next,
+            id_expediente: expediente
+          }
+          sendRequest(datosDel).then((response) => {
+            // console.log(response)
+            datosJur.id_consulta = 'abrir_tarea';
+            datosJur.ruta_close = [rutas.ruta];
+            // console.log(datosJur)
+            sendRequest(datosJur).then((response2) => { 
+              console.log(response2)
+            })
+          })
+        }
+
+        if(rutas.rutas_before){
+          datosJur.id_consulta = 'cerrar_tarea';
+          datosJur.ruta_close = rutas.rutas_before;
+          sendRequest(datosJur).then((response) => {
+            console.log(response)
+          })
+        }
+
+      }
+
+      
+
       // let datos = {}
       // datos.id_expediente = expediente
       
 
-      if(tec === "SI"){ 
-        let datosTec = {
-          id_expediente: expediente,
-          id_consulta: "update_tareas_calidad_tecnico"
-        }
-        // datos.id_consulta = "update_tareas_calidad_tecnico"
-        console.log(datosTec)
-        sendRequest(datosTec).then((response) => {
-          console.log(response)
-          if(response.data.length > 0){
-            let datosClose = {
-              id_expediente: expediente,
-              id_consulta: 'insert_calidad_tecnico',
-              aprobado: 1,
-              obs: 'APROBACIÓN MASIVA'
-            }
+      // if(tec === "SI"){ 
+      //   let datosTec = {
+      //     id_expediente: expediente,
+      //     id_consulta: "update_tareas_calidad_tecnico"
+      //   }
+      //   // datos.id_consulta = "update_tareas_calidad_tecnico"
+      //   console.log(datosTec)
+      //   sendRequest(datosTec).then((response) => {
+      //     console.log(response)
+      //     if(response.data.length > 0){
+      //       let datosClose = {
+      //         id_expediente: expediente,
+      //         id_consulta: 'insert_calidad_tecnico',
+      //         aprobado: 1,
+      //         obs: 'APROBACIÓN MASIVA'
+      //       }
 
-            sendRequest(datosClose).then((res) => {
-              toast.success("Expediente " + expediente + " aprobado técnico");
-            })
-          }
+      //       sendRequest(datosClose).then((res) => {
+      //         toast.success("Expediente " + expediente + " aprobado técnico");
+      //       })
+      //     }
           
-        })
-      }
+      //   })
+      // }
 
-      if(jur === "SI"){
-        let datosJur = {
-          id_expediente: expediente,
-          id_consulta: "update_tareas_calidad_juridico"
-        }
-        // datos.id_consulta = "update_tareas_calidad_juridico"
-        console.log(datosJur)
-        sendRequest(datosJur).then((response) => {
-          console.log(response)
-          if(response.data.length > 0){
-            let datosClose = {
-              id_expediente: expediente,
-              id_consulta: 'insert_calidad_juridico',
-              aprobado: 1,
-              obs: 'APROBACIÓN MASIVA'
-            }
-            sendRequest(datosClose).then((res) => {
-              toast.success("Expediente " + expediente + " aprobado jurídico");
-            })
-          }
+      // if(jur === "SI"){
+      //   let datosJur = {
+      //     id_expediente: expediente,
+      //     id_consulta: "update_tareas_calidad_juridico"
+      //   }
+      //   // datos.id_consulta = "update_tareas_calidad_juridico"
+      //   console.log(datosJur)
+      //   sendRequest(datosJur).then((response) => {
+      //     console.log(response)
+      //     if(response.data.length > 0){
+      //       let datosClose = {
+      //         id_expediente: expediente,
+      //         id_consulta: 'insert_calidad_juridico',
+      //         aprobado: 1,
+      //         obs: 'APROBACIÓN MASIVA'
+      //       }
+      //       sendRequest(datosClose).then((res) => {
+      //         toast.success("Expediente " + expediente + " aprobado jurídico");
+      //       })
+      //     }
           
-        })
+      //   })
 
-      }
+      // }
     }
+
+
+    toast.success("Cambio de estado a " + doc.length + " expediente(s)");
     
    
     //   envio();
@@ -225,8 +417,8 @@ const select=e=>{
 
   return (
     <div id="seccion">
-      <div id="titulo_seccion">Aprobar masivamente</div>
-      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los expedientes a aprobar según la guia.</p>
+      <div id="titulo_seccion">Cambio de estados</div>
+      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los expedientes para cambiar el estado según la guia.</p>
     
 
       {permiso ? <>
@@ -249,16 +441,16 @@ const select=e=>{
     
       </div>  
       <div >
-          <label htmlFor="file1" className="label-input" >Selecionar csv
+          <label htmlFor="file1" className="label-input" >Seleccionar csv
           <input type="file" id="file1"onChange={onChange} className="input" /> 
           </label> 
       </div>
 
-      <button type="button" className="primmary" onClick={aprobar}>Aprobar expedientes</button>
+      <button type="button" className="primmary" onClick={aprobar}>Cambiar de estado</button>
 
       <ToastContainer/>
    
-    {/* <p>Se asignarán: {Object.keys(doc).length} Expedientes</p>
+    <p>Se modificaran: {Object.keys(doc).length} Expedientes</p>
    
       {doc.map((item,key)=>
           <div className="col-12 mb-1" key={key}>
@@ -266,7 +458,7 @@ const select=e=>{
           </div>
         
       )
-   } */}
+   }
 
     </>
       :<p className="no-permiso">No cuentas con permisos para usar esta herramienta</p>}

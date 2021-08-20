@@ -20,7 +20,7 @@ const Actualizacion = () => {
                 <Tabs onSelect={()=>setIndex(0)}>
                     <TabList>
                         <Tab>Actualización</Tab>
-                        <Tab>Aprobación</Tab>
+                        <Tab>Cambio de estados</Tab>
                     </TabList>
                     <TabPanel>
                     </TabPanel>
