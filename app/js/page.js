@@ -15,9 +15,6 @@ import {Notifi} from '../modulos/encabezado'
 import { getPermisos } from '../variables/permisos'
 
 
-import { getPermisos } from '../variables/permisos'
-
-
 const Estructura = ({children}) => {
     
   const [session, setSession] = React.useState(0);
