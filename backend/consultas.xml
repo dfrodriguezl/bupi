@@ -871,6 +871,25 @@ group by dominio) as d
         order by id_expediente
         </sql>
     </Consulta>
+    <Consulta id="reporte_info22">
+        <sql>
+        select * from info22_factura_municipio
+        natural join(
+        SELECT *
+        FROM crosstab(
+            'select id_expediente,id_tarea,usuario_nombre
+            from tareas.asignacion t 
+            left join usuario u
+            on t.usuario=u.usuario_usuario
+            order by id_expediente,id_tarea'
+        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+        )sub
+        natural join (
+        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        )sub1
+        order by id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="get_asignacion">
         <sql>
             select id_tarea,usuario_nombre,usuario_cargo
