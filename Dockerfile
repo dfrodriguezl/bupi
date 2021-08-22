@@ -8,6 +8,7 @@ RUN npm install pm2 -g
 COPY dist dist
 COPY backend backend
 COPY repositorio repositorio
+COPY help help
 
 
 CMD ["pm2-runtime", "backend/server.bundle.js","--json"]
