@@ -7,9 +7,12 @@ import { Home,Search,InsertDriveFile,Public,AttachFile,GroupAdd,EmojiPeople,Exit
 
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import PublishIcon from '@material-ui/icons/Publish';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import {Notifi} from '../modulos/encabezado'
+
+import { getPermisos } from '../variables/permisos'
 
 
 import { getPermisos } from '../variables/permisos'
@@ -112,27 +115,30 @@ const Estructura = ({children}) => {
           <FaceIcon/>
           <p>Usuario</p>
         </Link>
-      </div>  
+      </div> 
       {isAdmin?
-      <Fragment>
-        <div className="elemento">
-          <Link to="/asignar">
-            <GroupAdd/>
-            <p>Asignar</p>
-          </Link>
-        </div>
-         
-        <div className="elemento">
-          <Link to="/admin">
-            <SupervisorAccountIcon/>
-            <p>Administracion</p>
-          </Link>
-        </div>
-      </Fragment>
-      :null
-      }
-            
-
+        <Fragment>
+          <div className="elemento">
+            <Link to="/asignar">
+              <GroupAdd/>
+              <p>Asignar</p>
+            </Link>
+          </div>
+          <div className="elemento">
+            <Link to="/actualizar">
+              <PublishIcon/>
+              <p>Actualizar</p>
+            </Link>
+          </div> 
+          <div className="elemento">
+            <Link to="/admin">
+              <SupervisorAccountIcon/>
+              <p>Administracion</p>
+            </Link>
+          </div> 
+        </Fragment>:null
+    }
+           
       </div>
     </div>
         <div id="panel_superior">

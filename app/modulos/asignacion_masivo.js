@@ -48,6 +48,10 @@ const Asignacion = () => {
     
   }, []);  
 
+  const sendRequest = (data) => {
+    return servidorPost('/backend',data);
+  }
+
 const onChange=e=>{
 
   const yourFile = e.target.files[0]
@@ -56,7 +60,7 @@ const onChange=e=>{
 
   servidorPost('/xls',formData).then((response) =>{
     const data = response.data;
-    console.log(data.json[0])
+    // console.log(data.json[0])
     if( typeof  data.json[0].id_expediente!="undefined"){
       setdoc(data.json)
     }else{
@@ -72,7 +76,7 @@ const asignar=e=>{
   var usuario_asigna='dangarita';
   var usuario_responsable=responsable;
   
-  if (usuario_responsable != null) {
+  // if (usuario_responsable != null) {
   
  
     envio();
@@ -81,14 +85,114 @@ const asignar=e=>{
 
 
       for (var i = 0; i < doc.length; i++){
-        
-        var datos={
-          "id_expediente":doc[i].id_expediente,
-          "ruta": 0,
-          "usuario_responsable":usuario_responsable
+
+        console.log(doc[i])
+        let tec = doc[i].tec;
+        let jur = doc[i].jur;
+        let sup_tec = doc[i].sup_tec;
+        let sup_jur = doc[i].sup_jur;
+        let expediente = doc[i].id_expediente;
+
+        let datos = {};
+        datos.id_expediente = expediente;
+        datos.id_consulta = 'insertar_asignacion_tecnico';
+
+        if(tec != ''){
+          let dataTec ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 2,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataTec);
+
+          let dataNotTec = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 1,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataNotTec);
+
+          let dataNotTec2 = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 7,
+            usuario_responsable: doc[i].tec
+          }
+          sendRequest(dataNotTec2);
         }
+
+        if(jur != ''){
+          let dataJur ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 3,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataJur);
+
+          let dataNotJur = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 2,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataNotJur);
+
+          let dataNotJur2 = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 5,
+            usuario_responsable: doc[i].jur
+          }
+          sendRequest(dataNotJur2);
+        }
+
+        if(sup_jur != ''){
+          let dataSupJur ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 4,
+            usuario_responsable: doc[i].sup_jur
+          }
+          sendRequest(dataSupJur);
+
+          let dataNotSupJur = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 4,
+            usuario_responsable: doc[i].sup_jur
+          }
+          sendRequest(dataNotSupJur);
+        }
+
+        if(sup_tec != ''){
+          let dataSupTec ={
+            id_expediente: expediente,
+            id_consulta: 'insertar_asignacion_tecnico',
+            id_tarea: 5,
+            usuario_responsable: doc[i].sup_tec
+          }
+
+          sendRequest(dataSupTec);
+
+          let dataNotSupTec = {
+            id_expediente: expediente,
+            id_consulta: 'update_notificacion',
+            ruta: 3,
+            usuario_responsable: doc[i].sup_tec
+          }
+          sendRequest(dataNotSupTec);
+        }
+        
+        // var datos={
+        //   "id_expediente":doc[i].id_expediente,
+        //   "ruta": 0,
+        //   "usuario_responsable":usuario_responsable
+        // }
       
-        notificacion(datos)
+        // notificacion(datos)
 
 
 
@@ -103,16 +207,17 @@ const asignar=e=>{
 
 
 
-}else{
-  toast.error("Seleccione un usuario ");
 }
+// else{
+//   toast.error("Seleccione un usuario ");
+// }
 
 
   
 
 
 
-}
+
 const select=e=>{
   const resp=e.target.value;
   setResponsable(resp)
@@ -128,8 +233,8 @@ const select=e=>{
       
         <Help titulo="Modelo" doc='guia_asignar_masivo.csv' />
 
-        <br/>
-      <div>
+        {/* <br/> */}
+      {/* <div>
       <select  onChange={select}>
       <option value="">Seleccione...</option>     
       {user.map((el,key) => (
@@ -139,7 +244,7 @@ const select=e=>{
       ))}
         
       </select>
-      </div>
+      </div> */}
         <div>
     
       </div>  
@@ -169,6 +274,7 @@ const select=e=>{
   </div>
   )
   }
+
 
 export default Asignacion;
 

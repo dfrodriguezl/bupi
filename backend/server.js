@@ -527,7 +527,8 @@ app.get('*', (req,res) =>{
         'reporte_info11' ,
         'reporte_info17',
          'reporte_info12' ,
-         'reporte_info13' ,     
+         'reporte_info13' ,
+         'reporte_info22' ,     
       ]
       var names = [
          'TÉCNICO',
@@ -544,7 +545,8 @@ app.get('*', (req,res) =>{
          'ESTUDIOS_DETALLADOS' ,
         'DOCUMENTOS_REQUERIDOS' , 
          'CONTROL_CALIDAD_TECNICO' ,
-         'CONTROL_CALIDAD_JURIDICO'          
+         'CONTROL_CALIDAD_JURIDICO' ,
+         'FACTURA_MUNICIPIO' ,          
       ]
     } else if (reporte == 'tributaria') {
       
