@@ -40,14 +40,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'pg_acueducto',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: 5432,//5432
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'pg_acueducto',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 5432,//5432
+//   timezone: 'utc'
+// })
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -63,14 +63,14 @@ const pool = new Pool({
 
 //local
 
-// const pool = new Pool({
-//   user: 'postgres',//docker
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
-//   password: 'postgres',//docker
-//   port: 5433,//5432
-//   // timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'postgres',//docker
+  host: 'localhost',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: 'postgres',//docker
+  port: 5433,//5432
+  // timezone: 'utc'
+})
 
 
 
@@ -166,19 +166,33 @@ const consulta = (request, response) => {
 
   }
 
-const auditoria = (data,user) => {
+const auditoria = (data,user,id) => {
   
   var datetime = new Date();
 
-  pool.query("insert into auditoria values((select max(id)+1 from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
-    if (error) {
-      console.log(error)
-      throw error
-    }
-        
-    console.log(results.rows)
-   
-  });
+  if(id != null){
+    pool.query("insert into auditoria values((select max(id)+" + id + " from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+      if (error) {
+        console.log(error)
+        throw error
+      }
+          
+      console.log(results.rows)
+     
+    });
+  }else{
+    pool.query("insert into auditoria values((select max(id)+1 from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+      if (error) {
+        console.log(error)
+        throw error
+      }
+          
+      console.log(results.rows)
+     
+    });
+  }
+
+  
 
 
 }
@@ -877,6 +891,142 @@ app.post('/excel', function(request, response){
 
   
 });
+
+app.post("/actualizacionMasiva", function(request, response){
+  var token = request.cookies.jwt;
+  let data = request.body;
+
+  var consultas = [
+    'update_info1_general_proyecto',
+    'update_info2_general_predio' ,
+    'update_info3_areas_usos' ,
+    'update_info4_avaluos' ,
+    'update_info5_juridicos' ,  
+    'update_info21_juridicos' ,
+    'update_info7_propietario_catastral' ,
+    'update_info8_propietario_juridico' ,
+    'update_info6_propietario_anterior_juridico' ,
+    'update_info9_zmpa',
+    'update_info10_infraestructura',  
+    'update_info14_saneamiento_basico' ,
+    'update_info15_saneamiento_juridico',
+     'update_info18_municipios_intersectados' ,
+     'update_info19_mutacion_predial' ,
+     'update_info11_estudios_detallados' , 
+     'update_info17_documentos_requeridos' , 
+     'update_info12_control_calidad_tecnico' , 
+     'update_info13_control_calidad_juridico' , 
+     'update_info22_factura_municipio' ,     
+  ]
+  var hojas = [
+     'general_proyecto',
+     'general_predio' ,
+    'areas_usos' ,
+    'avaluos' ,
+     'juridico' ,
+     'adquisicion' ,
+     'propietario_catastral' ,
+    'propietario_juridico' ,
+    'propietario_anterior_juridico' ,
+    'zmpa',
+    'infraestructura',
+     'saneamiento_basico' ,
+    'saneamiento_juridico' , 
+     'municipios_intersectados' ,
+     'mutacion_predial' ,
+     'estudios_detallados' ,  
+     'documentos_requeridos' ,  
+     'control_calidad_tecnico' ,  
+     'control_calidad_juridico' ,  
+     'factura_municipio' ,          
+  ]
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });    
+      } else {
+        request.decoded = decoded;   
+        
+        let totalData = 0;
+        let counter = 0;
+
+        Object.keys(data).map((key,idx) => {
+          let hoja_nombre = data[key];
+          if(hoja_nombre.length > 0){
+            totalData = totalData + hoja_nombre.length;
+          }
+
+        });
+
+
+        // console.log(resultsList)
+
+        async function processTasks(){
+          let resultsList = []
+          Object.keys(data).map((key,idx) => {
+            let hoja_nombre = data[key];
+            if(hoja_nombre.length > 0){
+              if(hojas.includes(key)){
+                hoja_nombre.forEach(element => {
+                  counter = counter + 1;
+                  let id_consulta = consultas[idx];
+                  var query_text=get_sql(id_consulta);
+                  var upd = ""
+                  for (var k in element) {
+                    upd = upd + k + "=$" + k + ","
+                  }
+                  upd = upd.replace(/,\s*$/, "");
+                  
+                  if(query_text.includes("upd_query_alpaca")){
+                    query_text = query_text.replace("upd_query_alpaca", upd);
+                    var usuario = decoded.usuario_usuario;
+                    auditoria(element,usuario, counter)
+                  }else if(query_text.includes("token")){
+                    query_text=query_text.replace(/token/g,"'"+decoded.usuario_usuario+"'");
+                  }
+  
+                  try {
+                    console.log(counter)
+                    const promise = pool.query(query_text, element)
+                                    .then(results => {
+                                      return results.rows;
+                                    })
+                                    .catch(err => {
+                                        console.log(err)
+                                        response.status(200).json("error")
+                                        throw error
+                                    })
+
+                    resultsList.push(promise)
+                  }
+                  catch (err) {
+                    console.log(err)
+                    response.status(200).json("error")
+                  }
+                  
+                });
+                
+              }
+            }
+  
+          })
+
+          const array = await Promise.all(resultsList);
+          response.status(200).send(array);
+        }
+
+        processTasks()
+
+          
+
+          // response.status(200).send(await Promise.all(resultsList));
+      }
+    });
+  }else{
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+})
 
 
 

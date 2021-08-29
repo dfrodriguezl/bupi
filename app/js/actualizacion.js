@@ -4,6 +4,7 @@ import Estructura from './page'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Aprobacion from '../modulos/aprobacion'
 import Tipologias from '../modulos/tipologias'
+import ActualizacionMasiva from '../modulos/actualizacion_masiva'
 
 
 const Actualizacion = () => {
@@ -23,6 +24,7 @@ const Actualizacion = () => {
                         <Tab>Cambio de estados</Tab>
                     </TabList>
                     <TabPanel>
+                        <ActualizacionMasiva />
                     </TabPanel>
                     <TabPanel>
                         <Aprobacion></Aprobacion>
