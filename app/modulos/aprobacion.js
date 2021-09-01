@@ -90,7 +90,7 @@ const Aprobacion = () => {
 
       getPermisos().then((response) => {
         setpermiso(response.some(r=> [1,2].includes(r)))
-    })
+      })
     
     
   }, []);  
