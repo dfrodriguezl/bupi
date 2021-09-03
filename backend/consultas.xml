@@ -913,7 +913,7 @@ group by dominio) as d
         <sql>
             select descripcion
             from info5_juridicos ij
-            left join tabla_dominios d on ij.tipologia_impuesto_2021::text = d.valor
+            left join dominios d on ij.tipologia_impuesto_2021::text = d.valor
             and d.dominio = 'Tip_Impuestos_V'
             where ij.id_expediente=$id_expediente
         </sql>
@@ -936,7 +936,7 @@ group by dominio) as d
 
 select * from (
 
-select * from info1_general_proyecto 
+select * from info1_general_proyecto_vw 
 natural join info2_general_predio
 natural join info3_areas_usos
 natural join info4_avaluos
@@ -1672,6 +1672,16 @@ order by id_expediente
             SET estado = 1,fecha_solucion = null
             WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[]) and estado = 2
             returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_observacion">
+        <sql>
+            select d.descripcion, d.bloqueo_predio
+            from info1_general_proyecto igp
+            left join dominios d on igp.observacion_sig::text = d.valor
+            and d.dominio = 'Observ_SIG'
+            where igp.id_expediente=$id_expediente
         </sql>
     </Consulta>
 
