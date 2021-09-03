@@ -157,9 +157,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             var data = { id_consulta: 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
-                                // console.log(response)
                                 getBloqueo(id).then((r) => {
-                                    console.log(r);
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
@@ -168,7 +166,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                 })
 
                                 console.log("lectura")
-                                // console.log(response.data[0].exists)
                             });
 
                         }
@@ -295,13 +292,46 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-
+                validar(index,result[0].id_expediente)
             }
         });
 
         data = null
 
     };
+
+    const validar = (id_form, id_exp) => {
+        const data = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'eval_validadores'
+        }
+
+        let resultados_validacion = {};
+
+        servidorPost('/backend', data).then(function (response) {
+            
+            const dataGet = {
+                formulario: id_form,
+                expediente: id_exp,
+                id_consulta: 'get_validadores'
+            }
+            servidorPost('/backend', dataGet).then(function (response_2) {
+                console.log(response_2)
+                response_2.data.forEach((v) => {
+                    if(resultados_validacion.hasOwnProperty(v.campo)){
+                        resultados_validacion[v.campo].push(v);
+                    }else{
+                        resultados_validacion[v.campo] = []
+                        resultados_validacion[v.campo].push(v);
+                    }
+                    
+                },[]);
+
+                console.log(resultados_validacion);
+            })
+        })
+    }
 
 
     const change = (msg, e) => {

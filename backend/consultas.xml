@@ -1685,5 +1685,23 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="eval_validadores">
+        <sql>
+            select *
+            from eval_validadores($formulario, $expediente);
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_validadores">
+        <sql>
+            select *
+            from resultados_validacion rv
+            join validadores v on rv.id_validador = v.id_validador
+            where rv.id_expediente = $expediente
+            and rv.estado is not null
+            and v.id_formulario = $formulario;
+        </sql>
+    </Consulta>
+
 
 </Consultas>
