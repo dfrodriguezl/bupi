@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useParams } from 'react-router-dom'
@@ -21,6 +21,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import ReactSelect from "react-select";
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 import ReactDatePicker from "react-datepicker";
@@ -292,7 +294,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-                validar(index,result[0].id_expediente)
+                // validar(index,result[0].id_expediente)
             }
         });
 
@@ -300,38 +302,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     };
 
-    const validar = (id_form, id_exp) => {
-        const data = {
-            formulario: id_form,
-            expediente: id_exp,
-            id_consulta: 'eval_validadores'
-        }
-
-        let resultados_validacion = {};
-
-        servidorPost('/backend', data).then(function (response) {
-            
-            const dataGet = {
-                formulario: id_form,
-                expediente: id_exp,
-                id_consulta: 'get_validadores'
-            }
-            servidorPost('/backend', dataGet).then(function (response_2) {
-                console.log(response_2)
-                response_2.data.forEach((v) => {
-                    if(resultados_validacion.hasOwnProperty(v.campo)){
-                        resultados_validacion[v.campo].push(v);
-                    }else{
-                        resultados_validacion[v.campo] = []
-                        resultados_validacion[v.campo].push(v);
-                    }
-                    
-                },[]);
-
-                console.log(resultados_validacion);
-            })
-        })
-    }
+    
 
 
     const change = (msg, e) => {
@@ -512,7 +483,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         )}
 
-                        {permiso && !lectura ? <button className='primmary' type="submit">Guardar</button> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
+                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} id_exp={index} id_form={id}></ModalValidacion>  : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
 
@@ -872,6 +843,92 @@ const Ayuda = () => {
 
     )
 
+}
+
+const ModalValidacion = ({open,id_exp,id_form}) => {
+
+    const [ listaValidacion, setListaValidacion ] = useState({})
+
+    const validar = (id_form, id_exp) => {
+        const data = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'eval_validadores'
+        }
+
+        let resultados_validacion = {};
+
+        servidorPost('/backend', data).then(function (response) {
+            
+            const dataGet = {
+                formulario: id_form,
+                expediente: id_exp,
+                id_consulta: 'get_validadores'
+            }
+            servidorPost('/backend', dataGet).then(function (response_2) {
+                console.log(response_2)
+                response_2.data.forEach((v) => {
+                    if(resultados_validacion.hasOwnProperty(v.campo)){
+                        resultados_validacion[v.campo].push(v);
+                    }else{
+                        resultados_validacion[v.campo] = []
+                        resultados_validacion[v.campo].push(v);
+                    }
+                    
+                },[]);
+
+                setListaValidacion(resultados_validacion);
+                
+            })
+        })
+    }
+
+    
+
+    useEffect(() => {
+        validar(id_exp,id_form);
+    },[])
+
+
+
+    return (
+        <Popup
+        trigger={open}
+        modal
+        nested
+      >               
+           <div className="modal">
+           <div id="seccion">       
+               <div id="titulo_seccion">Resultados validación</div>
+               <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
+                {console.log(listaValidacion)}
+                {Object.keys(listaValidacion).map((v) => {
+                    return (
+                        <Fragment>
+                            <p>Campo: {v}</p>
+                            <ul>
+                                {listaValidacion[v].map((c) => {
+                                    console.log(c)
+                                    return (
+                                        <li>
+                                            Condición: {c.id_condicion}, estado: {
+                                                c.estado ?
+                                                    <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }}/>:
+                                                    <CloseIcon style={{ color: 'red', fontSize: '1rem' }}/>
+                                            }
+                                            
+                                        </li>
+                                    )
+                                })}
+                            </ul>    
+                        </Fragment>
+                        
+                    )
+                })}
+         </div>
+         </div>
+        </Popup>
+    )
 }
 
 
