@@ -91,6 +91,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [defecto, setDefecto] = React.useState(true);
     const [permiso, setpermiso] = React.useState(false);
     const [reload, setReload] = React.useState(false);
+    const [listaValidacion, setListaValidacion] = React.useState({});
 
 
 
@@ -294,6 +295,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
+                validar(index, result[0].id_expediente)
                 // validar(index,result[0].id_expediente)
             }
         });
@@ -349,6 +351,40 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         }
 
 
+    }
+
+    const validar = (id_form, id_exp) => {
+        const data = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'eval_validadores'
+        }
+
+        let resultados_validacion = {};
+
+        servidorPost('/backend', data).then(function (response) {
+            
+            const dataGet = {
+                formulario: id_form,
+                expediente: id_exp,
+                id_consulta: 'get_validadores'
+            }
+            servidorPost('/backend', dataGet).then(function (response_2) {
+                // console.log(response_2)
+                response_2.data.forEach((v) => {
+                    if(resultados_validacion.hasOwnProperty(v.campo)){
+                        resultados_validacion[v.campo].push(v);
+                    }else{
+                        resultados_validacion[v.campo] = []
+                        resultados_validacion[v.campo].push(v);
+                    }
+                    
+                },[]);
+
+                setListaValidacion(resultados_validacion);
+                
+            })
+        })
     }
 
     return (
@@ -483,7 +519,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         )}
 
-                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} id_exp={index} id_form={id}></ModalValidacion>  : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
+                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion}></ModalValidacion>  : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
 
@@ -845,52 +881,9 @@ const Ayuda = () => {
 
 }
 
-const ModalValidacion = ({open,id_exp,id_form}) => {
+const ModalValidacion = ({open,lista}) => {
 
-    const [ listaValidacion, setListaValidacion ] = useState({})
-
-    const validar = (id_form, id_exp) => {
-        const data = {
-            formulario: id_form,
-            expediente: id_exp,
-            id_consulta: 'eval_validadores'
-        }
-
-        let resultados_validacion = {};
-
-        servidorPost('/backend', data).then(function (response) {
-            
-            const dataGet = {
-                formulario: id_form,
-                expediente: id_exp,
-                id_consulta: 'get_validadores'
-            }
-            servidorPost('/backend', dataGet).then(function (response_2) {
-                console.log(response_2)
-                response_2.data.forEach((v) => {
-                    if(resultados_validacion.hasOwnProperty(v.campo)){
-                        resultados_validacion[v.campo].push(v);
-                    }else{
-                        resultados_validacion[v.campo] = []
-                        resultados_validacion[v.campo].push(v);
-                    }
-                    
-                },[]);
-
-                setListaValidacion(resultados_validacion);
-                
-            })
-        })
-    }
-
-    
-
-    useEffect(() => {
-        validar(id_exp,id_form);
-    },[])
-
-
-
+   
     return (
         <Popup
         trigger={open}
@@ -901,13 +894,13 @@ const ModalValidacion = ({open,id_exp,id_form}) => {
            <div id="seccion">       
                <div id="titulo_seccion">Resultados validación</div>
                <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
-                {console.log(listaValidacion)}
-                {Object.keys(listaValidacion).map((v) => {
+                {console.log(lista)}
+                {Object.keys(lista).map((v) => {
                     return (
                         <Fragment>
                             <p>Campo: {v}</p>
                             <ul>
-                                {listaValidacion[v].map((c) => {
+                                {lista[v].map((c) => {
                                     console.log(c)
                                     return (
                                         <li>
