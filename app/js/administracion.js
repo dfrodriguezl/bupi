@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Dominios from '../modulos/dominios'
 import Tipologias from '../modulos/tipologias'
 import Usuarios from '../modulos/usuarios'
+import Dups from '../modulos/dups'
 
 
 const Administracion = () => {
@@ -23,6 +24,7 @@ const Administracion = () => {
                         <Tab>Dominios</Tab>
                         <Tab>Tipologías documentales</Tab>
                         <Tab>Usuarios</Tab>
+                        <Tab>Dup's</Tab>
                     </TabList>
                     <TabPanel>
                         <Dominios/>
@@ -32,6 +34,9 @@ const Administracion = () => {
                     </TabPanel>
                     <TabPanel>  
                         <Usuarios/>
+                    </TabPanel>
+                    <TabPanel>  
+                        <Dups/>
                     </TabPanel>
                 </Tabs>
             </div>      

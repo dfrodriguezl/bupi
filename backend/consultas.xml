@@ -17,7 +17,7 @@
     </Consulta>
     <Consulta id="info1_general_proyecto">
         <sql>
-        select * from info1_general_proyecto where id_expediente=$id_expediente
+        select * from info1_vw_dup where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info2_general_predio">
@@ -360,7 +360,10 @@
             'enum',d.enum,
             'editable',editable,
             'regex',regex,
-            'message',message
+            'message',message,
+            'listener',listener,
+            'id_consulta',id_consulta,
+            'external_field',external_field
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion)) as enum
@@ -1700,6 +1703,32 @@ order by id_expediente
             where rv.id_expediente = $expediente
             and rv.estado is not null
             and v.id_formulario = $formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_dup">
+        <sql>
+            select *
+            from dup
+            where id_proyecto = $proyecto;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_dups_lista">
+        <sql>
+            select *
+            from dup;
+        </sql>
+    </Consulta>
+
+     <Consulta id="insert_valor_dup">
+        <sql>
+        INSERT INTO dup
+            VALUES ((select max (id_dup)+1 from dup),$id_proyecto, $cod_dup,$fecha_actadm, $objet_res, $nom_proy, $actadm_anteriores, $observacion)
+            ON CONFLICT (id_proyecto) DO UPDATE
+            SET id_proyecto = $id_proyecto, cod_dup = $cod_dup, fecha_actadm = $fecha_actadm, objet_res = $objet_res, nom_proy = $nom_proy,
+            actadm_anteriores = $actadm_anteriores, observacion = $observacion
+            returning id_dup
         </sql>
     </Consulta>
 

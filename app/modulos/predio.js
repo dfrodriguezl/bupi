@@ -92,6 +92,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [permiso, setpermiso] = React.useState(false);
     const [reload, setReload] = React.useState(false);
     const [listaValidacion, setListaValidacion] = React.useState({});
+    const [valueTexto, setValueTexto] = React.useState({});
+    const [externalData, setExternalData] = React.useState({});
 
 
 
@@ -179,6 +181,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         setFields({ data: datos, info: response1.data[0] });
 
                         setView(true)
+                        datos.map((f) => {
+                            if (f.doc.form === 'texto' && f.doc.listener === 'change') {
+                                let json = {}
+                                json[f.doc.field] = response1.data[0][f.doc.field];
+                                setValueTexto(json)
+                            }
+                        })
                     } else {
                         setView(false)
                     }
@@ -304,7 +313,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     };
 
-    
+
 
 
     const change = (msg, e) => {
@@ -363,7 +372,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         let resultados_validacion = {};
 
         servidorPost('/backend', data).then(function (response) {
-            
+
             const dataGet = {
                 formulario: id_form,
                 expediente: id_exp,
@@ -372,19 +381,34 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             servidorPost('/backend', dataGet).then(function (response_2) {
                 // console.log(response_2)
                 response_2.data.forEach((v) => {
-                    if(resultados_validacion.hasOwnProperty(v.campo)){
+                    if (resultados_validacion.hasOwnProperty(v.campo)) {
                         resultados_validacion[v.campo].push(v);
-                    }else{
+                    } else {
                         resultados_validacion[v.campo] = []
                         resultados_validacion[v.campo].push(v);
                     }
-                    
-                },[]);
+
+                }, []);
 
                 setListaValidacion(resultados_validacion);
-                
+
             })
         })
+    }
+
+    const handleChange = (consulta, e) => {
+        let value = e.target.value;
+        setValueTexto(value)
+        const dataConsulta = {
+            proyecto: value,
+            id_consulta: consulta
+        }
+
+        servidorPost('/backend', dataConsulta).then(function (response) {
+            console.log(response.data[0])
+            setExternalData(response.data[0])
+        });
+
     }
 
     return (
@@ -397,6 +421,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                         {fields.data.map((i, e) =>
+
 
                             <div className="formulario">
 
@@ -454,6 +479,21 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
+
+                                                {/* {i.doc.listener === "change" ?
+                                                    <input type={i.doc.type}
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        //  defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        value={valueTexto[i.doc.field]}
+                                                        onChange={i.doc.listener === "change" ? (e) => handleChange(i.doc.id_consulta, e) : null}
+                                                        ref={register({
+                                                            pattern: {
+                                                                value: getRegex(i.doc.regex),
+                                                                message: i.doc.message
+                                                            }
+                                                        })} /> : */}
                                                 <input type={i.doc.type}
                                                     className='form_input'
                                                     name={i.doc.field}
@@ -465,6 +505,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                             message: i.doc.message
                                                         }
                                                     })} />
+                                                {/* } */}
+
                                                 {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
                                             </>
                                             : ''
@@ -493,7 +535,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         }
                                         {i.doc.form == 'fecha' ?
 
-
                                             <Controller
                                                 as={DatePicker}
                                                 control={control}
@@ -519,7 +560,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         )}
 
-                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion}></ModalValidacion>  : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
+
+                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
 
@@ -881,45 +923,50 @@ const Ayuda = () => {
 
 }
 
-const ModalValidacion = ({open,lista}) => {
+const ModalValidacion = ({ open, lista }) => {
 
-   
+    console.log("Lista validadores")
+    console.log(lista)
+
     return (
         <Popup
-        trigger={open}
-        modal
-        nested
-      >               
-           <div className="modal">
-           <div id="seccion">       
-               <div id="titulo_seccion">Resultados validación</div>
-               <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
-                {console.log(lista)}
-                {Object.keys(lista).map((v) => {
-                    return (
-                        <Fragment>
-                            <p>Campo: {v}</p>
-                            <ul>
-                                {lista[v].map((c) => {
-                                    console.log(c)
-                                    return (
-                                        <li>
-                                            Condición: {c.id_condicion}, estado: {
-                                                c.estado ?
-                                                    <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }}/>:
-                                                    <CloseIcon style={{ color: 'red', fontSize: '1rem' }}/>
-                                            }
-                                            
-                                        </li>
-                                    )
-                                })}
-                            </ul>    
-                        </Fragment>
-                        
-                    )
-                })}
-         </div>
-         </div>
+            trigger={open}
+            modal
+            nested
+        >
+            {Object.keys(lista).length > 0 ?
+                <div className="modal">
+                    <div id="seccion">
+                        <div id="titulo_seccion">Resultados validación</div>
+                        <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
+
+                        {Object.keys(lista).map((v) => {
+                            return (
+                                <Fragment>
+                                    <p>Campo: {v}</p>
+                                    <ul>
+                                        {lista[v].map((c) => {
+                                            return (
+                                                <li>
+                                                    Condición: {c.id_condicion}, estado: {
+                                                        c.estado ?
+                                                            <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
+                                                            <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />
+                                                    }
+
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </Fragment>
+
+                            )
+                        })}
+                    </div>
+                </div> : null}
+
+
+
         </Popup>
     )
 }
