@@ -1732,5 +1732,22 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="get_servicios">
+        <sql>
+            select *
+            from servicios s
+            where s.id_formulario = $id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_valor_validacion">
+        <sql>
+            INSERT INTO resultados_validacion
+            VALUES ($id_validador,$id_condicion,$estado,$id_expediente)
+            ON CONFLICT (id_validador,id_condicion,id_expediente) DO UPDATE
+            SET estado = $estado
+            returning id_validador,id_condicion,id_expediente
+        </sql>
+    </Consulta>
 
 </Consultas>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { useParams } from 'react-router-dom'
 
-import { url, servidorPost } from '../js/request'
+import { url, servidorPost, servidorGetAbs } from '../js/request'
 
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -213,7 +213,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         if (str) {
             var parts = /\/(.*)\/(.*)/.exec(str);
             var restoredRegex = new RegExp(parts[1], parts[2]);
-            console.log(restoredRegex)
+            // console.log(restoredRegex)
             return restoredRegex;
 
         } else {
@@ -295,16 +295,16 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         data.upd = key
         data.id_consulta = "update_" + tbl;
         data.id_expediente = id
+        let data_guardar = data;
 
         servidorPost('/backend', data).then(function (response) {
             var result = response.data;
-            console.log(result)
             if (result == "error") {
                 toast.error("Hubo un error al almacenar");
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-                validar(index, result[0].id_expediente)
+                validar(index, result[0].id_expediente, data_guardar)
                 // validar(index,result[0].id_expediente)
             }
         });
@@ -362,39 +362,114 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     }
 
-    const validar = (id_form, id_exp) => {
+    async function validar(id_form, id_exp, datos_guardar){
         const data = {
             formulario: id_form,
             expediente: id_exp,
             id_consulta: 'eval_validadores'
         }
 
+        const dataGet = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'get_validadores'
+        }
+
+        const dataServicios = {
+            id_formulario: id_form,
+            id_consulta: 'get_servicios'
+        }
+
+        let resultsList = [];
+
         let resultados_validacion = {};
 
-        servidorPost('/backend', data).then(function (response) {
+        let serv = servidorPost('/backend', dataServicios).then(function (response_servicios) {
+            let data_res = response_servicios.data;
+            
+            if (data_res.length > 0) {
+                let results2 = [];
+                data_res.forEach((dr) => {
+                    let url_completa = dr.url + "?where=" + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
+                    servidorGetAbs(url_completa).then((res_serv) => {
+                        let features = res_serv.data.features;
+                        let dataValServ = {
+                            id_validador: dr.id_validador,
+                            id_condicion: dr.id_servicio,
+                            id_expediente: id_exp,
+                            estado: features.length > 0 ? true : false,
+                            id_consulta: 'insert_valor_validacion'
+                        }
+                        // console.log(features)
+                        // console.log(dataValServ)
 
-            const dataGet = {
-                formulario: id_form,
-                expediente: id_exp,
-                id_consulta: 'get_validadores'
-            }
-            servidorPost('/backend', dataGet).then(function (response_2) {
-                // console.log(response_2)
-                response_2.data.forEach((v) => {
-                    if (resultados_validacion.hasOwnProperty(v.campo)) {
-                        resultados_validacion[v.campo].push(v);
-                    } else {
-                        resultados_validacion[v.campo] = []
-                        resultados_validacion[v.campo].push(v);
-                    }
+                        let promise = servidorPost('/backend', dataValServ).then(function (response_insert) {
+                            return response_insert.data;       
+                        })
 
-                }, []);
+                        
 
-                setListaValidacion(resultados_validacion);
+                        resultsList.push(promise);              
+                        
+                    })
+                })
+            } 
+            // else {
+            //     let promise = servidorPost('/backend', dataGet).then(function (response_2) {
+            //         // console.log(response_2)
+            //         response_2.data.forEach((v) => {
+            //             if (resultados_validacion.hasOwnProperty(v.campo)) {
+            //                 resultados_validacion[v.campo].push(v);
+            //             } else {
+            //                 resultados_validacion[v.campo] = []
+            //                 resultados_validacion[v.campo].push(v);
+            //             }
 
-            })
+            //         }, []);
+
+            //         resultsList.push(promise);
+
+                   
+
+                    
+
+
+            //     })
+            // }
+
+
+            
         })
-    }
+
+        let promiseJur = servidorPost('/backend', data).then(function (response) {
+                return response.data;
+        })
+
+        resultsList.push(promiseJur);
+        // resultsList.push(serv);
+        console.log("ARRAY")
+        console.log(resultsList);
+
+                await Promise.all(resultsList).then((r) => {
+                    console.log("ARRAY")
+                    console.log(r)
+                    servidorPost('/backend', dataGet).then(function (response_2) {
+                        console.log("reponse",response_2)
+                        response_2.data.forEach((v) => {
+                            if (resultados_validacion.hasOwnProperty(v.campo)) {
+                                resultados_validacion[v.campo].push(v);
+                            } else {
+                                resultados_validacion[v.campo] = []
+                                resultados_validacion[v.campo].push(v);
+                            }
+
+                        }, []);
+
+                        setListaValidacion(resultados_validacion);
+
+                    })
+                });
+    };
 
     const handleChange = (consulta, e) => {
         let value = e.target.value;
@@ -925,8 +1000,8 @@ const Ayuda = () => {
 
 const ModalValidacion = ({ open, lista }) => {
 
-    console.log("Lista validadores")
-    console.log(lista)
+    // console.log("Lista validadores")
+    // console.log(lista)
 
     return (
         <Popup

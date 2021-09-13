@@ -24,6 +24,15 @@ export function servidorGet(uri){
     });
 }
 
+export function servidorGetAbs(uri){
+
+    return axios({
+        method: 'get',
+        url: uri,
+        withCredentials: true
+        })
+}
+
 export function redireccionar(error){
     if(error.response.status==403){
         window.location.href = 'bienes-raices/web/login';
