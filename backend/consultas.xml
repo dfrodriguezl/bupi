@@ -363,10 +363,15 @@
             'message',message,
             'listener',listener,
             'id_consulta',id_consulta,
-            'external_field',external_field
+            'external_field',external_field,
+            'field_child', field_child,
+			'child_domain',child_domain,
+			'field_father',field_father,
+			'father_domain',father_domain,
+            'enum_name',m.enum
             ) as doc
         from modulos m left join (select dominio,
-								  json_agg(json_build_object('value',valor,'label',descripcion)) as enum
+								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 								  from dominios
 group by dominio) as d
         on m.enum=d.dominio

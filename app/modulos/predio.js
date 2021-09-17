@@ -94,6 +94,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [listaValidacion, setListaValidacion] = React.useState({});
     const [valueTexto, setValueTexto] = React.useState({});
     const [externalData, setExternalData] = React.useState({});
+    const [listDomains, setListDomains ] = React.useState({});
 
 
 
@@ -318,6 +319,17 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     const change = (msg, e) => {
 
+        let value = msg[0].value;
+        if(e.child_domain != null){
+            let fieldChild = fields.data.filter((f) => f.doc.enum_name == e.child_domain);
+            console.log(fieldChild[0].doc.enum)
+            let valuesChild = fieldChild[0].doc.enum.filter((v) => v.padre_valor == value || v.padre_valor == null);
+            let dominios = {};
+            dominios[e.field_child] = valuesChild;
+            console.log(dominios)
+            setListDomains(dominios);
+        }
+        
         return msg;
     }
 
@@ -362,7 +374,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     }
 
-    async function validar(id_form, id_exp, datos_guardar){
+    async function validar(id_form, id_exp, datos_guardar) {
         const data = {
             formulario: id_form,
             expediente: id_exp,
@@ -386,7 +398,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         let serv = servidorPost('/backend', dataServicios).then(function (response_servicios) {
             let data_res = response_servicios.data;
-            
+
             if (data_res.length > 0) {
                 let results2 = [];
                 data_res.forEach((dr) => {
@@ -404,16 +416,16 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         // console.log(dataValServ)
 
                         let promise = servidorPost('/backend', dataValServ).then(function (response_insert) {
-                            return response_insert.data;       
+                            return response_insert.data;
                         })
 
-                        
 
-                        resultsList.push(promise);              
-                        
+
+                        resultsList.push(promise);
+
                     })
                 })
-            } 
+            }
             // else {
             //     let promise = servidorPost('/backend', dataGet).then(function (response_2) {
             //         // console.log(response_2)
@@ -429,46 +441,46 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             //         resultsList.push(promise);
 
-                   
 
-                    
+
+
 
 
             //     })
             // }
 
 
-            
+
         })
 
         let promiseJur = servidorPost('/backend', data).then(function (response) {
-                return response.data;
+            return response.data;
         })
 
         resultsList.push(promiseJur);
         // resultsList.push(serv);
-        console.log("ARRAY")
-        console.log(resultsList);
+        // console.log("ARRAY")
+        // console.log(resultsList);
 
-                await Promise.all(resultsList).then((r) => {
-                    console.log("ARRAY")
-                    console.log(r)
-                    servidorPost('/backend', dataGet).then(function (response_2) {
-                        console.log("reponse",response_2)
-                        response_2.data.forEach((v) => {
-                            if (resultados_validacion.hasOwnProperty(v.campo)) {
-                                resultados_validacion[v.campo].push(v);
-                            } else {
-                                resultados_validacion[v.campo] = []
-                                resultados_validacion[v.campo].push(v);
-                            }
+        await Promise.all(resultsList).then((r) => {
+            // console.log("ARRAY")
+            // console.log(r)
+            servidorPost('/backend', dataGet).then(function (response_2) {
+                console.log("reponse", response_2)
+                response_2.data.forEach((v) => {
+                    if (resultados_validacion.hasOwnProperty(v.campo)) {
+                        resultados_validacion[v.campo].push(v);
+                    } else {
+                        resultados_validacion[v.campo] = []
+                        resultados_validacion[v.campo].push(v);
+                    }
 
-                        }, []);
+                }, []);
 
-                        setListaValidacion(resultados_validacion);
+                setListaValidacion(resultados_validacion);
 
-                    })
-                });
+            })
+        });
     };
 
     const handleChange = (consulta, e) => {
@@ -509,23 +521,42 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                                {i.doc.field_father ?
+                                                    <Controller
+                                                        as={ReactSelect}
+                                                        options={
+                                                            listDomains[i.doc.field]
+                                                        }
 
-                                                <Controller
-                                                    as={ReactSelect}
-                                                    options={
-                                                        i.doc.enum
-                                                    }
+
+                                                        isDisabled={lectura}
+                                                        name={i.doc.field}
+                                                        isClearable={true}
+
+                                                        control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                        onChange={(e) => change(e, i.doc)}
+
+                                                    /> :
+                                                    <Controller
+                                                        as={ReactSelect}
+                                                        options={
+                                                            i.doc.enum
+                                                        }
 
 
-                                                    isDisabled={lectura}
-                                                    name={i.doc.field}
-                                                    isClearable={true}
+                                                        isDisabled={lectura}
+                                                        name={i.doc.field}
+                                                        isClearable={true}
 
-                                                    control={control}
-                                                    defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                    onChange={(e) => change(e, i.doc.field)}
+                                                        control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                        onChange={(e) => change(e, i.doc)}
 
-                                                />
+                                                    />
+
+                                                }
+
                                             </>
 
                                             : ''
