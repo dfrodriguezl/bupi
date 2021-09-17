@@ -94,7 +94,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [listaValidacion, setListaValidacion] = React.useState({});
     const [valueTexto, setValueTexto] = React.useState({});
     const [externalData, setExternalData] = React.useState({});
-    const [listDomains, setListDomains ] = React.useState({});
+    const [listDomains, setListDomains] = React.useState({});
+    const [chip, setChip] = React.useState(null);
 
 
 
@@ -115,6 +116,34 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             return servidorPost('/backend', data);
         }
+
+        var data = {
+            "id_consulta": "info_header_form",
+            "id_expediente": id,
+        }
+
+        // console.log(data)
+
+        servidorPost('/backend', data).then((response) => {
+            setChip(response.data[0].chip_cat)
+        })
+
+        // useEffect(() => {
+
+        //     var data = {
+        //         "id_consulta": "info_header_form",
+        //         "id_expediente": id,
+        //     }
+    
+        //     // console.log(data)
+    
+        //     servidorPost('/backend', data).then((response) => {
+        //         setChip(response.data[0].chip_cat)
+        //     })
+    
+    
+    
+        // }, [false])
 
         if (index > 0) {
 
@@ -275,7 +304,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                 }
             } else {
-                if (item == "select" || item == "fecha" || item == "numero") {
+                if (item == "select" || item == "fecha" || item == "numero" || item == "consulta") {
                     data[key] = null
                 }
             }
@@ -320,16 +349,15 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const change = (msg, e) => {
 
         let value = msg[0].value;
-        if(e.child_domain != null){
+        if (e.child_domain != null) {
             let fieldChild = fields.data.filter((f) => f.doc.enum_name == e.child_domain);
             console.log(fieldChild[0].doc.enum)
             let valuesChild = fieldChild[0].doc.enum.filter((v) => v.padre_valor == value || v.padre_valor == null);
             let dominios = {};
             dominios[e.field_child] = valuesChild;
-            console.log(dominios)
             setListDomains(dominios);
         }
-        
+
         return msg;
     }
 
@@ -402,7 +430,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             if (data_res.length > 0) {
                 let results2 = [];
                 data_res.forEach((dr) => {
-                    let url_completa = dr.url + "?where=" + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
+                    let url_completa = dr.url + "?where=PRECHIP='" + chip + "' and " + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
                     servidorGetAbs(url_completa).then((res_serv) => {
                         let features = res_serv.data.features;
                         let dataValServ = {
@@ -1003,11 +1031,12 @@ const Ayuda = () => {
             "id_expediente": id,
         }
 
-        console.log(data)
+        // console.log(data)
 
         servidorPost('/backend', data).then((response) => {
 
             setInfo(response.data[0])
+            setChip(response.data[0].chip_cat)
 
         })
 
@@ -1041,7 +1070,7 @@ const ModalValidacion = ({ open, lista }) => {
             nested
         >
             {Object.keys(lista).length > 0 ?
-                <div className="modal">
+                <div className="modal" style={{ maxHeight: '400px', overflow: 'auto' }}>
                     <div id="seccion">
                         <div id="titulo_seccion">Resultados validación</div>
                         <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
