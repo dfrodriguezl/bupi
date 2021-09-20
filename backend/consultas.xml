@@ -1755,4 +1755,29 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="validacion_masiva">
+        <sql>
+            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
+                from info2_general_predio pr, 
+                (select distinct id_formulario from validadores) va
+                order by pr.id_expediente, va.id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="validacion_masiva">
+        <sql>
+            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
+                from info2_general_predio pr, 
+                (select distinct id_formulario from validadores) va
+                order by pr.id_expediente, va.id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="reporte_validacion">
+        <sql>
+            select *
+                from resultados_validacion;
+        </sql>
+    </Consulta>
+
 </Consultas>
