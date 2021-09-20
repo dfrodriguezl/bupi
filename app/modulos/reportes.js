@@ -1,9 +1,9 @@
-import React, { useState  } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import {url} from '../js/request'
+import { url } from '../js/request'
 
-import {servidorDocs} from '../js/request'
+import { servidorDocs, servidorPost } from '../js/request'
 
 import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
@@ -13,15 +13,77 @@ import LoadingMask from "react-loadingmask";
 import "react-loadingmask/dist/react-loadingmask.css";
 
 
-function Excel({titulo,descripcion,data}) {
-    // Declara una nueva variable de estado, la cual llamaremos “count”
+function Excel({ titulo, descripcion, data, prevStep }) {
+  // Declara una nueva variable de estado, la cual llamaremos “count”
   const [show, setShow] = useState(false);
-  
+
+  const prevStep = () => {
+    let data = {
+      id_consulta: 'validacion_masiva'
+    }
+
+    return servidorPost("/backend",data);
+  }
 
 
-  const download=(data) => {
+
+  const download = (data) => {
     setShow(true)
-    servidorDocs('/excel', data).then(response => {
+
+    if(prevStep){
+      prevStep.then((r) => {
+        servidorDocs('/excel', data).then(response => {
+          setShow(false)
+        })
+      })
+    }else{
+      servidorDocs('/excel', data).then(response => {
+        setShow(false)
+      })
+    }
+    
+
+
+  }
+
+
+
+  return (
+    <div>
+
+
+      <div className="reporte">
+        <p className="titulo">{titulo}</p>
+        <p className="descripcion">{descripcion}</p>
+        <button className="secondary" onClick={() => download(data)}>Descargar Reporte</button>
+      </div>
+      <div className="cargando">
+        <Loader
+          type="Watch"
+          color="#00BFFF"
+          height={30}
+          width={30}
+          timeout={0} //3 secs
+          visible={show}
+        />
+      </div>
+
+
+    </div>
+  );
+}
+
+
+
+function ExcelAll({ titulo, descripcion, data, reporte }) {
+  // Declara una nueva variable de estado, la cual llamaremos “count”
+  const [show, setShow] = useState(false);
+
+
+
+  const download = () => {
+    setShow(true)
+    servidorDocs('/todoreport/' + reporte).then(response => {
       setShow(false)
     })
 
@@ -29,69 +91,25 @@ function Excel({titulo,descripcion,data}) {
   }
 
 
-  
-    return (
-      <div>
-
-      
-        <div className="reporte">
-          <p className="titulo">{titulo}</p>  
-          <p className="descripcion">{descripcion}</p>
-          <button className="secondary" onClick={()=>download(data)}>Descargar Reporte</button>
-        </div>
-        <div className="cargando">
-        <Loader
-              type="Watch"
-              color="#00BFFF"
-              height={30}
-              width={30}
-              timeout={0} //3 secs
-              visible={show}
-            />
-        </div>
-          
-
-      </div>
-    );
-}
-  
-
-
-function ExcelAll({titulo,descripcion,data,reporte}) {
-  // Declara una nueva variable de estado, la cual llamaremos “count”
-  const [show, setShow] = useState(false);
-
-
-
-const download=() => {
-  setShow(true)
-  servidorDocs('/todoreport/'+reporte).then(response => {
-    setShow(false)
-  })
-
-
-}
-
-
 
   return (
     <div>
       <div className="reporte">
-        <p className="titulo">{titulo}</p>  
+        <p className="titulo">{titulo}</p>
         <p className="descripcion">{descripcion}</p>
-        <button className="primmary" onClick={()=>download()}>Descargar Reporte</button>
+        <button className="primmary" onClick={() => download()}>Descargar Reporte</button>
       </div>
       <div className="cargando">
         <Loader
-              type="Watch"
-              color="#00BFFF"
-              height={30}
-              width={30}
-              timeout={0} //3 secs
-              visible={show}
-            />
-        </div>
-      
+          type="Watch"
+          color="#00BFFF"
+          height={30}
+          width={30}
+          timeout={0} //3 secs
+          visible={show}
+        />
+      </div>
+
 
 
 
@@ -102,11 +120,11 @@ const download=() => {
 
 
 const Report = () => {
-  
-  return(
+
+  return (
     <div id="seccion">
 
-      
+
 
 
       <div id="titulo_seccion">Descarga de reportes </div>
@@ -116,6 +134,8 @@ const Report = () => {
       <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" />
 
       <ExcelAll titulo="Reporte Tributario" descripcion="Reporte de la información tributaria" reporte="tributaria" />
+
+      <Excel titulo="Reporte validaciones" descripcion="Reporte completo de las validaciones realizadas por el sistema" data={{ 'id_consulta': 'reporte_validacion' }} prevStep={true} />
 
       {/* <Excel titulo="Reporte Tareas" descripcion="Reporte completo de las tareas asignadas en el sistema" data={{ 'id_consulta': 'reporte_tareas' }} />
       <Excel titulo="Reporte Documentos" descripcion="Reporte completo de los documentos cargados al sistema" data={{ 'id_consulta': 'reporte_documentos' }} />
@@ -152,12 +172,12 @@ const Report = () => {
       <Excel titulo="Reporte General saneamiento jurídico" descripcion="Reporte completo relacionado al saneamiento jurídico" data={{ 'id_consulta': 'reporte_info15' }} /> 
 
       <Excel titulo="Reporte General municipios intersectados" descripcion="Reporte completo relacionado a los municipios que intersectán los predios" data={{ 'id_consulta': 'reporte_info18' }} />  */}
-      
+
 
 
     </div>
 
-)
+  )
 
 }
 

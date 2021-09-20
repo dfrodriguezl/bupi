@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 import { useParams } from 'react-router-dom'
 
-import { url, servidorPost } from '../js/request'
+import { url, servidorPost, servidorGetAbs } from '../js/request'
 
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -21,6 +21,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import ReactSelect from "react-select";
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 import ReactDatePicker from "react-datepicker";
@@ -43,7 +45,7 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7];
     }
-    else if ([2, 3, 4, 7, 10, 11, 14].includes(index)) {
+    else if ([2, 3, 4, 7, 9, 10, 11, 14, 18].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
     } else if ([5, 6, 8, 15, 16, 20, 21, 22].includes(index)) {
@@ -89,6 +91,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [defecto, setDefecto] = React.useState(true);
     const [permiso, setpermiso] = React.useState(false);
     const [reload, setReload] = React.useState(false);
+    const [listaValidacion, setListaValidacion] = React.useState({});
+    const [valueTexto, setValueTexto] = React.useState({});
+    const [externalData, setExternalData] = React.useState({});
+    const [listDomains, setListDomains] = React.useState({});
+    const [chip, setChip] = React.useState(null);
 
 
 
@@ -109,6 +116,34 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             return servidorPost('/backend', data);
         }
+
+        var data = {
+            "id_consulta": "info_header_form",
+            "id_expediente": id,
+        }
+
+        // console.log(data)
+
+        servidorPost('/backend', data).then((response) => {
+            setChip(response.data[0].chip_cat)
+        })
+
+        // useEffect(() => {
+
+        //     var data = {
+        //         "id_consulta": "info_header_form",
+        //         "id_expediente": id,
+        //     }
+    
+        //     // console.log(data)
+    
+        //     servidorPost('/backend', data).then((response) => {
+        //         setChip(response.data[0].chip_cat)
+        //     })
+    
+    
+    
+        // }, [false])
 
         if (index > 0) {
 
@@ -157,9 +192,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             var data = { id_consulta: 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
-                                // console.log(response)
                                 getBloqueo(id).then((r) => {
-                                    console.log(r);
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
@@ -168,7 +201,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                 })
 
                                 console.log("lectura")
-                                // console.log(response.data[0].exists)
                             });
 
                         }
@@ -179,6 +211,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         setFields({ data: datos, info: response1.data[0] });
 
                         setView(true)
+                        datos.map((f) => {
+                            if (f.doc.form === 'texto' && f.doc.listener === 'change') {
+                                let json = {}
+                                json[f.doc.field] = response1.data[0][f.doc.field];
+                                setValueTexto(json)
+                            }
+                        })
                     } else {
                         setView(false)
                     }
@@ -204,7 +243,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         if (str) {
             var parts = /\/(.*)\/(.*)/.exec(str);
             var restoredRegex = new RegExp(parts[1], parts[2]);
-            console.log(restoredRegex)
+            // console.log(restoredRegex)
             return restoredRegex;
 
         } else {
@@ -265,7 +304,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                 }
             } else {
-                if (item == "select" || item == "fecha" || item == "numero") {
+                if (item == "select" || item == "fecha" || item == "numero" || item == "consulta") {
                     data[key] = null
                 }
             }
@@ -286,16 +325,17 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         data.upd = key
         data.id_consulta = "update_" + tbl;
         data.id_expediente = id
+        let data_guardar = data;
 
         servidorPost('/backend', data).then(function (response) {
             var result = response.data;
-            console.log(result)
             if (result == "error") {
                 toast.error("Hubo un error al almacenar");
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-
+                validar(index, result[0].id_expediente, data_guardar)
+                // validar(index,result[0].id_expediente)
             }
         });
 
@@ -304,7 +344,19 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     };
 
 
+
+
     const change = (msg, e) => {
+
+        let value = msg[0].value;
+        if (e.child_domain != null) {
+            let fieldChild = fields.data.filter((f) => f.doc.enum_name == e.child_domain);
+            console.log(fieldChild[0].doc.enum)
+            let valuesChild = fieldChild[0].doc.enum.filter((v) => v.padre_valor == value || v.padre_valor == null);
+            let dominios = {};
+            dominios[e.field_child] = valuesChild;
+            setListDomains(dominios);
+        }
 
         return msg;
     }
@@ -350,6 +402,130 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     }
 
+    async function validar(id_form, id_exp, datos_guardar) {
+        const data = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'eval_validadores'
+        }
+
+        const dataGet = {
+            formulario: id_form,
+            expediente: id_exp,
+            id_consulta: 'get_validadores'
+        }
+
+        const dataServicios = {
+            id_formulario: id_form,
+            id_consulta: 'get_servicios'
+        }
+
+        let resultsList = [];
+
+        let resultados_validacion = {};
+
+        let serv = servidorPost('/backend', dataServicios).then(function (response_servicios) {
+            let data_res = response_servicios.data;
+
+            if (data_res.length > 0) {
+                let results2 = [];
+                data_res.forEach((dr) => {
+                    let url_completa = dr.url + "?where=PRECHIP='" + chip + "' and " + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
+                    servidorGetAbs(url_completa).then((res_serv) => {
+                        let features = res_serv.data.features;
+                        let dataValServ = {
+                            id_validador: dr.id_validador,
+                            id_condicion: dr.id_servicio,
+                            id_expediente: id_exp,
+                            estado: features.length > 0 ? true : false,
+                            id_consulta: 'insert_valor_validacion'
+                        }
+                        // console.log(features)
+                        // console.log(dataValServ)
+
+                        let promise = servidorPost('/backend', dataValServ).then(function (response_insert) {
+                            return response_insert.data;
+                        })
+
+
+
+                        resultsList.push(promise);
+
+                    })
+                })
+            }
+            // else {
+            //     let promise = servidorPost('/backend', dataGet).then(function (response_2) {
+            //         // console.log(response_2)
+            //         response_2.data.forEach((v) => {
+            //             if (resultados_validacion.hasOwnProperty(v.campo)) {
+            //                 resultados_validacion[v.campo].push(v);
+            //             } else {
+            //                 resultados_validacion[v.campo] = []
+            //                 resultados_validacion[v.campo].push(v);
+            //             }
+
+            //         }, []);
+
+            //         resultsList.push(promise);
+
+
+
+
+
+
+            //     })
+            // }
+
+
+
+        })
+
+        let promiseJur = servidorPost('/backend', data).then(function (response) {
+            return response.data;
+        })
+
+        resultsList.push(promiseJur);
+        // resultsList.push(serv);
+        // console.log("ARRAY")
+        // console.log(resultsList);
+
+        await Promise.all(resultsList).then((r) => {
+            // console.log("ARRAY")
+            // console.log(r)
+            servidorPost('/backend', dataGet).then(function (response_2) {
+                console.log("reponse", response_2)
+                response_2.data.forEach((v) => {
+                    if (resultados_validacion.hasOwnProperty(v.campo)) {
+                        resultados_validacion[v.campo].push(v);
+                    } else {
+                        resultados_validacion[v.campo] = []
+                        resultados_validacion[v.campo].push(v);
+                    }
+
+                }, []);
+
+                setListaValidacion(resultados_validacion);
+
+            })
+        });
+    };
+
+    const handleChange = (consulta, e) => {
+        let value = e.target.value;
+        setValueTexto(value)
+        const dataConsulta = {
+            proyecto: value,
+            id_consulta: consulta
+        }
+
+        servidorPost('/backend', dataConsulta).then(function (response) {
+            console.log(response.data[0])
+            setExternalData(response.data[0])
+        });
+
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)} className="form-container">
@@ -360,6 +536,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                         {fields.data.map((i, e) =>
+
 
                             <div className="formulario">
 
@@ -372,23 +549,42 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                                {i.doc.field_father ?
+                                                    <Controller
+                                                        as={ReactSelect}
+                                                        options={
+                                                            listDomains[i.doc.field]
+                                                        }
 
-                                                <Controller
-                                                    as={ReactSelect}
-                                                    options={
-                                                        i.doc.enum
-                                                    }
+
+                                                        isDisabled={lectura}
+                                                        name={i.doc.field}
+                                                        isClearable={true}
+
+                                                        control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                        onChange={(e) => change(e, i.doc)}
+
+                                                    /> :
+                                                    <Controller
+                                                        as={ReactSelect}
+                                                        options={
+                                                            i.doc.enum
+                                                        }
 
 
-                                                    isDisabled={lectura}
-                                                    name={i.doc.field}
-                                                    isClearable={true}
+                                                        isDisabled={lectura}
+                                                        name={i.doc.field}
+                                                        isClearable={true}
 
-                                                    control={control}
-                                                    defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                    onChange={(e) => change(e, i.doc.field)}
+                                                        control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                        onChange={(e) => change(e, i.doc)}
 
-                                                />
+                                                    />
+
+                                                }
+
                                             </>
 
                                             : ''
@@ -417,6 +613,21 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
+
+                                                {/* {i.doc.listener === "change" ?
+                                                    <input type={i.doc.type}
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        //  defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        value={valueTexto[i.doc.field]}
+                                                        onChange={i.doc.listener === "change" ? (e) => handleChange(i.doc.id_consulta, e) : null}
+                                                        ref={register({
+                                                            pattern: {
+                                                                value: getRegex(i.doc.regex),
+                                                                message: i.doc.message
+                                                            }
+                                                        })} /> : */}
                                                 <input type={i.doc.type}
                                                     className='form_input'
                                                     name={i.doc.field}
@@ -428,6 +639,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                             message: i.doc.message
                                                         }
                                                     })} />
+                                                {/* } */}
+
                                                 {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
                                             </>
                                             : ''
@@ -456,7 +669,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         }
                                         {i.doc.form == 'fecha' ?
 
-
                                             <Controller
                                                 as={DatePicker}
                                                 control={control}
@@ -482,7 +694,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         )}
 
-                        {permiso && !lectura ? <button className='primmary' type="submit">Guardar</button> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
+
+                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
 
@@ -818,11 +1031,12 @@ const Ayuda = () => {
             "id_expediente": id,
         }
 
-        console.log(data)
+        // console.log(data)
 
         servidorPost('/backend', data).then((response) => {
 
             setInfo(response.data[0])
+            setChip(response.data[0].chip_cat)
 
         })
 
@@ -842,6 +1056,54 @@ const Ayuda = () => {
 
     )
 
+}
+
+const ModalValidacion = ({ open, lista }) => {
+
+    // console.log("Lista validadores")
+    // console.log(lista)
+
+    return (
+        <Popup
+            trigger={open}
+            modal
+            nested
+        >
+            {Object.keys(lista).length > 0 ?
+                <div className="modal" style={{ maxHeight: '400px', overflow: 'auto' }}>
+                    <div id="seccion">
+                        <div id="titulo_seccion">Resultados validación</div>
+                        <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
+
+                        {Object.keys(lista).map((v) => {
+                            return (
+                                <Fragment>
+                                    <p>Campo: {v}</p>
+                                    <ul>
+                                        {lista[v].map((c) => {
+                                            return (
+                                                <li>
+                                                    Condición: {c.id_condicion}, estado: {
+                                                        c.estado ?
+                                                            <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
+                                                            <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />
+                                                    }
+
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </Fragment>
+
+                            )
+                        })}
+                    </div>
+                </div> : null}
+
+
+
+        </Popup>
+    )
 }
 
 

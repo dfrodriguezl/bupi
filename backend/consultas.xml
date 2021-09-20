@@ -17,7 +17,7 @@
     </Consulta>
     <Consulta id="info1_general_proyecto">
         <sql>
-        select * from info1_general_proyecto where id_expediente=$id_expediente
+        select * from info1_vw_dup where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info2_general_predio">
@@ -27,7 +27,7 @@
     </Consulta>
     <Consulta id="info3_areas_usos">
         <sql>
-        select * from info3_areas_usos where id_expediente=$id_expediente
+        select * from info3_areas_usos_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info4_avaluos">
@@ -360,10 +360,18 @@
             'enum',d.enum,
             'editable',editable,
             'regex',regex,
-            'message',message
+            'message',message,
+            'listener',listener,
+            'id_consulta',id_consulta,
+            'external_field',external_field,
+            'field_child', field_child,
+			'child_domain',child_domain,
+			'field_father',field_father,
+			'father_domain',father_domain,
+            'enum_name',m.enum
             ) as doc
         from modulos m left join (select dominio,
-								  json_agg(json_build_object('value',valor,'label',descripcion)) as enum
+								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 								  from dominios
 group by dominio) as d
         on m.enum=d.dominio
@@ -938,7 +946,7 @@ select * from (
 
 select * from info1_general_proyecto_vw 
 natural join info2_general_predio
-natural join info3_areas_usos
+natural join info3_areas_usos_vw
 natural join info4_avaluos
 )b1
 natural join 
@@ -1685,5 +1693,91 @@ order by id_expediente
         </sql>
     </Consulta>
 
+    <Consulta id="eval_validadores">
+        <sql>
+            select *
+            from eval_validadores($formulario, $expediente);
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_validadores">
+        <sql>
+            select *
+            from resultados_validacion rv
+            join validadores v on rv.id_validador = v.id_validador
+            where rv.id_expediente = $expediente
+            and rv.estado is not null
+            and v.id_formulario = $formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_dup">
+        <sql>
+            select *
+            from dup
+            where id_proyecto = $proyecto;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_dups_lista">
+        <sql>
+            select *
+            from dup;
+        </sql>
+    </Consulta>
+
+     <Consulta id="insert_valor_dup">
+        <sql>
+        INSERT INTO dup
+            VALUES ((select max (id_dup)+1 from dup),$id_proyecto, $cod_dup,$fecha_actadm, $objet_res, $nom_proy, $actadm_anteriores, $observacion)
+            ON CONFLICT (id_proyecto) DO UPDATE
+            SET id_proyecto = $id_proyecto, cod_dup = $cod_dup, fecha_actadm = $fecha_actadm, objet_res = $objet_res, nom_proy = $nom_proy,
+            actadm_anteriores = $actadm_anteriores, observacion = $observacion
+            returning id_dup
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_servicios">
+        <sql>
+            select *
+            from servicios s
+            where s.id_formulario = $id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_valor_validacion">
+        <sql>
+            INSERT INTO resultados_validacion
+            VALUES ($id_validador,$id_condicion,$estado,$id_expediente)
+            ON CONFLICT (id_validador,id_condicion,id_expediente) DO UPDATE
+            SET estado = $estado
+            returning id_validador,id_condicion,id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="validacion_masiva">
+        <sql>
+            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
+                from info2_general_predio pr, 
+                (select distinct id_formulario from validadores) va
+                order by pr.id_expediente, va.id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="validacion_masiva">
+        <sql>
+            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
+                from info2_general_predio pr, 
+                (select distinct id_formulario from validadores) va
+                order by pr.id_expediente, va.id_formulario;
+        </sql>
+    </Consulta>
+
+    <Consulta id="reporte_validacion">
+        <sql>
+            select *
+                from resultados_validacion;
+        </sql>
+    </Consulta>
 
 </Consultas>
