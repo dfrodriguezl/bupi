@@ -17,7 +17,7 @@ function Excel({ titulo, descripcion, data, prevStep }) {
   // Declara una nueva variable de estado, la cual llamaremos “count”
   const [show, setShow] = useState(false);
 
-  const prevStep = () => {
+  const prevStepFunction = () => {
     let data = {
       id_consulta: 'validacion_masiva'
     }
@@ -31,7 +31,7 @@ function Excel({ titulo, descripcion, data, prevStep }) {
     setShow(true)
 
     if(prevStep){
-      prevStep.then((r) => {
+      prevStepFunction().then((r) => {
         servidorDocs('/excel', data).then(response => {
           setShow(false)
         })
