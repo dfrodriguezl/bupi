@@ -37,7 +37,7 @@ const Documentos=()=>{
       var data={"id_consulta":"get_metadata"}
       servidorPost('/backend/', data).then((response) => {
           
-          console.log(response.data)
+          // console.log(response.data)
           meta=response.data
           
           datos = datos.map((e,i) => ({"descripcion":hola(e.nombre),...e}));
@@ -72,7 +72,7 @@ const download=( id)=> {
 
   const hola = (name) => {
 
-    console.log(name)
+    // console.log(name)
     var nombre = name;
     var tipo=nombre.split('-')[1]  
     var tipo_documento = ""

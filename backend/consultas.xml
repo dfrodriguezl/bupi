@@ -1462,7 +1462,10 @@ order by id_expediente
                 f.descripcion as descripcion,
                 ta.descripcion as perfil,
                 estado,
-                fecha_asignacion
+                fecha_asignacion,
+                fecha_solucion,
+                (select aprobado from info12_control_calidad_tecnico where id_expediente = t.id_expediente) as tec,
+				(select aprobado from info13_control_calidad_juridico where id_expediente = t.id_expediente) as jur
             from tareas.tareas t left join (
             select id_tarea_next,concat(id_tarea,'-',id_tarea_next)as path,ruta,descripcion
             from tareas.flujo
@@ -1777,6 +1780,18 @@ order by id_expediente
         <sql>
             select *
                 from resultados_validacion;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_asignaciones">
+        <sql>
+            select id_expediente, 
+			(select usuario_nombre from usuario where usuario_usuario=asg.usuario),
+			ac.id_tarea,
+			ac.descripcion
+			from tareas.asignacion asg join 
+			tareas.actividades ac on asg.id_tarea = ac.id_tarea
+			where id_expediente = $id_expediente;
         </sql>
     </Consulta>
 

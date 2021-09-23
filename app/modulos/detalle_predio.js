@@ -78,13 +78,13 @@ const DetallePredio = () => {
 
       </div>
 
-      {data.map((i, e) => (
+      {/* {data.map((i, e) => (
         <div className="grupo-detalle-predio">
           <FaceIcon />
           <p className="cargo">{i.usuario_cargo}</p>
           <p className="usuario">{i.usuario_nombre}</p>
         </div>
-      ))}
+      ))} */}
       {/* <div id="estados">
                 <br/>
                 <div><p>Estado depuración Técnica: {estadoTecnico?estadoTecnico.dep_tec:null}</p></div><br/>
