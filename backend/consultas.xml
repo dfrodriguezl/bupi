@@ -1240,7 +1240,11 @@ order by id_expediente
 
     <Consulta id="estadistica1">
         <sql>
-        SELECT COUNT(*) as estadistica FROM (SELECT DISTINCT identificador FROM documentos) AS temp;
+        SELECT COUNT(*) as estadistica 
+            from (select distinct identificador
+            from documentos doc
+            join usuario u on doc.usuario = u.usuario_usuario
+            where u.usuario_rol = 8) as temp;
         </sql>
     </Consulta>
     <Consulta id="estadistica2">

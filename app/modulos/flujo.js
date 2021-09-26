@@ -54,26 +54,27 @@ const Flujo = () => {
     { id: '3', type: 'oneTwo', data: { label: 'Juridico' }, position: { x: 300, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
     { id: '4', type: 'TwoOne', data: { label: 'Sup. Juridico' }, position: { x: 700, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
     { id: '5', type: 'TwoOne', data: { label: 'Sup. Técnico' }, position: { x: 700, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
-    { id: '6', type: 'output', data: { label: 'Final' }, position: { x: 1000, y: 100 }, draggable: false, className: 'nodo', connectable: false, selectable: false },
+    { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '7', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1100, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
 
     // { id: 'wait', data: { label: 'ESPERA' }, position: { x: 550, y: 100 }, draggable: false, connectable: false, selectable: false },
 
 
     { id: '1-2', source: '1', target: '2', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
-    { id: '1-3', source: '1', target: '3', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed'  },
-    { id: '2-5', source: '2', target: '5', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed'  },
-    { id: '3-4', source: '3', target: '4', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed'  },
+    { id: '1-3', source: '1', target: '3', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
+    { id: '2-5', source: '2', target: '5', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed' },
+    { id: '3-4', source: '3', target: '4', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed' },
     // { id: '4-5', source: '4', target: 'wait', type: 'step', label: 'Envia a revisión' },
 
     // { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprueba todo' },
 
-    { id: '5-2', source: '5', target: '2', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed'  },
-    { id: '4-3', source: '4', target: '3', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed'  },
+    { id: '5-2', source: '5', target: '2', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
+    { id: '4-3', source: '4', target: '3', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
 
     // { id: 'wait-5', source: 'wait', target: '5', type: 'step', label: 'llega al supervisor' },
 
-    { id: '4-6', source: '4', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed'  },
-    { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed'  },
+    { id: '4-7', source: '4', target: '7', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
+    { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
 
 
   ];
@@ -94,7 +95,7 @@ const Flujo = () => {
         let flujo = response.data;
         usuarios.forEach((u) => {
           let filterList = flujo.filter((o) => o.id_tarea_next === u.id_tarea)
-          if(filterList.length === 0){
+          if (filterList.length === 0) {
             flujo.push({
               ruta: u.id_tarea,
               id_tarea_next: u.id_tarea,
@@ -111,67 +112,64 @@ const Flujo = () => {
 
         //Verificar aprobados
 
-        if(flujo[0].tec === 1){
+        if (flujo[0].tec === 1) {
           let filtro = flujo.filter((o) => o.path === '5-6');
-          if(filtro.length === 0){
+          if (filtro.length === 0) {
             flujo.push({
               estado: 2,
               path: '5-6',
               id_tarea_next: 6
             })
-          }    
+          }
         }
 
-        if(flujo[0].jur === 1){
-          let filtro = flujo.filter((o) => o.path === '4-6');
-          if(filtro.length === 0){
+        if (flujo[0].jur === 1) {
+          let filtro = flujo.filter((o) => o.path === '4-7');
+          if (filtro.length === 0) {
             flujo.push({
               estado: 2,
-              path: '4-6',
-              id_tarea_next: 6
+              path: '4-7',
+              id_tarea_next: 7
             })
-          }  
+          }
         }
-        
+
         // console.log(flujo)
 
         // var info = response.data;
 
-      if (flujo.length > 0) {
+        if (flujo.length > 0) {
 
-        let count = 0;
+          flujo.map((i) => {
 
-        flujo.map((i) => {
-          
-          elements.map((k, e) => {
-            if (k.id == i.id_tarea_next && i.id_tarea_next != 6) {
+            elements.map((k, e) => {
+              if(k.id == i.id_tarea_next && (i.id_tarea_next === 6 || i.id_tarea_next === 7)){
+                elements[e].data.label = (<><p>Fin</p></>)
+                elements[e].style = { background: '#81D37C' }
+              }
+              else if (k.id == i.id_tarea_next) {
 
-              elements[e].data.label = (<><p>{i.perfil}</p><p>{i.usuario_nombre}</p><p>{i.estado === 2 ? moment.utc(i.fecha_solucion).format("dddd, MMMM D YYYY, h:mm:ss a") : i.estado === 0 ? null : moment.utc(i.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p></>)
-              elements[e].style = { background: i.estado == 1 ? '#3FA8F1' : i.estado == 0 ? '#FFFFFF' : '#81D37C' }
+                elements[e].data.label = (<><p>{i.perfil}</p><p>{i.usuario_nombre}</p><p>{i.estado === 2 ? moment.utc(i.fecha_solucion).format("dddd, MMMM D YYYY, h:mm:ss a") : i.estado === 0 ? null : moment.utc(i.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p></>)
+                elements[e].style = { background: i.estado == 1 ? '#3FA8F1' : i.estado == 0 ? '#FFFFFF' : '#81D37C' }
 
-            } else if (k.id == i.path) {
-              elements[e].style = { stroke: '#0E9700 ' }
-              elements[e].animated = true
-            }
+              } else if (k.id == i.path) {
+                elements[e].style = { stroke: '#0E9700 ' }
+                elements[e].animated = true
+              }
 
-            if(k.id == i.id_tarea_next && i.id_tarea_next === 6){
-              count = count + 1;
-              elements[e].data.label = (<><p>Fin</p></>)
-              elements[e].style = { background: count === 1 ? '#3FA8F1' : count >= 2 ? '#81D37C' : '#FFFFFF' }
-            }
+
+            })
+
 
           })
+        }
 
-
-        })
-      }
-
-      setOpt(elements)
-      setVisible(true)
+        setOpt(elements)
+        setVisible(true)
 
       })
 
-      
+
     })
 
 
