@@ -946,7 +946,7 @@ select * from (
 
 select * from info1_general_proyecto_vw 
 natural join info2_general_predio
-natural join info3_areas_usos_vw
+natural join info3_areas_usos
 natural join info4_avaluos
 )b1
 natural join 

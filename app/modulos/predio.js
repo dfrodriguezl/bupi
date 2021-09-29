@@ -134,15 +134,15 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         //         "id_consulta": "info_header_form",
         //         "id_expediente": id,
         //     }
-    
+
         //     // console.log(data)
-    
+
         //     servidorPost('/backend', data).then((response) => {
         //         setChip(response.data[0].chip_cat)
         //     })
-    
-    
-    
+
+
+
         // }, [false])
 
         if (index > 0) {
@@ -161,15 +161,26 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     "tabla": index,
                     "id_consulta": "get_formulario"
                 }
-                console.log("datos primero")
+                // console.log("datos primero")
                 // console.log(response1)
 
                 servidorPost('/backend', data).then((response) => {
 
                     var datos = response.data;
 
-                    console.log("estructura segundo")
+                    // console.log("estructura segundo")
                     // console.log(datos)
+
+                    var datosNorm = datos.map((v) => {
+                        // console.log(v)
+                        if (v.doc.enum != null) {
+                            v.doc.enum.push({ value: null, label: null, padre: null, padre_valor: null })
+                        }
+                        return v;
+                    }, [])
+
+                    // console.log("estructura tercero")
+                    // console.log(datosNorm)
 
 
 
@@ -208,7 +219,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                     if (response1.data.length > 0) {
-                        setFields({ data: datos, info: response1.data[0] });
+                        setFields({ data: datosNorm, info: response1.data[0] });
 
                         setView(true)
                         datos.map((f) => {
@@ -549,6 +560,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                                {/* {i.doc.enum.push({value:null,label:null,padre:null,padre_valor:null})} */}
+                                                {/* {console.log("SELECT ARRAY",i.doc.enum)} */}
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
@@ -578,6 +591,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         isClearable={true}
 
                                                         control={control}
+                                                        // value={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         onChange={(e) => change(e, i.doc)}
 
