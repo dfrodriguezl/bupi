@@ -677,22 +677,25 @@ app.get('*', (req,res) =>{
 
     var token=req.cookies.jwt;
 
-    if (token) {
-      jwt.verify(token, accessTokenSecret, (err, decoded) => {      
-        if (err) {
-          res.json({ mensaje: 'Token inválida' });    
-        } else {
-
-
-          const file = path.join(__dirname, `../help/${req.params.file}`)
+    const file = path.join(__dirname, `../help/${req.params.file}`)
           res.download(file); // Set disposition and send it.
 
+    // if (token) {
+    //   jwt.verify(token, accessTokenSecret, (err, decoded) => {      
+    //     if (err) {
+    //       res.json({ mensaje: 'Token inválida' });    
+    //     } else {
 
-        }
-      });
-    }else{
-      res.status(403).json({ mensaje: 'sin permisos' });
-    }
+
+    //       const file = path.join(__dirname, `../help/${req.params.file}`)
+    //       res.download(file); // Set disposition and send it.
+
+
+    //     }
+    //   });
+    // }else{
+    //   res.status(403).json({ mensaje: 'sin permisos' });
+    // }
 
 
     

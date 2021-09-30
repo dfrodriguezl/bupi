@@ -575,9 +575,33 @@ group by dominio) as d
             )features
         </sql>
     </Consulta>
-
-
-
+    <Consulta id="get_geometria_predios">
+        <sql>
+            select json_build_object(
+				'type',     'FeatureCollection',
+                'features', jsonb_agg(features.Feature)
+			) as geojson from
+			(SELECT json_build_object(
+                'type',       'Feature',
+                'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
+                'properties', json_build_object(
+                    'id_expediente', id_expediente,
+                    'cod_dup', cod_dup,
+					'nom_proy', nom_proy,
+					'chip_cat', chip_cat,
+					'num_mi', num_mi,
+					'ced_cat', ced_cat,
+					'dir_act', dir_act
+                )
+            ) as Feature
+			FROM (select pr.id_expediente, 
+			dup.cod_dup,dup.nom_proy, pr.chip_cat, pr.num_mi,
+			pr.ced_cat, pr.dir_act, lote.geom
+			from info1_vw_dup dup 
+			join info2_general_predio pr on dup.id_expediente = pr.id_expediente
+			join geometria.lote_asignacion lote on pr.id_expediente = lote.id_expediente) as consulta) as features;
+        </sql>
+    </Consulta>
    <Consulta id="insertar_dibujo_mapa">
         <sql>
             insert into geometria.dibujo
