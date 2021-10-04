@@ -719,13 +719,13 @@ app.get("/vector-tile/:layer/:x/:y/:z", function(req, res) {
           id,
           ST_AsMVTGeom(
               geom,
-              TileBBox(${req.params.z}, ${req.params.x}, ${req.params.y}, 102233),
+              TileBBox(${req.params.z}, ${req.params.x}, ${req.params.y}, 4326),
               4096,
               0,
               false
           ) geom
       FROM ${req.params.layer}
-      WHERE ST_Intersects(geom, (SELECT ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, $5), 102233)))
+      WHERE ST_Intersects(geom, (SELECT ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, $5), 4326)))
   ) q`
   const values = [bbox[0], bbox[1], bbox[2], bbox[3], 4326]
   pool.query(sql, values , function(err, mvt) {
