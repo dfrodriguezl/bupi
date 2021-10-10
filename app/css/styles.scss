@@ -605,6 +605,54 @@ input[type="file"] {
     }
   }
 
+  #leyenda_predio{
+    position: relative;
+    bottom: 100px;
+    right: -115px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 2;
+    float: right;
+    display: inline;
+
+    .item{
+      display:grid;
+      grid-template-columns: 10px 1fr;
+      row-gap: 5px;
+    }
+    p{
+      font-size: 1em;
+    }
+    .descripcion{
+      margin:5px 0px;
+    }
+  }
+
+  #leyenda_capas{
+    position: relative;
+    bottom: 250px;
+    right: 20px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 2;
+    float: right;
+    display: inline;
+
+    .item{
+      display:grid;
+      grid-template-columns: 20px 1fr;
+      row-gap: 5px;
+    }
+    p{
+      font-size: 1em;
+    }
+    .descripcion{
+      margin:5px 0px;
+    }
+  }
+
   .enfasis{
       font-size: 1.2em;
       color: $color3;

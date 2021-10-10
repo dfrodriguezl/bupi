@@ -41,6 +41,20 @@ export default {
         fill:'rgba(141, 3, 135,0.5)'
         
     },
+    pred1: {
+        id:'pred1',
+        titulo: "Geometria verificada",
+        stroke: 'rgb(59, 246, 12)',
+        fill:'rgba(59, 246, 12,0.5)',
+        id_html: 'geometria_verificada'
+    },
+    pred2: {
+        id:'pred2',
+        titulo: "Geometria en revisión",
+        stroke: 'rgb(129, 1, 146 )',
+        fill:'rgba(129, 1, 146,0.5)',
+        id_html: 'geometria_revision'
+    }
 
 
 }

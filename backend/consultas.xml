@@ -127,6 +127,11 @@
         select * from info22_factura_municipio where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info23_sig">
+        <sql>
+        select * from info23_sig where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -263,6 +268,11 @@
     <Consulta id="update_info22_factura_municipio">
         <sql>
             update info22_factura_municipio set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info23_sig">
+        <sql>
+            update info23_sig set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
 
@@ -558,20 +568,36 @@ group by dominio) as d
     </Consulta>
     <Consulta id="get_geometria_predio">
         <sql>
-            SELECT jsonb_build_object(
+            SELECT 'geometria_verificada' as tipo,jsonb_build_object(
                 'type',     'FeatureCollection',
                 'features', jsonb_agg(features.Feature)
             )as geojson from (
             SELECT json_build_object(
                 'type',       'Feature',
-                'id',         'id',
+                'id',         id,
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'con', 'hola',
-                    'id_avaluo', 'hla'
+                    'id_expediente', id_expediente,
+                    'estado', estado
                 )
             ) as Feature
-            FROM geometria.lote_asignacion where id_expediente =$id_expediente
+            FROM geometria.lote_asignacion where id_expediente = $id_expediente and (estado is null or estado = 2)
+            )features
+            union
+            SELECT 'geometria_revision' as tipo,jsonb_build_object(
+                'type',     'FeatureCollection',
+                'features', jsonb_agg(features.Feature)
+            )as geojson from (
+            SELECT json_build_object(
+                'type',       'Feature',
+                'id',         id,
+                'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
+                'properties', json_build_object(
+                    'id_expediente', id_expediente,
+                    'estado', estado
+                )
+            ) as Feature
+            FROM geometria.lote_asignacion where id_expediente = $id_expediente and estado in (1)
             )features
         </sql>
     </Consulta>
@@ -604,10 +630,8 @@ group by dominio) as d
     </Consulta>
    <Consulta id="insertar_dibujo_mapa">
         <sql>
-            insert into geometria.dibujo
-            values($id_expediente,ST_SetSRID(ST_GeomFromGeoJSON($shape),4326))
-            on conflict(id_expediente) do update 
-                set geom=ST_SetSRID(ST_GeomFromGeoJSON($shape),4326)
+            insert into geometria.lote_asignacion (id,id_expediente,geom,estado)
+            values((select max(id) + 1 from geometria.lote_asignacion),$id_expediente,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
             returning id_expediente
         </sql>
     </Consulta>
@@ -1717,7 +1741,7 @@ order by id_expediente
     <Consulta id="get_observacion">
         <sql>
             select d.descripcion, d.bloqueo_predio
-            from info1_general_proyecto igp
+            from info23_sig igp
             left join dominios d on igp.observacion_sig::text = d.valor
             and d.dominio = 'Observ_SIG'
             where igp.id_expediente=$id_expediente

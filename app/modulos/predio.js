@@ -1216,6 +1216,10 @@ const Predio = () => {
                             Factura municipio
                         </button>
 
+                        <button onClick={() => getForm(23, "info23_sig", "SIG")} className={active == 23 ? 'active' : ''} >
+                            SIG
+                        </button>
+
 
                     </div>
 

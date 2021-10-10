@@ -43,7 +43,8 @@ const Flujo = () => {
   const [visible, setVisible] = React.useState(false);
   const nodeTypes = {
     oneTwo: OneTwoNode,
-    TwoOne: TwoOneNode
+    TwoOne: TwoOneNode,
+    twoTwo: TwoTwoNode
   };
 
   const elements = [
@@ -53,28 +54,32 @@ const Flujo = () => {
     { id: '2', type: 'oneTwo', data: { label: 'Técnico' }, position: { x: 300, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
     { id: '3', type: 'oneTwo', data: { label: 'Juridico' }, position: { x: 300, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
     { id: '4', type: 'TwoOne', data: { label: 'Sup. Juridico' }, position: { x: 700, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
-    { id: '5', type: 'TwoOne', data: { label: 'Sup. Técnico' }, position: { x: 700, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
-    { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
-    { id: '7', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1100, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '5', type: 'twoTwo', data: { label: 'Sup. Técnico' }, position: { x: 700, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
+    { id: '6', type: 'TwoOne', data: { label: 'SIG' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
+    // { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '7', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1400, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '8', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1100, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
 
     // { id: 'wait', data: { label: 'ESPERA' }, position: { x: 550, y: 100 }, draggable: false, connectable: false, selectable: false },
 
 
     { id: '1-2', source: '1', target: '2', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
     { id: '1-3', source: '1', target: '3', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
-    { id: '2-5', source: '2', target: '5', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed' },
+    { id: '2-5', source: '2', target: '5', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', targetHandle: 'envia3', arrowHeadType: 'arrowclosed' },
     { id: '3-4', source: '3', target: '4', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed' },
     // { id: '4-5', source: '4', target: 'wait', type: 'step', label: 'Envia a revisión' },
 
     // { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprueba todo' },
 
-    { id: '5-2', source: '5', target: '2', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
+    { id: '5-2', source: '5', target: '2', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa3', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
     { id: '4-3', source: '4', target: '3', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
 
     // { id: 'wait-5', source: 'wait', target: '5', type: 'step', label: 'llega al supervisor' },
 
-    { id: '4-7', source: '4', target: '7', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
-    { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
+    { id: '4-8', source: '4', target: '8', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
+    { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'regresa4', targetHandle: 'envia2', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
+    { id: '6-7', source: '6', target: '7', type: 'step', label: 'Aprobado SIG', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
+    { id: '8-5', source: '6', target: '5', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'envia4', arrowHeadType: 'arrowclosed' },
 
 
   ];
@@ -124,12 +129,12 @@ const Flujo = () => {
         }
 
         if (flujo[0].jur === 1) {
-          let filtro = flujo.filter((o) => o.path === '4-7');
+          let filtro = flujo.filter((o) => o.path === '4-8');
           if (filtro.length === 0) {
             flujo.push({
               estado: 2,
-              path: '4-7',
-              id_tarea_next: 7
+              path: '4-8',
+              id_tarea_next: 8
             })
           }
         }
@@ -143,7 +148,7 @@ const Flujo = () => {
           flujo.map((i) => {
 
             elements.map((k, e) => {
-              if(k.id == i.id_tarea_next && (i.id_tarea_next === 6 || i.id_tarea_next === 7)){
+              if (k.id == i.id_tarea_next && (i.id_tarea_next === 7 || i.id_tarea_next === 8)) {
                 elements[e].data.label = (<><p>Fin</p></>)
                 elements[e].style = { background: '#81D37C' }
               }
@@ -356,6 +361,41 @@ const TwoOneNode = (({ data }) => {
         position="right"
         id="output"
       />
+    </div>
+  );
+});
+
+const TwoTwoNode = (({ data }) => {
+  return (
+    <div style={customNodeStyles}>
+      <Handle
+        type="target"
+        position="left"
+        id="envia3"
+        style={{ top: 10, background: '#555' }}
+      />
+      <Handle
+        type="source"
+        position="left"
+        id="regresa3"
+        style={{ bottom: 10, top: 'auto', background: '#555' }}
+      />
+      <div>
+        {data.label}
+      </div>
+      <Handle
+        type="source"
+        position="right"
+        id="regresa4"
+        style={{ top: 10, background: '#555' }}
+      />
+      <Handle
+        type="target"
+        position="right"
+        id="envia4"
+        style={{ bottom: 10, top: 'auto', background: '#555' }}
+      />
+
     </div>
   );
 });

@@ -4,8 +4,11 @@ import ReactDOM from 'react-dom';
 import Estructura from './page'
 import Mapa from '../modulos/visor_general'
 import Leyenda from '../modulos/leyenda'
+import variables from '../variables/var_mapa'
 
 const Visor = () => {
+
+    const [data, setData] = React.useState({variables});
     
     return (
         <Estructura>
@@ -14,7 +17,7 @@ const Visor = () => {
                 <div id="popup-content"></div>
             </div>
             <Mapa />
-            <Leyenda/>
+            <Leyenda data_leyenda={data.variables}/>
         </Estructura>
     )
 
