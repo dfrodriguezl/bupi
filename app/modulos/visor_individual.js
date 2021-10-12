@@ -1,28 +1,21 @@
 
 import React from 'react'
-import { render } from 'react-dom'
 
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
 
 import GeoJSON from 'ol/format/GeoJSON';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
-import { OSM, Vector as VectorSource } from 'ol/source';
+import { Fill, Stroke, Style } from 'ol/style';
+import { Vector as VectorSource } from 'ol/source';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { fromLonLat } from 'ol/proj';
 import Overlay from 'ol/Overlay';
 import XYZ from 'ol/source/XYZ';
-import MVT from 'ol/format/MVT';
-import VectorTileLayer from 'ol/layer/VectorTile';
-import VectorTileSource from 'ol/source/VectorTile';
-import TileGrid from 'ol/tilegrid/TileGrid';
-
-import { get as getProjection } from 'ol/proj';
 
 
 import { useParams } from 'react-router-dom'
-import { url, servidorPost } from '../js/request'
+import { servidorPost } from '../js/request'
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -30,9 +23,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import CargaShape from './componentes/CargaShape';
 import { getPermisos } from '../variables/permisos';
 import variables from '../variables/var_mapa'
-import Leyenda from './leyenda';
-
-
 
 const Mapa = () => {
 
@@ -63,7 +53,6 @@ const Mapa = () => {
 
   }
 
-  
 
   React.useEffect(() => {
 
@@ -99,7 +88,6 @@ const Mapa = () => {
             }
           })
 
-          console.log("lectura")
         });
 
       }
@@ -185,8 +173,27 @@ const Mapa = () => {
         })
       });
 
-      setMapa(new Map({
+      const container = document.getElementById('popup');
+      const content = document.getElementById('popup-content');
+      const closer = document.getElementById('popup-closer');
+
+      const overlay = new Overlay({
+        element: container,
+        autoPan: true,
+        autoPanAnimation: {
+          duration: 250,
+        },
+      });
+
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+
+      const map = new Map({
         target: 'visor1',
+        overlays: [overlay],
         layers:
           vLay !== undefined && vLayRev !== undefined ?
             [base, vLay, vLayRev] :
@@ -201,11 +208,77 @@ const Mapa = () => {
           center: fromLonLat([-74.02, 4.62]),
           zoom: 10
         })
-      }));
+      });
 
-      setLayerExtent(vLay.getSource().getExtent());
+      setMapa(map);
+
+      setLayerExtent(vLay !== undefined ?
+        vLay.getSource().getExtent() :
+        vLayRev.getSource().getExtent());
+
+      let estats = {
+        "Geometria verificada": [2],
+        "Geometria en revisión": [1]
+      };
+
+      // Popup
+      map.on('singleclick', function (evt) {
+        const coordinate = evt.coordinate;
+        let mensaje = "";
+        let id = "";
+
+        let feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+          id = layer.get('id')
+
+          return feature;
+
+        }, {
+          hitTolerance: 2
+        });
+
+        const id_expediente_click = feature.values_.id_expediente;
+        const estado = feature.values_.estado === null || feature.values_.estado === 2 ?
+          "Geometria verificada" : "Geometria en revisión";
+        const id_geom = feature.values_.id;
+
+
+        if (feature) {
+          mensaje = '<p> ' + id_expediente_click + '</p>';
+          mensaje = mensaje + '<p>' + estado + '</p>';
+          let selectEstados = '<select name="estados" id="estados" >';
+          Object.keys(estats).forEach((es) => {
+            selectEstados = selectEstados + '<option value="' + estats[es][0] + '">' + es + '</option>';
+          })
+          selectEstados = selectEstados + '</select>';
+          mensaje = mensaje + selectEstados;
+          mensaje = mensaje + '<button class="primmary" id="estado_button" type="submit">Cambiar estado</button>';
+          content.innerHTML = mensaje;
+          overlay.setPosition(coordinate);
+          container.style.visibility = "visible";
+          const selectEstadosComponent = document.getElementById("estados");
+          const cambioEstado = document.getElementById("estado_button");
+          cambioEstado.onclick = () => {
+            let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
+            let dataPredio = {
+              id_consulta: 'update_predio',
+              id_expediente: id_expediente_click,
+              id: id_geom,
+              estado: selectedValue
+            }
+
+            servidorPost('/backend', dataPredio).then((response) => {
+              if (response.data.length > 0) {
+                const id_exp_return = response.data[0].id_expediente;
+                toast.success("Poligono actualizado para el expediente " + id_exp_return)
+              }
+            })
+          }
+        }
+      });
 
     })
+
+
 
 
   }, []);
@@ -221,8 +294,6 @@ const Mapa = () => {
   if (layerExtent) {
     mapa.getView().fit(layerExtent);
   }
-
-
 
 
   return (

@@ -578,7 +578,8 @@ group by dominio) as d
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
                     'id_expediente', id_expediente,
-                    'estado', estado
+                    'estado', estado,
+                    'id',id
                 )
             ) as Feature
             FROM geometria.lote_asignacion where id_expediente = $id_expediente and (estado is null or estado = 2)
@@ -594,7 +595,8 @@ group by dominio) as d
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
                     'id_expediente', id_expediente,
-                    'estado', estado
+                    'estado', estado,
+                    'id',id
                 )
             ) as Feature
             FROM geometria.lote_asignacion where id_expediente = $id_expediente and estado in (1)
@@ -1844,6 +1846,15 @@ order by id_expediente
 			from tareas.asignacion asg join 
 			tareas.actividades ac on asg.id_tarea = ac.id_tarea
 			where id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_predio">
+        <sql>
+        UPDATE geometria.lote_asignacion
+            SET estado = $estado
+            WHERE id=$id and id_expediente = $id_expediente
+            returning id_expediente
         </sql>
     </Consulta>
 

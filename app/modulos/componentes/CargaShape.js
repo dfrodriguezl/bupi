@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import shp from 'shpjs'
 import { servidorPost } from '../../js/request'
 
@@ -33,46 +35,15 @@ const CargaShape = ({id_expediente}) => {
           console.log("DATA",data)
           servidorPost("/backend",data).then((response) => {
             console.log("RESPONSE", response)
+            toast.success("Poligono cargado al expediente " + response.data[0].id_expediente);
           })
         }
         
       })  
-
-      // const wb = XLSX.read(bstr, { type: 'binary' });
-      // wb.SheetNames.forEach((sh) => {
-      //   let sh_data = wb.Sheets[sh];
-      //   data[sh] = XLSX.utils.sheet_to_json(sh_data, { header: 0 });
-      // })
-
-      // servidorPost('/actualizacionMasiva', data).then((response) => {
-      //   // console.log(response)
-      //   if (response.status == 200) {
-      //     toast.success("Expedientes actualizados correctamente");
-      //   } else {
-      //     toast.error("Problema actualizar expedientes");
-
-      //   }
-      // })
     }
 
     reader.readAsArrayBuffer(yourFile);
     
-    // reader.readAsArrayBuffer(yourFile);
-
-    // shp(yourFile).then((geojson) => {
-    //   console.log("GEOJSON", geojson)
-    // })
-    // servidorPost('/xls', formData).then((response) => {
-    //   const data = response.data;
-    //   // console.log(data.json[0])
-    //   if (typeof data.json[0].id_expediente != "undefined") {
-    //     setdoc(data.json)
-    //   } else {
-    //     alert("Seleccione un documento csv válido")
-    //     setdoc([])
-    //   }
-
-    // });
 
   }
 
@@ -82,6 +53,7 @@ const CargaShape = ({id_expediente}) => {
         <input type="file" id="file1" onChange={onChange} className="input" accept="application/zip,application/x-zip-compressed" />
       </label>
       <p>El shape debe estar en formato comprimido .zip, debe estar en sistema de referencia espacial WGS84 y debe contener por lo menos los ficheros .shp, .dbf, .prj y .shx</p>
+      <ToastContainer />
     </div>
   )
 }

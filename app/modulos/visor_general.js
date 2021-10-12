@@ -26,8 +26,6 @@ import {url,servidorGet} from '../js/request'
 
 import variables from '../variables/var_mapa'
 
-console.log(variables)
-console.log(variables.layer1.id)
 
 var container = document.getElementById('popup');
 var content = document.getElementById('popup-content');
