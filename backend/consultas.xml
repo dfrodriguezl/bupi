@@ -127,6 +127,56 @@
         select * from info22_factura_municipio where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info24_social">
+        <sql>
+        select * from info24_social where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info25_unidades_sociales">
+        <sql>
+        select * from info25_unidades_sociales where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info26_personas_unidad_social">
+        <sql>
+        select * from info26_personas_unidad_social where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info27_servicios_publicos">
+        <sql>
+        select * from info27_servicios_publicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info28_avaluo_actividad_economica">
+        <sql>
+        select * from info28_avaluo_actividad_economica where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info29_compensaciones_y_reconocimientos_economicos">
+        <sql>
+        select * from info29_compensaciones_y_reconocimientos_economicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info30_liquidacion_dano_emergente_y_lucrocesante">
+        <sql>
+        select * from info30_liquidacion_dano_emergente_y_lucrocesante where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info31_acta_de_aceptacion">
+        <sql>
+        select * from info31_acta_de_aceptacion where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info32_negociacion_construcciones">
+        <sql>
+        select * from info32_negociacion_construcciones where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info33_reasentamiento">
+        <sql>
+        select * from info33_reasentamiento where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -263,6 +313,56 @@
     <Consulta id="update_info22_factura_municipio">
         <sql>
             update info22_factura_municipio set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info24_social">
+        <sql>
+            update info24_social set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info25_unidades_sociales">
+        <sql>
+            update info25_unidades_sociales set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info26_personas_unidad_social">
+        <sql>
+            update info26_personas_unidad_social set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info27_servicios_publicos">
+        <sql>
+            update info27_servicios_publicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info28_avaluo_actividad_economica">
+        <sql>
+            update info28_avaluo_actividad_economica set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+     <Consulta id="update_info29_compensaciones_y_reconocimientos_economicos">
+        <sql>
+            update info29_compensaciones_y_reconocimientos_economicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info30_liquidacion_dano_emergente_y_lucrocesante">
+        <sql>
+            update info30_liquidacion_dano_emergente_y_lucrocesante set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info31_acta_de_aceptacion">
+        <sql>
+            update info31_acta_de_aceptacion set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info32_negociacion_construcciones">
+        <sql>
+            update info32_negociacion_construcciones set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info33_reasentamiento">
+        <sql>
+            update info33_reasentamiento set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
 
