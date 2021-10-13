@@ -241,7 +241,6 @@ const Mapa = () => {
           "Geometria verificada" : "Geometria en revisión";
         const id_geom = feature.values_.id;
 
-
         if (feature) {
           mensaje = '<p> ' + id_expediente_click + '</p>';
           mensaje = mensaje + '<p>' + estado + '</p>';
@@ -274,6 +273,9 @@ const Mapa = () => {
             })
           }
         }
+
+
+
       });
 
     })
