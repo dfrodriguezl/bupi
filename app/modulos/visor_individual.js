@@ -34,6 +34,7 @@ const Mapa = () => {
     "geometria_verificada": true,
     "geometria_revision": false
   })
+  let lecturaLocal = true;
 
   const [layerExtent, setLayerExtent] = React.useState(null)
   const [vectorLayer, setVectorLayer] = React.useState(null)
@@ -75,6 +76,7 @@ const Mapa = () => {
 
       if (response.some(r => r == 10)) {
         setLectura(false)
+        lecturaLocal = false;
       } else {
 
         var data = { id_consulta: 'tengo_predio', id_expediente: id }
@@ -83,8 +85,10 @@ const Mapa = () => {
           getBloqueo(id).then((r) => {
             if (r.data[0].bloqueo_predio) {
               setLectura(true)
+              lecturaLocal = true;
             } else {
               setLectura(!response.data[0].exists)
+              lecturaLocal = !response.data[0].exists;
             }
           })
 
@@ -241,38 +245,41 @@ const Mapa = () => {
           "Geometria verificada" : "Geometria en revisión";
         const id_geom = feature.values_.id;
 
-        if (feature) {
-          mensaje = '<p> ' + id_expediente_click + '</p>';
-          mensaje = mensaje + '<p>' + estado + '</p>';
-          let selectEstados = '<select name="estados" id="estados" >';
-          Object.keys(estats).forEach((es) => {
-            selectEstados = selectEstados + '<option value="' + estats[es][0] + '">' + es + '</option>';
-          })
-          selectEstados = selectEstados + '</select>';
-          mensaje = mensaje + selectEstados;
-          mensaje = mensaje + '<button class="primmary" id="estado_button" type="submit">Cambiar estado</button>';
-          content.innerHTML = mensaje;
-          overlay.setPosition(coordinate);
-          container.style.visibility = "visible";
-          const selectEstadosComponent = document.getElementById("estados");
-          const cambioEstado = document.getElementById("estado_button");
-          cambioEstado.onclick = () => {
-            let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
-            let dataPredio = {
-              id_consulta: 'update_predio',
-              id_expediente: id_expediente_click,
-              id: id_geom,
-              estado: selectedValue
-            }
-
-            servidorPost('/backend', dataPredio).then((response) => {
-              if (response.data.length > 0) {
-                const id_exp_return = response.data[0].id_expediente;
-                toast.success("Poligono actualizado para el expediente " + id_exp_return)
-              }
+        if (!lecturaLocal) {
+          if (feature) {
+            mensaje = '<p> ' + id_expediente_click + '</p>';
+            mensaje = mensaje + '<p>' + estado + '</p>';
+            let selectEstados = '<select name="estados" id="estados" >';
+            Object.keys(estats).forEach((es) => {
+              selectEstados = selectEstados + '<option value="' + estats[es][0] + '">' + es + '</option>';
             })
+            selectEstados = selectEstados + '</select>';
+            mensaje = mensaje + selectEstados;
+            mensaje = mensaje + '<button class="primmary" id="estado_button" type="submit">Cambiar estado</button>';
+            content.innerHTML = mensaje;
+            overlay.setPosition(coordinate);
+            container.style.visibility = "visible";
+            const selectEstadosComponent = document.getElementById("estados");
+            const cambioEstado = document.getElementById("estado_button");
+            cambioEstado.onclick = () => {
+              let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
+              let dataPredio = {
+                id_consulta: 'update_predio',
+                id_expediente: id_expediente_click,
+                id: id_geom,
+                estado: selectedValue
+              }
+
+              servidorPost('/backend', dataPredio).then((response) => {
+                if (response.data.length > 0) {
+                  const id_exp_return = response.data[0].id_expediente;
+                  toast.success("Poligono actualizado para el expediente " + id_exp_return)
+                }
+              })
+            }
           }
         }
+
 
 
 

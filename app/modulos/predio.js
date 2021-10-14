@@ -467,31 +467,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     })
                 })
             }
-            // else {
-            //     let promise = servidorPost('/backend', dataGet).then(function (response_2) {
-            //         // console.log(response_2)
-            //         response_2.data.forEach((v) => {
-            //             if (resultados_validacion.hasOwnProperty(v.campo)) {
-            //                 resultados_validacion[v.campo].push(v);
-            //             } else {
-            //                 resultados_validacion[v.campo] = []
-            //                 resultados_validacion[v.campo].push(v);
-            //             }
-
-            //         }, []);
-
-            //         resultsList.push(promise);
-
-
-
-
-
-
-            //     })
-            // }
-
-
-
         })
 
         let promiseJur = servidorPost('/backend', data).then(function (response) {
@@ -499,13 +474,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         })
 
         resultsList.push(promiseJur);
-        // resultsList.push(serv);
-        // console.log("ARRAY")
-        // console.log(resultsList);
 
         await Promise.all(resultsList).then((r) => {
-            // console.log("ARRAY")
-            // console.log(r)
             servidorPost('/backend', dataGet).then(function (response_2) {
                 console.log("reponse", response_2)
                 response_2.data.forEach((v) => {
@@ -562,8 +532,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                                {/* {i.doc.enum.push({value:null,label:null,padre:null,padre_valor:null})} */}
-                                                {/* {console.log("SELECT ARRAY",i.doc.enum)} */}
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
@@ -593,7 +561,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         isClearable={true}
 
                                                         control={control}
-                                                        // value={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         onChange={(e) => change(e, i.doc)}
 
@@ -629,21 +596,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
-
-                                                {/* {i.doc.listener === "change" ?
-                                                    <input type={i.doc.type}
-                                                        className='form_input'
-                                                        name={i.doc.field}
-                                                        disabled={lectura}
-                                                        //  defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                        value={valueTexto[i.doc.field]}
-                                                        onChange={i.doc.listener === "change" ? (e) => handleChange(i.doc.id_consulta, e) : null}
-                                                        ref={register({
-                                                            pattern: {
-                                                                value: getRegex(i.doc.regex),
-                                                                message: i.doc.message
-                                                            }
-                                                        })} /> : */}
                                                 <input type={i.doc.type}
                                                     className='form_input'
                                                     name={i.doc.field}
@@ -718,9 +670,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
             </form>
-
-            {/* {console.log(view)}
-            {console.log(permiso)} */}
 
             {view ? '' :
                 <>

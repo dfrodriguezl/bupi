@@ -130,6 +130,8 @@
     <Consulta id="info23_sig">
         <sql>
         select * from info23_sig where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info24_social">
         <sql>
         select * from info24_social where id_expediente=$id_expediente
@@ -321,6 +323,8 @@
     <Consulta id="update_info23_sig">
         <sql>
             update info23_sig set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info24_social">
         <sql>
             update info24_social set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente

@@ -222,7 +222,7 @@ export const notificacion = (data) => {
 
         })()
 
-    } else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
+    }  else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
 
         data.id_consulta = "update_tareas_estado";
 
