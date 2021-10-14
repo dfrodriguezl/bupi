@@ -41,9 +41,9 @@ const gestionPermisos = (index) => {
 
     var tipo_permiso = [0];
     if (index == 17) {
-        tipo_permiso = [6, 7];
+        tipo_permiso = [6, 7, 11];
     } else if (index == 19) {
-        tipo_permiso = [6, 7];
+        tipo_permiso = [6, 7, 11];
     }
     else if ([2, 3, 4, 7, 9, 10, 11, 14, 18].includes(index)) {
 
@@ -55,6 +55,8 @@ const gestionPermisos = (index) => {
         tipo_permiso = [4];//editar formulario juridico    
     } else if ([13].includes(index)) {
         tipo_permiso = [5];//editar formulario juridico    
+    } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
+        tipo_permiso = [11];//editar formulario social 
     }
     return tipo_permiso;
 
@@ -895,7 +897,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
 
-        if ([17, 18, 6, 7, 8, 9, 21, 22].includes(index)) {
+        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
             setMultiple(true)
 
 
@@ -1285,7 +1287,43 @@ const Predio = () => {
 
                 </TabPanel>
                 <TabPanel>
-                    En construcción...
+
+                    <h3>Formularios sociales</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+
+                    <div className="grupo-formularios">
+                        <button onClick={() => getForm(24, "info24_social", "Social")} className={active == 24 ? 'active' : ''}>
+                            Social
+                        </button>
+                        <button onClick={() => getForm(25, "info25_unidades_sociales", "Unidades sociales")} className={active == 25 ? 'active' : ''}>
+                            Unidades sociales
+                        </button>
+                        <button onClick={() => getForm(26, "info26_personas_unidad_social", "Personas unidad social")} className={active == 26 ? 'active' : ''}>
+                            Personas unidad social
+                        </button>
+                        <button onClick={() => getForm(27, "info27_servicios_publicos", "Servicios públicos")} className={active == 27 ? 'active' : ''}>
+                            Servicios públicos
+                        </button>
+                        <button onClick={() => getForm(28, "info28_avaluo_actividad_economica", "Avaluo actividad económica")} className={active == 28 ? 'active' : ''}>
+                            Avaluo actividad económica
+                        </button>
+                        <button onClick={() => getForm(29, "info29_compensaciones_y_reconocimientos_economicos", "Compensaciones y reconocimientos económicos")} className={active == 29 ? 'active' : ''}>
+                            Compensaciones y reconocimientos económicos
+                        </button>
+                        <button onClick={() => getForm(30, "info30_liquidacion_dano_emergente_y_lucrocesante", "Liquidación daño emergente y lucro cesante")} className={active == 30 ? 'active' : ''}>
+                            Liquidación daño emergente y lucro cesante
+                        </button>
+                        <button onClick={() => getForm(31, "info31_acta_de_aceptacion", "Acta de aceptación")} className={active == 31 ? 'active' : ''}>
+                            Acta de aceptación
+                        </button>
+                        <button onClick={() => getForm(32, "info32_negociacion_construcciones", "Negociación construcciones")} className={active == 32 ? 'active' : ''}>
+                            Negociación construcciones
+                        </button>
+                        <button onClick={() => getForm(33, "info33_reasentamiento", "Reasentamiento")} className={active == 33 ? 'active' : ''}>
+                            Reasentamiento
+                        </button>
+                    </div>
+
                 </TabPanel>
                 <TabPanel>
                     <CargueDocumentos />
