@@ -833,20 +833,28 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         setActivate(false)
         setMultiple(false)
 
-
+        console.log("INDEX", index)
         var tipo_permiso = gestionPermisos(index);
+        console.log("TIPO PERMISO", tipo_permiso)
 
         getPermisos().then((response) => {
             console.log("permisos-multiple")
             console.log(response)
             console.log(tipo_permiso)
+            if (response.some(r => r == 10)) {
 
-            setPermiso(response.some(r => tipo_permiso.includes(r)))
+                setPermiso(true)
+                // setLectura(false)
+            } else {
+                setPermiso(response.some(r => tipo_permiso.includes(r)))
+            }
+
+            
             console.log(permiso)
         })
 
 
-        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
+        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35].includes(index)) {
             setMultiple(true)
 
 
@@ -1106,6 +1114,7 @@ const Predio = () => {
                     <Tab>Financiera</Tab>
                     <Tab>Social</Tab>
                     <Tab>Documentos</Tab>
+                    <Tab>Saneamientos</Tab>
                 </TabList>
                 <TabPanel>
 
@@ -1276,6 +1285,18 @@ const Predio = () => {
                 </TabPanel>
                 <TabPanel>
                     <CargueDocumentos />
+                </TabPanel>
+                <TabPanel>
+                    <h3>Formularios saneamientos</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    <div className="grupo-formularios">
+                        <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
+                            Estado saneamiento básico
+                        </button>
+                        <button onClick={() => getForm(35, "info35_estado_saneamiento_juridico", "Estado saneamiento jurídico")} className={active == 35 ? 'active' : ''}>
+                            Estado saneamiento jurídico
+                        </button>
+                    </div>
                 </TabPanel>
 
             </Tabs>

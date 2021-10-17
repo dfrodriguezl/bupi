@@ -182,6 +182,16 @@
         select * from info33_reasentamiento where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info34_estado_saneamiento_basico">
+        <sql>
+        select * from i34_estado_saneamiento_basico_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info35_estado_saneamiento_juridico">
+        <sql>
+        select * from info35_estado_saneamiento_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -373,6 +383,16 @@
     <Consulta id="update_info33_reasentamiento">
         <sql>
             update info33_reasentamiento set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info34_estado_saneamiento_basico">
+        <sql>
+            update info34_estado_saneamiento_basico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info35_estado_saneamiento_juridico">
+        <sql>
+            update info35_estado_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
 

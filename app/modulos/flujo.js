@@ -57,10 +57,10 @@ const Flujo = () => {
     { id: '5', type: 'twoTwo', data: { label: 'Sup. Técnico' }, position: { x: 700, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
     { id: '6', type: 'TwoOne', data: { label: 'SIG' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
     // { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
-    { id: '7', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1400, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
-    { id: '8', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1100, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
-    { id: '9', data: { label: 'Social' }, position: { x: 500, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
-    { id: '10', type: 'output', data: { label: 'Fin social' }, position: { x: 1100, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '7', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1500, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '8', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1500, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    { id: '9', data: { label: 'Social' }, position: { x: 300, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
+    { id: '10', type: 'output', data: { label: 'Fin social' }, position: { x: 1500, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
 
 
     // { id: 'wait', data: { label: 'ESPERA' }, position: { x: 550, y: 100 }, draggable: false, connectable: false, selectable: false },

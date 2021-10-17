@@ -2,17 +2,17 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 
 import DeleteIcon from '@material-ui/icons/Delete';
-import {servidorPost} from '../js/request'
+import { servidorPost } from '../js/request'
 import { ToastContainer, toast } from 'react-toastify';
 import { notificacion } from '../variables/notificaciones'
 
-const Modal = ({nombre,id,refresh,tareacod}) => {
-       
+const Modal = ({ nombre, id, refresh, tareacod }) => {
+
   const toastId = React.useRef(null);
 
   return (
-      <>
-        <Popup
+    <>
+      <Popup
         trigger={<button>Finalizar actividad</button>}
         modal
         nested
@@ -24,43 +24,44 @@ const Modal = ({nombre,id,refresh,tareacod}) => {
             </button>
             <div className="header"> Confirmación </div>
             <div className="content">
-                        Se encuentra seguro de haber diligenciado el formulario para el expediente:  {nombre}
+              Se encuentra seguro de haber diligenciado el formulario para el expediente:  {nombre}
             </div>
             <div className="actions">
-            <button
+              <button
                 className="button"
                 onClick={() => {
-                  
-                  
+
+
                   refresh(Math.random())
 
-                  var data = {
-                    "id": id,
-                    "ruta":-1
-                  }
-                  notificacion(data)
-                  
 
-                  var datos={
-                    "id_expediente":nombre,
+                    var data = {
+                      "id": id,
+                      "ruta": -1
+                    }
+                    notificacion(data)
+
+                  
+                  var datos = {
+                    "id_expediente": nombre,
                     "ruta": tareacod,
                   }
                   notificacion(datos)
 
-                  
-                   /* 
-                  toast.success("Tarea resuelta satisfactoriamente",{
-                    toastId: id
-                  })*/
 
-                  
+                  /* 
+                 toast.success("Tarea resuelta satisfactoriamente",{
+                   toastId: id
+                 })*/
 
-                 close();
-                
 
-                
+
+                  close();
+
+
+
                 }}
-                
+
               >
                 Si
               </button>
@@ -75,14 +76,14 @@ const Modal = ({nombre,id,refresh,tareacod}) => {
               </button>
             </div>
           </div>
-          
+
         )}
       </Popup>
-      <ToastContainer/>
-  </>
-)
+      <ToastContainer />
+    </>
+  )
 
 }
 
 
-export {Modal}
+export { Modal }

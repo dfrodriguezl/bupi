@@ -222,7 +222,31 @@ export const notificacion = (data) => {
 
         })()
 
-    }  else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
+    } else if (ruta === 12) {
+        data.id_consulta = "info24_social";
+
+        (async () => {
+            var result = await back(data);
+
+            if (result.data[0].informacion_social != null) { // Devolucion de geometria
+                (async () => {
+
+                    //alert()
+
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 5,
+                        ruta_destino: 11,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })()
+            }
+
+        })()
+
+    } else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
 
         data.id_consulta = "update_tareas_estado";
 
