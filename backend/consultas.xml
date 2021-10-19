@@ -189,7 +189,7 @@
     </Consulta>
     <Consulta id="info35_estado_saneamiento_juridico">
         <sql>
-        select * from info35_estado_saneamiento_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from i35_estado_saneamiento_juridico_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
 
