@@ -4,26 +4,31 @@ import { useForm } from 'react-hook-form';
 
 import { servidorPost } from './request'
 import { Redirect } from 'react-router'
+import HomeDialogo from '../modulos/componentes/HomeDialogo';
 
 const Login = () => {
   const { register, handleSubmit, errors } = useForm();
   const [ok, setOk] = React.useState(false);
   const [msg, setMsg] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const onSubmit = data => {
     console.log(data)
+    
 
     const post = async () => {
       data.id_consulta = 'get_usuario'
       const result = await servidorPost('/login', data)
 
       if (result.data.length > 0) {
-        setOk(true)
+        setOpen(true)
+        // setOk(true)
       } else {
         setMsg(true)
       }
 
     }
+
     post();
 
 
@@ -32,7 +37,8 @@ const Login = () => {
 
   return (
     <div id="login">
-      {ok ? <Redirect to="/" /> : ''}
+      <HomeDialogo open={open} />
+      {/* {ok ? <Redirect to="/" /> : ''} */}
       <div id="contenido">
         <div className="crop">
           <img src="bienes-raices/img/login-header.png" alt="" />
