@@ -18,6 +18,8 @@ import Asignar from './asignar'
 import User from './usuario'
 import Administracion from './administracion';
 import Actualizacion from './actualizacion';
+import BusquedaServ from './servidumbres/Busqueda'
+import Servidumbre from './servidumbres/servidumbre'
 
 
 
@@ -38,6 +40,8 @@ const Tree = () => {
             <Route exact path='/personal' component={User}/>
             <Route exact path='/admin' component={Administracion}/>
             <Route exact path='/actualizar' component={Actualizacion}/>
+            <Route exact path='/servidumbres/buscar' component={BusquedaServ}/>
+            <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre}/>
         </BrowserRouter>
         </Switch>
     </BrowserRouter>

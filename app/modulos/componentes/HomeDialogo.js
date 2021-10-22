@@ -8,7 +8,7 @@ const HomeDialogo = (props) => {
 
   const handleClick = (tipo) => {
     if (tipo === "serv") {
-      history.push("/servidumbres");
+      history.push("/servidumbres/buscar");
     }else if (tipo === "predios"){
       history.push("/");
     }
@@ -20,13 +20,13 @@ const HomeDialogo = (props) => {
         <DialogTitle>Seleccione la opción a la que requiere ingresar</DialogTitle>
         <Grid xs={12} container style={{ padding: 50 }} >
           <Grid xs={5} item container justify="center" className="label-input">
-            <Button onClick={(e) => handleClick("predios")}>
+            <Button onClick={() => handleClick("predios")}>
               Predios
             </Button>
           </Grid>
           <Grid xs={1} />
           <Grid xs={5} item container justify="center" className="label-input">
-            <Button>
+            <Button onClick={() => handleClick("serv")}>
               Servidumbres
             </Button>
           </Grid>
