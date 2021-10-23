@@ -45,19 +45,20 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([2, 3, 4, 7, 9, 10, 11, 14, 18].includes(index)) {
+    else if ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
-    } else if ([5, 6, 8, 15, 16, 20, 21, 22].includes(index)) {
+    } else if ([].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
-    } else if ([12].includes(index)) {
+    } else if ([18].includes(index)) {
         tipo_permiso = [4];//editar formulario juridico    
-    } else if ([13].includes(index)) {
-        tipo_permiso = [5];//editar formulario juridico    
-    } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
-        tipo_permiso = [11];//editar formulario social 
     }
+    // else if ([13].includes(index)) {
+    //     tipo_permiso = [5];//editar formulario juridico    
+    // } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
+    //     tipo_permiso = [11];//editar formulario social 
+    // }
     return tipo_permiso;
 
 }
@@ -205,6 +206,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             var data = { id_consulta: 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
+                                setLectura(!response.data[0].exists)
                                 // getBloqueo(id).then((r) => {
                                 //     if (r.data[0].bloqueo_predio) {
                                 //         setLectura(true)
@@ -1197,6 +1199,10 @@ const Servidumbre = () => {
                         <button onClick={() => getForm(19, "info19_estado_saneamiento_basico_servidumbre", "Estado saneamiento básico servidumbre")}
                             className={active == 19 ? 'active' : ''}    >
                             Estado saneamiento básico
+                        </button>
+                        <button onClick={() => getForm(20, "info20_sig_servidumbre", "SIG")}
+                            className={active == 20 ? 'active' : ''}    >
+                            SIG
                         </button>
 
                         {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}

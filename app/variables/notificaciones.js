@@ -149,7 +149,12 @@ export const notificacion = (data) => {
     else if (ruta == 3 || ruta === 11) {// tarea a cargo del sup tecnico
 
 
-        data.id_consulta = "aprobado_tecnico";
+        
+        if(data.id_expediente.includes("S_")){
+            data.id_consulta = "aprobado_tecnico_servidumbre";
+        }else{
+            data.id_consulta = "aprobado_tecnico";
+        }
 
         (async () => {
             var result = await back(data);
@@ -194,7 +199,12 @@ export const notificacion = (data) => {
 
     } else if (ruta === 9) { // Tarea en usuario SIG
 
-        data.id_consulta = "info23_sig";
+        if(data.id_expediente.includes("S_")){
+            data.id_consulta = "info20_sig_servidumbre";
+            data.id_servidumbre = data.id_expediente;
+        }else{
+            data.id_consulta = "info23_sig";
+        }
 
         (async () => {
             var result = await back(data);

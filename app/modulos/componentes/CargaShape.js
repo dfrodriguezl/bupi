@@ -31,11 +31,14 @@ const CargaShape = ({id_expediente}) => {
             estado: 1,
             shape: JSON.stringify(shape)
           }
+
+          if(id_expediente.includes("S_")){
+            data.id_consulta = 'insertar_dibujo_mapa_servidumbre'
+          }
           
-          console.log("DATA",data)
           servidorPost("/backend",data).then((response) => {
             console.log("RESPONSE", response)
-            toast.success("Poligono cargado al expediente " + response.data[0].id_expediente);
+            toast.success("Poligono cargado al expediente " + response.data[0].id_expediente ? response.data[0].id_expediente : response.data[0].id_expedie);
           })
         }
         

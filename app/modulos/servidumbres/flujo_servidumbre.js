@@ -213,6 +213,7 @@ const FlujoServidumbre = () => {
             snapGrid={[15, 15]}
             onLoad={onLoad}
             nodeTypes={nodeTypes}
+            className="flujo_servidumbre"
           >
             <Controls />
 
