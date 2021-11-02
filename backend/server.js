@@ -567,6 +567,49 @@ app.get('*', (req,res) =>{
       var consultas = ['tributaria_principal','tributaria_zmpa','tributaria_juridico'];
       var names=['TRIBUTARIA','ACTADM_ZMPA','PORCENTAJE_DE_PROPIEDAD']
 
+    } else if (reporte === 'all_servidumbres'){
+      var consultas = [
+        'reporte_info1_servidumbres',
+         'reporte_info2_servidumbres' ,
+        'reporte_info3_servidumbres' ,
+        'reporte_info4_servidumbres' ,
+         'reporte_info5_servidumbres' ,  
+         'reporte_info6_servidumbres' ,
+         'reporte_info7_servidumbres' ,
+        'reporte_info8_servidumbres' ,
+        'reporte_info9_servidumbres' ,
+        'reporte_info10_servidumbres',
+        'reporte_info11_servidumbres',  
+        'reporte_info12_servidumbres' ,
+        'reporte_info13_servidumbres',
+         'reporte_info14_servidumbres' ,
+         'reporte_info15_servidumbres' ,
+         'reporte_info16_servidumbres' ,   
+        'reporte_info17_servidumbres',
+        'reporte_info18_servidumbres',
+        'reporte_info19_servidumbres'  
+      ]
+      var names = [
+         'GENERAL_PROYECTO',
+         'GENERAL_PREDIO_SIRVIENTE' ,
+        'GENERAL_PREDIOS_DERIVADOS' ,
+        'AREA_Y_USOS_PREDIO_SIRVIENTE' ,
+         'SERVIDUMBRE' ,
+         'AVALUOS' ,
+         'ORDEN_DE_PAGO' ,
+        'SOPORTES_PAGO' ,
+        'JURIDICO_SERVIDUMBRE' ,
+        'CONSTITUCION_SERVIDUMBRE',
+        'PROPIETARIO_CATASTRAL',
+         'PROPIETARIO_JURIDICO_ACTUAL' ,
+        'PROPIETARIO_CONSTITUCION' , 
+         'INFRAESTRUCTURA_SERVIDUMBRE' ,
+         'SANEAMIENTO_BASICO' ,
+         'MUNICIPIOS_INTERSECTADOS' ,   
+         'DOCUMENTOS_REQUERIDOS' ,   
+         'CONTROL_CALIDAD_TECNICO' ,   
+         'ESTADO_SANEAMIENTO_BASICO' ,          
+      ]
     }
 
 

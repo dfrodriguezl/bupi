@@ -20,6 +20,7 @@ import Administracion from './administracion';
 import Actualizacion from './actualizacion';
 import BusquedaServ from './servidumbres/Busqueda'
 import Servidumbre from './servidumbres/servidumbre'
+import ReporteServidumbre from './servidumbres/reportes'
 
 
 
@@ -42,6 +43,7 @@ const Tree = () => {
             <Route exact path='/actualizar' component={Actualizacion}/>
             <Route exact path='/servidumbres/buscar' component={BusquedaServ}/>
             <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre}/>
+            <Route exact path='/servidumbres/reportes' component={ReporteServidumbre}/>
         </BrowserRouter>
         </Switch>
     </BrowserRouter>
