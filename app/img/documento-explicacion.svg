@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -14,7 +12,7 @@
    viewBox="0 0 150 30"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    sodipodi:docname="documento-explicacion.svg">
   <defs
      id="defs2">
@@ -101,17 +99,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="304.84783"
-     inkscape:cy="-43.985188"
+     inkscape:zoom="1.4"
+     inkscape:cx="155.51789"
+     inkscape:cy="10.855658"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="text817"
      showgrid="false"
-     inkscape:window-width="1316"
-     inkscape:window-height="1001"
-     inkscape:window-x="1228"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:document-rotation="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -120,7 +119,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -245,6 +244,29 @@
          d="M 130.73555,283.78354 H 127.9588 V 283.25988 H 129.02678 V 279.82168 H 127.9588 V 279.35315 Q 128.17584,279.35315 128.42389,279.3187 128.67194,279.2808 128.79941,279.2119 128.95788,279.12577 129.04745,278.99486 129.14047,278.8605 129.15425,278.63657 H 129.68824 V 283.25988 H 130.73555 Z"
          style="fill:#80b3ff"
          id="path1098" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:6.97051px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0055d4;fill-opacity:1;stroke:none;stroke-width:0.0461071"
+         x="2.2179582"
+         y="267.3927"
+         id="text1165"
+         transform="scale(0.94224306,1.0612973)"><tspan
+           sodipodi:role="line"
+           id="tspan1163"
+           x="2.2179582"
+           y="267.3927"
+           style="fill:#0055d4;fill-opacity:1;stroke-width:0.0461071">S_</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0700043"
+         x="6.225534"
+         y="283.73898"
+         id="text1169"><tspan
+           sodipodi:role="line"
+           id="tspan1167"
+           x="6.225534"
+           y="283.73898"
+           style="stroke-width:0.0700043"></tspan></text>
     </g>
     <g
        aria-label="Código del documento"

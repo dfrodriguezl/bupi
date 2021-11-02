@@ -320,7 +320,7 @@
     </Consulta>
     <Consulta id="get_servidumbres">
         <sql>
-        select ig.id_servidumbre,id_proyecto_s,nom_proy_res,chip_cat,direccion,bar_ver from servidumbres.info1_general_proyecto_servidumbre ig 
+        select ig.id_servidumbre,id_proyecto_s,nom_proy_res,chip_cat,direccion,bar_ver, matricula from servidumbres.info1_general_proyecto_servidumbre ig 
         left join servidumbres.info2_general_predio_sirviente ip
         on ig.id_servidumbre=ip.id_servidumbre
         where 

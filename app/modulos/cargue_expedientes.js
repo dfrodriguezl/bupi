@@ -24,6 +24,7 @@ const CargueDocumentos = () => {
     const [meta, setMeta] = React.useState([]);
     const [permiso, setpermiso] = React.useState(false);
     const [load, setLoad] = React.useState(0)
+    const [expedientes, setExpedientes] = React.useState([])
 
     React.useEffect(() => {
 
@@ -59,13 +60,10 @@ const CargueDocumentos = () => {
             var separators = ['-', '\\.'];
             var estruc = nombre.split(new RegExp(separators.join('|'), 'g'));
 
-            // console.log(estruc)
 
             if (estruc.length == 6) {
 
-                console.log(estruc[4].length)
-
-                if (estruc[0].length == 10 && estruc[1].length == 3 && estruc[2].length == 8 && estruc[3].length == 3 && estruc[4].length == 2) {
+                if ((estruc[0].length == 10 || estruc[0].length == 8) && estruc[1].length == 3 && estruc[2].length == 8 && estruc[3].length == 3 && estruc[4].length == 2) {
 
                     var tipo_documento = ""
 
@@ -97,8 +95,18 @@ const CargueDocumentos = () => {
         }
 
         setPDF(files)
+        let expedientesList = [];
+        json.forEach((i) => {
+            expedientesList.push(i.name.split("-")[0]);
+        })
+        let uniqueExp = expedientesList.filter(onlyUnique);
+        setExpedientes(uniqueExp)
         setdoc(json)
 
+    }
+
+    const onlyUnique = (value, index, self) => {
+        return self.indexOf(value) === index;
     }
 
 
@@ -145,7 +153,7 @@ const CargueDocumentos = () => {
 
         <div id="seccion">
             <div id="titulo_seccion">Cargue de documentos</div>
-            <p id="descripcion_seccion">En esta sección usted puede cargar el expeediente que debe estar digitalizado en formato PDF y nombrado correctamente</p>
+            <p id="descripcion_seccion">En esta sección usted puede cargar el expediente o servidumbre que debe estar digitalizado en formato PDF y nombrado correctamente</p>
 
             <Help titulo="Metadata" doc='METADATA.xlsx' />
 
@@ -166,6 +174,23 @@ const CargueDocumentos = () => {
                     <p>Se Cargarán: {doc.reduce(function (sum, d) {
                         return sum + d.valido;
                     }, 0)} Documentos de {doc.length}</p>
+
+                    <div className="documento">
+                        <p>Se cargaran los documentos de los siguientes expedientes:</p>
+                        <p>
+                        {expedientes.map((item, key) => {
+                            return (
+                                        item.includes("S_") ?
+                                            "Servidumbre " + item + ", " :
+                                            "Predio " + item + ", "
+                            )
+
+                        })}
+                        </p>
+                        
+                    </div>
+
+
 
                     <Line percent={progreso} strokeWidth="1" strokeColor="#035B93" trailColor="#fff" />
                     <p className="enfasis">Documentos subidos: {load} </p>

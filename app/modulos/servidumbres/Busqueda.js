@@ -51,7 +51,8 @@ const Busqueda = () => {
                     <p className="item_titulo"> {el.id_servidumbre}</p>
                     <p className="item_des">Proyecto: {el.id_proyecto_s}</p>
                       <p className="item_des">Nombre: {el.nom_proy_res}</p>
-                      <p className="item_des">CHIP: {el.chip_cat}</p>
+                      <p className="item_des">CHIP predio sirviente: {el.chip_cat}</p>
+                      <p className="item_des">Matrícula predio sirviente: {el.matricula}</p>
                       <p className="item_des">Dirección: {el.direccion}</p>
                       <p className="item_des">Barrio/Vereda: {el.bar_ver}</p>
                       <button >
