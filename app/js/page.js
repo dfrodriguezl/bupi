@@ -8,17 +8,18 @@ import { Home, Search, InsertDriveFile, Public, AttachFile, GroupAdd, EmojiPeopl
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import PublishIcon from '@material-ui/icons/Publish';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import { Notifi } from '../modulos/encabezado'
-
 import { getPermisos } from '../variables/permisos'
+import { useHistory } from 'react-router-dom'
 
 
 const Estructura = ({ children }) => {
 
   const [session, setSession] = React.useState(0);
   const [isAdmin, setIsAdmin] = React.useState(false);
+  const history = useHistory();
+  const isServidumbre = history.location.pathname.indexOf('servidumbres') > -1;
 
   React.useEffect(() => {
 
@@ -77,18 +78,31 @@ const Estructura = ({ children }) => {
           <img src="bienes-raices/img/logo.png" alt="" />
         </div>
         <div id="items-nav">
-          <div className="elemento">
-            <Link to="/">
-              <Home />
-              <p>Inicio</p>
-            </Link>
-          </div>
-          <div className="elemento">
-            <Link to="/buscar">
-              <Search />
-              <p>Buscador</p>
-            </Link>
-          </div>
+          {!isServidumbre ?
+            <div className="elemento">
+              <Link to="/">
+                <Home />
+                <p>Inicio</p>
+              </Link>
+            </div> : null
+          }
+
+          {isServidumbre ?
+            <div className="elemento">
+              <Link to="/servidumbres/buscar">
+                <Search />
+                <p>Buscador</p>
+              </Link>
+            </div> :
+            <div className="elemento">
+              <Link to="/buscar">
+                <Search />
+                <p>Buscador</p>
+              </Link>
+            </div>
+          }
+
+
           <div className="elemento">
             <Link to="/documentos">
               <InsertDriveFile />
@@ -101,12 +115,22 @@ const Estructura = ({ children }) => {
               <p>Visor geográfico</p>
             </Link>
           </div>
-          <div className="elemento">
-            <Link to="/reportes">
-              <AttachFile />
-              <p>Reportes</p>
-            </Link>
-          </div>
+          {isServidumbre ?
+            <div className="elemento">
+              <Link to="/servidumbres/reportes">
+                <AttachFile />
+                <p>Reportes</p>
+              </Link>
+            </div> :
+            <div className="elemento">
+              <Link to="/reportes">
+                <AttachFile />
+                <p>Reportes</p>
+              </Link>
+            </div>
+
+          }
+
           <div className="elemento">
             <Link to="/personal">
               <FaceIcon />
