@@ -292,6 +292,11 @@
         select * from i35_estado_saneamiento_juridico_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info36_documental">
+        <sql>
+        select * from info36_documental where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -619,6 +624,11 @@
     <Consulta id="update_info35_estado_saneamiento_juridico">
         <sql>
             update info35_estado_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info36_documental">
+        <sql>
+            update info36_documental set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
 

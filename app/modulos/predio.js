@@ -1115,6 +1115,7 @@ const Predio = () => {
                     <Tab>Social</Tab>
                     <Tab>Documentos</Tab>
                     <Tab>Saneamientos</Tab>
+                    <Tab>Documental</Tab>
                 </TabList>
                 <TabPanel>
 
@@ -1295,6 +1296,15 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(35, "info35_estado_saneamiento_juridico", "Estado saneamiento jurídico")} className={active == 35 ? 'active' : ''}>
                             Estado saneamiento jurídico
+                        </button>
+                    </div>
+                </TabPanel>
+                <TabPanel>
+                    <h3>Formularios documental</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    <div className="grupo-formularios">
+                        <button onClick={() => getForm(36, "info36_documental", "Documental")} className={active == 36 ? 'active' : ''}>
+                        Documental
                         </button>
                     </div>
                 </TabPanel>
