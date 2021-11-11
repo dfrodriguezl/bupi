@@ -171,7 +171,7 @@ const auditoria = (data,user,id) => {
   var datetime = new Date();
 
   if(id != null){
-    pool.query("insert into auditoria values((select max(id)+" + id + " from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+    pool.query("insert into auditoria (data,usuario,fecha) values($1,$2,$3) returning id", [data,user,datetime], (error, results) => {
       if (error) {
         console.log(error)
         throw error
@@ -181,7 +181,7 @@ const auditoria = (data,user,id) => {
      
     });
   }else{
-    pool.query("insert into auditoria values((select max(id)+1 from auditoria),$1,$2,$3) returning id", [data,user,datetime], (error, results) => {
+    pool.query("insert into auditoria (data,usuario,fecha) values($1,$2,$3) returning id", [data,user,datetime], (error, results) => {
       if (error) {
         console.log(error)
         throw error
