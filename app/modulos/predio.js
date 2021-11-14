@@ -34,6 +34,7 @@ import date from 'date-and-time';
 import Popup from 'reactjs-popup';
 
 import CargueDocumentos from './cargue_expedientes'
+import { notificacion } from '../variables/notificaciones';
 
 
 const gestionPermisos = (index) => {
@@ -57,6 +58,8 @@ const gestionPermisos = (index) => {
         tipo_permiso = [5];//editar formulario juridico    
     } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
         tipo_permiso = [11];//editar formulario social 
+    } else if([36,37].includes(index)){
+        tipo_permiso = [12];
     }
     return tipo_permiso;
 
@@ -200,7 +203,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             setpermiso(response.some(r => tipo_permiso.includes(r)))
 
 
-
+                            let responseUp = response;
 
                             var data = { id_consulta: 'tengo_predio', id_expediente: id }
 
@@ -209,12 +212,18 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        setLectura(!response.data[0].exists)
+                                        if(responseUp.some(r => r == 12)){
+                                            setLectura(false)
+                                        }else{
+                                            setLectura(!response.data[0].exists)
+                                        }
+                                        
                                     }
                                 })
 
                                 console.log("lectura")
                             });
+
 
                         }
                     })
@@ -277,6 +286,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         console.log("datos-------")
         console.log(datos)
         var data = datos;
+        console.log("TBL",index)
 
 
         Object.keys(data).forEach(function (key) {
@@ -327,6 +337,31 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             }
         });
         console.log(data)
+
+        if(index === 37){
+            if(data.fecha_ent_usu_prestamo != null && data.fecha_dev_usu_prestamo == null){
+                // Insertar notificacion (tarea) para agregar tarea
+                let dataNot = data;
+                dataNot.ruta = -2;
+                notificacion(dataNot);
+                delete dataNot.ruta;
+                delete dataNot.opcion;
+                delete dataNot.id_consulta;
+                delete dataNot.tarea_next;
+                delete dataNot.ruta_destino;
+                delete dataNot.usuario;
+                
+            }else if(data.fecha_ent_usu_prestamo != null && data.fecha_dev_usu_prestamo != null){
+                // TODO Cerrar tarea de préstamo
+                let dataNot = data;
+                dataNot.ruta = -3;
+                notificacion(dataNot)
+                delete dataNot.ruta;
+                delete dataNot.id_consulta;
+                delete dataNot.usuario_prestamo;
+                delete dataNot.opcion;
+            }
+        }   
 
 
 
@@ -854,7 +889,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
 
-        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35].includes(index)) {
+        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37].includes(index)) {
             setMultiple(true)
 
 
@@ -1305,6 +1340,9 @@ const Predio = () => {
                     <div className="grupo-formularios">
                         <button onClick={() => getForm(36, "info36_documental", "Documental")} className={active == 36 ? 'active' : ''}>
                         Documental
+                        </button>
+                        <button onClick={() => getForm(37, "info37_prestamo_expedientes", "Préstamo expedientes")} className={active == 37 ? 'active' : ''}>
+                        Préstamo expedientes
                         </button>
                     </div>
                 </TabPanel>

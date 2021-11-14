@@ -1,12 +1,12 @@
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');//sirve para que el body de post sea en formato json
+// var bodyParser = require('body-parser');//sirve para que el body de post sea en formato json
 var named = require('node-postgres-named');//sirve para agregar named parameters en las consultas $data
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const jwt = require('jsonwebtoken');
 var cookieParser = require('cookie-parser')
-var schedule = require('node-schedule');
+// var schedule = require('node-schedule');
 // var compression = require('compression');
 
 var expressStaticGzip = require("express-static-gzip");
@@ -25,7 +25,7 @@ const mercator = new SphericalMercator()
 //convierte csv a json
 const csvtojson = require('csvtojson');
 
-var sess;
+// var sess;
 //conexión a la base de datos en postgresql
 const { Pool, types } = require('pg')
 
@@ -87,14 +87,22 @@ app.use(cors({credentials: true, origin: 'http://localhost:9000'}));
 
 app.use(cookieParser());
 app.use(fileUpload())
-app.use(bodyParser.json())
+app.use(express.json())
+// app.use(bodyParser.json())
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//     limit: '100mb'
+//   })
+// )
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
     limit: '100mb'
   })
 )
-app.use(bodyParser.json({limit: '100mb'})); 
+// app.use(bodyParser.json({limit: '100mb'}));
+app.use(express.json({limit: '100mb'})); 
 
 
 
@@ -692,7 +700,7 @@ app.get('*', (req,res) =>{
           response.setHeader('Content-disposition', 'attachment; filename=reporte.xlsx');
           // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
        
-         response.end(new Buffer(buffer, 'base64'));
+         response.end(new Buffer.from(buffer, 'base64'));
 
 
           }

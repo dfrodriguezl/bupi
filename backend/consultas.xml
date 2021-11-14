@@ -297,6 +297,11 @@
         select * from info36_documental where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info37_prestamo_expedientes">
+        <sql>
+        select * from info37_prestamo_expedientes where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -631,7 +636,11 @@
             update info36_documental set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
-
+    <Consulta id="update_info37_prestamo_expedientes">
+        <sql>
+            update info37_prestamo_expedientes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
 
 
 
@@ -723,7 +732,11 @@
             'type', type,
             'size', size,
             'helper',helper,
-            'enum',d.enum,
+            'enum',CASE
+				WHEN u.enum is not null then u.enum
+				WHEN d.enum is not null then d.enum
+				ELSE NULL
+			END,
             'editable',editable,
             'regex',regex,
             'message',message,
@@ -741,6 +754,10 @@
 								  from dominios
 group by dominio) as d
         on m.enum=d.dominio
+        left join (select 'usuarios' as dominio,
+								  json_agg(json_build_object('value',usuario_usuario,'label',usuario_nombre,'padre',null,'padre_valor',null)) as enum
+								  from usuario) as u
+        on m.enum=u.dominio
         where tabla=$tabla order by orden
         </sql>
     </Consulta>
@@ -831,6 +848,22 @@ group by dominio) as d
         )ON CONFLICT DO NOTHING RETURNING usuario_responsable
         </sql>
     </Consulta>
+    <Consulta id="insertar_notificacion_documental">
+        <sql>
+        insert into tareas.tareas values(
+            (select max (id)+1 from tareas.tareas),
+            $id_expediente,
+            $ruta_destino,
+            $usuario,
+            (select usuario from tareas.asignacion 
+            where id_expediente=$id_expediente and id_tarea= $tarea_next),
+            now(),
+            null,
+            1,
+            true
+        )ON CONFLICT DO NOTHING RETURNING usuario_responsable
+        </sql>
+    </Consulta>
 
 
 
@@ -912,6 +945,15 @@ group by dominio) as d
         <sql>
         update tareas.tareas set estado=2, fecha_solucion=now() 
         where id=$id 
+        returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_tareas_estado_documental">
+        <sql>
+        update tareas.tareas set estado=2, fecha_solucion=now() 
+        where id_expediente = $id_expediente and usuario_asigna = $usuario_prestamo 
+        and ruta = 13
         returning id_expediente
         </sql>
     </Consulta>

@@ -54,18 +54,18 @@ const Tarea = ({ refresh_number }) => {
 
     }
 
-    const color = (fecha) => {
+    const color = (fecha, ruta) => {
 
         const f_noti = moment.utc(fecha);
 
-        const f_15 = moment().subtract(15, 'days');
+        const f_15 = ruta !== 13 ? moment().subtract(15, 'days') : moment().subtract(3, 'days');
 
         var msg = "";
 
         if (f_noti > f_15) {
             msg = "success"
         } else {
-            const f_30 = moment().subtract(30, 'days');
+            const f_30 = ruta !== 13 ? moment().subtract(30, 'days') : moment().subtract(5, 'days');
             if (f_noti > f_30) {
                 msg = "warning"
             } else {
@@ -104,7 +104,7 @@ const Tarea = ({ refresh_number }) => {
 
 
             {filtro.map((item, index) =>
-                <div className={"grupo " + color(item.fecha_asignacion)}>
+                <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
                     <p className="titulo">{item.id_expediente}</p>
                     <p>Fecha Asignación: {moment.utc(item.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p>
                     <p>Enviado por: {item.usuario_nombre}</p>
@@ -121,12 +121,14 @@ const Tarea = ({ refresh_number }) => {
 
                     </button>
 
-                    <Modal
-                        nombre={item.id_expediente}
-                        id={item.id}
-                        refresh={setRefresh}
-                        tareacod={item.ruta}
-                    />
+                    {item.ruta != 13 ?
+                        <Modal
+                            nombre={item.id_expediente}
+                            id={item.id}
+                            refresh={setRefresh}
+                            tareacod={item.ruta}
+                        /> : null}
+
                 </div>
             )
             }

@@ -13,7 +13,7 @@ export const notificacion = (data) => {
     const ruta = data.ruta;
     data.opcion = 1;
 
-    console.log(data)
+    // console.log("DATA NOT", data)
 
 
     if (ruta === 0) {
@@ -256,6 +256,29 @@ export const notificacion = (data) => {
 
         })()
 
+    } else if (ruta === 13) {
+        data.id_consulta = "info37_prestamo_expedientes";
+
+        (async () => {
+            var result = await back(data);
+
+            if (result.data[0].fecha_dev_usu_prestamo != null) { // Devolucion de geometria
+                (async () => {
+
+                    //alert()
+
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 5,
+                        ruta_destino: 11,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })()
+            }
+
+        })()
     } else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
 
         data.id_consulta = "update_tareas_estado";
@@ -265,6 +288,36 @@ export const notificacion = (data) => {
 
         })()
 
+    } else if (ruta === -2){ // Tarea para asignar a supervisor documental
+
+        let post = {
+            id_consulta: "insertar_notificacion_documental",
+            tarea_next: 8,
+            ruta_destino: 13,
+            opcion: 1,
+            id_expediente: data.id_expediente,
+            usuario: data.usuario_prestamo
+        };
+
+
+        (async () => {
+            await back(post)
+
+        })()
+
+    } else if (ruta === -3){
+
+        let post = {
+            id_consulta: "update_tareas_estado_documental",
+            id_expediente: data.id_expediente,
+            usuario_prestamo: data.usuario_prestamo
+        };
+
+
+        (async () => {
+            await back(post)
+
+        })()
     }
 
 
