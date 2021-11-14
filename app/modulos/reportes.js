@@ -137,6 +137,7 @@ const Report = () => {
 
       <Excel titulo="Reporte validaciones" descripcion="Reporte completo de las validaciones realizadas por el sistema" data={{ 'id_consulta': 'reporte_validacion' }} prevStep={true} />
 
+      <Excel titulo="Reporte componente documental" descripcion="Reporte completo del componente documental en el sistema" data={{ 'id_consulta': 'reporte_documental' }} />
       {/* <Excel titulo="Reporte Tareas" descripcion="Reporte completo de las tareas asignadas en el sistema" data={{ 'id_consulta': 'reporte_tareas' }} />
       <Excel titulo="Reporte Documentos" descripcion="Reporte completo de los documentos cargados al sistema" data={{ 'id_consulta': 'reporte_documentos' }} />
       <Excel titulo="Reporte General del proyecto" descripcion="Reporte completo relacionado a la información general del proyecto" data={{ 'id_consulta': 'reporte_info1' }} />
