@@ -302,6 +302,11 @@
         select * from info37_prestamo_expedientes where id_expediente=$id_expediente and consecutivo = $consecutivo
         </sql>
     </Consulta>
+     <Consulta id="info38_financiero">
+        <sql>
+        select * from info38_financiero where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -639,6 +644,11 @@
     <Consulta id="update_info37_prestamo_expedientes">
         <sql>
             update info37_prestamo_expedientes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info38_financiero">
+        <sql>
+            update info38_financiero set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
 

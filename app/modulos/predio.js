@@ -60,6 +60,8 @@ const gestionPermisos = (index) => {
         tipo_permiso = [11];//editar formulario social 
     } else if([36,37].includes(index)){
         tipo_permiso = [12];
+    } else if ([38].includes(index)) {
+        tipo_permiso = [13];
     }
     return tipo_permiso;
 
@@ -212,7 +214,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        if(responseUp.some(r => r == 12)){
+                                        if(responseUp.some(r => r == 12) || responseUp.some(r => r == 13)){
                                             setLectura(false)
                                         }else{
                                             setLectura(!response.data[0].exists)
@@ -1272,8 +1274,11 @@ const Predio = () => {
                 </TabPanel>
 
                 <TabPanel>
-                    <button onClick={() => getForm(16, "info16_tributaria", "Información tributaria")} className={active == 16 ? 'active' : ''}>
+                    {/* <button onClick={() => getForm(16, "info16_tributaria", "Información tributaria")} className={active == 16 ? 'active' : ''}>
                         tributaria
+                    </button> */}
+                    <button onClick={() => getForm(38, "info38_financiero", "Información financiera")} className={active == 38 ? 'active' : ''}>
+                        Financiero
                     </button>
 
 
