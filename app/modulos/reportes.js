@@ -11,6 +11,8 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 import LoadingMask from "react-loadingmask";
 import "react-loadingmask/dist/react-loadingmask.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Excel({ titulo, descripcion, data, prevStep }) {
@@ -22,7 +24,7 @@ function Excel({ titulo, descripcion, data, prevStep }) {
       id_consulta: 'validacion_masiva'
     }
 
-    return servidorPost("/backend",data);
+    return servidorPost("/backend", data);
   }
 
 
@@ -30,18 +32,18 @@ function Excel({ titulo, descripcion, data, prevStep }) {
   const download = (data) => {
     setShow(true)
 
-    if(prevStep){
+    if (prevStep) {
       prevStepFunction().then((r) => {
         servidorDocs('/excel', data).then(response => {
           setShow(false)
         })
       })
-    }else{
+    } else {
       servidorDocs('/excel', data).then(response => {
         setShow(false)
       })
     }
-    
+
 
 
   }
@@ -85,6 +87,10 @@ function ExcelAll({ titulo, descripcion, data, reporte }) {
     setShow(true)
     servidorDocs('/todoreport/' + reporte).then(response => {
       setShow(false)
+      toast.success("Reporte descargado exitosamente");
+    }).catch(err => {
+      setShow(false)
+      toast.error("Error al descargar el reporte, vuelva a intentarlo más tarde");
     })
 
 
@@ -174,7 +180,7 @@ const Report = () => {
 
       <Excel titulo="Reporte General municipios intersectados" descripcion="Reporte completo relacionado a los municipios que intersectán los predios" data={{ 'id_consulta': 'reporte_info18' }} />  */}
 
-
+      <ToastContainer />
 
     </div>
 

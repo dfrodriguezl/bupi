@@ -41,7 +41,7 @@ export function redireccionar(error){
 
 export function servidorDocs(uri, datos) {
 
-    console.log(datos)
+    // console.log(datos)
     
     return axios({
         method: 'post',
@@ -56,6 +56,7 @@ export function servidorDocs(uri, datos) {
             link.setAttribute('download','reporte.xlsx'); //or any other extension
             document.body.appendChild(link);
             link.click();
+            return response;
     });
 }
 
