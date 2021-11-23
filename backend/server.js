@@ -131,6 +131,9 @@ const consulta = (request, response) => {
             auditoria(data,usuario)
           }else if(query_text.includes("token")){
             query_text=query_text.replace(/token/g,"'"+decoded.usuario_usuario+"'");
+            if(query_text.includes("insert-dinamico")){
+              query_text=query_text.replace(/insert-dinamico/g,data.tabla);
+            }
           }
           else if(query_text.includes("insert-dinamico")){
             query_text=query_text.replace(/insert-dinamico/g,data.tabla);

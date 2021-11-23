@@ -1766,23 +1766,24 @@ group by dominio) as d
         select i2.id_expediente, i2.chip_cat, i2.num_mi, i2.dir_act,
         d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, i37.consecutivo, i37.fecha_sol_usu_prestamo,
         i37.fecha_ent_usu_prestamo, i37.fecha_dev_usu_prestamo, 
-        (select usuario_nombre from usuario where usuario_usuario = i37.usuario_prestamo) as usuario_prestamo,
-        sub.*
+        (select usuario_nombre from usuario where usuario_usuario = i37.usuario_prestamo) as usuario_prestamo
         from info2_general_predio i2
         left join info36_documental i36 on i2.id_expediente = i36.id_expediente
         left join info37_prestamo_expedientes i37 on i36.id_expediente = i37.id_expediente
-        left join 
-        (SELECT *
-                FROM crosstab(
-                    'select id_expediente,id_tarea,usuario_nombre
-                    from tareas.asignacion t 
-                    left join usuario u
-                    on t.usuario=u.usuario_usuario
-                    order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-        )sub on sub.id_expediente = i2.id_expediente
         left join dominios d on d.dominio = 'Ubi_exp' and d.valor::real = i36.ubicacion::real
         order by i2.id_expediente, i37.consecutivo;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_carga_documental">
+        <sql>
+        select i2.id_expediente, i2.chip_cat, i2.num_mi, i2.dir_act,
+        d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, u.usuario_usuario as usuario_carga
+        from info2_general_predio i2
+        left join info36_documental i36 on i2.id_expediente = i36.id_expediente
+		left join (select distinct identificador,usuario from documentos doc) doc on i2.id_expediente = doc.identificador
+		left join usuario u on doc.usuario = u.usuario_usuario and u.usuario_rol in (4,8)
+        left join dominios d on d.dominio = 'Ubi_exp' and d.valor::real = i36.ubicacion::real
+        order by i2.id_expediente;
         </sql>
     </Consulta>
     <Consulta id="get_asignacion">
@@ -2190,6 +2191,18 @@ group by dominio) as d
        insert into insert-dinamico(id_expediente,consecutivo)
         values ($id_expediente,coalesce((select max(consecutivo)+1 
 		from insert-dinamico where id_expediente=$id_expediente),1)
+	  	)returning id_expediente
+
+
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_prestamo">
+        <sql>
+
+       insert into insert-dinamico(id_expediente,consecutivo,usuario_prestamo, fecha_sol_usu_prestamo)
+        values ($id_expediente,coalesce((select max(consecutivo)+1 
+		from insert-dinamico where id_expediente=$id_expediente),1),token, now()
 	  	)returning id_expediente
 
 

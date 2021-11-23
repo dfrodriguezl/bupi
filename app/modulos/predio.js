@@ -52,17 +52,19 @@ const gestionPermisos = (index) => {
     } else if ([5, 6, 8, 15, 16, 20, 21, 22].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
-    } else if ([12].includes(index)) {
+    } else if ([12, 37].includes(index)) {
         tipo_permiso = [4];//editar formulario juridico    
-    } else if ([13].includes(index)) {
+    } else if ([13, 37].includes(index)) {
         tipo_permiso = [5];//editar formulario juridico    
     } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
         tipo_permiso = [11];//editar formulario social 
-    } else if([36,37].includes(index)){
+    } else if ([36].includes(index)) {
         tipo_permiso = [12];
     } else if ([38].includes(index)) {
         tipo_permiso = [13];
     }
+
+
     return tipo_permiso;
 
 }
@@ -197,7 +199,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                     getPermisos().then((response) => {
 
-                        if (response.some(r => r == 10)) {
+                        if (response.some(r => r == 10) || response.some(r => r == 12)) {
 
                             setpermiso(true)
                             setLectura(false)
@@ -214,12 +216,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        if(responseUp.some(r => r == 12) || responseUp.some(r => r == 13)){
+                                        if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
                                             setLectura(false)
-                                        }else{
+                                        } else {
                                             setLectura(!response.data[0].exists)
                                         }
-                                        
+
                                     }
                                 })
 
@@ -288,7 +290,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         console.log("datos-------")
         console.log(datos)
         var data = datos;
-        console.log("TBL",index)
+        console.log("TBL", index)
 
 
         Object.keys(data).forEach(function (key) {
@@ -340,8 +342,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         });
         console.log(data)
 
-        if(index === 37){
-            if(data.fecha_ent_usu_prestamo != null && data.fecha_dev_usu_prestamo == null){
+        if (index === 37) {
+            if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo == null) {
                 // Insertar notificacion (tarea) para agregar tarea
                 let dataNot = data;
                 dataNot.ruta = -2;
@@ -352,8 +354,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete dataNot.tarea_next;
                 delete dataNot.ruta_destino;
                 delete dataNot.usuario;
-                
-            }else if(data.fecha_ent_usu_prestamo != null && data.fecha_dev_usu_prestamo != null){
+
+            } else if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo != null) {
                 // TODO Cerrar tarea de préstamo
                 let dataNot = data;
                 dataNot.ruta = -3;
@@ -363,7 +365,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete dataNot.usuario_prestamo;
                 delete dataNot.opcion;
             }
-        }   
+        }
 
 
 
@@ -870,15 +872,14 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         setActivate(false)
         setMultiple(false)
 
-        console.log("INDEX", index)
         var tipo_permiso = gestionPermisos(index);
-        console.log("TIPO PERMISO", tipo_permiso)
+        console.log("TIPO PERMISO",  tipo_permiso)
 
         getPermisos().then((response) => {
             console.log("permisos-multiple")
             console.log(response)
             console.log(tipo_permiso)
-            if (response.some(r => r == 10)) {
+            if (response.some(r => r == 10) || response.some(r => r === 12)) {
 
                 setPermiso(true)
                 // setLectura(false)
@@ -886,7 +887,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
                 setPermiso(response.some(r => tipo_permiso.includes(r)))
             }
 
-            
+
             console.log(permiso)
         })
 
@@ -930,9 +931,6 @@ const FormMultiple = ({ tbl, index, titulo }) => {
     }, [index, autoref])
 
     const activar = (con) => () => {
-        console.log("activado")
-        console.log(con)
-        console.log(tbl)
         setConsecutivo(con)
         setActivate(true)
         setRefresh(Math.random())
@@ -944,7 +942,15 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             "id_consulta": "insert_consecutivo",
             "id_expediente": id,
             "tabla": tbl
+        };
+
+        if (index === 37) {
+            data.id_consulta = "insert_prestamo";
+            data.id_expediente = id;
+            data.tabla = tbl;
         }
+
+        console.log("DATA", data)
 
 
         servidorPost('/backend', data).then((response) => {
@@ -1344,10 +1350,10 @@ const Predio = () => {
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
                     <div className="grupo-formularios">
                         <button onClick={() => getForm(36, "info36_documental", "Documental")} className={active == 36 ? 'active' : ''}>
-                        Documental
+                            Documental
                         </button>
                         <button onClick={() => getForm(37, "info37_prestamo_expedientes", "Préstamo expedientes")} className={active == 37 ? 'active' : ''}>
-                        Préstamo expedientes
+                            Préstamo expedientes
                         </button>
                     </div>
                 </TabPanel>

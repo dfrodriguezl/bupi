@@ -93,6 +93,7 @@ const Tarea = ({ refresh_number }) => {
             </div>
 
             <div className="leyenda">
+                {/* {console.log("ITEM",item)} */}
                 <span className="bolita success"></span>
                 <p> menos de 15 días</p>
                 <span className="bolita warning"></span>
