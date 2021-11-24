@@ -345,7 +345,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         if (index === 37) {
             if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo == null) {
                 // Insertar notificacion (tarea) para agregar tarea
-                
+                let dataNot = data;
+                dataNot.ruta = -2;
                 servidorPost('/backend', {
                     id_consulta: "check_prestamo",
                     tarea_next: 8,
@@ -353,20 +354,26 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     usuario: data.usuario_prestamo,
                     id_expediente: id
                 }).then(function (response) {
-                    let dataNot = data;
                     const exists = response.data[0].exists;
                     if(!exists){
-                        console.log("EXISTS", exists)
-                        
-                        console.log("DATANOT", dataNot)
-                        notificacion(dataNot);
+                        notificacion({
+                            id_expediente: id,
+                            usuario_prestamo: data.usuario_prestamo,
+                            ruta: -2
+                        });
                         delete dataNot.ruta;
                         delete dataNot.opcion;
                         delete dataNot.id_consulta;
                         delete dataNot.tarea_next;
                         delete dataNot.ruta_destino;
                         delete dataNot.usuario;
+                        delete data.ruta;
                     }
+
+                    if(data){
+                        delete data.ruta;
+                    }
+                    
                 }) 
                 
 
@@ -382,7 +389,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             }
         }
 
-
+        delete data.ruta;
 
         var key = ""
         for (var k in data) {
@@ -391,7 +398,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         key = key.replace(/,\s*$/, "");
         data.upd = key
         data.id_consulta = "update_" + tbl;
-        data.id_expediente = id
+        data.id_expediente = id;
+        
         let data_guardar = data;
 
         servidorPost('/backend', data).then(function (response) {
