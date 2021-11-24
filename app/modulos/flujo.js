@@ -38,7 +38,6 @@ moment.locale('es');
 const Flujo = () => {
 
 
-  const [code, setCode] = React.useState(null);
   const [opt, setOpt] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
   const nodeTypes = {
@@ -63,21 +62,13 @@ const Flujo = () => {
     { id: '10', type: 'output', data: { label: 'Fin social' }, position: { x: 1500, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
 
 
-    // { id: 'wait', data: { label: 'ESPERA' }, position: { x: 550, y: 100 }, draggable: false, connectable: false, selectable: false },
-
-
     { id: '1-2', source: '1', target: '2', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
     { id: '1-3', source: '1', target: '3', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
     { id: '2-5', source: '2', target: '5', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', targetHandle: 'envia3', arrowHeadType: 'arrowclosed' },
     { id: '3-4', source: '3', target: '4', type: 'step', label: 'Envia a revisión', sourceHandle: 'envia', arrowHeadType: 'arrowclosed' },
-    // { id: '4-5', source: '4', target: 'wait', type: 'step', label: 'Envia a revisión' },
-
-    // { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprueba todo' },
 
     { id: '5-2', source: '5', target: '2', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa3', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
     { id: '4-3', source: '4', target: '3', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'regresa', arrowHeadType: 'arrowclosed' },
-
-    // { id: 'wait-5', source: 'wait', target: '5', type: 'step', label: 'llega al supervisor' },
 
     { id: '4-8', source: '4', target: '8', type: 'step', label: 'Aprobado', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
     { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'regresa4', targetHandle: 'envia2', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
@@ -156,9 +147,6 @@ const Flujo = () => {
         }
         
 
-        // console.log(flujo)
-
-        // var info = response.data;
 
         if (flujo.length > 0) {
 
@@ -219,8 +207,6 @@ const Flujo = () => {
           >
             <Controls />
 
-            {/* <Background color="#aaa" gap={16} /> */}
-
           </ReactFlow>
         </> : ''}
 
@@ -233,93 +219,6 @@ const Flujo = () => {
 }
 
 export { Flujo }
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: '6px 16px',
-  },
-  activo: {
-    backgroundColor: '#9CCB9C',
-    padding: '6px 16px',
-  }
-}));
-
-export function CustomizedTimeline() {
-  const classes = useStyles();
-
-  const [info, setInfo] = React.useState([]);
-
-  let { id } = useParams();
-
-
-  React.useEffect(() => {
-
-
-
-    var data = { "id_consulta": "get_flujo", "id_expediente": id }
-
-    servidorPost('/backend/', data).then((response) => {
-
-      setInfo(response.data)
-
-
-    })
-
-
-  }, [])
-
-
-
-
-  return (
-
-
-    <>
-      <div id="seccion">
-        <div id="titulo_seccion">Flujo</div>
-        <p id="descripcion_seccion">Sección para ver el estado del proceso</p>
-
-        <div className="static">
-          <Timeline align="alternate">
-            {info.map((i) =>
-
-              <>
-                <TimelineItem>
-                  <TimelineOppositeContent>
-                    <Typography variant="body2" color="textSecondary">
-                      {moment.utc(i.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}
-                    </Typography>
-                  </TimelineOppositeContent>
-                  <TimelineSeparator>
-                    <TimelineDot>
-                      {i.estado == 1 ? <ErrorOutlineIcon /> : <CheckIcon />}
-
-                    </TimelineDot>
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent>
-                    <Paper elevation={3} className={i.estado == 1 ? classes.activo : classes.paper}>
-                      <p>{i.perfil}</p>
-                      <p>{i.descripcion}</p>
-                      <p>Encargado: {i.usuario_nombre}</p>
-                    </Paper>
-                  </TimelineContent>
-                </TimelineItem>
-
-              </>
-            )}
-
-          </Timeline>
-        </div>
-      </div>
-
-    </>
-
-
-
-
-  );
-}
 
 const customNodeStyles = {
   padding: 10,

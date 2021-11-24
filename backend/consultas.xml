@@ -2535,4 +2535,17 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="check_prestamo">
+        <sql>
+        select exists (
+            select *
+            from tareas.tareas
+            where id_expediente = $id_expediente
+            and ruta = $ruta_destino
+            and usuario_asigna = $usuario
+            and usuario_responsable = (select usuario from tareas.asignacion 
+            where id_expediente=$id_expediente and id_tarea= $tarea_next));
+        </sql>
+    </Consulta>
+
 </Consultas>

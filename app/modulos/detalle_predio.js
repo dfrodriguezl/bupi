@@ -13,8 +13,6 @@ const DetallePredio = () => {
 
   let { id } = useParams();
 
-  const [data, setData] = useState([]);
-  const [filtro, setFiltro] = useState("");
   const [expediente, setExpediente] = useState(id);
   const [tipologia, setTopologia] = useState({});
   const [estadoTecnico, setEstadoTecnico] = useState({});
@@ -24,12 +22,6 @@ const DetallePredio = () => {
 
 
   useEffect(() => {
-
-    var datos = { "id_consulta": "get_asignacion", "id_expediente": id }
-
-    servidorPost('/backend', datos).then((response) => {
-      setData(response.data)
-    });
 
     var datosTipologia = { "id_consulta": "get_tipologia", "id_expediente": id }
 
@@ -84,18 +76,6 @@ const DetallePredio = () => {
 
       </div>
 
-      {/* {data.map((i, e) => (
-        <div className="grupo-detalle-predio">
-          <FaceIcon />
-          <p className="cargo">{i.usuario_cargo}</p>
-          <p className="usuario">{i.usuario_nombre}</p>
-        </div>
-      ))} */}
-      {/* <div id="estados">
-                <br/>
-                <div><p>Estado depuración Técnica: {estadoTecnico?estadoTecnico.dep_tec:null}</p></div><br/>
-                <div><p>Estado depuración Jurídica: {estadoTecnico?estadoTecnico.dep_jur:null}</p></div>
-              </div> */}
     </div>
   );
 

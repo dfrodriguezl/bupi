@@ -345,15 +345,30 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         if (index === 37) {
             if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo == null) {
                 // Insertar notificacion (tarea) para agregar tarea
-                let dataNot = data;
-                dataNot.ruta = -2;
-                notificacion(dataNot);
-                delete dataNot.ruta;
-                delete dataNot.opcion;
-                delete dataNot.id_consulta;
-                delete dataNot.tarea_next;
-                delete dataNot.ruta_destino;
-                delete dataNot.usuario;
+                
+                servidorPost('/backend', {
+                    id_consulta: "check_prestamo",
+                    tarea_next: 8,
+                    ruta_destino: 13,
+                    usuario: data.usuario_prestamo,
+                    id_expediente: id
+                }).then(function (response) {
+                    let dataNot = data;
+                    const exists = response.data[0].exists;
+                    if(!exists){
+                        console.log("EXISTS", exists)
+                        
+                        console.log("DATANOT", dataNot)
+                        notificacion(dataNot);
+                        delete dataNot.ruta;
+                        delete dataNot.opcion;
+                        delete dataNot.id_consulta;
+                        delete dataNot.tarea_next;
+                        delete dataNot.ruta_destino;
+                        delete dataNot.usuario;
+                    }
+                }) 
+                
 
             } else if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo != null) {
                 // TODO Cerrar tarea de préstamo
