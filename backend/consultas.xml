@@ -2525,4 +2525,14 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_estado_prestamo">
+        <sql>
+        select count(*)
+        from info37_prestamo_expedientes
+        where id_expediente = $id_expediente 
+        and fecha_dev_usu_prestamo is null
+        and fecha_ent_usu_prestamo is not null;
+        </sql>
+    </Consulta>
+
 </Consultas>

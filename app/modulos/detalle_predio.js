@@ -19,6 +19,7 @@ const DetallePredio = () => {
   const [tipologia, setTopologia] = useState({});
   const [estadoTecnico, setEstadoTecnico] = useState({});
   const [observacionSIG, setObservacionSIG] = useState({});
+  const [estadoPrestamo, setEstadoPrestamo] = useState();
 
 
 
@@ -33,22 +34,26 @@ const DetallePredio = () => {
     var datosTipologia = { "id_consulta": "get_tipologia", "id_expediente": id }
 
     servidorPost('/backend', datosTipologia).then((response) => {
-      // console.log(response.data[0])
       setTopologia(response.data[0])
     });
 
     var datosTecnico = { "id_consulta": "get_estados_depuracion", "id_expediente": id }
 
     servidorPost('/backend', datosTecnico).then((response) => {
-      // console.log(response.data[0])
       setEstadoTecnico(response.data[0])
     });
 
     var observacion = { "id_consulta": "get_observacion", "id_expediente": id }
 
     servidorPost('/backend', observacion).then((response) => {
-      console.log(response.data[0])
       setObservacionSIG(response.data[0])
+    });
+
+    var prestamo = { "id_consulta": "get_estado_prestamo", "id_expediente": id }
+
+    servidorPost('/backend', prestamo).then((response) => {
+      const count = response.data[0].count;
+      setEstadoPrestamo(count === "0" ? "DISPONIBLE" : "EN PRÉSTAMO")
     });
 
   }, [])
@@ -74,6 +79,7 @@ const DetallePredio = () => {
         <Fragment>
           <p id="title-estados">Estado depuración Técnica: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
           <p id="title-estados">Estado depuración Jurídica: {estadoTecnico ? estadoTecnico.dep_jur : null}</p>
+          <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p>
         </Fragment>
 
       </div>
