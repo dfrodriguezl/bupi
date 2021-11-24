@@ -52,9 +52,9 @@ const gestionPermisos = (index) => {
     } else if ([5, 6, 8, 15, 16, 20, 21, 22].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
-    } else if ([12, 37].includes(index)) {
+    } else if ([12].includes(index)) {
         tipo_permiso = [4];//editar formulario juridico    
-    } else if ([13, 37].includes(index)) {
+    } else if ([13].includes(index)) {
         tipo_permiso = [5];//editar formulario juridico    
     } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
         tipo_permiso = [11];//editar formulario social 
@@ -62,6 +62,8 @@ const gestionPermisos = (index) => {
         tipo_permiso = [12];
     } else if ([38].includes(index)) {
         tipo_permiso = [13];
+    } else if ([37].includes(index)) {
+        tipo_permiso = [14];
     }
 
 
@@ -111,7 +113,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     let { id } = useParams();
 
     useEffect(() => {
-        console.log("cambios")
+        // console.log("cambios")
         setView(false)
         setpermiso(false)
 
@@ -216,7 +218,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                        if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13) || responseUp.some(r => r == 14)) {
                                             setLectura(false)
                                         } else {
                                             setLectura(!response.data[0].exists)
@@ -225,7 +227,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     }
                                 })
 
-                                console.log("lectura")
+                                // console.log("lectura")
                             });
 
 
@@ -287,10 +289,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     const onSubmit = datos => {
 
-        console.log("datos-------")
-        console.log(datos)
+        // console.log("datos-------")
+        // console.log(datos)
         var data = datos;
-        console.log("TBL", index)
+        // console.log("TBL", index)
 
 
         Object.keys(data).forEach(function (key) {
@@ -302,7 +304,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             if (data[key] != "") {
                 if (Array.isArray(data[key])) {
-                    console.log("array")
+                    // console.log("array")
                     // var item = fields.data.filter(item => item.doc.field == key).map(item => {
                     //     return item.doc.form
                     // });
@@ -316,7 +318,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             data[key] = null
 
                         } else {
-                            console.log(data[key][0].value)
+                            // console.log(data[key][0].value)
                             data[key] = data[key][0].value
 
                         }
@@ -340,25 +342,26 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete data[key];
             }
         });
-        console.log(data)
+        // console.log(data)
 
         if (index === 37) {
             if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo == null) {
                 // Insertar notificacion (tarea) para agregar tarea
                 let dataNot = data;
                 dataNot.ruta = -2;
+                const usuario_prestamo = data.usuario_prestamo;
                 servidorPost('/backend', {
                     id_consulta: "check_prestamo",
                     tarea_next: 8,
                     ruta_destino: 13,
-                    usuario: data.usuario_prestamo,
+                    usuario: usuario_prestamo,
                     id_expediente: id
                 }).then(function (response) {
                     const exists = response.data[0].exists;
-                    if(!exists){
+                    if (!exists) {
                         notificacion({
                             id_expediente: id,
-                            usuario_prestamo: data.usuario_prestamo,
+                            usuario_prestamo: usuario_prestamo,
                             ruta: -2
                         });
                         delete dataNot.ruta;
@@ -370,12 +373,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         delete data.ruta;
                     }
 
-                    if(data){
-                        delete data.ruta;
-                    }
-                    
-                }) 
-                
+                    // if(data){
+                    //     delete data.ruta;
+                    // }
+
+                })
+
 
             } else if (data.fecha_sol_usu_prestamo != null && data.fecha_dev_usu_prestamo != null) {
                 // TODO Cerrar tarea de préstamo
@@ -399,7 +402,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         data.upd = key
         data.id_consulta = "update_" + tbl;
         data.id_expediente = id;
-        
+
         let data_guardar = data;
 
         servidorPost('/backend', data).then(function (response) {
@@ -426,7 +429,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         let value = msg[0].value;
         if (e.child_domain != null) {
             let fieldChild = fields.data.filter((f) => f.doc.enum_name == e.child_domain);
-            console.log(fieldChild[0].doc.enum)
+            // console.log(fieldChild[0].doc.enum)
             let valuesChild = fieldChild[0].doc.enum.filter((v) => v.padre_valor == value || v.padre_valor == null);
             let dominios = {};
             dominios[e.field_child] = valuesChild;
@@ -459,7 +462,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     }
     const handleMultiChange = selectedOption => {
-        console.log(selectedOption)
+        // console.log(selectedOption)
         //setValue('mot_dev_tec', selectedOption);
         return selectedOption[0];
     };
@@ -539,7 +542,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         await Promise.all(resultsList).then((r) => {
             servidorPost('/backend', dataGet).then(function (response_2) {
-                console.log("reponse", response_2)
+                // console.log("reponse", response_2)
                 response_2.data.forEach((v) => {
                     if (resultados_validacion.hasOwnProperty(v.campo)) {
                         resultados_validacion[v.campo].push(v);
@@ -565,7 +568,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         }
 
         servidorPost('/backend', dataConsulta).then(function (response) {
-            console.log(response.data[0])
+            // console.log(response.data[0])
             setExternalData(response.data[0])
         });
 
@@ -577,7 +580,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                 {view ?
                     <>
-                        {console.log("renderizando...")}
+                        {/* {console.log("renderizando...")} */}
 
 
                         {fields.data.map((i, e) =>
@@ -767,7 +770,7 @@ const Files = ({ titulo, cod }) => {
             "id_consulta": "get_soportes",
             "identificador": id + '-' + cod
         }
-        console.log(data)
+        // console.log(data)
 
         servidorPost('/backend', data).then((response) => {
 
@@ -790,7 +793,7 @@ const Files = ({ titulo, cod }) => {
     const upload = e => {
 
         const files = e.target.files
-        console.log(files[0].name)
+        // console.log(files[0].name)
         setFilename(id + '-' + cod + '.pdf')
 
 
@@ -800,7 +803,7 @@ const Files = ({ titulo, cod }) => {
         formData.append("file", files[0], id + '-' + cod + '.pdf')
 
         servidorPost('/upload/' + id + '-' + cod, formData).then((response) => {
-            console.log(response)
+            // console.log(response)
             if (response.status == 200) {
                 toast.success("Documento cargado al sistema: " + titulo);
                 setRefresh(!refresh)
@@ -896,12 +899,12 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         setMultiple(false)
 
         var tipo_permiso = gestionPermisos(index);
-        console.log("TIPO PERMISO",  tipo_permiso)
+        // console.log("TIPO PERMISO", tipo_permiso)
 
         getPermisos().then((response) => {
-            console.log("permisos-multiple")
-            console.log(response)
-            console.log(tipo_permiso)
+            // console.log("permisos-multiple")
+            // console.log(response)
+            // console.log(tipo_permiso)
             if (response.some(r => r == 10) || response.some(r => r === 12)) {
 
                 setPermiso(true)
@@ -911,7 +914,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             }
 
 
-            console.log(permiso)
+            // console.log(permiso)
         })
 
 
@@ -925,7 +928,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
                 "tabla": tbl
             }
 
-            console.log(data)
+            // console.log(data)
 
             servidorPost('/backend', data).then((response) => {
 
@@ -973,12 +976,12 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             data.tabla = tbl;
         }
 
-        console.log("DATA", data)
+        // console.log("DATA", data)
 
 
         servidorPost('/backend', data).then((response) => {
 
-            console.log(response)
+            // console.log(response)
             if (response.data.length > 0) {
                 toast.success("Registro creado satisfactoriamente");
                 setAutoref(Math.random())
@@ -1002,7 +1005,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
 
         servidorPost('/backend', data).then((response) => {
 
-            console.log(response)
+            // console.log(response)
             if (response.data.length > 0) {
                 toast.success("Registro borrado satisfactoriamente");
                 setAutoref(Math.random())
