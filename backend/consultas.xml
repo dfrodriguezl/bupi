@@ -2543,6 +2543,7 @@ group by dominio) as d
             where id_expediente = $id_expediente
             and ruta = $ruta_destino
             and usuario_asigna = $usuario
+            and estado = 1
             and usuario_responsable = (select usuario from tareas.asignacion 
             where id_expediente=$id_expediente and id_tarea= $tarea_next));
         </sql>
