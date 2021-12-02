@@ -218,12 +218,15 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13) || responseUp.some(r => r == 14)) {
-                                            setLectura(false)
-                                        } else {
-                                            setLectura(!response.data[0].exists)
+                                        if(index === 37 && responseUp.some(r => r == 14)){
+                                                setLectura(false)
+                                        }else{
+                                            if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                                setLectura(false)
+                                            } else {
+                                                setLectura(!response.data[0].exists)
+                                            }
                                         }
-
                                     }
                                 })
 
@@ -1078,7 +1081,7 @@ const Ayuda = () => {
         servidorPost('/backend', data).then((response) => {
 
             setInfo(response.data[0])
-            setChip(response.data[0].chip_cat)
+            // setChip(response.data[0].chip_cat)
 
         })
 
