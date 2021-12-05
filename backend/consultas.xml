@@ -1777,10 +1777,11 @@ group by dominio) as d
     <Consulta id="reporte_carga_documental">
         <sql>
         select i2.id_expediente, i2.chip_cat, i2.num_mi, i2.dir_act,
-        d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, u.usuario_usuario as usuario_carga
+        d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, u.usuario_usuario as usuario_carga,
+		doc.fecha as fecha_carga
         from info2_general_predio i2
         left join info36_documental i36 on i2.id_expediente = i36.id_expediente
-		left join (select distinct identificador,usuario from documentos doc) doc on i2.id_expediente = doc.identificador
+		left join (select distinct identificador,usuario,fecha::date from documentos doc) doc on i2.id_expediente = doc.identificador
 		left join usuario u on doc.usuario = u.usuario_usuario and u.usuario_rol in (4,8)
         left join dominios d on d.dominio = 'Ubi_exp' and d.valor::real = i36.ubicacion::real
         order by i2.id_expediente;
@@ -2546,6 +2547,21 @@ group by dominio) as d
             and estado = 1
             and usuario_responsable = (select usuario from tareas.asignacion 
             where id_expediente=$id_expediente and id_tarea= $tarea_next));
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_parametros_busqueda">
+        <sql>
+            select *    
+            from busqueda_avanzada_filtros;
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_parametros_busqueda">
+        <sql>
+            select *
+            from busqueda_avanzada_resultado
+            where where_parametros_avanzados;
         </sql>
     </Consulta>
 

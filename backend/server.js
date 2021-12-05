@@ -137,11 +137,11 @@ const consulta = (request, response) => {
         }
         else if (query_text.includes("insert-dinamico")) {
           query_text = query_text.replace(/insert-dinamico/g, data.tabla);
+        } else if (query_text.includes("where_parametros_avanzados")) {
+          query_text = query_text.replace("where_parametros_avanzados", data.upd);
         }
 
-
-        console.log(query_text)
-        console.log(data)
+        console.log("QUERY TEXT", query_text);
 
         try {
           pool.query(query_text, data, (error, results) => {
@@ -395,44 +395,44 @@ app.post('/upload/:id', (req, res) => {
 // Carga de fotografías
 app.post('/upload/picture/:id', (req, res) => {
 
-      let EDFile = req.files.file;
-      var id = req.params.id;
-      let uuid_file = uuid.v1();
+  let EDFile = req.files.file;
+  var id = req.params.id;
+  let uuid_file = uuid.v1();
 
-      var ruta = path.join(__dirname, `../repositorio/fotografias/`)
-      var archivo = path.join(__dirname, `../repositorio/fotografias/${uuid_file}.${EDFile.name.split(".")[1]}`)
+  var ruta = path.join(__dirname, `../repositorio/fotografias/`)
+  var archivo = path.join(__dirname, `../repositorio/fotografias/${uuid_file}.${EDFile.name.split(".")[1]}`)
 
 
-      if (!fs.existsSync(ruta)) {
-        fs.mkdirSync(ruta, { recursive: true });
+  if (!fs.existsSync(ruta)) {
+    fs.mkdirSync(ruta, { recursive: true });
+  }
+
+
+  EDFile.mv(archivo, err => {
+    if (err) return res.status(500).send({ message: err })
+
+    var datetime = new Date()
+    var datetimeTime = datetime.getTime();
+
+    var localOffset = datetime.getTimezoneOffset() * 60000;
+    var utc = datetimeTime + localOffset;
+    var localTime = utc - (3600000 * 5);
+    var newDate = new Date(localTime);
+    // console.log(datetime)
+    // console.log(newDate);
+
+    pool.query("INSERT INTO fotografias(id_fotografia,id_expediente,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file, id, newDate, archivo], (error, results) => {
+      if (error) {
+        console.log(error)
+        return res.status(500).send({ message: error })
       }
 
+      return res.status(200).send({ message: 'File upload' })
 
-      EDFile.mv(archivo, err => {
-        if (err) return res.status(500).send({ message: err })
-
-        var datetime = new Date()
-        var datetimeTime = datetime.getTime();
-
-        var localOffset = datetime.getTimezoneOffset() * 60000;
-        var utc = datetimeTime + localOffset;
-        var localTime = utc - (3600000 * 5);
-        var newDate = new Date(localTime);
-        // console.log(datetime)
-        // console.log(newDate);
-
-        pool.query("INSERT INTO fotografias(id_fotografia,id_expediente,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file,id, newDate, archivo], (error, results) => {
-          if (error) {
-            console.log(error)
-            return res.status(500).send({ message: error })
-          }
-
-          return res.status(200).send({ message: 'File upload' })
-
-        })
+    })
 
 
-      })
+  })
 
 });
 
