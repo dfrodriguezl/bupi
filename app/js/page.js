@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 import { servidorPost } from './request'
 
-import { Home, Search, InsertDriveFile, Public, AttachFile, GroupAdd, EmojiPeople, ExitToApp } from '@material-ui/icons';
+import { Home, Search, InsertDriveFile, Public, AttachFile, GroupAdd, FilterList } from '@material-ui/icons';
 
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -94,12 +94,20 @@ const Estructura = ({ children }) => {
                 <p>Buscador</p>
               </Link>
             </div> :
-            <div className="elemento">
-              <Link to="/buscar">
-                <Search />
-                <p>Buscador</p>
-              </Link>
-            </div>
+            <Fragment>
+              <div className="elemento">
+                <Link to="/buscar">
+                  <Search />
+                  <p>Buscador de expedientes</p>
+                </Link>
+              </div>
+              <div className="elemento">
+                <Link to="/buscarAvanzado">
+                  <FilterList />
+                  <p>Búsqueda avanzada</p>
+                </Link>
+              </div>
+            </Fragment>
           }
 
 

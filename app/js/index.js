@@ -21,39 +21,41 @@ import Actualizacion from './actualizacion';
 import BusquedaServ from './servidumbres/Busqueda'
 import Servidumbre from './servidumbres/servidumbre'
 import ReporteServidumbre from './servidumbres/reportes'
+import BusquedaAvanzada from './busqueda_avanzada';
 
 
 
 const Tree = () => {
-    
+
     return (
-    <BrowserRouter>
-        <Switch>
-        <BrowserRouter basename='/bienes-raices/web'>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/buscar' component={Buscar}/>
-            <Route exact path='/documentos' component={Documentos}/>
-            <Route exact path='/login' component={Login}/>
-            <Route exact path='/visor' component={Visor}/>
-            <Route exact path='/reportes' component={Reportes}/>
-            <Route exact path='/asignar' component={Asignar}/>
-            <Route exact path="/predio/:id" component={Predio} />
-            <Route exact path='/personal' component={User}/>
-            <Route exact path='/admin' component={Administracion}/>
-            <Route exact path='/actualizar' component={Actualizacion}/>
-            <Route exact path='/servidumbres/buscar' component={BusquedaServ}/>
-            <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre}/>
-            <Route exact path='/servidumbres/reportes' component={ReporteServidumbre}/>
+        <BrowserRouter>
+            <Switch>
+                <BrowserRouter basename='/bienes-raices/web'>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/buscar' component={Buscar} />
+                    <Route exact path='/buscarAvanzado' component={BusquedaAvanzada} />
+                    <Route exact path='/documentos' component={Documentos} />
+                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/visor' component={Visor} />
+                    <Route exact path='/reportes' component={Reportes} />
+                    <Route exact path='/asignar' component={Asignar} />
+                    <Route exact path="/predio/:id" component={Predio} />
+                    <Route exact path='/personal' component={User} />
+                    <Route exact path='/admin' component={Administracion} />
+                    <Route exact path='/actualizar' component={Actualizacion} />
+                    <Route exact path='/servidumbres/buscar' component={BusquedaServ} />
+                    <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre} />
+                    <Route exact path='/servidumbres/reportes' component={ReporteServidumbre} />
+                </BrowserRouter>
+            </Switch>
         </BrowserRouter>
-        </Switch>
-    </BrowserRouter>
 
     )
 
 
 }
 
-ReactDOM.render(<Tree/>, document.getElementById('pagina'));
+ReactDOM.render(<Tree />, document.getElementById('pagina'));
 
 
 
@@ -62,5 +64,5 @@ function importAll(r) {
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
 }
-  
+
 const images = importAll(require.context('../img/', false, /\.(png|jpg|svg)$/));

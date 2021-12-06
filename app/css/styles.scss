@@ -425,6 +425,16 @@ input[type="file"] {
     color: #fff;
   }
 
+  .butttonAdvancedSearch {
+    border-radius: 10px !important;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: $color2;
+    border:none;
+    color: #fff;
+  }
+
   #cuadro_busqueda{
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -529,6 +539,43 @@ input[type="file"] {
     }
 
   }
+
+  .formulario2{
+    color: #464646;
+   
+  .form_title{
+      margin: 5px 0px;
+      width: 100%;
+      font-size: 1.3em;
+      font-weight: 300;
+      color: $color1;
+  }
+  .form_input{
+      
+      padding: 9px;
+      border: 1px solid #cccc;
+      border-radius: 5px;
+      height: '100%';
+      
+  }
+
+  .form_input_static{
+      border:none;
+  }
+
+  .form_input:focus{
+      
+      outline: none;
+      border: 2px solid $color3;
+      
+      
+  }
+  .form_helper{
+      margin-top: 3px;
+      margin-bottom: 10px;
+  }
+
+}
 
   select{
     padding: 3px;
