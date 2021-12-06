@@ -123,11 +123,17 @@ const BusquedaAvanzada = () => {
     data.id_consulta = "update_parametros_busqueda";
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
-        let row = [<Link to={"predio/" + v.id_expediente}>{v.id_expediente}</Link>, v.cod_dup, v.nom_proy, v.chip_cat, v.num_mi, v.ced_cat, v.cod_predial, v.bar_ver, v.upz_upr, v.localidad, v.zona, v.dir_act,
+        let row = [<Link to={"predio/" + v.id_expediente}>{v.id_expediente}</Link>, 
+        v.cod_dup && v.id_doc_dup ?
+        <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
+        : v.cod_dup && !v.id_doc_dup ?
+          v.cod_dup :"", 
+        v.nom_proy, v.chip_cat, v.num_mi, v.ced_cat, v.cod_predial, v.bar_ver, v.upz_upr, v.localidad, v.zona, v.dir_act,
         v.num_activo,
-        v.doc_num ?
+        v.doc_num && v.id_doc ?
           <a href={url + '/descargar/' + v.id_doc} target="_blank">{v.doc_num}</a>
-          : "",
+          : v.doc_num && !v.id_doc ?
+            v.doc_num :"",
         v.doc_notaria];
         return row;
       }, []);
