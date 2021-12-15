@@ -121,7 +121,7 @@ const BusquedaAvanzada = () => {
     data.id_consulta = "update_parametros_busqueda";
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
-        let row = [<a href={"/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
+        let row = [<a href={"/bienes-raices/web/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
         v.cod_dup && v.id_doc_dup ?
           <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
           : v.cod_dup && !v.id_doc_dup ?

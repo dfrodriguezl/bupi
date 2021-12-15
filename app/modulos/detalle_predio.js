@@ -6,6 +6,7 @@ import { servidorPost } from '../js/request.js'
 import { useParams } from 'react-router-dom';
 
 import FaceIcon from '@material-ui/icons/Face';
+import DescargaShape from "./componentes/descarga_shape.js";
 
 
 const DetallePredio = () => {
@@ -74,6 +75,10 @@ const DetallePredio = () => {
           <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p>
         </Fragment>
 
+      </div>
+
+      <div class="opciones">
+        <DescargaShape id_expediente={expediente} />
       </div>
 
     </div>
