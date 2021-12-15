@@ -99,9 +99,7 @@ const BusquedaAvanzada = () => {
   const buscar = (e) => {
     let data = {};
     let valuesDef = {};
-    console.log("LISTFILTER", listFilteredOptions)
     Object.keys(listFilteredOptions).forEach((key) => {
-      console.log("KEY", key)
       valuesDef[key] = listFilteredOptions[key];
       valuesDef[key]["value"] = "%" + values[key] + "%";
       data[listFilteredOptions[key].campo] = "%" + values[key] + "%";
@@ -123,7 +121,7 @@ const BusquedaAvanzada = () => {
     data.id_consulta = "update_parametros_busqueda";
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
-        let row = [<Link to={"predio/" + v.id_expediente}>{v.id_expediente}</Link>, 
+        let row = [<a href={"/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>, 
         v.cod_dup && v.id_doc_dup ?
         <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
         : v.cod_dup && !v.id_doc_dup ?
