@@ -4,10 +4,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import FiltroBusqueda from "./filtro_busqueda.js";
 import MUIDataTable from "mui-datatables";
-import { Link } from 'react-router-dom';
 
-const columns = ["Expediente", "Cód. DUP", "Nom. proyecto", "Chip catastral", "Matrícula inmobiliaria", "Céd. catastral", "Cód. predial", "Barrio/vereda", "UPZ/UPR",
-  "Localidad", "Zona EAAB", "Dirección", "Activo fijo", "Número documento", "Notaría"];
+const columns = ["Expediente", "Cód. DUP", "Nom. proyecto", "Chip catastral", "Matrícula inmobiliaria", "Céd. catastral", "Cód. predial", "Municipio", "Barrio/vereda", "UPZ/UPR",
+  "Localidad", "Zona EAAB", "Dirección", "Activo fijo", "Número escritura/sentencia", "Fecha escritura/sentencia", "Notaría", "Círculo",];
 
 const options = {
   selectableRows: "none",
@@ -44,7 +43,8 @@ const options = {
       delete: 'Borrar',
       deleteAria: 'Borrar filas seleccionadas',
     },
-  }
+  },
+  responsive: 'standard'
 };
 
 const BusquedaAvanzada = () => {
@@ -121,18 +121,19 @@ const BusquedaAvanzada = () => {
     data.id_consulta = "update_parametros_busqueda";
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
-        let row = [<a href={"/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>, 
+        let row = [<a href={"/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
         v.cod_dup && v.id_doc_dup ?
-        <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
-        : v.cod_dup && !v.id_doc_dup ?
-          v.cod_dup :"", 
-        v.nom_proy, v.chip_cat, v.num_mi, v.ced_cat, v.cod_predial, v.bar_ver, v.upz_upr, v.localidad, v.zona, v.dir_act,
+          <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
+          : v.cod_dup && !v.id_doc_dup ?
+            v.cod_dup : "",
+        v.nom_proy, v.chip_cat, v.num_mi, v.ced_cat, v.cod_predial, v.mpio, v.bar_ver, v.upz_upr, v.localidad, v.zona, v.dir_act,
         v.num_activo,
         v.doc_num && v.id_doc ?
           <a href={url + '/descargar/' + v.id_doc} target="_blank">{v.doc_num}</a>
           : v.doc_num && !v.id_doc ?
-            v.doc_num :"",
-        v.doc_notaria];
+            v.doc_num : "",
+        v.doc_fecha,
+        v.doc_notaria, v.doc_circulo];
         return row;
       }, []);
       setDataTable(vals);
@@ -154,10 +155,11 @@ const BusquedaAvanzada = () => {
       <div id="titulo_seccion">Búsqueda avanzada</div>
       <p id="descripcion_seccion">Sección para la búsqueda avanzada de predios, aquí puede seleccionar uno o más filtros de acuerdo a su necesidad</p>
       <div className="formulario2">
+        {console.log("COMPONENTS", components)}
         {components.map((item, i) => (
           <div key={i}>
             <FiltroBusqueda onChangeHandle={onChangeHandle} isLoading={isLoading} listFiltros={listFiltros} campo={item.campo ? item.campo : ""}
-              idx={i} borrarFiltro={borrarFiltro} updateValues={updateValues} />
+              idx={i} borrarFiltro={borrarFiltro} updateValues={updateValues} tipo={item.tipo} />
           </div>
         ))}
       </div>

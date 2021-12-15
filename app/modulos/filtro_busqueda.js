@@ -1,10 +1,10 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { Fragment } from "react";
 import Select from 'react-select';
 import CloseIcon from '@material-ui/icons/Close';
 
 const FiltroBusqueda = (props) => {
 
-  const { onChangeHandle, isLoading, listFiltros, campo, idx, borrarFiltro, updateValues } = props;
+  const { onChangeHandle, isLoading, listFiltros, campo, idx, borrarFiltro, updateValues, tipo } = props;
 
   return (
     <Fragment>
@@ -28,8 +28,9 @@ const FiltroBusqueda = (props) => {
           }}
         />
       </div>
+      {console.log("TIPO", tipo)}
       <div style={{ height: '100%', width: '40%', display: 'inline-block', marginLeft: 20 }}>
-        <input type="text"
+        <input type={tipo}
           className='form_input'
           name={campo}
           onChange={(e) => updateValues(e, idx)} />
