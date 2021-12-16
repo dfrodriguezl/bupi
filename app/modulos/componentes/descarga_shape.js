@@ -43,7 +43,6 @@ const DescargaShape = (props) => {
 
       if(geometria != null){
         servidorPost('/download-shp', dataDownload).then(function (response) {
-          console.log("RESPONSE", response);
           const link = document.createElement('a');
           link.href = url + "/help/" + id_expediente + ".zip";
           link.setAttribute('download', id_expediente + '.zip'); //or any other extension
