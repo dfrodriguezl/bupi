@@ -69,6 +69,7 @@
     "express-static-gzip": "^2.0.8",
     "file-loader": "^5.1.0",
     "font-awesome": "^4.7.0",
+    "geojson2shp": "^0.4.0",
     "glamor": "^2.20.40",
     "i": "^0.3.6",
     "jquery": "^3.4.1",

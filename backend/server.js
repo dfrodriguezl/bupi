@@ -25,6 +25,9 @@ const mercator = new SphericalMercator()
 //convierte csv a json
 const csvtojson = require('csvtojson');
 
+//Convierte geojson a shp
+const {convert} = require('geojson2shp');
+
 // var sess;
 //conexión a la base de datos en postgresql
 const { Pool, types } = require('pg')
@@ -40,14 +43,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'pg_acueducto',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: 5432,//5432
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'pg_acueducto',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 5432,//5432
+//   timezone: 'utc'
+// })
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -63,14 +66,14 @@ const pool = new Pool({
 
 //local
 
-// const pool = new Pool({
-//   user: 'postgres',//docker
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
-//   password: 'postgres',//docker
-//   port: 5433,//5432
-//   // timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'postgres',//docker
+  host: 'localhost',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: 'postgres',//docker
+  port: 5433,//5432
+  // timezone: 'utc'
+})
 
 
 
@@ -1126,6 +1129,39 @@ app.post("/actualizacionMasiva", function (request, response) {
       }
     });
   } else {
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+})
+
+app.post('/download-shp', function (request, response) {
+  const token = request.cookies.jwt;
+  const data = request.body;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });
+      } else {
+        request.decoded = decoded;
+        const geojson = data.geojson;
+        const options = {
+          layer: 'predio',
+          targetCrs: 4326
+        }
+
+        async function convertGeoJSON(){
+          const shpresult = await convert(geojson,"D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip",options);
+          response.status(200).json({
+            mensaje: 'Shape generado correctamente'
+          })
+        }
+
+        convertGeoJSON();
+        
+      }
+
+    });
+  }else {
     response.status(403).json({ mensaje: 'sin permisos' });
   }
 })

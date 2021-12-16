@@ -56,7 +56,7 @@ const DetallePredio = () => {
 
     <div id="seccion">
 
-      <div id="titulo_seccion">{expediente}
+      <div id="titulo_seccion" style={{ display: 'inline-block' }}>{expediente}
         {tipologia.descripcion ?
           <Fragment>
             <br />Tipología impuesto 2021: {tipologia.descripcion}
@@ -77,7 +77,7 @@ const DetallePredio = () => {
 
       </div>
 
-      <div class="opciones">
+      <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
         <DescargaShape id_expediente={expediente} />
       </div>
 

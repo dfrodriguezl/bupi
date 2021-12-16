@@ -1,63 +1,68 @@
-import React, { Fragment, useState } from 'react'
+import React from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import shp from 'shpjs'
-import { servidorPost } from '../../js/request'
+import { servidorPost, url } from '../../js/request'
 
 const DescargaShape = (props) => {
 
   const { id_expediente } = props;
-  const [doc, setDoc] = useState([]);
-
 
   const onChange = (e) => {
-    // const yourFile = e.target.files[0]
-    // // console.log("File", yourFile)
+    const datos = { "id_consulta": "get_geometria_predio", "id_expediente": id_expediente }
+    let geometria = null;
 
-    // let reader = new FileReader();
-    // reader.onload = function (e) {
-    //   const bstr = e.target.result;
-    //   // console.log("BSTR", bstr)
-    //   // const geojson = await shp(bstr);
-    //   shp(bstr).then((geojson) => {
-    //     // console.log("GEOJSON", geojson)
-    //     delete geojson.fileName;
-    //     delete geojson.type;
-    //     let features = geojson.features;
-    //     if(features.length == 1){
-    //       let shape = features[0].geometry;
-    //       delete shape.bbox;
-    //       let data = {
-    //         id_consulta: "insertar_dibujo_mapa",
-    //         id_expediente: id_expediente,
-    //         estado: 1,
-    //         shape: JSON.stringify(shape)
-    //       }
+    servidorPost('/backend', datos).then(function (response) {
 
-    //       if(id_expediente.includes("S_")){
-    //         data.id_consulta = 'insertar_dibujo_mapa_servidumbre'
-    //       }
+      const data = response.data;
+      console.log("DATA", data);
 
-    //       servidorPost("/backend",data).then((response) => {
-    //         console.log("RESPONSE", response)
-    //         toast.success("Poligono cargado al expediente " + response.data[0].id_expediente ? response.data[0].id_expediente : response.data[0].id_expedie);
-    //       })
-    //     }
+      data.every((d) => {
+        if (d.tipo === 'geometria_verificada') {
+          if (d.geojson.features != null) {
+            console.log("GEOMETRIA", d.geojson);
+            geometria = d.geojson;
+            return false;
+          } else {
+            toast.info("Predio sin geometria");
+          }
 
-    //   })  
-    // }
+        } else if (d.tipo === 'geometria_revision') {
+          if (d.geojson.features != null) {
+            console.log("GEOMETRIA", d.geojson);
+            geometria = d.geojson;
+            return true;
+          }
 
-    // reader.readAsArrayBuffer(yourFile);
+        }
+      })
 
+      const dataDownload = {
+        geojson: geometria,
+        id_expediente: id_expediente
+      }
+
+      if(geometria != null){
+        servidorPost('/download-shp', dataDownload).then(function (response) {
+          console.log("RESPONSE", response);
+          const link = document.createElement('a');
+          link.href = url + "/help/" + id_expediente + ".zip";
+          link.setAttribute('download', id_expediente + '.zip'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+          toast.success("Shape generado");
+        });
+      }else{
+        toast.error("Error al generar shape o no hay poligono asociado al predio");
+      }
+    })
 
   }
 
   return (
-    <div >
+    <div onClick={onChange}>
       <label htmlFor="file1" className="label-input" >Descargar shape
-        <input type="file" id="file1" onChange={onChange} className="input" accept="application/zip,application/x-zip-compressed" />
+        <p id="file1" className="input" />
       </label>
-      {/* <p>El shape debe estar en formato comprimido .zip, debe estar en sistema de referencia espacial WGS84 y debe contener por lo menos los ficheros .shp, .dbf, .prj y .shx</p> */}
       <ToastContainer />
     </div>
   )
