@@ -26,7 +26,10 @@ const mercator = new SphericalMercator()
 const csvtojson = require('csvtojson');
 
 //Convierte geojson a shp
-const {convert} = require('geojson2shp');
+const { convert } = require('geojson2shp');
+
+//Llenar pdf
+const pdfFiller = require('pdffiller');
 
 // var sess;
 //conexión a la base de datos en postgresql
@@ -1149,19 +1152,52 @@ app.post('/download-shp', function (request, response) {
           targetCrs: 4326
         }
 
-        async function convertGeoJSON(){
-          const shpresult = await convert(geojson,"D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip",options);
+        async function convertGeoJSON() {
+          const shpresult = await convert(geojson, "D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip", options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'
           })
         }
 
         convertGeoJSON();
-        
+
       }
 
     });
-  }else {
+  } else {
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+})
+
+
+app.post('/generate-pdf', function (request, response) {
+  const token = request.cookies.jwt;
+  const data = request.body;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });
+      } else {
+        request.decoded = decoded;
+        const tipo = data.tipo;
+        if (tipo === "mapa") {
+          const pdfTemplate = path.join(__dirname, `../help/plantilla-template-def.pdf`);
+          const destinationPDF = path.join(__dirname, `../help/prueba.pdf`);
+          const parameters = {
+            usuario_nombre: data.usuario_nombre,
+            usuario_cargo: data.usuario_cargo
+          }
+          pdfFiller.fillForm(pdfTemplate, destinationPDF, parameters, (err) => {
+            if (err) throw err;
+            console.log("In callback (we're done).");
+            response.status(200).json({ mensaje: "In callback (we're done)." })
+          })
+        }
+      }
+
+    });
+  } else {
     response.status(403).json({ mensaje: 'sin permisos' });
   }
 })
