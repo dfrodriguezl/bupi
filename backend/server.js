@@ -29,7 +29,14 @@ const csvtojson = require('csvtojson');
 const { convert } = require('geojson2shp');
 
 //Llenar pdf
-const pdfFiller = require('pdffiller');
+const PizZip = require("pizzip");
+const DocxTemplater = require("docxtemplater");
+const fsPromises = require('fs').promises;
+const libre = require('libreoffice-convert');
+libre.convertAsync = require('util').promisify(libre.convert);
+// const fs = require("fs");
+
+
 
 // var sess;
 //conexión a la base de datos en postgresql
@@ -1179,21 +1186,51 @@ app.post('/generate-pdf', function (request, response) {
       if (err) {
         response.json({ mensaje: 'Token inválida' });
       } else {
-        request.decoded = decoded;
-        const tipo = data.tipo;
-        if (tipo === "mapa") {
-          const pdfTemplate = path.join(__dirname, `../help/plantilla-template-def.pdf`);
-          const destinationPDF = path.join(__dirname, `../help/prueba.pdf`);
-          const parameters = {
-            usuario_nombre: data.usuario_nombre,
-            usuario_cargo: data.usuario_cargo
-          }
-          pdfFiller.fillForm(pdfTemplate, destinationPDF, parameters, (err) => {
-            if (err) throw err;
-            console.log("In callback (we're done).");
-            response.status(200).json({ mensaje: "In callback (we're done)." })
-          })
+
+        //Load the docx file as binary content
+        const content = fs.readFileSync(
+          path.resolve(__dirname, "../help/plantilla-reporte.docx"),
+          "binary"
+        );
+        const zip = new PizZip(content);
+        const doc = new DocxTemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+          nullGetter: function nullGetter(part, scopeManager) {
+            if (!part.module) {
+                return "";
+            }
+            if (part.module === "rawxml") {
+                return "";
+            }
+            return "";
         }
+        });
+        // render the document
+        // (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+        doc.render(data);
+        const buf = doc.getZip().generate({ type: "nodebuffer" });
+        // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+        fs.writeFileSync(path.resolve(__dirname, "../help/output.docx"), buf);
+
+        async function convertDocx() {
+          const ext = '.pdf'
+          const inputPath = path.join(__dirname, '../help/output.docx');
+          const outputPath = path.join(__dirname, `../help/reporte${ext}`);
+
+          // Read file
+          const docxBuf = await fsPromises.readFile(inputPath);
+
+          // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
+          let pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
+
+          // Here in done you have pdf file which you can save or transfer in another stream
+          await fsPromises.writeFile(outputPath, pdfBuf);
+          response.end(pdfBuf);
+        }
+
+        convertDocx();
+
       }
 
     });
@@ -1201,9 +1238,6 @@ app.post('/generate-pdf', function (request, response) {
     response.status(403).json({ mensaje: 'sin permisos' });
   }
 })
-
-
-
 
 
 

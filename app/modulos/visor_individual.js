@@ -27,7 +27,7 @@ import { jsPDF } from "jspdf";
 import 'jspdf-autotable';
 import leyenda_salida from '../img/leyenda_salida_grafica.png'
 import rosa_vientos from '../img/rosa_vientos.png'
-import logo_salida_grafica from '../img/logo_salida_grafica.png'
+import small_logo from '../img/small_logo.png'
 
 const Mapa = () => {
 
@@ -75,7 +75,7 @@ const Mapa = () => {
 
     let vLay, vLayRev;
 
-    const dataSession = { "id_consulta": "session" }
+    const dataSession = { "id_consulta": "info2_general_predio", id_expediente: id };
 
     servidorPost('/backend', dataSession).then(function (response) {
 
@@ -382,36 +382,48 @@ const Mapa = () => {
       pdf.addImage(
         rosa_vientos,
         'PNG',
-        pdf.internal.pageSize.width - 45,
+        pdf.internal.pageSize.width - 93,
         5,
         20,
         20
       );
       pdf.addImage(
-        logo_salida_grafica,
+        small_logo,
         'PNG',
-        pdf.internal.pageSize.width - 60,
-        40,
-        50,
-        10
+        pdf.internal.pageSize.width - 45,
+        10,
+        25,
+        20
       );
       pdf.setFontSize(7);
-      pdf.text("DIRECCIÓN ADMINISTRATIVA DE BIENES RAÍCES", pdf.internal.pageSize.width - 63, 65);
-      pdf.text("DIRECCIÓN DE BIENES RAÍCES", pdf.internal.pageSize.width - 53, 70);
-      pdf.text("SISTEMA DE INFORMACIÓN GEOGRÁFICA", pdf.internal.pageSize.width - 58, 75);
+      pdf.text("DIRECCIÓN DE BIENES RAÍCES", pdf.internal.pageSize.width - 53, 40);
+      pdf.text("SISTEMA DE INFORMACIÓN GEOGRÁFICA", pdf.internal.pageSize.width - 58, 45);
       pdf.setFontSize(11);
-      pdf.text("PREDIO " + id, pdf.internal.pageSize.width - 50, 100);
+      pdf.text("Matrícula inmobiliaria: ", pdf.internal.pageSize.width - 54, 105);
+      pdf.text(session.num_mi, pdf.internal.pageSize.width - 50, 110);
+      pdf.text("Dirección: ", pdf.internal.pageSize.width - 46, 115);
+      pdf.text(session.dir_act, pdf.internal.pageSize.width - 53, 120);
+      pdf.text("Chip catastral: ", pdf.internal.pageSize.width - 48, 125);
+      pdf.text(session.chip_cat, pdf.internal.pageSize.width - 64, 130);
+      pdf.text("Cédula catastral: ", pdf.internal.pageSize.width - 50, 135);
+      pdf.text(session.ced_cat, pdf.internal.pageSize.width - 64, 140);
+      pdf.text("Código predial: ", pdf.internal.pageSize.width - 50, 145);
+      pdf.text(session.cod_predial, pdf.internal.pageSize.width - 64, 150);
+      // pdf.text("Chip catastral: " + id, pdf.internal.pageSize.width - 64, 110);
+      // pdf.text("Cédula catastral: " + id, pdf.internal.pageSize.width - 64, 115);
+      // pdf.text("Código predial: " + id, pdf.internal.pageSize.width - 64, 120);
       pdf.addImage(
         leyenda_salida,
         'PNG',
-        pdf.internal.pageSize.width - 57,
-        120,
+        10,
+        130,
         50,
         30
       );
-      pdf.text(`Elaboró: ${session.usuario_nombre}`, pdf.internal.pageSize.width - 63, 180);
-      pdf.text(`Cargo: ${session.usuario_cargo}`, pdf.internal.pageSize.width - 63, 185);
-      pdf.text(`Fecha: ${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`, pdf.internal.pageSize.width - 63, 190);
+      pdf.setFontSize(7);
+      const lines = pdf.splitTextToSize(`Generado desde el módulo web de depuración predial de la EAAB`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(lines, pdf.internal.pageSize.width - 63, 185);
+      pdf.text(`Fecha: ${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`, pdf.internal.pageSize.width - 63, 180);
       pdf.save('map.pdf');
       // Reset original map size
       mapa.setSize(size);

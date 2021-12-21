@@ -2565,4 +2565,36 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_reporte_tecnico">
+        <sql>
+            select *
+            from reporte_tecnico
+            where id_expediente=$id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_reporte_juridico">
+        <sql>
+            select *
+            from reporte_juridico
+            where id_expediente=$id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_reporte_propietarios">
+        <sql>
+            select *
+            from reporte_juridico_propietarios
+            where id_expediente=$id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_reporte_segregados">
+        <sql>
+            select *
+            from reporte_juridico_segregados
+            where id_expediente=$id_expediente;
+        </sql>
+    </Consulta>
+
 </Consultas>
