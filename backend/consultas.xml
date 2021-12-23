@@ -72,7 +72,7 @@
     </Consulta>
     <Consulta id="info6_avaluos_servidumbre">
         <sql>
-        select * from servidumbres.info6_avaluos_servidumbre where id_servidumbre=$id_servidumbre
+        select * from servidumbres.info6_avaluos_servidumbre where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info7_propietario_catastral">
@@ -92,7 +92,7 @@
     </Consulta>
     <Consulta id="info8_soportes_pago">
         <sql>
-        select * from servidumbres.info8_soportes_pago where id_servidumbre=$id_servidumbre
+        select * from servidumbres.info8_soportes_pago where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info9_zmpa">
@@ -416,7 +416,7 @@
     </Consulta>
     <Consulta id="update_info6_avaluos_servidumbre">
         <sql>
-            update servidumbres.info6_avaluos_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
+            update servidumbres.info6_avaluos_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
         </sql>
     </Consulta>
     <Consulta id="update_info7_propietario_catastral">
@@ -436,7 +436,7 @@
     </Consulta>
     <Consulta id="update_info8_soportes_pago">
         <sql>
-            update servidumbres.info8_soportes_pago set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
+            update servidumbres.info8_soportes_pago set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
         </sql>
     </Consulta>
     <Consulta id="update_info9_zmpa">
