@@ -23,6 +23,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import CargaShape from './componentes/CargaShape';
 import { getPermisos } from '../variables/permisos';
 import variables from '../variables/var_mapa'
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
+import leyenda_salida from '../img/leyenda_salida_grafica.png'
+import rosa_vientos from '../img/rosa_vientos.png'
+import small_logo from '../img/small_logo.png'
 
 const Mapa = () => {
 
@@ -34,11 +39,22 @@ const Mapa = () => {
     "geometria_verificada": true,
     "geometria_revision": false
   })
+  const [mapSize, setMapSize] = React.useState({});
   let lecturaLocal = true;
+
+  const dims = {
+    a0: [1189, 841],
+    a1: [841, 594],
+    a2: [594, 420],
+    a3: [420, 297],
+    a4: [297, 210],
+    a5: [210, 148],
+  };
 
   const [layerExtent, setLayerExtent] = React.useState(null)
   const [vectorLayer, setVectorLayer] = React.useState(null)
   const [vectorLayerRev, setVectorLayerRev] = React.useState(null)
+  const [session, setSession] = React.useState(0)
   const { id } = useParams();
 
 
@@ -58,6 +74,15 @@ const Mapa = () => {
   React.useEffect(() => {
 
     let vLay, vLayRev;
+
+    const dataSession = { "id_consulta": "info2_general_predio", id_expediente: id };
+
+    servidorPost('/backend', dataSession).then(function (response) {
+
+      const datos = response.data[0]
+      setSession(datos)
+
+    });
 
     const getBloqueo = (id_exp) => {
 
@@ -304,6 +329,117 @@ const Mapa = () => {
     mapa.getView().fit(layerExtent);
   }
 
+  variables.exportar = () => {
+    document.body.style.cursor = 'progress';
+    const dim = dims['a4'];
+    const resolution = 150;
+    const width = Math.round((dim[0] * resolution) / 25.4);
+    const height = Math.round((dim[1] * resolution) / 25.4);
+
+    const size = mapa.getSize();
+    const viewResolution = mapa.getView().getResolution();
+
+    mapa.once('rendercomplete', () => {
+      const mapCanvas = document.createElement('canvas');
+      mapCanvas.width = width;
+      mapCanvas.height = height;
+      const mapContext = mapCanvas.getContext('2d');
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.ol-layer canvas'),
+        function (canvas) {
+          if (canvas.width > 0) {
+            const opacity = canvas.parentNode.style.opacity;
+            mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+            const transform = canvas.style.transform;
+            // Get the transform parameters from the style's transform matrix
+            const matrix = transform
+              .match(/^matrix\(([^\(]*)\)$/)[1]
+              .split(',')
+              .map(Number);
+            // Apply the transform to the export map context
+            CanvasRenderingContext2D.prototype.setTransform.apply(
+              mapContext,
+              matrix
+            );
+            mapContext.drawImage(canvas, 0, 0);
+          }
+        }
+      );
+
+      const currentDate = new Date();
+
+      const pdf = new jsPDF('landscape', undefined, "a4");
+      pdf.rect(2, 2, pdf.internal.pageSize.width - 70, pdf.internal.pageSize.height - 4, 'S');
+      pdf.rect(pdf.internal.pageSize.width - 66, 2, 64, pdf.internal.pageSize.height - 4, 'S');
+      pdf.addImage(
+        mapCanvas.toDataURL('image/jpeg'),
+        'JPEG',
+        3,
+        9,
+        pdf.internal.pageSize.width - 72,
+        190
+      );
+      pdf.addImage(
+        rosa_vientos,
+        'PNG',
+        pdf.internal.pageSize.width - 93,
+        5,
+        20,
+        20
+      );
+      pdf.addImage(
+        small_logo,
+        'PNG',
+        pdf.internal.pageSize.width - 45,
+        10,
+        25,
+        20
+      );
+      pdf.setFontSize(7);
+      pdf.text("DIRECCIÓN DE BIENES RAÍCES", pdf.internal.pageSize.width - 53, 40);
+      pdf.text("SISTEMA DE INFORMACIÓN GEOGRÁFICA", pdf.internal.pageSize.width - 58, 45);
+      pdf.setFontSize(11);
+      pdf.text("Matrícula inmobiliaria: ", pdf.internal.pageSize.width - 54, 105);
+      pdf.text(session.num_mi, pdf.internal.pageSize.width - 50, 110);
+      pdf.text("Dirección: ", pdf.internal.pageSize.width - 46, 115);
+      pdf.text(session.dir_act, pdf.internal.pageSize.width - 53, 120);
+      pdf.text("Chip catastral: ", pdf.internal.pageSize.width - 48, 125);
+      pdf.text(session.chip_cat, pdf.internal.pageSize.width - 64, 130);
+      pdf.text("Cédula catastral: ", pdf.internal.pageSize.width - 50, 135);
+      pdf.text(session.ced_cat, pdf.internal.pageSize.width - 64, 140);
+      pdf.text("Código predial: ", pdf.internal.pageSize.width - 50, 145);
+      pdf.text(session.cod_predial, pdf.internal.pageSize.width - 64, 150);
+      // pdf.text("Chip catastral: " + id, pdf.internal.pageSize.width - 64, 110);
+      // pdf.text("Cédula catastral: " + id, pdf.internal.pageSize.width - 64, 115);
+      // pdf.text("Código predial: " + id, pdf.internal.pageSize.width - 64, 120);
+      pdf.addImage(
+        leyenda_salida,
+        'PNG',
+        10,
+        130,
+        50,
+        30
+      );
+      pdf.setFontSize(7);
+      const lines = pdf.splitTextToSize(`Generado desde el módulo web de depuración predial de la EAAB`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(lines, pdf.internal.pageSize.width - 63, 185);
+      pdf.text(`Fecha: ${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`, pdf.internal.pageSize.width - 63, 180);
+      pdf.save('map.pdf');
+      // Reset original map size
+      mapa.setSize(size);
+      mapa.getView().setResolution(viewResolution);
+      document.body.style.cursor = 'auto';
+    })
+
+
+    // Set print size
+    const printSize = [width, height];
+    mapa.setSize(printSize);
+    const scaling = Math.min(width / size[0], height / size[1]);
+    mapa.getView().setResolution(viewResolution / scaling);
+
+  }
+
 
   return (
     <div id="seccion">
@@ -319,17 +455,16 @@ const Mapa = () => {
           <br />
           {Object.keys(data.variables).map((i, e) =>
             <>
-              {data.variables[i].id.includes("pred") ?
-                <div className="item" >
-                  <input type="checkbox" id={data.variables[i].id} name={data.variables[i].id_html}
-                    defaultChecked={layers[data.variables[i].id_html]}
-                    onChange={handleChange} />
-                  <label htmlFor={data.variables[i].id}> {data.variables[i].titulo}
-                  </label>
-                  <br />
-                </div> : null
-              }
-
+              {i !== "exportar" ?
+                data.variables[i].id.includes("pred") && i !== "exportar" ?
+                  <div className="item" >
+                    <input type="checkbox" id={data.variables[i].id} name={data.variables[i].id_html}
+                      defaultChecked={layers[data.variables[i].id_html]}
+                      onChange={handleChange} />
+                    <label htmlFor={data.variables[i].id}> {data.variables[i].titulo}
+                    </label>
+                    <br />
+                  </div> : null : null}
             </>
           )}
         </div>
@@ -339,17 +474,17 @@ const Mapa = () => {
         <div>
           {Object.keys(data.variables).map((i, e) =>
             <>
-              {data.variables[i].id.includes("pred") ?
-                <div className="item" >
-                  <span style={{ backgroundColor: data.variables[i].fill }}></span>
-                  <p>{data.variables[i].titulo}</p>
-                </div> : null
-              }
-
+              {i !== "exportar" ?
+                data.variables[i].id.includes("pred") ?
+                  <div className="item" >
+                    <span style={{ backgroundColor: data.variables[i].fill }}></span>
+                    <p>{data.variables[i].titulo}</p>
+                  </div> : null : null}
             </>
           )}
         </div>
       </div>
+      <a id="image-download" download="map.png"></a>
 
       <ToastContainer />
       {!lectura ?

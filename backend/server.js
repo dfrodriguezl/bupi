@@ -26,7 +26,17 @@ const mercator = new SphericalMercator()
 const csvtojson = require('csvtojson');
 
 //Convierte geojson a shp
-const {convert} = require('geojson2shp');
+const { convert } = require('geojson2shp');
+
+//Llenar pdf
+const PizZip = require("pizzip");
+const DocxTemplater = require("docxtemplater");
+const fsPromises = require('fs').promises;
+const libre = require('libreoffice-convert');
+libre.convertAsync = require('util').promisify(libre.convert);
+// const fs = require("fs");
+
+
 
 // var sess;
 //conexión a la base de datos en postgresql
@@ -1149,25 +1159,85 @@ app.post('/download-shp', function (request, response) {
           targetCrs: 4326
         }
 
-        async function convertGeoJSON(){
-          const shpresult = await convert(geojson,"D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip",options);
+        async function convertGeoJSON() {
+          const shpresult = await convert(geojson, "D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip", options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'
           })
         }
 
         convertGeoJSON();
-        
+
       }
 
     });
-  }else {
+  } else {
     response.status(403).json({ mensaje: 'sin permisos' });
   }
 })
 
 
+app.post('/generate-pdf', function (request, response) {
+  const token = request.cookies.jwt;
+  const data = request.body;
 
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });
+      } else {
+
+        //Load the docx file as binary content
+        const content = fs.readFileSync(
+          path.resolve(__dirname, "../help/plantilla-reporte.docx"),
+          "binary"
+        );
+        const zip = new PizZip(content);
+        const doc = new DocxTemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+          nullGetter: function nullGetter(part, scopeManager) {
+            if (!part.module) {
+                return "";
+            }
+            if (part.module === "rawxml") {
+                return "";
+            }
+            return "";
+        }
+        });
+        // render the document
+        // (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+        doc.render(data);
+        const buf = doc.getZip().generate({ type: "nodebuffer" });
+        // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+        fs.writeFileSync(path.resolve(__dirname, "../help/output.docx"), buf);
+
+        async function convertDocx() {
+          const ext = '.pdf'
+          const inputPath = path.join(__dirname, '../help/output.docx');
+          const outputPath = path.join(__dirname, `../help/reporte${ext}`);
+
+          // Read file
+          const docxBuf = await fsPromises.readFile(inputPath);
+
+          // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
+          let pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
+
+          // Here in done you have pdf file which you can save or transfer in another stream
+          await fsPromises.writeFile(outputPath, pdfBuf);
+          response.end(pdfBuf);
+        }
+
+        convertDocx();
+
+      }
+
+    });
+  } else {
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+})
 
 
 

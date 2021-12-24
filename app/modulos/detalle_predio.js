@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 
 import FaceIcon from '@material-ui/icons/Face';
 import DescargaShape from "./componentes/descarga_shape.js";
+import DescargaSalida from "./componentes/descarga_salida_grafica.js";
+import DescargaReportePredio from "./componentes/descarga_reporte_predio.js";
 
 
 const DetallePredio = () => {
@@ -80,6 +82,13 @@ const DetallePredio = () => {
       <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
         <DescargaShape id_expediente={expediente} />
       </div>
+      <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
+        <DescargaSalida id_expediente={expediente} />
+      </div>
+      <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
+        <DescargaReportePredio id_expediente={expediente} />
+      </div>
+
 
     </div>
   );

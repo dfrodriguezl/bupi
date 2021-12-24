@@ -13,11 +13,12 @@ const Leyenda = ({ data_leyenda }) => {
       <div>
         {Object.keys(data_leyenda).map((i, e) =>
           <>
-            {data.variables[i].id.includes("layer") ?
+            { i !== "exportar" ?
+            data.variables[i].id.includes("layer") ?
               <div className="item" >
                 <span style={{ backgroundColor: data.variables[i].fill }}></span>
                 <p>{data.variables[i].titulo}</p>
-              </div> : null
+              </div> : null : null
             }
 
           </>
