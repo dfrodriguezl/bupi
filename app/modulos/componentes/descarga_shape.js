@@ -14,9 +14,9 @@ const DescargaShape = (props) => {
     servidorPost('/backend', datos).then(function (response) {
 
       const data = response.data;
-      console.log("DATA", data);
 
       data.every((d) => {
+        console.log("DD", d);
         if (d.tipo === 'geometria_verificada') {
           if (d.geojson.features != null) {
             console.log("GEOMETRIA", d.geojson);
@@ -32,6 +32,7 @@ const DescargaShape = (props) => {
             geometria = d.geojson;
             return true;
           }
+          return true;
 
         }
       })
@@ -40,6 +41,8 @@ const DescargaShape = (props) => {
         geojson: geometria,
         id_expediente: id_expediente
       }
+
+      console.log("DATA DOWNLOAD", dataDownload);
 
       if(geometria != null){
         servidorPost('/download-shp', dataDownload).then(function (response) {
