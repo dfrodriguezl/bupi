@@ -1160,7 +1160,9 @@ app.post('/download-shp', function (request, response) {
         }
 
         async function convertGeoJSON() {
-          const shpresult = await convert(geojson, "D:\\PROYECTOS\\EAAB_2021\\Workspace\\bienes-raices\\help\\" + data.id_expediente + ".zip", options);
+          const shpresult = await convert(geojson, 
+            path.join(__dirname, '../help/' + data.id_expediente + ".zip"),
+             options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'
           })
@@ -1229,7 +1231,9 @@ app.post('/generate-pdf', function (request, response) {
           response.end(pdfBuf);
         }
 
-        convertDocx();
+        convertDocx().catch((err) => {
+          console.log("Error converting file:" + err);
+        })
 
       }
 

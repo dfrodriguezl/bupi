@@ -379,16 +379,20 @@ const Mapa = () => {
         pdf.internal.pageSize.width - 72,
         190
       );
+      let rosa = new Image();
+      rosa.src = '../img/rosa_vientos.png';
       pdf.addImage(
-        rosa_vientos,
+        rosa,
         'PNG',
         pdf.internal.pageSize.width - 93,
         5,
         20,
         20
       );
+      let s_logo = new Image();
+      s_logo.src = '../img/small_logo.png';
       pdf.addImage(
-        small_logo,
+        s_logo,
         'PNG',
         pdf.internal.pageSize.width - 45,
         10,
@@ -399,21 +403,33 @@ const Mapa = () => {
       pdf.text("DIRECCIÓN DE BIENES RAÍCES", pdf.internal.pageSize.width - 53, 40);
       pdf.text("SISTEMA DE INFORMACIÓN GEOGRÁFICA", pdf.internal.pageSize.width - 58, 45);
       pdf.setFontSize(11);
-      pdf.text("Matrícula inmobiliaria: ", pdf.internal.pageSize.width - 54, 105);
-      pdf.text(session.num_mi, pdf.internal.pageSize.width - 50, 110);
-      pdf.text("Dirección: ", pdf.internal.pageSize.width - 46, 115);
-      pdf.text(session.dir_act, pdf.internal.pageSize.width - 53, 120);
-      pdf.text("Chip catastral: ", pdf.internal.pageSize.width - 48, 125);
-      pdf.text(session.chip_cat, pdf.internal.pageSize.width - 64, 130);
-      pdf.text("Cédula catastral: ", pdf.internal.pageSize.width - 50, 135);
-      pdf.text(session.ced_cat, pdf.internal.pageSize.width - 64, 140);
-      pdf.text("Código predial: ", pdf.internal.pageSize.width - 50, 145);
-      pdf.text(session.cod_predial, pdf.internal.pageSize.width - 64, 150);
+      const linesMat = pdf.splitTextToSize(`Matrícula inmobiliaria ${session.num_mi}`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(linesMat, pdf.internal.pageSize.width - 63, 105);
+      const linesDir = pdf.splitTextToSize(`Dirección ${session.dir_act}`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(linesDir, pdf.internal.pageSize.width - 63, 115);
+      const linesChip = pdf.splitTextToSize(`Chip catastral ${session.chip_cat}`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(linesChip, pdf.internal.pageSize.width - 63, 125);
+      const linesCed = pdf.splitTextToSize(`Cédula catastral ${session.ced_cat}`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(linesCed, pdf.internal.pageSize.width - 63, 135);
+      const linesCod = pdf.splitTextToSize(`Código predial ${session.cod_predial}`, (pdf.internal.pageSize.width  - (pdf.internal.pageSize.width - 63) - 3));
+      pdf.text(linesCod, pdf.internal.pageSize.width - 63, 145);
+      // pdf.text(linesMat, pdf.internal.pageSize.width - 63, 105);
+      // pdf.text(session.num_mi, pdf.internal.pageSize.width - 50, 110);
+      // pdf.text("Dirección: ", pdf.internal.pageSize.width - 46, 115);
+      // pdf.text(session.dir_act, pdf.internal.pageSize.width - 53, 120);
+      // pdf.text("Chip catastral: ", pdf.internal.pageSize.width - 48, 125);
+      // pdf.text(session.chip_cat, pdf.internal.pageSize.width - 64, 130);
+      // pdf.text("Cédula catastral: ", pdf.internal.pageSize.width - 50, 135);
+      // pdf.text(session.ced_cat, pdf.internal.pageSize.width - 64, 140);
+      // pdf.text("Código predial: ", pdf.internal.pageSize.width - 50, 145);
+      // pdf.text(session.cod_predial, pdf.internal.pageSize.width - 64, 150);
       // pdf.text("Chip catastral: " + id, pdf.internal.pageSize.width - 64, 110);
       // pdf.text("Cédula catastral: " + id, pdf.internal.pageSize.width - 64, 115);
       // pdf.text("Código predial: " + id, pdf.internal.pageSize.width - 64, 120);
+      let ley = new Image();
+      ley.src = '../img/leyenda_salida_grafica.png';
       pdf.addImage(
-        leyenda_salida,
+        ley,
         'PNG',
         10,
         130,
