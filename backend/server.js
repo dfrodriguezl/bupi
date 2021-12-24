@@ -1222,10 +1222,10 @@ app.post('/generate-pdf', function (request, response) {
 
           // Read file
           const docxBuf = await fsPromises.readFile(inputPath);
-
+          console.log("DOC BUF", docxBuf);
           // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
-          let pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
-
+          const pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
+          console.log("PDF BUF", pdfBuf);
           // Here in done you have pdf file which you can save or transfer in another stream
           await fsPromises.writeFile(outputPath, pdfBuf);
           response.end(pdfBuf);
