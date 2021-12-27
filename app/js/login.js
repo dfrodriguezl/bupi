@@ -11,6 +11,7 @@ const Login = () => {
   const [ok, setOk] = React.useState(false);
   const [msg, setMsg] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [user, setUser] = React.useState({})
 
   const onSubmit = data => {
     console.log(data)
@@ -22,6 +23,7 @@ const Login = () => {
 
       if (result.data.length > 0) {
         setOpen(true)
+        setUser(result.data);
         // setOk(true)
       } else {
         setMsg(true)
@@ -37,7 +39,7 @@ const Login = () => {
 
   return (
     <div id="login">
-      <HomeDialogo open={open} />
+      <HomeDialogo open={open} user={user}/>
       {/* {ok ? <Redirect to="/" /> : ''} */}
       <div id="contenido">
         <div className="crop">

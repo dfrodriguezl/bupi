@@ -22,6 +22,7 @@ import BusquedaServ from './servidumbres/Busqueda'
 import Servidumbre from './servidumbres/servidumbre'
 import ReporteServidumbre from './servidumbres/reportes'
 import BusquedaAvanzada from './busqueda_avanzada';
+import HomeConsulta from './home_consulta';
 
 
 
@@ -46,6 +47,7 @@ const Tree = () => {
                     <Route exact path='/servidumbres/buscar' component={BusquedaServ} />
                     <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre} />
                     <Route exact path='/servidumbres/reportes' component={ReporteServidumbre} />
+                    <Route exact path='/consulta' component={HomeConsulta} />
                 </BrowserRouter>
             </Switch>
         </BrowserRouter>

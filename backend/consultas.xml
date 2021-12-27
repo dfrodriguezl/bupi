@@ -2,7 +2,7 @@
 <Consultas>
     <Consulta id="get_usuario">
         <sql>
-        SELECT usuario_id from usuario where usuario_usuario=$usuario_usuario and usuario_pwd=md5($usuario_pwd)
+        SELECT usuario_id, usuario_rol from usuario where usuario_usuario=$usuario_usuario and usuario_pwd=md5($usuario_pwd)
         </sql>
     </Consulta>
     <Consulta id="validate_user">

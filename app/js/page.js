@@ -18,6 +18,7 @@ const Estructura = ({ children }) => {
 
   const [session, setSession] = React.useState(0);
   const [isAdmin, setIsAdmin] = React.useState(false);
+  const [isConsulta, setIsConsulta] = React.useState(false);
   const history = useHistory();
   const isServidumbre = history.location.pathname.indexOf('servidumbres') > -1;
 
@@ -29,6 +30,7 @@ const Estructura = ({ children }) => {
 
       var datos = response.data[0]
       setSession(datos)
+      setIsConsulta(datos.usuario_rol === 0 ? true : false);
 
     });
 
@@ -80,7 +82,7 @@ const Estructura = ({ children }) => {
         <div id="items-nav">
           {!isServidumbre ?
             <div className="elemento">
-              <Link to="/">
+              <Link to={isConsulta ? "/consulta" : "/"}>
                 <Home />
                 <p>Inicio</p>
               </Link>

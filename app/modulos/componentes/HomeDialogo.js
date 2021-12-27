@@ -3,14 +3,19 @@ import { Dialog, DialogTitle, Grid, Button } from '@material-ui/core';
 import { useHistory  } from 'react-router';
 
 const HomeDialogo = (props) => {
-  const { open } = props;
+  const { open, user } = props;
   const history = useHistory();
 
   const handleClick = (tipo) => {
     if (tipo === "serv") {
       history.push("/servidumbres/buscar");
     }else if (tipo === "predios"){
-      history.push("/");
+      console.log("USER", user)
+      if(user[0].usuario_rol === 0){
+        history.push("/consulta");
+      }else{
+        history.push("/");
+      }
     }
   }
 
