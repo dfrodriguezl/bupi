@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //import {Info} from './estadisticas'
 
@@ -6,12 +6,20 @@ import { servidorPost } from '../js/request.js'
 import { Link } from 'react-router-dom';
 
 import SearchIcon from '@material-ui/icons/Search';
+import { useParams } from 'react-router-dom';
 
 const Busqueda=()=>{
   
+  const { id } = useParams();
   const [data, setData] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [vacio, setVacio] = useState(0);
+
+  useEffect(() => {
+    if(id){
+      setFiltro(id)
+    }
+  },[])
     
   const ver_expediente = e => {
     
@@ -42,7 +50,7 @@ const Busqueda=()=>{
             <div id="titulo_seccion">Busqueda</div>
             <p id="descripcion_seccion">Sección para la busqueda de predios, puede hacer busquedas con id_expediente, identificador de proyecto, nombre de proyecto, chip catastral, número de matricula inmobiliaria, código catastral, barrio/vereda, UPZ ó dirección. (Se muestran máximo 50 resultados)</p>
             <div className="search">
-                <input type="text" className="searchTerm" onChange={onChangeHandler}/>
+                <input type="text" className="searchTerm" onChange={onChangeHandler} value={filtro}/>
                 <button type="submit" className="searchButton primmary" onClick={ver_expediente}>
                     <SearchIcon/>
                 </button>

@@ -33,6 +33,7 @@ const Tree = () => {
             <Switch>
                 <BrowserRouter basename='/bienes-raices/web'>
                     <Route exact path='/' component={Home} />
+                    <Route exact path='/buscar/:id' component={Buscar} />
                     <Route exact path='/buscar' component={Buscar} />
                     <Route exact path='/buscarAvanzado' component={BusquedaAvanzada} />
                     <Route exact path='/documentos' component={Documentos} />
