@@ -321,16 +321,21 @@ const Mapa = () => {
           <br />
           {Object.keys(data.variables).map((i, e) =>
             <>
-              {data.variables[i].id.includes("pred") ?
-                <div className="item" >
-                  <input type="checkbox" id={data.variables[i].id} name={data.variables[i].id_html}
-                    defaultChecked={layers[data.variables[i].id_html]}
-                    onChange={handleChange} />
-                  <label htmlFor={data.variables[i].id}> {data.variables[i].titulo}
-                  </label>
-                  <br />
-                </div> : null
-              }
+              {console.log("DATA", data.variables[i])}
+              {console.log("I", i)}
+              {i !== "exportar" ?
+                data.variables[i].id.includes("pred") && i !== "exportar"?
+                  <div className="item" >
+                    <input type="checkbox" id={data.variables[i].id} name={data.variables[i].id_html}
+                      defaultChecked={layers[data.variables[i].id_html]}
+                      onChange={handleChange} />
+                    <label htmlFor={data.variables[i].id}> {data.variables[i].titulo}
+                    </label>
+                    <br />
+                  </div> : null
+
+                : null}
+
 
             </>
           )}
@@ -341,12 +346,15 @@ const Mapa = () => {
         <div>
           {Object.keys(data.variables).map((i, e) =>
             <>
-              {data.variables[i].id.includes("pred") ?
-                <div className="item" >
-                  <span style={{ backgroundColor: data.variables[i].fill }}></span>
-                  <p>{data.variables[i].titulo}</p>
-                </div> : null
-              }
+            {i !== "exportar" ? 
+              data.variables[i].id.includes("pred") && i !== "exportar"?
+              <div className="item" >
+                <span style={{ backgroundColor: data.variables[i].fill }}></span>
+                <p>{data.variables[i].titulo}</p>
+              </div> : null
+            
+          : null}
+              
 
             </>
           )}

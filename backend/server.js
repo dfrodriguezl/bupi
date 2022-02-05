@@ -35,6 +35,14 @@ const fsPromises = require('fs').promises;
 const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 // const fs = require("fs");
+const axios = require('axios');
+const FormData = require('form-data');
+const fileDownload = require('js-file-download');
+const fileSaver = require('file-saver');
+const Blob = require('buffer');
+const gotenberg = require('gotenberg-js-client');
+
+const urlPdf = "http://192.168.56.10:3000/forms/libreoffice/convert";
 
 
 
@@ -53,14 +61,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'pg_acueducto',//'pg-acueducto',
-  database: 'acueducto_bienes_raices',
-  password: 'docker',
-  port: 5432,//5432
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'pg_acueducto',//'pg-acueducto',
+//   database: 'acueducto_bienes_raices',
+//   password: 'docker',
+//   port: 5432,//5432
+//   timezone: 'utc'
+// })
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -76,14 +84,14 @@ const pool = new Pool({
 
 //local
 
-// const pool = new Pool({
-//   user: 'postgres',//docker
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
-//   password: 'postgres',//docker
-//   port: 5433,//5432
-//   // timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'postgres',//docker
+  host: 'localhost',//'pg-acueducto',
+  database: 'acueducto_bienes_raices',
+  password: 'postgres',//docker
+  port: 5433,//5432
+  // timezone: 'utc'
+})
 
 
 
@@ -790,7 +798,7 @@ app.get('/help/:file', function (req, res) {
   const file = path.join(__dirname, `../help/${req.params.file}`)
 
 
-  if (file.includes(".db")) {
+  if (file.includes(".db") || file.includes(".docx")) {
     res.download(file); // Set disposition and send it.
   } else {
     if (token) {
@@ -1160,9 +1168,9 @@ app.post('/download-shp', function (request, response) {
         }
 
         async function convertGeoJSON() {
-          const shpresult = await convert(geojson, 
+          const shpresult = await convert(geojson,
             path.join(__dirname, '../help/' + data.id_expediente + ".zip"),
-             options);
+            options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'
           })
@@ -1200,13 +1208,13 @@ app.post('/generate-pdf', function (request, response) {
           linebreaks: true,
           nullGetter: function nullGetter(part, scopeManager) {
             if (!part.module) {
-                return "";
+              return "";
             }
             if (part.module === "rawxml") {
-                return "";
+              return "";
             }
             return "";
-        }
+          }
         });
         // render the document
         // (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
@@ -1214,26 +1222,73 @@ app.post('/generate-pdf', function (request, response) {
         const buf = doc.getZip().generate({ type: "nodebuffer" });
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
         fs.writeFileSync(path.resolve(__dirname, "../help/output.docx"), buf);
+        const form = new FormData();
+        form.append('file', fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
+        // console.log(fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
+        response.status(200).send(fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
+        // const toPDF = gotenberg.pipe(
+        //   gotenberg.gotenberg('http://192.168.56.10:3000'),
+        //   gotenberg.convert,
+        //   gotenberg.office,
+        //   gotenberg.to(gotenberg.landscape),
+        //   gotenberg.set(gotenberg.filename('reporte.pdf')),
+        //   gotenberg.please
+        // );
 
-        async function convertDocx() {
-          const ext = '.pdf'
-          const inputPath = path.join(__dirname, '../help/output.docx');
-          const outputPath = path.join(__dirname, `../help/reporte${ext}`);
+        // async function createPDF () {
+        //   const pdf = await toPDF(path.resolve(__dirname, "../help/output.docx"));
+        //   console.log("PDF RES", pdf);
+        // }
 
-          // Read file
-          const docxBuf = await fsPromises.readFile(inputPath);
-          console.log("DOC BUF", docxBuf);
-          // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
-          const pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
-          console.log("PDF BUF", pdfBuf);
-          // Here in done you have pdf file which you can save or transfer in another stream
-          await fsPromises.writeFile(outputPath, pdfBuf);
-          response.end(pdfBuf);
-        }
+        // createPDF();
 
-        convertDocx().catch((err) => {
-          console.log("Error converting file:" + err);
-        })
+        
+        // axios.post(urlPdf, form, {
+        //   headers: {
+        //     ...form.getHeaders()
+        //   }
+        // }).then(res => {
+        //   console.log("RES BACK", res);
+        //   // response.setHeader('Content-disposition', 'attachment; filename=reporte.pdf');
+        //   // console.log("RES PDF", new Blob([response.data]));
+        //   // window.URL.createObjectURL(new Blob([response.data]));
+        //   // fs.writeFileSync(path.resolve(__dirname, "../help/reporte.pdf"), Buffer.from(res.data,'binary'));
+        //   // response.status(200).send(res.data);
+          
+
+        //   // fs.writeFileSync(path.resolve(__dirname, "../help/reporte.pdf"), new Buffer.from(res.data, 'base64'));
+        //   // response.end(new Buffer.from(res.data, 'base64'));
+        //   // const w = res.data.pipe(fs.createWriteStream(path.join(__dirname, `../help/reporte.pdf`)));
+        //   // w.on('finish', () => {
+        //   //   console.log("Finished")
+        //   // })
+        //   // fileDownload(res.data.pipe(), 'reporte.pdf');
+        //   // fileSaver.saveAs(res.data, path.join(__dirname, `../help/reporte.pdf`));
+
+        //   // response.end(new Buffer.from(buffer, 'base64'));
+        // }).catch(err => {
+        //   console.log("ERROR", err);
+        // })
+
+        // async function convertDocx() {
+        //   const ext = '.pdf'
+        //   const inputPath = path.join(__dirname, '../help/output.docx');
+        //   const outputPath = path.join(__dirname, `../help/reporte${ext}`);
+
+        //   // Read file
+        //   const docxBuf = await fsPromises.readFile(inputPath);
+        //   console.log("DOC BUF", docxBuf);
+        //   // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
+        //   const pdfBuf = await libre.convertAsync(docxBuf, ext, undefined);          
+        //   console.log("PDF BUF", pdfBuf);
+        //   // Here in done you have pdf file which you can save or transfer in another stream
+        //   await fsPromises.writeFile(outputPath, pdfBuf);
+        //   response.end(pdfBuf);
+        // }
+
+        // convertDocx().catch((err) => {
+        //   console.log("Error converting file:" + err);
+        // })
 
       }
 

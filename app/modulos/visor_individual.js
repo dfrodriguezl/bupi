@@ -491,7 +491,7 @@ const Mapa = () => {
           {Object.keys(data.variables).map((i, e) =>
             <>
               {i !== "exportar" ?
-                data.variables[i].id.includes("pred") ?
+                data.variables[i].id.includes("pred") && i !== "exportar"?
                   <div className="item" >
                     <span style={{ backgroundColor: data.variables[i].fill }}></span>
                     <p>{data.variables[i].titulo}</p>

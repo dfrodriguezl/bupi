@@ -1,12 +1,28 @@
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { servidorPost, url } from '../../js/request'
+import {
+  pipe,
+  gotenberg,
+  convert,
+  office,
+  to,
+  landscape,
+  set,
+  filename,
+  please,
+} from 'gotenberg-js-client'
+import fileDownload from 'js-file-download';
 
 const DescargaReportePredio = (props) => {
 
   const { id_expediente } = props;
   const [dataSend, setDataSend] = useState({});
+  // const urlPdf = "http://192.168.56.10/gotenberg/forms/libreoffice/convert";
+  // const urlPdf = "http://192.168.56.10/bienes-raices/gotenberg/forms/libreoffice/convert";
+  const urlPdf = "https://www.acueducto.com.co/depuracionpredial/bienes-raices/gotenberg/forms/libreoffice/convert";
 
   useEffect(() => {
     const data = {
@@ -50,16 +66,45 @@ const DescargaReportePredio = (props) => {
   const onChange = (e) => {
 
     document.body.style.cursor = 'progress';
-    
+
 
     servidorPost('/generate-pdf', dataSend).then(function (response) {
-      const link = document.createElement('a');
-      link.href = url + "/help/reporte.pdf";
-      link.setAttribute('download', 'reporte.pdf'); //or any other extension
-      document.body.appendChild(link);
-      link.click();
-      toast.success("Reporte generado");
-      document.body.style.cursor = 'auto';
+      console.log("RESPONSE PDF", response);
+      const toPDF = pipe(
+        gotenberg('http://192.168.56.10/gotenberg'),
+        convert,
+        office,
+        to(landscape),
+        set(filename('result.pdf')),
+        please
+      )
+
+      console.log("TOPDF", toPDF);
+
+      Axios({
+        method: 'get',
+        url: url + '/help/output.docx',
+        responseType: 'blob'
+      }).then(resDOC => {
+        const form = new FormData();
+        const file = new File([new Blob([resDOC.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })], 'output.docx');
+        console.log("FILE", file);
+        form.append('file', file);
+
+        Axios({
+          method: 'post',
+          url: urlPdf,
+          data: form,
+          responseType: 'blob'
+        }).then(res => {
+          fileDownload(new File([new Blob([res.data, 'application/pdf'])], 'reporte.pdf'), "reporte.pdf");
+          toast.success("Reporte generado");
+          document.body.style.cursor = 'auto';
+        })
+
+      })
+
+
     });
   }
 

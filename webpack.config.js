@@ -126,7 +126,7 @@ module.exports = {
         filename: 'css/[name].css',
         template: './app/css/styles.scss'
       }),
-      // new CompressionPlugin()
+      new CompressionPlugin()
   ],
   node: {
     fs: "empty"
