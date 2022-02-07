@@ -107,6 +107,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [externalData, setExternalData] = React.useState({});
     const [listDomains, setListDomains] = React.useState({});
     const [chip, setChip] = React.useState(null);
+    const [textDomains, setTextDomains] = React.useState({});
 
 
 
@@ -170,7 +171,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                 var data = {
                     "tabla": index,
-                    "id_consulta": "get_formulario"
+                    "id_consulta": "get_formulario",
+                    "id_expediente": id
                 }
                 // console.log("datos primero")
                 // console.log(response1)
@@ -218,9 +220,9 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
                                     } else {
-                                        if(index === 37 && responseUp.some(r => r == 14)){
-                                                setLectura(false)
-                                        }else{
+                                        if (index === 37 && responseUp.some(r => r == 14)) {
+                                            setLectura(false)
+                                        } else {
                                             if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
                                                 setLectura(false)
                                             } else {
@@ -437,6 +439,28 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             let dominios = {};
             dominios[e.field_child] = valuesChild;
             setListDomains(dominios);
+        }
+
+        if (e.caso_especial != null) {
+            if (e.caso_especial.includes("accion_saneamiento")) {
+                console.log("CASO ESPECIAL", e)
+                console.log("MSG", msg)
+                const dataSaneamiento = {
+                    id_consulta: 'get_descripcion_saneamientos',
+                    accion_saneamiento: msg[0].value,
+                    dominio: e.enum_name
+                }
+                servidorPost('/backend', dataSaneamiento).then(function (response) {
+                    console.log("RESPONSE ENUM", response)
+                    const childs = e.field_child.split(",");
+                    console.log("CHILDS", childs);
+                    setTextDomains({
+                        [childs[0]]: response.data[0][childs[0]],
+                        [childs[1]]: response.data[0][childs[1]]
+                    })
+                })
+            }
+
         }
 
         return msg;
@@ -664,17 +688,32 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
-                                                <input type={i.doc.type}
-                                                    className='form_input'
-                                                    name={i.doc.field}
-                                                    disabled={lectura}
-                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                    ref={register({
-                                                        pattern: {
-                                                            value: getRegex(i.doc.regex),
-                                                            message: i.doc.message
-                                                        }
-                                                    })} />
+                                                {i.doc.field_father ?
+                                                    <input type={i.doc.type}
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        value={textDomains ? textDomains[i.doc.field] : ''}
+                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        ref={register({
+                                                            pattern: {
+                                                                value: getRegex(i.doc.regex),
+                                                                message: i.doc.message
+                                                            }
+                                                        })} />
+
+                                                    : <input type={i.doc.type}
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        ref={register({
+                                                            pattern: {
+                                                                value: getRegex(i.doc.regex),
+                                                                message: i.doc.message
+                                                            }
+                                                        })} />}
+
                                                 {/* } */}
 
                                                 {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
@@ -692,15 +731,28 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             : ''
                                         }
                                         {i.doc.form == 'area' ?
+                                            
+                                                i.doc.field_father ?
+                                                    <textarea
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        value={textDomains ? textDomains[i.doc.field] : ''}
+                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        ref={register}
+                                                        rows="4"
+                                                    />
+                                                    :
+                                                    <textarea
+                                                        className='form_input'
+                                                        name={i.doc.field}
+                                                        disabled={lectura}
+                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        ref={register}
+                                                        rows="4"
+                                                    />
+                                            
 
-                                            <textarea
-                                                className='form_input'
-                                                name={i.doc.field}
-                                                disabled={lectura}
-                                                defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                ref={register}
-                                                rows="4"
-                                            />
                                             : ''
                                         }
                                         {i.doc.form == 'fecha' ?
@@ -921,7 +973,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
 
-        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37].includes(index)) {
+        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
             setMultiple(true)
 
 
@@ -1371,6 +1423,12 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(35, "info35_estado_saneamiento_juridico", "Estado saneamiento jurídico")} className={active == 35 ? 'active' : ''}>
                             Estado saneamiento jurídico
+                        </button>
+                        <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento técnico")} className={active == 39 ? 'active' : ''}>
+                            Gestión saneamiento técnico
+                        </button>
+                        <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
+                            Gestión saneamiento jurídico
                         </button>
                     </div>
                 </TabPanel>

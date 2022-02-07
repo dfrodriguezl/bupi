@@ -307,6 +307,16 @@
         select * from info38_financiero where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info39_gestion_san_tec">
+        <sql>
+        select * from info39_gestion_san_tec where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info40_gestion_san_jur">
+        <sql>
+        select * from info40_gestion_san_jur where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -651,6 +661,16 @@
             update info38_financiero set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info39_gestion_san_tec">
+        <sql>
+            update info39_gestion_san_tec set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info40_gestion_san_jur">
+        <sql>
+            update info40_gestion_san_jur set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
 
 
 
@@ -743,9 +763,14 @@
             'size', size,
             'helper',helper,
             'enum',CASE
-				WHEN u.enum is not null then u.enum
-				WHEN d.enum is not null then d.enum
-				ELSE NULL
+				WHEN m.caso_especial = 'accion_saneamiento' THEN c.enum
+                WHEN m.caso_especial = 'accion_saneamiento_jur' THEN e.enum
+				ELSE 
+					CASE
+						WHEN u.enum is not null then u.enum
+						WHEN d.enum is not null then d.enum
+						ELSE NULL
+					END
 			END,
             'editable',editable,
             'regex',regex,
@@ -757,7 +782,8 @@
 			'child_domain',child_domain,
 			'field_father',field_father,
 			'father_domain',father_domain,
-            'enum_name',m.enum
+            'enum_name',m.enum,
+            'caso_especial',m.caso_especial
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
@@ -768,6 +794,20 @@ group by dominio) as d
 								  json_agg(json_build_object('value',usuario_usuario,'label',usuario_nombre,'padre',null,'padre_valor',null)) as enum
 								  from usuario) as u
         on m.enum=u.dominio
+        left join (select dominio,
+				  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+				  from dominios a join (
+				  select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
+					from info14_saneamiento_basico) as b on a.valor = b.accion_saneamiento
+			  		where b.id_expediente = $id_expediente
+					group by a.dominio) as c on m.enum=c.dominio
+        left join (select dominio,
+				  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+				  from dominios a join (
+				  select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
+					from info15_saneamiento_juridico) as b on a.valor = b.accion_saneamiento
+			  		where b.id_expediente = $id_expediente
+					group by a.dominio) as e on m.enum=e.dominio
         where tabla=$tabla order by orden
         </sql>
     </Consulta>
@@ -2594,6 +2634,15 @@ group by dominio) as d
             select *
             from reporte_juridico_segregados
             where id_expediente=$id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_descripcion_saneamientos">
+        <sql>
+            select *
+            from actividades_saneamiento
+            where cod_accion_saneamiento = $accion_saneamiento
+            and dominio = $dominio;
         </sql>
     </Consulta>
 
