@@ -5,8 +5,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { servidorPost } from '../js/request'
 import { ToastContainer, toast } from 'react-toastify';
 import { notificacion } from '../variables/notificaciones'
+import { notificacion_saneamientos } from '../variables/notificaciones_saneamientos';
 
-const Modal = ({ nombre, id, refresh, tareacod }) => {
+const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
   const toastId = React.useRef(null);
 
@@ -34,19 +35,38 @@ const Modal = ({ nombre, id, refresh, tareacod }) => {
 
                   refresh(Math.random())
 
+                  if (tipo === 39 || tipo === 40) {
+                    var data = {
+                      "id": id,
+                      "ruta": -1
+                    }
 
+                    notificacion_saneamientos(data,tipo,consecutivo)
+
+
+                    var datos = {
+                      "id_expediente": nombre,
+                      "ruta": tareacod,
+                    }
+
+                    notificacion_saneamientos(datos,tipo,consecutivo)
+                  } else {
                     var data = {
                       "id": id,
                       "ruta": -1
                     }
                     notificacion(data)
 
-                  
-                  var datos = {
-                    "id_expediente": nombre,
-                    "ruta": tareacod,
+
+                    var datos = {
+                      "id_expediente": nombre,
+                      "ruta": tareacod,
+                    }
+                    notificacion(datos)
                   }
-                  notificacion(datos)
+
+
+
 
 
                   /* 

@@ -309,12 +309,17 @@
     </Consulta>
     <Consulta id="info39_gestion_san_tec">
         <sql>
-        select * from info39_gestion_san_tec where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info39_gestion_san_tec_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info40_gestion_san_jur">
         <sql>
-        select * from info40_gestion_san_jur where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info40_gestion_san_jur_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info41_observaciones_predio">
+        <sql>
+        select * from info41_observaciones_predio_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
 
@@ -671,6 +676,11 @@
             update info40_gestion_san_jur set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info41_observaciones_predio">
+        <sql>
+            update info41_observaciones_predio set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
 
 
 
@@ -783,7 +793,8 @@
 			'field_father',field_father,
 			'father_domain',father_domain,
             'enum_name',m.enum,
-            'caso_especial',m.caso_especial
+            'caso_especial',m.caso_especial,
+            'rol_edicion', m.rol_edicion
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
@@ -935,6 +946,46 @@ group by dominio) as d
         END as aprobado
         </sql>
     </Consulta>
+    <Consulta id="aprobado_juridico_saneamiento">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT apro_bor_salida_j
+            from info40_gestion_san_jur
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN apro_bor_salida_j=1 THEN true
+                    ELSE false
+            END
+        from info40_gestion_san_jur
+        where id_expediente=$id_expediente
+            and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
+        </sql>
+    </Consulta>
+    <Consulta id="aprobado_juridico_saneamiento_final">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT aprobacion_gestion_j
+            from info40_gestion_san_jur
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN aprobacion_gestion_j=1 THEN true
+                    ELSE false
+            END
+        from info40_gestion_san_jur
+        where id_expediente=$id_expediente
+            and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
+        </sql>
+    </Consulta>
     <Consulta id="aprobado_tecnico">
         <sql>
         SELECT CASE WHEN EXISTS (
@@ -951,6 +1002,46 @@ group by dominio) as d
         ELSE
             false
         END as aprobado
+        </sql>
+    </Consulta>
+    <Consulta id="aprobado_tecnico_saneamiento">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT apro_bor_salida_t
+            from info39_gestion_san_tec
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN apro_bor_salida_t=1 THEN true
+                    ELSE false
+            END
+        from info39_gestion_san_tec 
+        where id_expediente=$id_expediente
+        and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
+        </sql>
+    </Consulta>
+    <Consulta id="aprobado_tecnico_saneamiento_final">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT aprobacion_gestion_t 
+            from info39_gestion_san_tec
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN aprobacion_gestion_t=1 THEN true
+                    ELSE false
+            END
+        from info39_gestion_san_tec 
+        where id_expediente=$id_expediente
+        and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
         </sql>
     </Consulta>
     <Consulta id="aprobado_tecnico_servidumbre">
@@ -978,6 +1069,8 @@ group by dominio) as d
     <Consulta id="get_tareas">
         <sql>
         select *,
+        null as consecutivo,
+        null as tabla,
         (select descripcion from tareas.flujo as tf where
         tf.ruta=t.ruta), 
         (select usuario_nombre from usuario as u where
@@ -987,13 +1080,32 @@ group by dominio) as d
         from tareas.tareas as t
         where
         usuario_responsable=token and estado=1 and visible=true
-        order by fecha_asignacion desc
+		union
+        select *,
+        (select descripcion from tareas.flujo_saneamientos as tf where
+        tf.ruta=t.ruta), 
+        (select usuario_nombre from usuario as u where
+        u.usuario_usuario=t.usuario_asigna)as usuario_nombre,
+        (select usuario_nombre from usuario as u where
+        u.usuario_usuario=t.usuario_responsable)as usuario_responsable
+        from tareas.tareas_saneamientos as t
+        where
+        usuario_responsable=token and estado=1 and visible=true
+        order by fecha_asignacion desc;
         </sql>
     </Consulta>
 
     <Consulta id="update_tareas_estado">
         <sql>
         update tareas.tareas set estado=2, fecha_solucion=now() 
+        where id=$id 
+        returning id_expediente
+        </sql>
+    </Consulta>
+
+    <Consulta id="update_tareas_estado_saneamientos">
+        <sql>
+        update tareas.tareas_saneamientos set estado=2, fecha_solucion=now() 
         where id=$id 
         returning id_expediente
         </sql>
@@ -1011,8 +1123,14 @@ group by dominio) as d
 
     <Consulta id="get_numero_tareas">
         <sql>
-        select count(*) from tareas.tareas 
+        select sum(conteo) count
+       from (
+       select count(*) conteo
+       from tareas.tareas 
         where usuario_responsable=token and estado=1
+        union
+        select count(*) conteo from tareas.tareas_saneamientos 
+        where usuario_responsable=token and estado=1) as a
         </sql>
     </Consulta>
 
@@ -2180,6 +2298,34 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_flujo_saneamiento">
+        <sql>
+            select 
+                t.ruta,
+                id_tarea_next,
+                t.consecutivo,
+                path,
+                (select usuario_nombre from usuario where usuario_usuario=t.usuario_responsable),
+                f.descripcion as descripcion,
+                ta.descripcion as perfil,
+                estado,
+                fecha_asignacion,
+                fecha_solucion,
+                (select aprobado from info12_control_calidad_tecnico where id_expediente = t.id_expediente) as tec,
+				(select aprobado from info13_control_calidad_juridico where id_expediente = t.id_expediente) as jur
+            from tareas.tareas_saneamientos t left join (
+            select id_tarea_next,concat(id_tarea,'-',id_tarea_next)as path,ruta,descripcion
+            from tareas.flujo_saneamientos
+            ) f
+            on t.ruta=f.ruta 
+            inner join tareas.actividades ta on f.id_tarea_next=ta.id_tarea
+            where id_expediente=$id_expediente
+            and tabla = $tabla
+            and consecutivo = $consecutivo
+            order by fecha_asignacion
+        </sql>
+    </Consulta>
+
 
     <Consulta id="insertar_vacio">
         <sql>
@@ -2215,6 +2361,15 @@ group by dominio) as d
         <sql>
         select exists(
            select * from tareas.tareas
+            where id_expediente=$id_expediente 
+            and usuario_responsable=token and estado=1)
+        </sql>
+    </Consulta>
+
+    <Consulta id="tengo_predio_saneamiento">
+        <sql>
+        select exists(
+           select * from tareas.tareas_saneamientos
             where id_expediente=$id_expediente 
             and usuario_responsable=token and estado=1)
         </sql>
@@ -2643,6 +2798,25 @@ group by dominio) as d
             from actividades_saneamiento
             where cod_accion_saneamiento = $accion_saneamiento
             and dominio = $dominio;
+        </sql>
+    </Consulta>
+
+    <Consulta id="insertar_notificacion_saneamiento">
+        <sql>
+        insert into tareas.tareas_saneamientos values(
+            (select max (id)+1 from tareas.tareas_saneamientos),
+            $id_expediente,
+            $ruta_destino,
+            token,
+            (select usuario from tareas.asignacion_saneamientos
+            where id_expediente=$id_expediente and id_tarea= $tarea_next),
+            now(),
+            null,
+            1,
+            true,
+            $consecutivo,
+            $tabla
+        )ON CONFLICT DO NOTHING RETURNING usuario_responsable
         </sql>
     </Consulta>
 

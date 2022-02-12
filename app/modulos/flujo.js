@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import ReactFlow, {
   Controls,
   Background,
-  Handle
+  Handle,
+  ReactFlowProvider
 } from 'react-flow-renderer';
 
 
@@ -136,8 +137,8 @@ const Flujo = () => {
         }
 
         let finSocial = flujo.filter((o) => o.path === '1-9');
-        if(finSocial.length > 0){
-          if(finSocial[0].fecha_solucion != null){
+        if (finSocial.length > 0) {
+          if (finSocial[0].fecha_solucion != null) {
             flujo.push({
               estado: 2,
               path: '9-10',
@@ -145,7 +146,7 @@ const Flujo = () => {
             })
           }
         }
-        
+
 
 
         if (flujo.length > 0) {
@@ -198,16 +199,19 @@ const Flujo = () => {
         <p id="descripcion_seccion">Sección para ver el estado del proceso</p>
 
         {visible ? <>
-          <ReactFlow
-            elements={opt}
-            snapToGrid={true}
-            snapGrid={[15, 15]}
-            onLoad={onLoad}
-            nodeTypes={nodeTypes}
-          >
-            <Controls />
+          <ReactFlowProvider>
+            <ReactFlow
+              elements={opt}
+              snapToGrid={true}
+              snapGrid={[15, 15]}
+              onLoad={onLoad}
+              nodeTypes={nodeTypes}
+            >
+              <Controls />
 
-          </ReactFlow>
+            </ReactFlow>
+          </ReactFlowProvider>
+
         </> : ''}
 
 

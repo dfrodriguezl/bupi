@@ -24,6 +24,8 @@ import ReactSelect from "react-select";
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
+import { FlujoSan } from './saneamientos/flujo_san'
+
 
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -64,6 +66,10 @@ const gestionPermisos = (index) => {
         tipo_permiso = [13];
     } else if ([37].includes(index)) {
         tipo_permiso = [14];
+    } else if ([39].includes(index)) {
+        tipo_permiso = [15];
+    } else if ([40].includes(index)) {
+        tipo_permiso = [16];
     }
 
 
@@ -108,6 +114,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [listDomains, setListDomains] = React.useState({});
     const [chip, setChip] = React.useState(null);
     const [textDomains, setTextDomains] = React.useState({});
+    const [superTec, setSuperTec] = React.useState(false);
+    const [superJur, setSuperJur] = React.useState(false);
 
 
 
@@ -202,6 +210,14 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                     getPermisos().then((response) => {
+                        
+                        if (response.some(r => r === 4)) {
+                            setSuperTec(true)
+                        }
+
+                        if (response.some(r => r === 5)) {
+                            setSuperJur(true)
+                        }
 
                         if (response.some(r => r == 10) || response.some(r => r == 12)) {
 
@@ -213,7 +229,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                             let responseUp = response;
 
-                            var data = { id_consulta: 'tengo_predio', id_expediente: id }
+                            var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
                                 getBloqueo(id).then((r) => {
@@ -603,12 +619,22 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     return (
         <>
+
             <form onSubmit={handleSubmit(onSubmit)} className="form-container">
 
+
+
                 {view ?
+
+
+
                     <>
                         {/* {console.log("renderizando...")} */}
-
+                        <Fragment>
+                            {index === 39 || index === 40 ?
+                                <FlujoSan tipo={index} consecutivo={consecutivo}/> :
+                                null}
+                        </Fragment>
 
                         {fields.data.map((i, e) =>
 
@@ -624,6 +650,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                                
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
@@ -632,7 +659,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         }
 
 
-                                                        isDisabled={lectura}
+                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
                                                         isClearable={true}
 
@@ -648,7 +675,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         }
 
 
-                                                        isDisabled={lectura}
+                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
                                                         isClearable={true}
 
@@ -731,27 +758,27 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             : ''
                                         }
                                         {i.doc.form == 'area' ?
-                                            
-                                                i.doc.field_father ?
-                                                    <textarea
-                                                        className='form_input'
-                                                        name={i.doc.field}
-                                                        disabled={lectura}
-                                                        value={textDomains ? textDomains[i.doc.field] : ''}
-                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                        ref={register}
-                                                        rows="4"
-                                                    />
-                                                    :
-                                                    <textarea
-                                                        className='form_input'
-                                                        name={i.doc.field}
-                                                        disabled={lectura}
-                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                        ref={register}
-                                                        rows="4"
-                                                    />
-                                            
+
+                                            i.doc.field_father ?
+                                                <textarea
+                                                    className='form_input'
+                                                    name={i.doc.field}
+                                                    disabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    value={textDomains ? textDomains[i.doc.field] : ''}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register}
+                                                    rows="4"
+                                                />
+                                                :
+                                                <textarea
+                                                    className='form_input'
+                                                    name={i.doc.field}
+                                                    disabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register}
+                                                    rows="4"
+                                                />
+
 
                                             : ''
                                         }
@@ -1017,6 +1044,10 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         setRefresh(Math.random())
     }
 
+    const add_tarea_saneamiento = () => {
+
+    }
+
     const add_registro = () => {
 
         var data = {
@@ -1029,6 +1060,27 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             data.id_consulta = "insert_prestamo";
             data.id_expediente = id;
             data.tabla = tbl;
+        }
+
+        if (index === 39 || index === 40) {
+            const dataSaneamiento = {
+                id_consulta: "insertar_notificacion_saneamiento",
+                id_expediente: id,
+                ruta_destino: index === 39 ? 1 : 2,
+                tarea_next: index === 39 ? 2 : 3,
+                consecutivo: opciones.length + 1,
+                tabla: index
+            }
+
+            servidorPost('/backend', dataSaneamiento).then((response) => {
+
+                // console.log(response)
+                if (response.data.length > 0) {
+
+                }
+            });
+
+            console.log("DATA SANEAMIENTO", dataSaneamiento);
         }
 
         // console.log("DATA", data)
@@ -1417,12 +1469,19 @@ const Predio = () => {
                 <TabPanel>
                     <h3>Formularios saneamientos</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    {/* {index === 39 ?
+                        <FlujoSan /> :
+                        null
+                    } */}
                     <div className="grupo-formularios">
                         <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
                             Estado saneamiento básico
                         </button>
                         <button onClick={() => getForm(35, "info35_estado_saneamiento_juridico", "Estado saneamiento jurídico")} className={active == 35 ? 'active' : ''}>
                             Estado saneamiento jurídico
+                        </button>
+                        <button onClick={() => getForm(41, "info41_observaciones_predio", "Observaciones predios")} className={active == 41 ? 'active' : ''}>
+                            Observaciones predio
                         </button>
                         <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento técnico")} className={active == 39 ? 'active' : ''}>
                             Gestión saneamiento técnico

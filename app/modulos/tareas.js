@@ -25,6 +25,9 @@ const Tarea = ({ refresh_number }) => {
             var datos = { "id_consulta": "get_tareas" }
             const result = await servidor.servidorPost('/backend', datos);
 
+            // var datosSan = { "id_consulta": "get_tareas_saneamientos" };
+            // const result2 = await servidor.servidorPost("/backend", datosSan);
+
             console.log(result)
 
             setData(result.data);
@@ -106,7 +109,7 @@ const Tarea = ({ refresh_number }) => {
 
             {filtro.map((item, index) =>
                 <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
-                    <p className="titulo">{item.id_expediente}</p>
+                    <p className="titulo">{!item.consecutivo ? item.id_expediente : item.id_expediente + " - Saneamiento " + item.consecutivo}</p>
                     <p>Fecha Asignación: {moment.utc(item.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p>
                     <p>Enviado por: {item.usuario_nombre}</p>
                     <p>Descripción: {item.descripcion}</p>
@@ -122,12 +125,24 @@ const Tarea = ({ refresh_number }) => {
 
                     </button>
 
-                    {item.ruta != 13 ?
+                    {item.ruta === 13 && item.tabla ?
                         <Modal
                             nombre={item.id_expediente}
                             id={item.id}
                             refresh={setRefresh}
                             tareacod={item.ruta}
+                            tipo={item.tabla}
+                            consecutivo={item.consecutivo} />
+                        : null}
+
+                    {item.ruta !== 13 ?
+                        <Modal
+                            nombre={item.id_expediente}
+                            id={item.id}
+                            refresh={setRefresh}
+                            tareacod={item.ruta}
+                            tipo={item.tabla}
+                            consecutivo={item.consecutivo}
                         /> : null}
 
                 </div>
