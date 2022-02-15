@@ -155,7 +155,7 @@ const FlujoSan = (props) => {
     var data = { "id_consulta": "get_flujo_saneamiento", "id_expediente": id, "tabla": tipo, "consecutivo": consecutivo }
     servidorPost('/backend/', data).then((response) => {
       console.log("RESPONSE FLUJO", response)
-      var data = { "id_consulta": "get_asignaciones", "id_expediente": id }
+      var data = { "id_consulta": "get_asignaciones_saneamientos", "id_expediente": id }
       servidorPost('/backend/', data).then((responseUsuarios) => {
         let usuarios = responseUsuarios.data;
         let flujo = response.data;

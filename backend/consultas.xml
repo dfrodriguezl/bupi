@@ -806,20 +806,40 @@ group by dominio) as d
 								  from usuario) as u
         on m.enum=u.dominio
         left join (select dominio,
-				  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 				  from dominios a join (
-				  select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
-					from info14_saneamiento_basico) as b on a.valor = b.accion_saneamiento
+				  select a.id_expediente,a.accion_saneamiento,
+				case 
+					when b.id_expediente is not null then 'GESTIONADO'
+					else 'NO GESTIONADO'
+				end as gestion_san
+				from (select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
+					from info14_saneamiento_basico isb 
+					where id_expediente = $id_expediente) as a
+					left join 
+				(select id_expediente, accion_saneamiento 
+				from info39_gestion_san_tec igst 
+				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
 			  		where b.id_expediente = $id_expediente
 					group by a.dominio) as c on m.enum=c.dominio
         left join (select dominio,
-				  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 				  from dominios a join (
-				  select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
-					from info15_saneamiento_juridico) as b on a.valor = b.accion_saneamiento
+				  select a.id_expediente,a.accion_saneamiento,
+				case 
+					when b.id_expediente is not null then 'GESTIONADO'
+					else 'NO GESTIONADO'
+				end as gestion_san
+				from (select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
+					from info15_saneamiento_juridico
+					where id_expediente = $id_expediente) as a
+					left join 
+				(select id_expediente, accion_saneamiento 
+				from info40_gestion_san_jur igsj
+				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
 			  		where b.id_expediente = $id_expediente
 					group by a.dominio) as e on m.enum=e.dominio
-        where tabla=$tabla order by orden
+        where tabla=$tabla order by orden;
         </sql>
     </Consulta>
 
@@ -1037,6 +1057,46 @@ group by dominio) as d
                     ELSE false
             END
         from info39_gestion_san_tec 
+        where id_expediente=$id_expediente
+        and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
+        </sql>
+    </Consulta>
+    <Consulta id="procede_saneamiento_tecnico">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT proc_san_t 
+            from info39_gestion_san_tec
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN proc_san_t=1 THEN true
+                    ELSE false
+            END
+        from info39_gestion_san_tec 
+        where id_expediente=$id_expediente
+        and consecutivo = $consecutivo)
+        ELSE
+            false
+        END as aprobado;
+        </sql>
+    </Consulta>
+    <Consulta id="procede_saneamiento_juridico">
+        <sql>
+        SELECT CASE WHEN EXISTS (
+            SELECT proc_san_j 
+            from info40_gestion_san_jur igsj 
+            where id_expediente=$id_expediente
+            and consecutivo = $consecutivo
+        )
+        THEN
+            (select CASE WHEN proc_san_j=1 THEN true
+                    ELSE false
+            END
+        from info40_gestion_san_jur 
         where id_expediente=$id_expediente
         and consecutivo = $consecutivo)
         ELSE
@@ -2698,6 +2758,18 @@ group by dominio) as d
 			ac.id_tarea,
 			ac.descripcion
 			from tareas.asignacion asg join 
+			tareas.actividades ac on asg.id_tarea = ac.id_tarea
+			where id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_asignaciones_saneamientos">
+        <sql>
+            select id_expediente, 
+			(select usuario_nombre from usuario where usuario_usuario=asg.usuario),
+			ac.id_tarea,
+			ac.descripcion
+			from tareas.asignacion_saneamientos asg join 
 			tareas.actividades ac on asg.id_tarea = ac.id_tarea
 			where id_expediente = $id_expediente;
         </sql>
