@@ -232,6 +232,19 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
+                                if(data.id_consulta === "tengo_predio" && !response.data[0].exists){
+                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                                    servidorPost('/backend', data2).then((responseSan) => {
+                                        if(responseSan.data[0].exists){
+                                            
+                                        } else {
+
+                                        }
+                                    });
+                                }
+                            })
+
+                            servidorPost('/backend', data).then((response) => {
                                 getBloqueo(id).then((r) => {
                                     if (r.data[0].bloqueo_predio) {
                                         setLectura(true)
@@ -242,7 +255,20 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
                                                 setLectura(false)
                                             } else {
-                                                setLectura(!response.data[0].exists)
+                                                if(!response.data[0].exists){
+                                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                                                    servidorPost('/backend', data2).then((responseSan) => {
+                                                        setLectura(!responseSan.data[0].exists)
+                                                        // if(responseSan.data[0].exists){
+
+                                                        // } else {
+
+                                                        // }
+                                                    })
+                                                }else {
+                                                    setLectura(!response.data[0].exists)
+                                                }   
+                                                
                                             }
                                         }
                                     }
