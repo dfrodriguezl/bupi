@@ -84,20 +84,42 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
 
     //alert();
 
+    data.id_consulta = "procede_saneamiento_tecnico";
+    data.consecutivo = consecutivo;
+
     (async () => {
 
-      var post2 = {
-        id_consulta: "insertar_notificacion_saneamiento",
-        tarea_next: 5,
-        ruta_destino: 3,
-        opcion: 1,
-        id_expediente: data.id_expediente,
-        consecutivo: consecutivo,
-        tabla: tipo
+      var result = await back(data);
+
+      if (!result.data[0].aprobado) {
+        var post2 = {
+          id_consulta: "insertar_notificacion_saneamiento",
+          tarea_next: 5,
+          ruta_destino: 10,
+          opcion: 1,
+          id_expediente: data.id_expediente,
+          consecutivo: consecutivo,
+          tabla: tipo
+        }
+  
+  
+        await back(post2)
+      }else{
+        var post2 = {
+          id_consulta: "insertar_notificacion_saneamiento",
+          tarea_next: 5,
+          ruta_destino: 3,
+          opcion: 1,
+          id_expediente: data.id_expediente,
+          consecutivo: consecutivo,
+          tabla: tipo
+        }
+  
+  
+        await back(post2)
       }
 
-
-      await back(post2)
+      
 
 
     })()
@@ -105,14 +127,49 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
   }
   else if (ruta === 2 || ruta == 5) {//el juridico se desprende de su tarea
 
-    data.id_consulta = "insertar_notificacion_saneamiento";
-    data.tarea_next = 4;
-    data.ruta_destino = 4;
+    data.id_consulta = "procede_saneamiento_juridico";
     data.consecutivo = consecutivo;
-    data.tabla = tipo;
+
+    // data.id_consulta = "insertar_notificacion_saneamiento";
+    // data.tarea_next = 4;
+    // data.ruta_destino = 4;
+    // data.consecutivo = consecutivo;
+    // data.tabla = tipo;
 
     (async () => {
-      await back(data)
+
+      var result = await back(data);
+
+      if (!result.data[0].aprobado) {
+        var post2 = {
+          id_consulta: "insertar_notificacion_saneamiento",
+          tarea_next: 4,
+          ruta_destino: 11,
+          opcion: 1,
+          id_expediente: data.id_expediente,
+          consecutivo: consecutivo,
+          tabla: tipo
+        }
+  
+  
+        await back(post2)
+      }else{
+        var post2 = {
+          id_consulta: "insertar_notificacion_saneamiento",
+          tarea_next: 4,
+          ruta_destino: 4,
+          opcion: 1,
+          id_expediente: data.id_expediente,
+          consecutivo: consecutivo,
+          tabla: tipo
+        }
+  
+  
+        await back(post2)
+      }
+
+
+      // await back(data)
 
     })()
 
