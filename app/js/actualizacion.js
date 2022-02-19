@@ -3,8 +3,8 @@ import React from 'react';
 import Estructura from './page'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Aprobacion from '../modulos/aprobacion'
-import Tipologias from '../modulos/tipologias'
 import ActualizacionMasiva from '../modulos/actualizacion_masiva'
+import CrearPredio from '../modulos/crear_nuevo';
 
 
 const Actualizacion = () => {
@@ -22,12 +22,16 @@ const Actualizacion = () => {
                     <TabList>
                         <Tab>Actualización</Tab>
                         <Tab>Cambio de estados</Tab>
+                        <Tab>Crear nuevo predio</Tab>
                     </TabList>
                     <TabPanel>
                         <ActualizacionMasiva />
                     </TabPanel>
                     <TabPanel>
                         <Aprobacion></Aprobacion>
+                    </TabPanel>
+                    <TabPanel>
+                        <CrearPredio />
                     </TabPanel>
                 </Tabs>
             </div>      

@@ -59,16 +59,18 @@ const DetallePredio = () => {
     <div id="seccion">
 
       <div id="titulo_seccion" style={{ display: 'inline-block' }}>{expediente}
-        {tipologia.descripcion ?
-          <Fragment>
-            <br />Tipología impuesto 2021: {tipologia.descripcion}
-          </Fragment> : null
+        {tipologia ?
+          tipologia.descripcion ?
+            <Fragment>
+              <br />Tipología impuesto 2021: {tipologia.descripcion}
+            </Fragment> : null : null
         }
 
-        {observacionSIG.descripcion ?
-          <Fragment>
-            <br />Observación SIG: {observacionSIG.descripcion}
-          </Fragment> : null
+        {observacionSIG ?
+          observacionSIG.descripcion ?
+            <Fragment>
+              <br />Observación SIG: {observacionSIG.descripcion}
+            </Fragment> : null : null
         }
 
         <Fragment>

@@ -259,11 +259,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
                                                     servidorPost('/backend', data2).then((responseSan) => {
                                                         setLectura(!responseSan.data[0].exists)
-                                                        // if(responseSan.data[0].exists){
-
-                                                        // } else {
-
-                                                        // }
                                                     })
                                                 }else {
                                                     setLectura(!response.data[0].exists)

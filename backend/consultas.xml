@@ -2892,4 +2892,29 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_ultimo_expediente">
+        <sql>
+        select concat('EAAB',max(substring(id_expediente,5)::int) + 1) as expediente
+            from info2_general_predio igp 
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_expediente_2">
+        <sql>
+        insert into info2_general_predio (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_expediente_1">
+        <sql>
+        insert into info1_general_proyecto (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
+
+    <Consulta id="insert_info5_juridicos">
+        <sql>
+        insert into info5_juridicos (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
+
 </Consultas>
