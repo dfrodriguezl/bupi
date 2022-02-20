@@ -1,8 +1,6 @@
-# Acueducto Bienes Raices
+# BUPI INVIAS
 
-Aplicativo de cargue de información predial para la dirección de bienes raices del acueducto de Bogotá
-
-![Screenshot](screenshot.JPG)
+Aplicativo de cargue de información predial para el grupo de registro y administración de bienes de uso público BUPI del INVIAS
 
 
 ## Installation
@@ -42,7 +40,7 @@ npm run build
 run the command for build back-end
 
 ```bash
-npm run build_backend
+npm run build_back
 
 ```
 
@@ -69,8 +67,9 @@ and follow the guide for install in docker.
 
 ## Contributing
 
+Diego Fernando Rodriguez Lamus
 
-EAAB-COLOMBIA
+INVIAS-COLOMBIA
 
 ## License
 Private Project
