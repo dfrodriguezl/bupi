@@ -210,7 +210,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                     getPermisos().then((response) => {
-                        
+
                         if (response.some(r => r === 4)) {
                             setSuperTec(true)
                         }
@@ -232,11 +232,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', id_expediente: id }
 
                             servidorPost('/backend', data).then((response) => {
-                                if(data.id_consulta === "tengo_predio" && !response.data[0].exists){
+                                if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
                                     let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
                                     servidorPost('/backend', data2).then((responseSan) => {
-                                        if(responseSan.data[0].exists){
-                                            
+                                        if (responseSan.data[0].exists) {
+
                                         } else {
 
                                         }
@@ -255,15 +255,15 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
                                                 setLectura(false)
                                             } else {
-                                                if(!response.data[0].exists){
+                                                if (!response.data[0].exists) {
                                                     let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
                                                     servidorPost('/backend', data2).then((responseSan) => {
                                                         setLectura(!responseSan.data[0].exists)
                                                     })
-                                                }else {
+                                                } else {
                                                     setLectura(!response.data[0].exists)
-                                                }   
-                                                
+                                                }
+
                                             }
                                         }
                                     }
@@ -454,7 +454,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-                validar(index, result[0].id_expediente, data_guardar)
+                // validar(index, result[0].id_expediente, data_guardar)
                 // validar(index,result[0].id_expediente)
             }
         });
@@ -653,7 +653,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         {/* {console.log("renderizando...")} */}
                         <Fragment>
                             {index === 39 || index === 40 ?
-                                <FlujoSan tipo={index} consecutivo={consecutivo}/> :
+                                <FlujoSan tipo={index} consecutivo={consecutivo} /> :
                                 null}
                         </Fragment>
 
@@ -671,7 +671,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                                
+
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
@@ -1020,8 +1020,8 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             // console.log(permiso)
         })
 
-
-        if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
+        // if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
+        if ([3, 6, 12].includes(index)) {
             setMultiple(true)
 
 
@@ -1218,9 +1218,9 @@ const Ayuda = () => {
     return (
 
         <div className="header-help-form">
-            <div><p>Número de matricula: </p>   <p>{info.num_mi}</p></div>
-            <div><p>CHIP: </p> <p>{info.chip_cat}</p></div>
-            <div><p>Código predial: </p>   <p>{info.cod_predial}</p></div>
+            <div><p>Matrícula inmobiliaria: </p>   <p>{info.num_mi}</p></div>
+            {/* <div><p>CHIP: </p> <p>{info.chip_cat}</p></div> */}
+            <div><p>Número predial nacional: </p>   <p>{info.numero_predial_nacional}</p></div>
 
         </div>
 
@@ -1307,12 +1307,12 @@ const Predio = () => {
             <Tabs onSelect={() => setIndex(0)}>
                 <TabList>
                     <Tab>Técnico</Tab>
-                    <Tab>Jurídico</Tab>
+                    {/* <Tab>Jurídico</Tab>
                     <Tab>Financiera</Tab>
                     <Tab>Social</Tab>
                     <Tab>Documentos</Tab>
                     <Tab>Saneamientos</Tab>
-                    <Tab>Documental</Tab>
+                    <Tab>Documental</Tab> */}
                 </TabList>
                 <TabPanel>
 
@@ -1321,27 +1321,71 @@ const Predio = () => {
 
                     <div className="grupo-formularios">
 
-                        <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
+                        <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
                             className={active == 1 ? 'active' : ''}    >
-                            general del proyecto
+                            Fuente
                         </button>
-                        <button onClick={() => getForm(2, "info2_general_predio", "Información general del predio")} className={active == 2 ? 'active' : ''}>
-                            general del predio
+                        <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
+                            Adquisición
                         </button>
-                        <button onClick={() => getForm(3, "info3_areas_usos", "Información de áreas y usos")} className={active == 3 ? 'active' : ''} >
-                            areas y usos
+                        <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
+                            Predios segregados
                         </button>
-                        <button onClick={() => getForm(4, "info4_avaluos", "Información de avalúos")} className={active == 4 ? 'active' : ''}>
-                            avaluos
+                        <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
+                            Información catastral
+                        </button>
+                        <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
+                            Información INVIAS
+                        </button>
+                        <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
+                            Avalúos
+                        </button>
+                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Control de calidad jurídico")} className={active == 7 ? 'active' : ''}>
+                            Control de calidad jurídico
+                        </button>
+                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
+                            Control de calidad catastral
+                        </button>
+                        <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
+                            SIG
+                        </button>
+                        <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Adquisición - escritura")} className={active == 11 ? 'active' : ''}>
+                            Adquisición - escritura
+                        </button>
+                        <button onClick={() => getForm(12, "info12_pago", "Pago")} className={active == 12 ? 'active' : ''}>
+                            Pago
+                        </button>
+                        <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                            Saneamiento catastral
+                        </button>
+                        <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                            Saneamiento jurídico
+                        </button>
+                        <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
+                            Áreas
                         </button>
 
-                        <button onClick={() => getForm(9, "info9_zmpa", "ZMPA")} className={active == 9 ? 'active' : ''}>
+                        {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
+                            className={active == 1 ? 'active' : ''}    >
+                            general del proyecto
+                        </button> */}
+                        {/* <button onClick={() => getForm(2, "info2_general_predio", "Información general del predio")} className={active == 2 ? 'active' : ''}>
+                            general del predio
+                        </button> */}
+                        {/* <button onClick={() => getForm(3, "info3_areas_usos", "Información de áreas y usos")} className={active == 3 ? 'active' : ''} >
+                            areas y usos
+                        </button> */}
+                        {/* <button onClick={() => getForm(4, "info4_avaluos", "Información de avalúos")} className={active == 4 ? 'active' : ''}>
+                            avaluos
+                        </button> */}
+
+                        {/* <button onClick={() => getForm(9, "info9_zmpa", "ZMPA")} className={active == 9 ? 'active' : ''}>
                             ZMPA
-                        </button>
-                        <button onClick={() => getForm(10, "info10_infraestructura", "Infraestructura")} className={active == 10 ? 'active' : ''} >
+                        </button> */}
+                        {/* <button onClick={() => getForm(10, "info10_infraestructura", "Infraestructura")} className={active == 10 ? 'active' : ''} >
                             infraestructura
-                        </button>
-                        <button onClick={() => getForm(11, "info11_estudios_detallados", "Estudios detallados")} className={active == 11 ? 'active' : ''}>
+                        </button> */}
+                        {/* <button onClick={() => getForm(11, "info11_estudios_detallados", "Estudios detallados")} className={active == 11 ? 'active' : ''}>
                             estudios detallados
                         </button>
                         <button onClick={() => getForm(7, "info7_propietario_catastral", "Propietario Catastral")} className={active == 7 ? 'active' : ''}>
@@ -1376,18 +1420,18 @@ const Predio = () => {
 
                         <button onClick={() => getForm(23, "info23_sig", "SIG")} className={active == 23 ? 'active' : ''} >
                             SIG
-                        </button>
+                        </button> */}
 
 
                     </div>
 
-                    <h3>Documentos</h3>
+                    {/* <h3>Documentos</h3>
                     <Files titulo="Soporte" cod={1} />
                     <Files titulo="Concepto técnico" cod={2} />
-                    <Ayuda />
+                    <Ayuda /> */}
                 </TabPanel>
 
-                <TabPanel>
+                {/* <TabPanel>
 
                     <h3>Formularios Jurídicos</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
@@ -1431,21 +1475,21 @@ const Predio = () => {
 
                     <Ayuda />
 
-                </TabPanel>
+                </TabPanel> */}
 
-                <TabPanel>
+                {/* <TabPanel> */}
                     {/* <button onClick={() => getForm(16, "info16_tributaria", "Información tributaria")} className={active == 16 ? 'active' : ''}>
                         tributaria
                     </button> */}
-                    <button onClick={() => getForm(38, "info38_financiero", "Información financiera")} className={active == 38 ? 'active' : ''}>
+                    {/* <button onClick={() => getForm(38, "info38_financiero", "Información financiera")} className={active == 38 ? 'active' : ''}>
                         Financiero
-                    </button>
+                    </button> */}
 
 
 
 
-                </TabPanel>
-                <TabPanel>
+                {/* </TabPanel> */}
+                {/* <TabPanel>
 
                     <h3>Formularios sociales</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
@@ -1483,18 +1527,18 @@ const Predio = () => {
                         </button>
                     </div>
 
-                </TabPanel>
-                <TabPanel>
+                </TabPanel> */}
+                {/* <TabPanel>
                     <CargueDocumentos />
-                </TabPanel>
-                <TabPanel>
-                    <h3>Formularios saneamientos</h3>
-                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                </TabPanel> */}
+                {/* <TabPanel> */}
+                    {/* <h3>Formularios saneamientos</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p> */}
                     {/* {index === 39 ?
                         <FlujoSan /> :
                         null
                     } */}
-                    <div className="grupo-formularios">
+                    {/* <div className="grupo-formularios">
                         <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
                             Estado saneamiento básico
                         </button>
@@ -1510,9 +1554,9 @@ const Predio = () => {
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
                         </button>
-                    </div>
-                </TabPanel>
-                <TabPanel>
+                    </div> */}
+                {/* </TabPanel> */}
+                {/* <TabPanel>
                     <h3>Formularios documental</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
                     <div className="grupo-formularios">
@@ -1523,7 +1567,7 @@ const Predio = () => {
                             Préstamo expedientes
                         </button>
                     </div>
-                </TabPanel>
+                </TabPanel> */}
 
             </Tabs>
 

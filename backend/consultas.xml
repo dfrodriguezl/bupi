@@ -20,6 +20,11 @@
         select * from info1_vw_dup where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info1_fuente">
+        <sql>
+        select * from info1_fuente where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info1_general_proyecto_servidumbre">
         <sql>
         select * from servidumbres.info1_general_proyecto_servidumbre where id_servidumbre=$id_servidumbre
@@ -28,6 +33,11 @@
     <Consulta id="info2_general_predio">
         <sql>
         select * from info2_general_predio where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info2_adquisicion">
+        <sql>
+        select * from info2_adquisicion where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info2_general_predio_sirviente">
@@ -40,6 +50,11 @@
         select * from info3_areas_usos_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info3_predios_segregados">
+        <sql>
+        select * from info3_predios_segregados where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
     <Consulta id="info3_general_predios_derivados">
         <sql>
         select * from servidumbres.info3_general_predios_derivados where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
@@ -48,6 +63,11 @@
     <Consulta id="info4_avaluos">
         <sql>
         select * from info4_avaluos where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info4_informacion_catastral">
+        <sql>
+        select * from info4_informacion_catastral where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info4_areas_y_usos_predio_sirviente">
@@ -60,6 +80,11 @@
         select * from info5_juridicos where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info5_informacion_invias">
+        <sql>
+        select * from info5_informacion_invias where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info5_servidumbre">
         <sql>
         select * from servidumbres.info5_servidumbre where id_servidumbre=$id_servidumbre
@@ -68,6 +93,11 @@
     <Consulta id="info6_propietario_anterior_juridico">
         <sql>
         select * from info6_propietario_anterior_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info6_avaluos">
+        <sql>
+        select * from info6_avaluos where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info6_avaluos_servidumbre">
@@ -80,6 +110,11 @@
         select * from info7_propietario_catastral where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info7_control_calidad_juridico">
+        <sql>
+        select * from info7_control_calidad_juridico where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info7_orden_de_pago">
         <sql>
         select * from servidumbres.info7_orden_de_pago where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
@@ -88,6 +123,11 @@
     <Consulta id="info8_propietario_juridico">
         <sql>
         select * from info8_propietario_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info8_control_calidad_catastral">
+        <sql>
+        select * from info8_control_calidad_catastral where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info8_soportes_pago">
@@ -105,6 +145,11 @@
         select * from servidumbres.info9_juridico_servidumbre where id_servidumbre=$id_servidumbre
         </sql>
     </Consulta>
+    <Consulta id="info10_sig">
+        <sql>
+        select * from info10_sig where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info10_infraestructura">
         <sql>
         select * from info10_infraestructura where id_expediente=$id_expediente
@@ -120,6 +165,11 @@
         select * from info11_estudios_detallados where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info11_adquisicion_escritura">
+        <sql>
+        select * from info11_adquisicion_escritura where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info11_propietario_catastral">
         <sql>
         select * from servidumbres.info11_propietario_catastral where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
@@ -128,6 +178,11 @@
     <Consulta id="info12_control_calidad_tecnico">
         <sql>
         select * from info12_control_calidad_tecnico where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info12_pago">
+        <sql>
+        select * from info12_pago where id_expediente=$id_expediente and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info12_propietario_juridico_actual">
@@ -140,6 +195,11 @@
         select * from info13_control_calidad_juridico where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info13_saneamiento_catastral">
+        <sql>
+        select * from info13_saneamiento_catastral where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info13_propietario_constitucion_servidumbre_juridico">
         <sql>
         select * from servidumbres.info13_propietario_constitucion_servidumbre_juridico where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo
@@ -150,6 +210,11 @@
         select * from info14_saneamiento_basico where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info14_saneamiento_juridico">
+        <sql>
+        select * from info14_saneamiento_juridico where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="info14_infraestructura_servidumbre">
         <sql>
         select * from servidumbres.info14_infraestructura_servidumbre where id_servidumbre=$id_servidumbre
@@ -158,6 +223,11 @@
     <Consulta id="info15_saneamiento_juridico">
         <sql>
         select * from info15_saneamiento_juridico where id_expediente=$id_expediente 
+        </sql>
+    </Consulta>
+    <Consulta id="info15_areas">
+        <sql>
+        select * from info15_areas where id_expediente=$id_expediente 
         </sql>
     </Consulta>
     <Consulta id="info15_saneamiento_basico_servidumbre">
@@ -325,26 +395,18 @@
 
     <Consulta id="get_proyectos">
         <sql>
-        select ig.id_expediente,id_proyecto,nom_proy,chip_cat,dir_act,bar_ver from info1_general_proyecto ig left join info2_general_predio ip
-        on ig.id_expediente=ip.id_expediente
+        select ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
+        iic.direccion_actual_igac 
+		from info1_fuente ig left join info2_adquisicion ip
+		on ig.id_expediente=ip.id_expediente
+		left join info4_informacion_catastral iic
+        on ig.id_expediente=iic.id_expediente
+        left join dominios dep on iic.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
+        left join dominios mun on iic.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
         where 
         upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
         or 
-        upper(id_proyecto) like  upper('%' || $filtro || '%') 
-        or 
-        upper(nom_proy) like upper('%' || $filtro || '%') 
-        or 
-        upper(chip_cat) like upper('%' || $filtro || '%') 
-        or 
-        upper(num_mi) like upper('%' || $filtro || '%')
-        or 
-        upper(ced_cat) like upper('%' || $filtro || '%')
-        or 
-        upper(bar_ver) like upper('%' || $filtro || '%')
-        or 
-        upper(upz_upr) like upper('%' || $filtro || '%')
-        or 
-        upper(dir_act) like upper('%' || $filtro || '%')
+        upper(calculo_matricula) like  upper('%' || $filtro || '%') 
         limit 50
         </sql>
     </Consulta>
@@ -379,6 +441,11 @@
             update info1_general_proyecto set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info1_fuente">
+        <sql>
+            update info1_fuente set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info1_general_proyecto_servidumbre">
         <sql>
             update servidumbres.info1_general_proyecto_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
@@ -387,6 +454,11 @@
     <Consulta id="update_info2_general_predio">
         <sql>
             update info2_general_predio set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info2_adquisicion">
+        <sql>
+            update info2_adquisicion set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info2_general_predio_sirviente">
@@ -399,6 +471,11 @@
             update info3_areas_usos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info3_predios_segregados">
+        <sql>
+            update info3_predios_segregados set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info3_general_predios_derivados">
         <sql>
             update servidumbres.info3_general_predios_derivados set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -407,6 +484,11 @@
     <Consulta id="update_info4_avaluos">
         <sql>
             update info4_avaluos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info4_informacion_catastral">
+        <sql>
+            update info4_informacion_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info4_areas_y_usos_predio_sirviente">
@@ -419,6 +501,11 @@
             update info5_juridicos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info5_informacion_invias">
+        <sql>
+            update info5_informacion_invias set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info5_servidumbre">
         <sql>
             update servidumbres.info5_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
@@ -427,6 +514,11 @@
     <Consulta id="update_info6_propietario_anterior_juridico">
         <sql>
             update info6_propietario_anterior_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info6_avaluos">
+        <sql>
+            update info6_avaluos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info6_avaluos_servidumbre">
@@ -439,6 +531,11 @@
             update info7_propietario_catastral set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info7_control_calidad_juridico">
+        <sql>
+            update info7_control_calidad_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info7_orden_de_pago">
         <sql>
             update servidumbres.info7_orden_de_pago set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -447,6 +544,11 @@
     <Consulta id="update_info8_propietario_juridico">
         <sql>
             update info8_propietario_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info8_control_calidad_catastral">
+        <sql>
+            update info8_control_calidad_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info8_soportes_pago">
@@ -469,6 +571,11 @@
             update info10_infraestructura set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info10_sig">
+        <sql>
+            update info10_sig set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info10_cons_servidumbre">
         <sql>
             update servidumbres.info10_cons_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -480,6 +587,11 @@
             update info11_estudios_detallados set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info11_adquisicion_escritura">
+        <sql>
+            update info11_adquisicion_escritura set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info11_propietario_catastral">
         <sql>
             update servidumbres.info11_propietario_catastral set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -488,6 +600,11 @@
     <Consulta id="update_info12_control_calidad_tecnico">
         <sql>
             update info12_control_calidad_tecnico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info12_pago">
+        <sql>
+            update info12_pago set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info12_propietario_juridico_actual">
@@ -501,6 +618,11 @@
             update info13_control_calidad_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info13_saneamiento_catastral">
+        <sql>
+            update info13_saneamiento_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info13_propietario_constitucion_servidumbre_juridico">
         <sql>
             update servidumbres.info13_propietario_constitucion_servidumbre_juridico set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -511,6 +633,11 @@
             update info14_saneamiento_basico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info14_saneamiento_juridico">
+        <sql>
+            update info14_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
     <Consulta id="update_info14_infraestructura_servidumbre">
         <sql>
             update servidumbres.info14_infraestructura_servidumbre set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
@@ -519,6 +646,11 @@
     <Consulta id="update_info15_saneamiento_juridico">
         <sql>
             update info15_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info15_areas">
+        <sql>
+            update info15_areas set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info15_saneamiento_basico_servidumbre">
@@ -2488,11 +2620,10 @@ group by dominio) as d
 
     <Consulta id="info_header_form">
         <sql>
-
-        select chip_cat,num_mi,cod_predial from info2_general_predio
-        where id_expediente=$id_expediente
-
-
+   select ad.calculo_matricula as num_mi, iic.numero_predial_nacional 
+    from info2_adquisicion ad
+    left join info4_informacion_catastral iic on ad.id_expediente = iic.id_expediente 
+        where ad.id_expediente=$id_expediente;
         </sql>
     </Consulta>
 

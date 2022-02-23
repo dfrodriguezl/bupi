@@ -49,7 +49,7 @@ const Busqueda = () => {
     <div id="seccion">
 
       <div id="titulo_seccion">Busqueda</div>
-      <p id="descripcion_seccion">Sección para la busqueda de predios, puede hacer busquedas con id_expediente, identificador de proyecto, nombre de proyecto, chip catastral, número de matricula inmobiliaria, código catastral, barrio/vereda, UPZ ó dirección. (Se muestran máximo 50 resultados)</p>
+      <p id="descripcion_seccion">Sección para la busqueda de predios, puede hacer busquedas con id_expediente o matricula. (Se muestran máximo 50 resultados)</p>
       <div className="search">
         <input type="text" className="searchTerm" onChange={onChangeHandler} value={filtro} />
         <button type="submit" className="searchButton primmary" onClick={() => ver_expediente()}>
@@ -61,11 +61,9 @@ const Busqueda = () => {
           <div className="item" key={key} >
             <div>
               <p className="item_titulo"> {el.id_expediente}</p>
-              <p className="item_des">Proyecto: {el.id_proyecto}</p>
-              <p className="item_des">Nombre: {el.nom_proy}</p>
-              <p className="item_des">CHIP: {el.chip_cat}</p>
-              <p className="item_des">Dirección: {el.dir_act}</p>
-              <p className="item_des">Barrio/Vereda: {el.bar_ver}</p>
+              <p className="item_des">Departamento: {el.departamento}</p>
+              <p className="item_des">Municipio: {el.municipio}</p>
+              <p className="item_des">Dirección: {el.direccion_actual_igac}</p>
               <button >
                 <Link to={"/predio/" + el.id_expediente}>
                   <p>Ver expediente</p>
