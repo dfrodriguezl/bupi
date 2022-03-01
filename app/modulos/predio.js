@@ -246,9 +246,29 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                             servidorPost('/backend', data).then((response) => {
                                 getBloqueo(id).then((r) => {
-                                    if (r.data[0].bloqueo_predio) {
-                                        setLectura(true)
-                                    } else {
+                                    if(r.data.length > 0){
+                                        if (r.data[0].bloqueo_predio) {
+                                            setLectura(true)
+                                        } else {
+                                            if (index === 37 && responseUp.some(r => r == 14)) {
+                                                setLectura(false)
+                                            } else {
+                                                if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                                    setLectura(false)
+                                                } else {
+                                                    if (!response.data[0].exists) {
+                                                        let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                                                        servidorPost('/backend', data2).then((responseSan) => {
+                                                            setLectura(!responseSan.data[0].exists)
+                                                        })
+                                                    } else {
+                                                        setLectura(!response.data[0].exists)
+                                                    }
+    
+                                                }
+                                            }
+                                        }
+                                    }else{
                                         if (index === 37 && responseUp.some(r => r == 14)) {
                                             setLectura(false)
                                         } else {
@@ -267,6 +287,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             }
                                         }
                                     }
+                                    
                                 })
 
                                 // console.log("lectura")

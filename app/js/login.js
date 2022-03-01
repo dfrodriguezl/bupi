@@ -43,13 +43,13 @@ const Login = () => {
       {/* {ok ? <Redirect to="/" /> : ''} */}
       <div id="contenido">
         <div className="crop">
-          <img src="bienes-raices/img/login-header.png" alt="" />
+          <img src="https://www.invias.gov.co/images/Photos/0011111ComunicadoCP.jpg" alt="" />
         </div>
-        <h2>Módulo de Bienes Raíces</h2>
-        <div className="azul">
-          <img height="70px" width="256px" src="https://www.acueducto.com.co/wps/wcm/connect/EAB2/ea5fe4fc-5743-4624-b4f3-692ce17d5b15/logo-acueducto2.png?MOD=AJPERES&CACHEID=ROOTWORKSPACE.Z18_K862HG82NOTF70QEKDBLFL3000-ea5fe4fc-5743-4624-b4f3-692ce17d5b15-mZDJFQZ" alt="" />
-        </div>
-        <p>Bienvenido al módulo de bienes raíces</p>
+        <h2>BUPI</h2>
+        {/* <div className="azul">
+          <img height="70px" width="256px" src="https://www.invias.gov.co/images/0logo.png" alt="" style={{paddingTop: 10}}/>
+        </div> */}
+        <p>Bienvenido a BUPI</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <p>Nombre de usuario</p>
           <input type="text" name="usuario_usuario" ref={register({ required: true, maxLength: 80 })} />

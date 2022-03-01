@@ -20,7 +20,7 @@ const DetallePredio = () => {
   const [tipologia, setTopologia] = useState({});
   const [estadoTecnico, setEstadoTecnico] = useState({});
   const [observacionSIG, setObservacionSIG] = useState({});
-  const [estadoPrestamo, setEstadoPrestamo] = useState();
+  // const [estadoPrestamo, setEstadoPrestamo] = useState();
 
 
 
@@ -44,12 +44,12 @@ const DetallePredio = () => {
       setObservacionSIG(response.data[0])
     });
 
-    var prestamo = { "id_consulta": "get_estado_prestamo", "id_expediente": id }
+    // var prestamo = { "id_consulta": "get_estado_prestamo", "id_expediente": id }
 
-    servidorPost('/backend', prestamo).then((response) => {
-      const count = response.data[0].count;
-      setEstadoPrestamo(count === "0" ? "DISPONIBLE" : "EN PRÉSTAMO")
-    });
+    // servidorPost('/backend', prestamo).then((response) => {
+    //   const count = response.data[0].count;
+    //   setEstadoPrestamo(count === "0" ? "DISPONIBLE" : "EN PRÉSTAMO")
+    // });
 
   }, [])
 
@@ -76,12 +76,12 @@ const DetallePredio = () => {
         <Fragment>
           <p id="title-estados">Estado depuración Técnica: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
           <p id="title-estados">Estado depuración Jurídica: {estadoTecnico ? estadoTecnico.dep_jur : null}</p>
-          <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p>
+          {/* <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p> */}
         </Fragment>
 
       </div>
 
-      <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
+      {/* <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
         <DescargaShape id_expediente={expediente} />
       </div>
       <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
@@ -89,7 +89,7 @@ const DetallePredio = () => {
       </div>
       <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
         <DescargaReportePredio id_expediente={expediente} />
-      </div>
+      </div> */}
 
 
     </div>

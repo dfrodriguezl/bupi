@@ -48,7 +48,7 @@ const Flujo = () => {
   };
 
   const elements = [
-    { id: '1', type: 'input', data: { label: 'Inicio' }, position: { x: 0, y: 200 }, draggable: false, connectable: false, selectable: false },
+    { id: '1', type: 'input', data: { label: 'Inicio' }, position: { x: 0, y: 100 }, draggable: false, connectable: false, selectable: false },
     // you can also pass a React Node as a label
 
     { id: '2', type: 'oneTwo', data: { label: 'Técnico' }, position: { x: 300, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
@@ -59,8 +59,8 @@ const Flujo = () => {
     // { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
     { id: '7', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1500, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
     { id: '8', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1500, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
-    { id: '9', data: { label: 'Social' }, position: { x: 300, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
-    { id: '10', type: 'output', data: { label: 'Fin social' }, position: { x: 1500, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+    // { id: '9', data: { label: 'Social' }, position: { x: 300, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
+    // { id: '10', type: 'output', data: { label: 'Fin social' }, position: { x: 1500, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
 
 
     { id: '1-2', source: '1', target: '2', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
@@ -75,8 +75,8 @@ const Flujo = () => {
     { id: '5-6', source: '5', target: '6', type: 'step', label: 'Aprobado', sourceHandle: 'regresa4', targetHandle: 'envia2', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
     { id: '6-7', source: '6', target: '7', type: 'step', label: 'Aprobado SIG', sourceHandle: 'output', arrowHeadType: 'arrowclosed', targetPosition: 'left' },
     { id: '8-5', source: '6', target: '5', type: 'step', label: 'Regresa tarea', sourceHandle: 'regresa2', targetHandle: 'envia4', arrowHeadType: 'arrowclosed' },
-    { id: '1-9', source: '1', target: '9', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
-    { id: '9-10', source: '9', target: '10', type: 'step', label: 'Aprobado social', arrowHeadType: 'arrowclosed' },
+    // { id: '1-9', source: '1', target: '9', type: 'step', label: 'Asigna predio', arrowHeadType: 'arrowclosed' },
+    // { id: '9-10', source: '9', target: '10', type: 'step', label: 'Aprobado social', arrowHeadType: 'arrowclosed' },
 
 
   ];

@@ -177,7 +177,7 @@ const Estructura = ({ children }) => {
         <div id="toggle" onClick={click}><MenuIcon /></div>
 
         <p id="titulo_sistema">
-          Modulo de depuración predial
+          BUPI
         </p>
 
         <Notifi />

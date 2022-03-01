@@ -1084,14 +1084,14 @@ group by dominio) as d
         <sql>
         SELECT CASE WHEN EXISTS (
             SELECT aprobado
-            from info13_control_calidad_juridico 
+            from info7_control_calidad_juridico 
             where id_expediente=$id_expediente
         )
         THEN
             (select CASE WHEN aprobado=1 THEN true
                     ELSE false
             END
-        from info13_control_calidad_juridico 
+        from info7_control_calidad_juridico 
         where id_expediente=$id_expediente)
         ELSE
             false
@@ -1142,14 +1142,14 @@ group by dominio) as d
         <sql>
         SELECT CASE WHEN EXISTS (
             SELECT aprobado
-            from info12_control_calidad_tecnico 
+            from info8_control_calidad_catastral 
             where id_expediente=$id_expediente
         )
         THEN
             (select CASE WHEN aprobado=1 THEN true
                     ELSE false
             END
-        from info12_control_calidad_tecnico 
+        from info8_control_calidad_catastral 
         where id_expediente=$id_expediente)
         ELSE
             false

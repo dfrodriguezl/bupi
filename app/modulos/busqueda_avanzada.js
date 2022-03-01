@@ -5,8 +5,8 @@ import AddIcon from '@material-ui/icons/Add';
 import FiltroBusqueda from "./filtro_busqueda.js";
 import MUIDataTable from "mui-datatables";
 
-const columns = ["Expediente", "Cód. DUP", "Nom. proyecto", "Chip catastral", "Matrícula inmobiliaria", "Céd. catastral", "Cód. predial", "Municipio", "Barrio/vereda", "UPZ/UPR",
-  "Localidad", "Zona EAAB", "Dirección", "Activo fijo", "Número escritura/sentencia", "Fecha escritura/sentencia", "Notaría", "Círculo",];
+const columns = ["Expediente", "Departamento", "Municipio", "Matrícula inmobiliaria", "Tradente", "Territorial", "Titular", "Serial título", "Número predial nal",
+  "Cód. predial ant.", "Modo trans.", "Vía", "Tramo", "Administrador"];
 
 const options = {
   selectableRows: "none",
