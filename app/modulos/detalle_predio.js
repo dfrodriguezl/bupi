@@ -17,20 +17,20 @@ const DetallePredio = () => {
   let { id } = useParams();
 
   const [expediente, setExpediente] = useState(id);
-  const [tipologia, setTopologia] = useState({});
+  // const [tipologia, setTopologia] = useState({});
   const [estadoTecnico, setEstadoTecnico] = useState({});
-  const [observacionSIG, setObservacionSIG] = useState({});
+  // const [observacionSIG, setObservacionSIG] = useState({});
   // const [estadoPrestamo, setEstadoPrestamo] = useState();
 
 
 
   useEffect(() => {
 
-    var datosTipologia = { "id_consulta": "get_tipologia", "id_expediente": id }
+    // var datosTipologia = { "id_consulta": "get_tipologia", "id_expediente": id }
 
-    servidorPost('/backend', datosTipologia).then((response) => {
-      setTopologia(response.data[0])
-    });
+    // servidorPost('/backend', datosTipologia).then((response) => {
+    //   setTopologia(response.data[0])
+    // });
 
     var datosTecnico = { "id_consulta": "get_estados_depuracion", "id_expediente": id }
 
@@ -38,11 +38,11 @@ const DetallePredio = () => {
       setEstadoTecnico(response.data[0])
     });
 
-    var observacion = { "id_consulta": "get_observacion", "id_expediente": id }
+    // var observacion = { "id_consulta": "get_observacion", "id_expediente": id }
 
-    servidorPost('/backend', observacion).then((response) => {
-      setObservacionSIG(response.data[0])
-    });
+    // servidorPost('/backend', observacion).then((response) => {
+    //   setObservacionSIG(response.data[0])
+    // });
 
     // var prestamo = { "id_consulta": "get_estado_prestamo", "id_expediente": id }
 
@@ -59,19 +59,19 @@ const DetallePredio = () => {
     <div id="seccion">
 
       <div id="titulo_seccion" style={{ display: 'inline-block' }}>{expediente}
-        {tipologia ?
+        {/* {tipologia ?
           tipologia.descripcion ?
             <Fragment>
               <br />Tipología impuesto 2021: {tipologia.descripcion}
             </Fragment> : null : null
-        }
+        } */}
 
-        {observacionSIG ?
+        {/* {observacionSIG ?
           observacionSIG.descripcion ?
             <Fragment>
               <br />Observación SIG: {observacionSIG.descripcion}
             </Fragment> : null : null
-        }
+        } */}
 
         <Fragment>
           <p id="title-estados">Estado depuración Técnica: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>

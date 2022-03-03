@@ -48,16 +48,16 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([2, 3, 4, 7, 9, 10, 11, 14, 18].includes(index)) {
+    else if ([2, 3, 4, 9, 10, 11, 14, 18].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
-    } else if ([5, 6, 8, 15, 16, 20, 21, 22].includes(index)) {
+    } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
-    } else if ([12].includes(index)) {
-        tipo_permiso = [4];//editar formulario juridico    
-    } else if ([13].includes(index)) {
-        tipo_permiso = [5];//editar formulario juridico    
+    } else if ([7].includes(index)) {
+        tipo_permiso = [5];//revisar formulario juridico    
+    } else if ([8].includes(index)) {
+        tipo_permiso = [4];//revisar formulario tecnico    
     } else if ([24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(index)) {
         tipo_permiso = [11];//editar formulario social 
     } else if ([36].includes(index)) {
@@ -246,7 +246,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                             servidorPost('/backend', data).then((response) => {
                                 getBloqueo(id).then((r) => {
-                                    if(r.data.length > 0){
+                                    if (r.data.length > 0) {
                                         if (r.data[0].bloqueo_predio) {
                                             setLectura(true)
                                         } else {
@@ -264,11 +264,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     } else {
                                                         setLectura(!response.data[0].exists)
                                                     }
-    
+
                                                 }
                                             }
                                         }
-                                    }else{
+                                    } else {
                                         if (index === 37 && responseUp.some(r => r == 14)) {
                                             setLectura(false)
                                         } else {
@@ -287,7 +287,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             }
                                         }
                                     }
-                                    
+
                                 })
 
                                 // console.log("lectura")
@@ -1499,10 +1499,10 @@ const Predio = () => {
                 </TabPanel> */}
 
                 {/* <TabPanel> */}
-                    {/* <button onClick={() => getForm(16, "info16_tributaria", "Información tributaria")} className={active == 16 ? 'active' : ''}>
+                {/* <button onClick={() => getForm(16, "info16_tributaria", "Información tributaria")} className={active == 16 ? 'active' : ''}>
                         tributaria
                     </button> */}
-                    {/* <button onClick={() => getForm(38, "info38_financiero", "Información financiera")} className={active == 38 ? 'active' : ''}>
+                {/* <button onClick={() => getForm(38, "info38_financiero", "Información financiera")} className={active == 38 ? 'active' : ''}>
                         Financiero
                     </button> */}
 
@@ -1553,13 +1553,13 @@ const Predio = () => {
                     <CargueDocumentos />
                 </TabPanel> */}
                 {/* <TabPanel> */}
-                    {/* <h3>Formularios saneamientos</h3>
+                {/* <h3>Formularios saneamientos</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p> */}
-                    {/* {index === 39 ?
+                {/* {index === 39 ?
                         <FlujoSan /> :
                         null
                     } */}
-                    {/* <div className="grupo-formularios">
+                {/* <div className="grupo-formularios">
                         <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
                             Estado saneamiento básico
                         </button>
