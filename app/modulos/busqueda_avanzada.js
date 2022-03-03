@@ -122,18 +122,8 @@ const BusquedaAvanzada = () => {
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
         let row = [<a href={"/bienes-raices/web/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
-        v.cod_dup && v.id_doc_dup ?
-          <a href={url + '/descargar/' + v.id_doc_dup} target="_blank">{v.cod_dup}</a>
-          : v.cod_dup && !v.id_doc_dup ?
-            v.cod_dup : "",
-        v.nom_proy, v.chip_cat, v.num_mi, v.ced_cat, v.cod_predial, v.mpio, v.bar_ver, v.upz_upr, v.localidad, v.zona, v.dir_act,
-        v.num_activo,
-        v.doc_num && v.id_doc ?
-          <a href={url + '/descargar/' + v.id_doc} target="_blank">{v.doc_num}</a>
-          : v.doc_num && !v.id_doc ?
-            v.doc_num : "",
-        v.doc_fecha,
-        v.doc_notaria, v.doc_circulo];
+        v.departamento, v.municipio, v.matricula_inmobiliaria, v.tradente, v.territorial, v.titular, v.serial_titulo, v.numero_predial_nacional,
+        v.codigo_predial_anterior, v.modo_transporte, v.codigo_via, v.tramo, v.administrador];
         return row;
       }, []);
       setDataTable(vals);

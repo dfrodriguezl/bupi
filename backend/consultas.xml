@@ -37,7 +37,7 @@
     </Consulta>
     <Consulta id="info2_adquisicion">
         <sql>
-        select * from info2_adquisicion where id_expediente=$id_expediente
+        select * from info2_adquisicion_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info2_general_predio_sirviente">
