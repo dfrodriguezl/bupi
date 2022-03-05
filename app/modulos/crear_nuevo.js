@@ -151,7 +151,7 @@ const CrearPredio = () => {
   const insertCalidadJuridica = () => {
     const datosCalJur = {
       id_expediente: expediente,
-      id_consulta: "insert_info5_juridicos"
+      id_consulta: "insert_expediente_4"
     }
     servidorPost('/backend', datosCalJur).then((responseTareas) => {
       
