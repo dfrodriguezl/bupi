@@ -113,12 +113,12 @@ const Estructura = ({ children }) => {
           }
 
 
-          <div className="elemento">
+          {/* <div className="elemento">
             <Link to="/documentos">
               <InsertDriveFile />
               <p>Documentos</p>
             </Link>
-          </div>
+          </div> */}
           <div className="elemento">
             <Link to="/visor">
               <Public />

@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Aprobacion from '../modulos/aprobacion'
 import ActualizacionMasiva from '../modulos/actualizacion_masiva'
 import CrearPredio from '../modulos/crear_nuevo';
+import CrearPredioMasivo from '../modulos/crear_nuevo_masivo';
 
 
 const Actualizacion = () => {
@@ -23,6 +24,7 @@ const Actualizacion = () => {
                         <Tab>Actualización</Tab>
                         <Tab>Cambio de estados</Tab>
                         <Tab>Crear nuevo predio</Tab>
+                        <Tab>Creación masiva de predios</Tab>
                     </TabList>
                     <TabPanel>
                         <ActualizacionMasiva />
@@ -32,6 +34,9 @@ const Actualizacion = () => {
                     </TabPanel>
                     <TabPanel>
                         <CrearPredio />
+                    </TabPanel>
+                    <TabPanel>
+                        <CrearPredioMasivo />
                     </TabPanel>
                 </Tabs>
             </div>      

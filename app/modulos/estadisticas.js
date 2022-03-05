@@ -34,7 +34,8 @@ const Estadistica = (props) => {
 
     <div>
       <p className={`titulo ${props.clase}`}>{props.titulo}</p>
-      <p className={`valor ${props.clase}`}> {info.estadistica}</p>
+      <p className={`valor ${props.clase}`}> 0 </p>
+      {/* <p className={`valor ${props.clase}`}> {info.estadistica}</p> */}
     </div>
 
 
