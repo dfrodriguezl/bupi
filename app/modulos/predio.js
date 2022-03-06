@@ -692,7 +692,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-
+                                                {console.log("DOC", i.doc)}
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
@@ -1042,7 +1042,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
         // if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
-        if ([3, 6, 12].includes(index)) {
+        if ([3, 6, 12, 39, 40].includes(index)) {
             setMultiple(true)
 
 
@@ -1328,6 +1328,7 @@ const Predio = () => {
             <Tabs onSelect={() => setIndex(0)}>
                 <TabList>
                     <Tab>Técnico</Tab>
+                    <Tab>Saneamientos</Tab>
                     {/* <Tab>Jurídico</Tab>
                     <Tab>Financiera</Tab>
                     <Tab>Social</Tab>
@@ -1552,15 +1553,15 @@ const Predio = () => {
                 {/* <TabPanel>
                     <CargueDocumentos />
                 </TabPanel> */}
-                {/* <TabPanel> */}
-                {/* <h3>Formularios saneamientos</h3>
-                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p> */}
-                {/* {index === 39 ?
+                <TabPanel>
+                    <h3>Formularios saneamientos</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    {index === 39 ?
                         <FlujoSan /> :
                         null
-                    } */}
-                {/* <div className="grupo-formularios">
-                        <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
+                    }
+                    <div className="grupo-formularios">
+                        {/* <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
                             Estado saneamiento básico
                         </button>
                         <button onClick={() => getForm(35, "info35_estado_saneamiento_juridico", "Estado saneamiento jurídico")} className={active == 35 ? 'active' : ''}>
@@ -1568,15 +1569,15 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(41, "info41_observaciones_predio", "Observaciones predios")} className={active == 41 ? 'active' : ''}>
                             Observaciones predio
-                        </button>
+                        </button> */}
                         <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento técnico")} className={active == 39 ? 'active' : ''}>
                             Gestión saneamiento técnico
                         </button>
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
                         </button>
-                    </div> */}
-                {/* </TabPanel> */}
+                    </div>
+                </TabPanel>
                 {/* <TabPanel>
                     <h3>Formularios documental</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>

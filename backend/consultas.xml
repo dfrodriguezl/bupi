@@ -945,8 +945,8 @@ group by dominio) as d
 					when b.id_expediente is not null then 'GESTIONADO'
 					else 'NO GESTIONADO'
 				end as gestion_san
-				from (select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
-					from info14_saneamiento_basico isb 
+				from (select id_expediente, UNNEST(saneamientos_catastrales) as accion_saneamiento
+					from info13_saneamiento_catastral isb 
 					where id_expediente = $id_expediente) as a
 					left join 
 				(select id_expediente, accion_saneamiento 
@@ -962,8 +962,8 @@ group by dominio) as d
 					when b.id_expediente is not null then 'GESTIONADO'
 					else 'NO GESTIONADO'
 				end as gestion_san
-				from (select id_expediente, UNNEST(accion_saneamiento) as accion_saneamiento
-					from info15_saneamiento_juridico
+				from (select id_expediente, UNNEST(saneamientos) as accion_saneamiento
+					from info14_saneamiento_juridico
 					where id_expediente = $id_expediente) as a
 					left join 
 				(select id_expediente, accion_saneamiento 
