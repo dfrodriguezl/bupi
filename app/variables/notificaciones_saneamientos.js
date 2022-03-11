@@ -177,7 +177,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
 
   else if (ruta === 4) {//el sup. juridico se desprende de su tarea
 
-    data.id_consulta = "aprobado_juridico_saneamiento";
+    data.id_consulta = "aprobado_juridico_saneamiento_final";
     data.consecutivo = consecutivo;
 
     (async () => {
@@ -202,13 +202,13 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
       } else {
 
         //ESTUDIO APROBADO, NO PASA NADA
-        data.id_consulta = "insertar_notificacion_saneamiento"
-        data.tarea_next = 3;
-        data.ruta_destino = 9;
-        data.consecutivo = consecutivo;
-        data.tabla = tipo;
+        // data.id_consulta = "insertar_notificacion_saneamiento"
+        // data.tarea_next = 3;
+        // data.ruta_destino = 9;
+        // data.consecutivo = consecutivo;
+        // data.tabla = tipo;
 
-        await back(data)
+        // await back(data)
 
       }
 
@@ -225,7 +225,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
     // } else {
     //   data.id_consulta = "aprobado_tecnico";
     // }
-    data.id_consulta = "aprobado_tecnico_saneamiento";
+    data.id_consulta = "aprobado_tecnico_saneamiento_final";
     data.consecutivo = consecutivo;
 
     (async () => {
@@ -260,13 +260,13 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
 
         //alert("se acabo todo el flujo de momento...");
 
-        data.id_consulta = "insertar_notificacion_saneamiento"
-        data.tarea_next = 2;
-        data.ruta_destino = 8;
-        data.consecutivo = consecutivo;
-        data.tabla = tipo;
+        // data.id_consulta = "insertar_notificacion_saneamiento"
+        // data.tarea_next = 2;
+        // data.ruta_destino = 8;
+        // data.consecutivo = consecutivo;
+        // data.tabla = tipo;
 
-        await back(data)
+        // await back(data)
 
       }
 

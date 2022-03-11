@@ -3054,4 +3054,11 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_reporte_san">
+        <sql>
+            select *
+            from reporte_saneamientos
+        </sql>
+    </Consulta>
+
 </Consultas>
