@@ -392,6 +392,16 @@
         select * from info41_observaciones_predio_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
+    <Consulta id="info41_adquisicion_matrices">
+        <sql>
+        select * from info41_adquisicion_matrices_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="info42_adquisicion_tradentes">
+        <sql>
+        select * from info42_adquisicion_tradentes where id_expediente=$id_expediente and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -811,6 +821,16 @@
     <Consulta id="update_info41_observaciones_predio">
         <sql>
             update info41_observaciones_predio set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info41_adquisicion_matrices">
+        <sql>
+            update info41_adquisicion_matrices set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info42_adquisicion_tradentes">
+        <sql>
+            update info42_adquisicion_tradentes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
 

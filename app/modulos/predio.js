@@ -1042,7 +1042,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
         // if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
-        if ([3, 6, 12, 39, 40].includes(index)) {
+        if ([3, 6, 12, 39, 40, 41, 42].includes(index)) {
             setMultiple(true)
 
 
@@ -1349,6 +1349,12 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
                             Adquisición
+                        </button>
+                        <button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
+                            Adquisición-tradentes
+                        </button>
+                        <button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
+                            Adquisición-matrices
                         </button>
                         <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
                             Predios segregados
