@@ -4,6 +4,7 @@ import Popup from 'reactjs-popup'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select';
+import { Link, useHistory } from 'react-router-dom';
 
 const asignaciones = {
   tecnico: 2,
@@ -36,6 +37,7 @@ const CrearPredio = () => {
   const [supJur, setSupJur] = useState();
   const [usuarioSIG, setUsuarioSIG] = useState("jbartolo");
   const [usuarioDoc, setUsuarioDoc] = useState("orojas");
+  const history = useHistory();
 
   useEffect(() => {
     getUltimoExpediente();
@@ -126,7 +128,7 @@ const CrearPredio = () => {
 
       servidorPost('/backend', datosAsignacion).then((responseAsignacion) => {
         if (responseAsignacion.data) {
-          insertarTareas(); 
+          insertarTareas();
         }
       });
     })
@@ -142,7 +144,7 @@ const CrearPredio = () => {
         id_consulta: "insertar_notificacion"
       }
       servidorPost('/backend', datosTarea).then((responseTareas) => {
-        
+
       });
     })
   }
@@ -154,7 +156,7 @@ const CrearPredio = () => {
       id_consulta: "insert_expediente_4"
     }
     servidorPost('/backend', datosCalJur).then((responseTareas) => {
-      
+      history.push("predio/" + expediente);
     });
   }
 
