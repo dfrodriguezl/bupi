@@ -91,7 +91,7 @@ const DatePicker = ({ selected, onChange }) => {
                 onChange(fecha);
             }}
             dateFormat="yyyy-MM-dd"
-
+            maxDate={new Date()}
         />
     )
 };
@@ -692,7 +692,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                                {console.log("DOC", i.doc)}
+                                                {/* {console.log("DOC", i.doc)} */}
                                                 {i.doc.field_father ?
                                                     <Controller
                                                         as={ReactSelect}
