@@ -37,6 +37,8 @@ import Popup from 'reactjs-popup';
 
 import CargueDocumentos from './cargue_expedientes'
 import { notificacion } from '../variables/notificaciones';
+import ListaComunicados from './lista_comunicados';
+import EditarComunicado from './editar_comunicado';
 
 
 const gestionPermisos = (index) => {
@@ -850,6 +852,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             </div>
 
                         )}
+
+                        {index === 40 ?
+                            <Fragment>
+                                {/* <EditarComunicado open={<button className='primmary'>Nuevo comunicado</button>} id_exp={id} index={index} consecutivo={consecutivo} /> */}
+                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} />
+                            </Fragment>
+                            : null}
 
 
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
