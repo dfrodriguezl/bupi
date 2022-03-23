@@ -3100,4 +3100,37 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_comunicado">
+        <sql>
+            select *
+            from comunicados
+            where id_expediente = $id_expediente
+            and consecutivo_saneamiento = $consecutivo
+            and consecutivo_comunicado = $consecutivo_com
+            and tabla = $tabla
+        </sql>
+    </Consulta>
+
+    <Consulta id="delete_comunicado">
+        <sql>
+            delete from comunicados
+            where id_expediente = $id_expediente
+            and consecutivo_saneamiento = $consecutivo_saneamiento
+            and consecutivo_comunicado = $consecutivo_comunicado
+            and tabla = $tabla
+        </sql>
+    </Consulta>
+
+    <Consulta id="editar_comunicado">
+        <sql>
+            update comunicados
+            set fecha_comunicado = $fecha_comunicado, radicado_invias_comunicado = $radicado_invias_comunicado, 
+            objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado
+            where id_expediente = $id_expediente
+            and consecutivo_saneamiento = $consecutivo_saneamiento
+            and consecutivo_comunicado = $consecutivo_comunicado
+            and tabla = $tabla
+        </sql>
+    </Consulta>
+
 </Consultas>
