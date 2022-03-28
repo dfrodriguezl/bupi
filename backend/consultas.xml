@@ -411,12 +411,19 @@
 		on ig.id_expediente=ip.id_expediente
 		left join info4_informacion_catastral iic
         on ig.id_expediente=iic.id_expediente
+        left join info42_adquisicion_tradentes iat on ig.id_expediente = iat.id_expediente 
         left join dominios dep on iic.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
         left join dominios mun on iic.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
         where 
         upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
         or 
         upper(calculo_matricula) like  upper('%' || $filtro || '%') 
+        or 
+        upper(iat.tradente) like  upper('%' || $filtro || '%') 
+        or 
+        upper(ip.serial_titulo) like  upper('%' || $filtro || '%') 
+         or 
+        ip.fecha_titulo::text like  ('%' || $filtro || '%')
         limit 50
         </sql>
     </Consulta>
