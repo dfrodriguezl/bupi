@@ -3133,4 +3133,22 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="get_estado_san_tecnicos">
+        <sql>
+        select *
+        from estado_saneamientos_tecnicos
+        where id_expediente = $id_expediente
+        and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_estado_san_juridicos">
+        <sql>
+        select *
+        from estado_saneamientos_juridicos
+        where id_expediente = $id_expediente
+        and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+
 </Consultas>

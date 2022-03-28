@@ -39,6 +39,7 @@ import CargueDocumentos from './cargue_expedientes'
 import { notificacion } from '../variables/notificaciones';
 import ListaComunicados from './lista_comunicados';
 import EditarComunicado from './editar_comunicado';
+import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 
 
 const gestionPermisos = (index) => {
@@ -50,7 +51,7 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([2, 3, 4, 9, 10, 11, 14, 18].includes(index)) {
+    else if ([2, 3, 4, 9, 10, 11, 14, 18, 12].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
     } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
@@ -676,8 +677,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         {/* {console.log("renderizando...")} */}
                         <Fragment>
                             {index === 39 || index === 40 ?
-                                <FlujoSan tipo={index} consecutivo={consecutivo} /> :
-                                null}
+                                <Fragment>
+                                    <EncabezadoSaneamiento tipo={index} id_expediente={id} consecutivo={consecutivo} />
+                                    <FlujoSan tipo={index} consecutivo={consecutivo} />
+                                </Fragment>
+                                : null}
                         </Fragment>
 
                         {fields.data.map((i, e) =>
