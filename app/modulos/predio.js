@@ -1372,8 +1372,14 @@ const Predio = () => {
                         <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
                             Predios segregados
                         </button>
+                        <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                            Saneamiento jurídico
+                        </button>
                         <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
                             Información catastral
+                        </button>
+                        <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                            Saneamiento catastral
                         </button>
                         <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
                             Información INVIAS
@@ -1381,29 +1387,26 @@ const Predio = () => {
                         <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
                             Avalúos
                         </button>
-                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Control de calidad jurídico")} className={active == 7 ? 'active' : ''}>
-                            Control de calidad jurídico
-                        </button>
-                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
-                            Control de calidad catastral
-                        </button>
-                        <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
+                        
+                        {/* <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
                             SIG
-                        </button>
+                        </button> */}
                         <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Adquisición - escritura")} className={active == 11 ? 'active' : ''}>
                             Adquisición - escritura
                         </button>
                         <button onClick={() => getForm(12, "info12_pago", "Pago")} className={active == 12 ? 'active' : ''}>
                             Pago
                         </button>
-                        <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
-                            Saneamiento catastral
-                        </button>
-                        <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
-                            Saneamiento jurídico
-                        </button>
+                       
+                        
                         <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
                             Áreas
+                        </button>
+                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Control de calidad jurídico")} className={active == 7 ? 'active' : ''}>
+                            Control de calidad jurídico
+                        </button>
+                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
+                            Control de calidad catastral
                         </button>
 
                         {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
