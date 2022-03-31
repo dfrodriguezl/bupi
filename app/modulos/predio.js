@@ -40,6 +40,7 @@ import { notificacion } from '../variables/notificaciones';
 import ListaComunicados from './lista_comunicados';
 import EditarComunicado from './editar_comunicado';
 import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
+import ExcelAll from './componentes/excell_all';
 
 
 const gestionPermisos = (index) => {
@@ -864,7 +865,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             </Fragment>
                             : null}
 
-
+                        {index === 7 || index === 8 ?
+                            <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all"/>: null}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}

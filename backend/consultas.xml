@@ -1626,6 +1626,182 @@ group by dominio) as d
             ) sub on i1.id_servidumbre = sub.id_expediente;
         </sql>
     </Consulta>
+    <Consulta id="reporte_info3_predios_segregados">
+        <sql>
+            select *
+            from info3_predios_segregados i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info6_avaluos">
+        <sql>
+            select *
+            from info6_avaluos i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info7_control_calidad_juridico">
+        <sql>
+            select *
+            from info7_control_calidad_juridico i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info8_control_calidad_catastral">
+        <sql>
+            select *
+            from info8_control_calidad_catastral i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info42_adquisicion_tradentes">
+        <sql>
+            select *
+            from info42_adquisicion_tradentes i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info41_adquisicion_matrices">
+        <sql>
+            select *
+            from info41_adquisicion_matrices i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info14_saneamiento_juridico">
+        <sql>
+            select *
+            from info14_saneamiento_juridico i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info13_saneamiento_catastral">
+        <sql>
+            select *
+            from info13_saneamiento_catastral i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info11_adquisicion_escritura">
+        <sql>
+            select *
+            from info11_adquisicion_escritura i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info12_pago">
+        <sql>
+            select *
+            from info12_pago i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="reporte_info15_areas">
+        <sql>
+            select *
+            from info15_areas i1
+            join (
+                SELECT *
+                    FROM crosstab(
+                        'select id_expediente,id_tarea,usuario_nombre
+                        from tareas.asignacion t 
+                        left join usuario u
+                        on t.usuario=u.usuario_usuario
+                        order by id_expediente,id_tarea'
+                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_expediente = sub.id_expediente;
+        </sql>
+    </Consulta>
     <Consulta id="reporte_info6_servidumbres">
         <sql>
             select *
