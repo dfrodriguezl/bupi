@@ -197,7 +197,7 @@
     </Consulta>
     <Consulta id="info13_saneamiento_catastral">
         <sql>
-        select * from info13_saneamiento_catastral where id_expediente=$id_expediente
+        select * from info13_saneamiento_catastral_vw where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info13_propietario_constitucion_servidumbre_juridico">
