@@ -1388,7 +1388,7 @@ const Predio = () => {
                 </TabList>
                 <TabPanel>
 
-                    <h3>Formularios técnico</h3>
+                    <h3>Formularios estructuración</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
 
                     <div className="grupo-formularios">
