@@ -199,7 +199,7 @@ const asignar=e=>{
 
       }
 
-      toast.success("Expedientes asignados correctamente");
+      toast.success("Registros asignados correctamente");
       
       setdoc([])
 
@@ -226,7 +226,7 @@ const select=e=>{
   return (
     <div id="seccion">
       <div id="titulo_seccion">Asignar masivamente</div>
-      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el usuario al cual le asignará los expedientes y luego seleccione el archivo csv con la asignación.</p>
+      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el usuario al cual le asignará los registros y luego seleccione el archivo csv con la asignación.</p>
     
 
       {permiso ? <>
@@ -249,16 +249,16 @@ const select=e=>{
     
       </div>  
       <div >
-          <label htmlFor="file1" className="label-input" >Selecionar csv
+          <label htmlFor="file1" className="label-input" >Seleccionar csv
           <input type="file" id="file1"onChange={onChange} className="input" /> 
           </label> 
       </div>
 
-      <button type="button" className="primmary" onClick={asignar}>Asignar expedientes</button>
+      <button type="button" className="primmary" onClick={asignar}>Asignar registros</button>
 
       <ToastContainer/>
    
-    <p>Se asignarán: {Object.keys(doc).length} Expedientes</p>
+    <p>Se asignarán: {Object.keys(doc).length} registros</p>
    
       {doc.map((item,key)=>
           <div className="col-12 mb-1" key={key}>

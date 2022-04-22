@@ -418,7 +418,7 @@ const select=e=>{
   return (
     <div id="seccion">
       <div id="titulo_seccion">Cambio de estados</div>
-      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los expedientes para cambiar el estado según la guia.</p>
+      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los registros para cambiar el estado según la guia.</p>
     
 
       {permiso ? <>
@@ -450,7 +450,7 @@ const select=e=>{
 
       <ToastContainer/>
    
-    <p>Se modificaran: {Object.keys(doc).length} Expedientes</p>
+    <p>Se modificaran: {Object.keys(doc).length} Registros</p>
    
       {doc.map((item,key)=>
           <div className="col-12 mb-1" key={key}>

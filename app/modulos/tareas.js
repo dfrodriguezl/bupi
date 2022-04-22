@@ -88,7 +88,7 @@ const Tarea = ({ refresh_number }) => {
             <div id="listado-header">
                 <h3>Listado de tareas en el sistema</h3>
 
-                <p>Puede filtrar el listado de tareas por id expediente en el siguiente cuadro</p>
+                <p>Puede filtrar el listado de tareas por código BUPI en el siguiente cuadro</p>
 
                 <div>
                     <input onChange={change} className="form-input" placeholder="Filtrar..."></input>
@@ -119,7 +119,7 @@ const Tarea = ({ refresh_number }) => {
                                 Ver servidumbre
                             </Link> :
                             <Link to={"/predio/" + item.id_expediente}>
-                                Ver expediente
+                                Ver registro
                             </Link>
                         }
 

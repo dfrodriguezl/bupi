@@ -63,8 +63,8 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 // const pool = new Pool({
 //   user: 'docker',
-//   host: 'pg_acueducto',//'pg-acueducto',
-//   database: 'acueducto_bienes_raices',
+//   host: 'postgis_bupi',//'pg-acueducto',
+//   database: 'invias_bupi',
 //   password: 'docker',
 //   port: 5432,//5432
 //   timezone: 'utc'

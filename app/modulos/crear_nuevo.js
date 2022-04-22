@@ -166,7 +166,7 @@ const CrearPredio = () => {
       <p id="descripcion_seccion">En la siguiente sección, por favor de click en Crear Predio, confirme y haga la respectiva asignación</p>
       <div>
         <br />
-        <p>Seleccione el profesional técnico asignado al predio</p>
+        <p>Seleccione el estructurador asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -176,11 +176,11 @@ const CrearPredio = () => {
           options={listTecnicos}
           getOptionLabel={(option) => option.usuario_nombre}
           getOptionValue={(option) => option.usuario_usuario}
-          placeholder="Seleccione el profesional técnico..."
+          placeholder="Seleccione el estructurador..."
           onChange={onChangeSelectTecnico}
         />
         <br />
-        <p>Seleccione el profesional jurídico asignado al predio</p>
+        <p>Seleccione el estructurador 2 asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -190,11 +190,11 @@ const CrearPredio = () => {
           options={listJuridicos}
           getOptionLabel={(option) => option.usuario_nombre}
           getOptionValue={(option) => option.usuario_usuario}
-          placeholder="Seleccione el profesional jurídico..."
+          placeholder="Seleccione el estructurador..."
           onChange={onChangeSelectJuridico}
         />
         <br />
-        <p>Seleccione el supervisor técnico asignado al predio</p>
+        <p>Seleccione el control de calidad asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -204,10 +204,10 @@ const CrearPredio = () => {
           options={listSupTec}
           getOptionLabel={(option) => option.usuario_nombre}
           getOptionValue={(option) => option.usuario_usuario}
-          placeholder="Seleccione el supervisor técnico..."
+          placeholder="Seleccione el control de calidad..."
           onChange={onChangeSelectSupTec} />
         <br />
-        <p>Seleccione el supervisor jurídico asignado al predio</p>
+        <p>Seleccione el control de calidad  asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -217,7 +217,7 @@ const CrearPredio = () => {
           options={listSupJur}
           getOptionLabel={(option) => option.usuario_nombre}
           getOptionValue={(option) => option.usuario_usuario}
-          placeholder="Seleccione el supervisor jurídico..."
+          placeholder="Seleccione el control de calidad..."
           onChange={onChangeSelectSupJur}
         />
       </div>
@@ -234,7 +234,7 @@ const CrearPredio = () => {
             </button>
             <div className="header"> Confirmación </div>
             <div className="content">
-              Se encuentra seguro de crear el expediente : {expediente}
+              Se encuentra seguro de crear el registro correspondiente al código BUPI : {expediente}
             </div>
             <div className="actions">
               <button

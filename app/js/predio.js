@@ -18,7 +18,7 @@ const Predio = () => {
             </div>
             <DetallePredio />
             {/* <CustomizedTimeline/> */}
-            <Flujo />
+            {/* <Flujo /> */}
             <Pred />
             <Mapa />
             <Documentos />

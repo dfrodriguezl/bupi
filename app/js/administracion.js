@@ -22,22 +22,22 @@ const Administracion = () => {
                 <Tabs onSelect={()=>setIndex(0)}>
                     <TabList>
                         <Tab>Dominios</Tab>
-                        <Tab>Tipologías documentales</Tab>
+                        {/* <Tab>Tipologías documentales</Tab> */}
                         <Tab>Usuarios</Tab>
-                        <Tab>Dup's</Tab>
+                        {/* <Tab>Dup's</Tab> */}
                     </TabList>
                     <TabPanel>
                         <Dominios/>
                     </TabPanel>
-                    <TabPanel>
+                    {/* <TabPanel>
                         <Tipologias/>
-                    </TabPanel>
+                    </TabPanel> */}
                     <TabPanel>  
                         <Usuarios/>
                     </TabPanel>
-                    <TabPanel>  
+                    {/* <TabPanel>  
                         <Dups/>
-                    </TabPanel>
+                    </TabPanel> */}
                 </Tabs>
             </div>      
         </Estructura>

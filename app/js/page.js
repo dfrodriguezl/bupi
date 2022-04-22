@@ -100,13 +100,13 @@ const Estructura = ({ children }) => {
               <div className="elemento">
                 <Link to="/buscar">
                   <Search />
-                  <p>Buscador de expedientes</p>
+                  <p>Consulta código BUPI - Matrícula</p>
                 </Link>
               </div>
               <div className="elemento">
                 <Link to="/buscarAvanzado">
                   <FilterList />
-                  <p>Búsqueda avanzada</p>
+                  <p>Consulta avanzada</p>
                 </Link>
               </div>
             </Fragment>

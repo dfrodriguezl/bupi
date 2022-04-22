@@ -138,7 +138,7 @@ const CrearPredioMasivo = () => {
         </label>
       </div>
       <button type="button" className="primmary" onClick={() => crearExpedientes()}>Crear predios</button>
-      <p>Se crearan: {Object.keys(exps).length} Expedientes</p>
+      <p>Se crearan: {Object.keys(exps).length} Registros</p>
       <ToastContainer />
     </div>
   )

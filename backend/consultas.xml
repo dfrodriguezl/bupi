@@ -953,7 +953,8 @@
 			'father_domain',father_domain,
             'enum_name',m.enum,
             'caso_especial',m.caso_especial,
-            'rol_edicion', m.rol_edicion
+            'rol_edicion', m.rol_edicion,
+            'required', m.required
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum

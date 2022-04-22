@@ -142,8 +142,8 @@ const BusquedaAvanzada = () => {
 
   return (
     <div id="seccion">
-      <div id="titulo_seccion">Búsqueda avanzada</div>
-      <p id="descripcion_seccion">Sección para la búsqueda avanzada de predios, aquí puede seleccionar uno o más filtros de acuerdo a su necesidad</p>
+      <div id="titulo_seccion">Consulta avanzada</div>
+      <p id="descripcion_seccion">Sección para la consulta avanzada de registros, aquí puede seleccionar uno o más filtros de acuerdo a su necesidad</p>
       <div className="formulario2">
         {console.log("COMPONENTS", components)}
         {components.map((item, i) => (

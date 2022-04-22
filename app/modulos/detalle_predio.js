@@ -58,7 +58,8 @@ const DetallePredio = () => {
 
     <div id="seccion">
 
-      <div id="titulo_seccion" style={{ display: 'inline-block' }}>{expediente}
+      <div id="titulo_seccion" style={{ display: 'inline-block' }}>
+        Código BUPI: {expediente}
         {/* {tipologia ?
           tipologia.descripcion ?
             <Fragment>
@@ -74,8 +75,8 @@ const DetallePredio = () => {
         } */}
 
         <Fragment>
-          <p id="title-estados">Estado depuración Técnica: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
-          <p id="title-estados">Estado depuración Jurídica: {estadoTecnico ? estadoTecnico.dep_jur : null}</p>
+          <p id="title-estados">Estado Estructuración: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
+          {/* <p id="title-estados">Estado depuración Jurídica: {estadoTecnico ? estadoTecnico.dep_jur : null}</p> */}
           {/* <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p> */}
         </Fragment>
 

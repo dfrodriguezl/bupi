@@ -205,90 +205,90 @@ var base = new TileLayer({
       ],
       view: new View({
         center: fromLonLat([-74.02, 4.62]),
-        zoom: 10
+        zoom: 6
       })
     });
 
 
 
 
-    const layer1_source = source(tileUrlFunction1)
-    const layer1 = layer(layer1_source,variables.layer1.stroke,variables.layer1.fill)
-    map.addLayer(layer1);
-    layer1.set('id', variables.layer1.id)
+    // const layer1_source = source(tileUrlFunction1)
+    // const layer1 = layer(layer1_source,variables.layer1.stroke,variables.layer1.fill)
+    // map.addLayer(layer1);
+    // layer1.set('id', variables.layer1.id)
 
-    const layer2_source = source(tileUrlFunction2)
-    const layer2 = layer(layer2_source,variables.layer2.stroke,variables.layer2.fill)
-    map.addLayer(layer2);
-    layer2.set('id', variables.layer2.id)
+    // const layer2_source = source(tileUrlFunction2)
+    // const layer2 = layer(layer2_source,variables.layer2.stroke,variables.layer2.fill)
+    // map.addLayer(layer2);
+    // layer2.set('id', variables.layer2.id)
 
-    const layer3_source = source(tileUrlFunction3)
-    const layer3 = layer(layer3_source,variables.layer3.stroke,variables.layer3.fill)
-    map.addLayer(layer3);
-    layer3.set('id', variables.layer3.id)
+    // const layer3_source = source(tileUrlFunction3)
+    // const layer3 = layer(layer3_source,variables.layer3.stroke,variables.layer3.fill)
+    // map.addLayer(layer3);
+    // layer3.set('id', variables.layer3.id)
 
-    const layer4_source = source(tileUrlFunction4)
-    const layer4 = layer(layer4_source,variables.layer4.stroke,variables.layer4.fill)
-    map.addLayer(layer4);
-    layer4.set('id', variables.layer4.id)
+    // const layer4_source = source(tileUrlFunction4)
+    // const layer4 = layer(layer4_source,variables.layer4.stroke,variables.layer4.fill)
+    // map.addLayer(layer4);
+    // layer4.set('id', variables.layer4.id)
 
 
-    //popup
+    // //popup
 
-    map.on('singleclick', function (evt) {
-      var coordinate = evt.coordinate;
-      console.log("aqui")
-      var mensaje = "";
-      var id = "";
+    // map.on('singleclick', function (evt) {
+    //   var coordinate = evt.coordinate;
+    //   console.log("aqui")
+    //   var mensaje = "";
+    //   var id = "";
     
-     var feature= map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-        id = layer.get('id')
+    //  var feature= map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+    //     id = layer.get('id')
        
-        return feature;
+    //     return feature;
     
-      }, {
-        hitTolerance: 2
-      });
+    //   }, {
+    //     hitTolerance: 2
+    //   });
      
-    /*
-      if (id == "mz_uso_viv") {
-        mensaje = "<p>Cod DANE: " + info[0] + "</p><p>Conteo: " + info[1] + "</p><p>% : " + info[4] + "</p>"
-      } 
-    */
-      if (feature) {
+    // /*
+    //   if (id == "mz_uso_viv") {
+    //     mensaje = "<p>Cod DANE: " + info[0] + "</p><p>Conteo: " + info[1] + "</p><p>% : " + info[4] + "</p>"
+    //   } 
+    // */
+    //   if (feature) {
         
 
-        servidorGet('/props/' + feature.get("layer") + '/' + feature.get("id")).then((response) => {
-          console.log("hi")
-          var datos = response[0];
+    //     servidorGet('/props/' + feature.get("layer") + '/' + feature.get("id")).then((response) => {
+    //       console.log("hi")
+    //       var datos = response[0];
           
-          mensaje = ""
+    //       mensaje = ""
           
 
-          for (var key in datos){
-            var value = datos[key];
-            mensaje = mensaje+"<p>"+key+' : '+ value + "</p>"
-          }
+    //       for (var key in datos){
+    //         var value = datos[key];
+    //         mensaje = mensaje+"<p>"+key+' : '+ value + "</p>"
+    //       }
 
           
-          if (mensaje != "") {
+    //       if (mensaje != "") {
             
-            content.innerHTML = '<p>' + mensaje + '</p>';
-            overlay.setPosition(coordinate);
-            container.style.visibility = "visible";
-          }
+    //         content.innerHTML = '<p>' + mensaje + '</p>';
+    //         overlay.setPosition(coordinate);
+    //         container.style.visibility = "visible";
+    //       }
 
-        })
+    //     })
         
         
       
         
 
-      }
+    //   }
 
     
     
-    });
+    // });
 
 
 

@@ -50,17 +50,20 @@ const Graficos = () => {
   return (
     <>
       <div className="estadistica">
-        <Estadistica titulo="Expedientes escaneados" consulta="estadistica1" clase="green" />
+        {/* <Estadistica titulo="Expedientes escaneados" consulta="estadistica1" clase="green" />
         <Estadistica titulo="Documentos en el sistema" consulta="estadistica2" clase="red" />
         <Estadistica titulo="Predios aprobados técnico" consulta="estadistica3" clase="orange" />
-        <Estadistica titulo="Transacciones en el sistema" consulta="estadistica4" clase="green" />
+        <Estadistica titulo="Transacciones en el sistema" consulta="estadistica4" clase="green" /> */}
+        <h1>Inicio</h1>
+        <br />
+        <h2>Tareas</h2>
       </div>
-      <div className="estadistica">
+      {/* <div className="estadistica">
         <Estadistica titulo="Predios aprobados Jurídico" consulta="estadistica5" clase="green" />
         <Estadistica titulo="Predios con saneamiento técnico" consulta="estadistica6" clase="red" />
         <Estadistica titulo="Predios con saneamiento jurídico" consulta="estadistica7" clase="orange" />
-        {/* <Estadistica titulo="Predios con ZMPA" consulta="estadistica8" clase="green"/> */}
-      </div>
+        {/* <Estadistica titulo="Predios con ZMPA" consulta="estadistica8" clase="green"/> 
+      </div> */}
     </>
   )
 

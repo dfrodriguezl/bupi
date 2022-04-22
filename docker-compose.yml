@@ -1,9 +1,9 @@
 version: "2"
 
 networks:
-    db-net-eaab:
+    db-net-bupi:
       external:
-        name: db-net-eaab
+        name: db-net-bupi
 
 services:
 
@@ -19,7 +19,7 @@ services:
      # - pg_data:/var/lib/postgresql
 
   web:
-    container_name: "eaab-containner"
+    container_name: "bupi-containner"
     build: .
     ports:
         - "3005:3000"
@@ -28,7 +28,7 @@ services:
     #depends_on:
     #    - db
     networks:
-        - db-net-eaab
+        - db-net-bupi
     volumes:
        - /app/repositorio/_data:/app/repositorio
 

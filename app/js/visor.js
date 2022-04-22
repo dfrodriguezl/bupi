@@ -17,7 +17,7 @@ const Visor = () => {
                 <div id="popup-content"></div>
             </div>
             <Mapa />
-            <Leyenda data_leyenda={data.variables}/>
+            {/* <Leyenda data_leyenda={data.variables}/> */}
         </Estructura>
     )
 

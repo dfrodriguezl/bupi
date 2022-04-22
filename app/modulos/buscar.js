@@ -48,8 +48,8 @@ const Busqueda = () => {
 
     <div id="seccion">
 
-      <div id="titulo_seccion">Busqueda</div>
-      <p id="descripcion_seccion">Sección para la busqueda de predios, puede hacer busquedas con id_expediente o matricula. (Se muestran máximo 50 resultados)</p>
+      <div id="titulo_seccion">Consulta</div>
+      <p id="descripcion_seccion">Sección para la busqueda de registros, puede hacer busquedas concódigo bupi o matricula. (Se muestran máximo 50 resultados)</p>
       <div className="search">
         <input type="text" className="searchTerm" onChange={onChangeHandler} value={filtro} />
         <button type="submit" className="searchButton primmary" onClick={() => ver_expediente()}>
@@ -66,7 +66,7 @@ const Busqueda = () => {
               <p className="item_des">Dirección: {el.direccion_actual_igac}</p>
               <button >
                 <Link to={"/predio/" + el.id_expediente}>
-                  <p>Ver expediente</p>
+                  <p>Ver registro</p>
                 </Link>
               </button>
             </div>

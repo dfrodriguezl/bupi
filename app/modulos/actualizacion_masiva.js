@@ -449,7 +449,7 @@ const select=e=>{
   return (
     <div id="seccion">
       <div id="titulo_seccion">Actualización masiva</div>
-      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los expedientes para actualizar según la guia.</p>
+      <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con los registros para actualizar según la guia.</p>
     
 
       {permiso ? <>

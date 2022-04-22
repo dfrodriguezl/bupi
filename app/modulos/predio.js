@@ -41,6 +41,7 @@ import ListaComunicados from './lista_comunicados';
 import EditarComunicado from './editar_comunicado';
 import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
+import RenderSelect from './componentes/render_select';
 
 
 const gestionPermisos = (index) => {
@@ -124,6 +125,14 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
     let { id } = useParams();
+
+    const { register, handleSubmit, watch, control, errors, setValue, formState: {isValid} } = useForm({
+        mode: 'onChange'
+    });
+
+    const registerOptions = {
+        titular: { required: "Role is required" }
+    };
 
     useEffect(() => {
         // console.log("cambios")
@@ -348,7 +357,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     }
 
 
-    const { register, handleSubmit, watch, errors, control, setValue } = useForm();
+
 
 
 
@@ -356,8 +365,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     const onSubmit = datos => {
 
-        // console.log("datos-------")
-        // console.log(datos)
+        console.log("datos-------")
+        console.log(datos)
         var data = datos;
         // console.log("TBL", index)
 
@@ -479,7 +488,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_expediente);
-                // validar(index, result[0].id_expediente, data_guardar)
+                validar(index, result[0].id_expediente, data_guardar)
                 // validar(index,result[0].id_expediente)
             }
         });
@@ -492,8 +501,9 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
     const change = (msg, e) => {
-
-        let value = msg[0].value;
+        console.log("MSG", msg);
+        // let value = msg[0].value;
+        let value = msg.value;
         if (e.child_domain != null) {
             let fieldChild = fields.data.filter((f) => f.doc.enum_name == e.child_domain);
             // console.log(fieldChild[0].doc.enum)
@@ -699,10 +709,9 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                                {/* {console.log("DOC", i.doc)} */}
                                                 {i.doc.field_father ?
                                                     <Controller
-                                                        as={ReactSelect}
+                                                        as={<ReactSelect />}
                                                         options={
                                                             listDomains[i.doc.field]
                                                         }
@@ -715,26 +724,52 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         control={control}
                                                         defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         onChange={(e) => change(e, i.doc)}
+                                                        rules={{
+                                                            required: true
+                                                        }}
 
-                                                    /> :
+                                                    /> 
+                                                    // <ReactSelect
+                                                    //     name={i.doc.field}
+                                                    //     isClearable
+                                                    //     options={listDomains[i.doc.field]}
+                                                    //     defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                    //     onChange={(e) => change(e, i.doc)}
+                                                    //     isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    //     ref={register}
+                                                    // /> 
+                                                    :
+
+                                                    // <ReactSelect
+                                                    //     name={i.doc.field}
+                                                    //     isClearable
+                                                    //     options={i.doc.enum}
+                                                    //     defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                    //     onChange={(e) => change(e, i.doc)}
+                                                    //     isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    //     ref={register}
+                                                    //      />
+
+
+
                                                     <Controller
-                                                        as={ReactSelect}
+                                                        as={<ReactSelect />}
+                                                        // render={({field}) => (<RenderSelect field={field} data={i.doc.enum}/>)}
                                                         options={
                                                             i.doc.enum
                                                         }
-
-
                                                         isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
                                                         isClearable={true}
-
                                                         control={control}
                                                         defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         onChange={(e) => change(e, i.doc)}
-
+                                                        rules={{ required: true }}
                                                     />
 
                                                 }
+                                                {console.log("ERRORS", errors)}
+                                                {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
 
                                             </>
 
@@ -866,7 +901,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             : null}
 
                         {index === 7 || index === 8 ?
-                            <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all"/>: null}
+                            <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" /> : null}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
@@ -1289,7 +1324,7 @@ const ModalValidacion = ({ open, lista }) => {
                                         {lista[v].map((c) => {
                                             return (
                                                 <li>
-                                                    Condición: {c.id_condicion}, estado: {
+                                                    Condición: {c.id_condicion} - {c.etiqueta}, estado: {
                                                         c.estado ?
                                                             <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
                                                             <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />
@@ -1342,7 +1377,7 @@ const Predio = () => {
 
             <Tabs onSelect={() => setIndex(0)}>
                 <TabList>
-                    <Tab>Técnico</Tab>
+                    <Tab>Estructuración</Tab>
                     <Tab>Saneamientos</Tab>
                     {/* <Tab>Jurídico</Tab>
                     <Tab>Financiera</Tab>
@@ -1389,7 +1424,7 @@ const Predio = () => {
                         <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
                             Avalúos
                         </button>
-                        
+
                         {/* <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
                             SIG
                         </button> */}
@@ -1399,8 +1434,8 @@ const Predio = () => {
                         <button onClick={() => getForm(12, "info12_pago", "Pago")} className={active == 12 ? 'active' : ''}>
                             Pago
                         </button>
-                       
-                        
+
+
                         <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
                             Áreas
                         </button>
