@@ -180,7 +180,7 @@ const CrearPredio = () => {
           onChange={onChangeSelectTecnico}
         />
         <br />
-        <p>Seleccione el estructurador 2 asignado al predio</p>
+        {/* <p>Seleccione el estructurador 2 asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -193,7 +193,7 @@ const CrearPredio = () => {
           placeholder="Seleccione el estructurador..."
           onChange={onChangeSelectJuridico}
         />
-        <br />
+        <br /> */}
         <p>Seleccione el control de calidad asignado al predio</p>
         <Select
           className="basic-single"
@@ -207,7 +207,7 @@ const CrearPredio = () => {
           placeholder="Seleccione el control de calidad..."
           onChange={onChangeSelectSupTec} />
         <br />
-        <p>Seleccione el control de calidad  asignado al predio</p>
+        {/* <p>Seleccione el control de calidad  asignado al predio</p>
         <Select
           className="basic-single"
           classNamePrefix="select"
@@ -219,7 +219,7 @@ const CrearPredio = () => {
           getOptionValue={(option) => option.usuario_usuario}
           placeholder="Seleccione el control de calidad..."
           onChange={onChangeSelectSupJur}
-        />
+        /> */}
       </div>
 
       <Popup
