@@ -42,6 +42,7 @@ import EditarComunicado from './editar_comunicado';
 import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
+import CurrencyInput, {formatValue} from 'react-currency-input-field';
 
 
 const gestionPermisos = (index) => {
@@ -53,7 +54,7 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([1,2,42,41,3,14,4,13,5,6,12,15].includes(index)) {
+    else if ([1, 2, 42, 41, 3, 14, 4, 13, 5, 6, 12, 15].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
     } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
@@ -129,7 +130,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     let { id } = useParams();
 
-    const { register, handleSubmit, watch, control, errors, setValue, formState: {isValid} } = useForm({
+    const { register, handleSubmit, watch, control, errors, setValue, formState: { isValid } } = useForm({
         mode: 'onChange'
     });
 
@@ -380,6 +381,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 return item.doc.form
             });
 
+            var itemMoneda = fields.data.filter(item => item.doc.field == key).map(item => {
+                return item.doc.moneda
+            });
+
 
             if (data[key] != "") {
                 if (Array.isArray(data[key])) {
@@ -419,6 +424,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             if (typeof data[key] === 'undefined') {
                 delete data[key];
+            }
+
+            if(itemMoneda[0]){
+                data[key] = parseFloat(data[key].replaceAll(".","").replaceAll("$","").replaceAll(",","."));
             }
         });
         // console.log(data)
@@ -470,6 +479,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete dataNot.opcion;
             }
         }
+        
 
         delete data.ruta;
 
@@ -731,7 +741,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                             required: true
                                                         }}
 
-                                                    /> 
+                                                    />
                                                     // <ReactSelect
                                                     //     name={i.doc.field}
                                                     //     isClearable
@@ -802,7 +812,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
-                                            {console.log("ERT", i.doc.size)}
+                                                {console.log("ERT", i.doc.size)}
                                                 {i.doc.field_father ?
                                                     <input type={i.doc.type}
                                                         className='form_input'
@@ -840,12 +850,21 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         }
                                         {i.doc.form == 'numero' ?
 
-                                            <input type="text"
-                                                pattern="[0-9.]+"
-                                                name={i.doc.field}
-                                                disabled={lectura}
-                                                defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                ref={register({ min: 0 })} />
+                                            i.doc.moneda ?
+                                                <CurrencyInput
+                                                    name={i.doc.field}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register}
+                                                    prefix="$"
+                                                    decimalSeparator="," 
+                                                    groupSeparator="."
+                                                />
+                                                : <input type="text"
+                                                    pattern="[0-9.]+"
+                                                    name={i.doc.field}
+                                                    disabled={lectura}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register({ min: 0 })} />
                                             : ''
                                         }
                                         {i.doc.form == 'area' ?

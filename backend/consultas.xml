@@ -405,7 +405,7 @@
 
     <Consulta id="get_proyectos">
         <sql>
-        select ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
+        select distinct ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
         iic.direccion_actual_igac 
 		from info1_fuente ig left join info2_adquisicion ip
 		on ig.id_expediente=ip.id_expediente
@@ -424,6 +424,7 @@
         upper(ip.serial_titulo) like  upper('%' || $filtro || '%') 
          or 
         ip.fecha_titulo::text like  ('%' || $filtro || '%')
+        order by ig.id_expediente
         limit 50
         </sql>
     </Consulta>
@@ -954,7 +955,8 @@
             'enum_name',m.enum,
             'caso_especial',m.caso_especial,
             'rol_edicion', m.rol_edicion,
-            'required', m.required
+            'required', m.required,
+            'moneda', m.moneda
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
