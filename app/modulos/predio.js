@@ -53,7 +53,7 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([2, 3, 4, 9, 10, 11, 14, 18, 12].includes(index)) {
+    else if ([1,2,42,41,3,14,4,13,5,6,12,15].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
     } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
@@ -97,6 +97,9 @@ const DatePicker = ({ selected, onChange }) => {
             }}
             dateFormat="yyyy-MM-dd"
             maxDate={new Date()}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
         />
     )
 };
@@ -799,6 +802,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
+                                            {console.log("ERT", i.doc.size)}
                                                 {i.doc.field_father ?
                                                     <input type={i.doc.type}
                                                         className='form_input'
@@ -809,7 +813,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
-                                                                message: i.doc.message
+                                                                message: i.doc.message,
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
                                                             }
                                                         })} />
 
@@ -818,10 +823,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         name={i.doc.field}
                                                         disabled={lectura}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        maxLength={10}
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
-                                                                message: i.doc.message
+                                                                message: i.doc.message,
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
                                                             }
                                                         })} />}
 
@@ -1172,7 +1179,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
                 }
             });
 
-            console.log("DATA SANEAMIENTO", dataSaneamiento);
+            // console.log("DATA SANEAMIENTO", dataSaneamiento);
         }
 
         // console.log("DATA", data)

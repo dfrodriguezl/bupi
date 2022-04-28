@@ -19,6 +19,7 @@ const DetallePredio = () => {
   const [expediente, setExpediente] = useState(id);
   // const [tipologia, setTopologia] = useState({});
   const [estadoTecnico, setEstadoTecnico] = useState({});
+  const [tareaActiva, setTareaActiva] = useState({});
   // const [observacionSIG, setObservacionSIG] = useState({});
   // const [estadoPrestamo, setEstadoPrestamo] = useState();
 
@@ -36,6 +37,12 @@ const DetallePredio = () => {
 
     servidorPost('/backend', datosTecnico).then((response) => {
       setEstadoTecnico(response.data[0])
+    });
+
+    const datosTarea = { "id_consulta": "get_tarea_activa", "id_expediente": id }
+
+    servidorPost('/backend', datosTarea).then((response) => {
+      setTareaActiva(response.data[0])
     });
 
     // var observacion = { "id_consulta": "get_observacion", "id_expediente": id }
@@ -76,6 +83,9 @@ const DetallePredio = () => {
 
         <Fragment>
           <p id="title-estados">Estado Estructuración: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
+          <p id="title-estados">Usuario asignado: {tareaActiva ? tareaActiva.usuario : null}</p>
+          
+          <p id="title-estados">Fecha de asignación: {tareaActiva ? new Date(tareaActiva.fecha_asignacion).toLocaleDateString() + " " + new Date(tareaActiva.fecha_asignacion).toLocaleTimeString() : null}</p>
           {/* <p id="title-estados">Estado depuración Jurídica: {estadoTecnico ? estadoTecnico.dep_jur : null}</p> */}
           {/* <p id="title-estados">Estado préstamo expediente: {estadoPrestamo}</p> */}
         </Fragment>

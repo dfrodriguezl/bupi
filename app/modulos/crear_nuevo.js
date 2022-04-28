@@ -8,16 +8,16 @@ import { Link, useHistory } from 'react-router-dom';
 
 const asignaciones = {
   tecnico: 2,
-  juridico: 3,
+  // juridico: 3,
   sup_tec: 5,
-  sup_jur: 4,
-  sig: 6,
-  doc: 8
+  // sup_jur: 4,
+  // sig: 6,
+  // doc: 8
 }
 
 const tareas_iniciales = {
   tecnico: { ruta: 1, tarea_next: 2 },
-  juridico: { ruta: 2, tarea_next: 3 }
+  // juridico: { ruta: 2, tarea_next: 3 }
 }
 
 const CrearPredio = () => {
@@ -128,9 +128,12 @@ const CrearPredio = () => {
 
       servidorPost('/backend', datosAsignacion).then((responseAsignacion) => {
         if (responseAsignacion.data) {
-          insertarTareas();
+          if (asignacion === "tecnico") {
+            insertarTareas();
+          }
         }
       });
+
     })
 
   }
@@ -156,7 +159,20 @@ const CrearPredio = () => {
       id_consulta: "insert_expediente_4"
     }
     servidorPost('/backend', datosCalJur).then((responseTareas) => {
-      history.push("predio/" + expediente);
+      const datosCalJur = {
+        id_expediente: expediente,
+        id_consulta: "insert_expediente_5"
+      }
+      servidorPost('/backend', datosCalJur).then((responseTareas) => {
+        const datosCalJur = {
+          id_expediente: expediente,
+          id_consulta: "insert_expediente_6"
+        }
+        servidorPost('/backend', datosCalJur).then((responseTareas) => {
+          history.push("predio/" + expediente);
+        })
+      })
+
     });
   }
 

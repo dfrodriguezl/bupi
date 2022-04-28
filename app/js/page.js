@@ -19,6 +19,7 @@ const Estructura = ({ children }) => {
   const [session, setSession] = React.useState(0);
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [isConsulta, setIsConsulta] = React.useState(false);
+  const [isEstructurador, setIsEstructurador] = React.useState(false);
   const history = useHistory();
   const isServidumbre = history.location.pathname.indexOf('servidumbres') > -1;
 
@@ -31,7 +32,7 @@ const Estructura = ({ children }) => {
       var datos = response.data[0]
       setSession(datos)
       setIsConsulta(datos.usuario_rol === 0 ? true : false);
-
+      setIsEstructurador(datos.usuario_rol === 9 ? true : false);
     });
 
     getPermisos().then((response) => {
@@ -167,7 +168,15 @@ const Estructura = ({ children }) => {
                   <p>Administracion</p>
                 </Link>
               </div>
-            </Fragment> : null
+            </Fragment> :
+            isEstructurador ?
+              <div className="elemento">
+                <Link to="/actualizar">
+                  <PublishIcon />
+                  <p>Actualizar</p>
+                </Link>
+              </div> :
+              null
           }
 
         </div>

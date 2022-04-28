@@ -3251,6 +3251,16 @@ group by dominio) as d
         insert into info1_fuente (id_expediente) values ($id_expediente);
         </sql>
     </Consulta>
+     <Consulta id="insert_expediente_5">
+        <sql>
+        insert into info7_control_calidad_juridico (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
+     <Consulta id="insert_expediente_6">
+        <sql>
+        insert into info8_control_calidad_catastral (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
 
     <Consulta id="insert_info5_juridicos">
         <sql>
@@ -3332,6 +3342,17 @@ group by dominio) as d
         from estado_saneamientos_juridicos
         where id_expediente = $id_expediente
         and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_tarea_activa">
+        <sql>
+        select t.*,u.usuario_nombre usuario
+        from tareas.tareas t 
+        left join usuario u on t.usuario_responsable = u.usuario_usuario 
+        where id_expediente = $id_expediente
+        and estado = 1 and fecha_solucion is null
+        limit 1;
         </sql>
     </Consulta>
 
