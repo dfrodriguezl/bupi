@@ -42,6 +42,7 @@ import EditarComunicado from './editar_comunicado';
 import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
+import CurrencyInput, {formatValue} from 'react-currency-input-field';
 
 
 const gestionPermisos = (index) => {
@@ -53,7 +54,7 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([2, 3, 4, 9, 10, 11, 14, 18, 12].includes(index)) {
+    else if ([1, 2, 42, 41, 3, 14, 4, 13, 5, 6, 12, 15].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
     } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
@@ -97,6 +98,9 @@ const DatePicker = ({ selected, onChange }) => {
             }}
             dateFormat="yyyy-MM-dd"
             maxDate={new Date()}
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
         />
     )
 };
@@ -126,7 +130,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     let { id } = useParams();
 
-    const { register, handleSubmit, watch, control, errors, setValue, formState: {isValid} } = useForm({
+    const { register, handleSubmit, watch, control, errors, setValue, formState: { isValid } } = useForm({
         mode: 'onChange'
     });
 
@@ -377,6 +381,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 return item.doc.form
             });
 
+            var itemMoneda = fields.data.filter(item => item.doc.field == key).map(item => {
+                return item.doc.moneda
+            });
+
 
             if (data[key] != "") {
                 if (Array.isArray(data[key])) {
@@ -416,6 +424,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             if (typeof data[key] === 'undefined') {
                 delete data[key];
+            }
+
+            if(itemMoneda[0]){
+                data[key] = parseFloat(data[key].replaceAll(".","").replaceAll("$","").replaceAll(",","."));
             }
         });
         // console.log(data)
@@ -467,6 +479,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete dataNot.opcion;
             }
         }
+        
 
         delete data.ruta;
 
@@ -501,7 +514,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
     const change = (msg, e) => {
-        console.log("MSG", msg);
+        // console.log("MSG", msg);
         // let value = msg[0].value;
         let value = msg.value;
         if (e.child_domain != null) {
@@ -515,8 +528,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         if (e.caso_especial != null) {
             if (e.caso_especial.includes("accion_saneamiento")) {
-                console.log("CASO ESPECIAL", e)
-                console.log("MSG", msg)
+                // console.log("CASO ESPECIAL", e)
+                // console.log("MSG", msg)
                 const dataSaneamiento = {
                     id_consulta: 'get_descripcion_saneamientos',
                     accion_saneamiento: msg[0].value,
@@ -525,7 +538,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 servidorPost('/backend', dataSaneamiento).then(function (response) {
                     console.log("RESPONSE ENUM", response)
                     const childs = e.field_child.split(",");
-                    console.log("CHILDS", childs);
+                    // console.log("CHILDS", childs);
                     setTextDomains({
                         [childs[0]]: response.data[0][childs[0]],
                         [childs[1]]: response.data[0][childs[1]]
@@ -728,7 +741,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                             required: true
                                                         }}
 
-                                                    /> 
+                                                    />
                                                     // <ReactSelect
                                                     //     name={i.doc.field}
                                                     //     isClearable
@@ -768,7 +781,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     />
 
                                                 }
-                                                {console.log("ERRORS", errors)}
+                                                {/* {console.log("ERRORS", errors)} */}
                                                 {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
 
                                             </>
@@ -799,6 +812,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
+                                                {/* {console.log("ERT", i.doc.size)} */}
                                                 {i.doc.field_father ?
                                                     <input type={i.doc.type}
                                                         className='form_input'
@@ -809,7 +823,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
-                                                                message: i.doc.message
+                                                                message: i.doc.message,
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
                                                             }
                                                         })} />
 
@@ -818,10 +833,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         name={i.doc.field}
                                                         disabled={lectura}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        maxLength={i.doc.size ? i.doc.size : undefined}
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
-                                                                message: i.doc.message
+                                                                message: i.doc.message,
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
                                                             }
                                                         })} />}
 
@@ -833,12 +850,21 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         }
                                         {i.doc.form == 'numero' ?
 
-                                            <input type="text"
-                                                pattern="[0-9.]+"
-                                                name={i.doc.field}
-                                                disabled={lectura}
-                                                defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                ref={register({ min: 0 })} />
+                                            i.doc.moneda ?
+                                                <CurrencyInput
+                                                    name={i.doc.field}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register}
+                                                    prefix="$"
+                                                    decimalSeparator="," 
+                                                    groupSeparator="."
+                                                />
+                                                : <input type="text"
+                                                    pattern="[0-9.]+"
+                                                    name={i.doc.field}
+                                                    disabled={lectura}
+                                                    defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                    ref={register({ min: 0 })} />
                                             : ''
                                         }
                                         {i.doc.form == 'area' ?
@@ -1172,7 +1198,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
                 }
             });
 
-            console.log("DATA SANEAMIENTO", dataSaneamiento);
+            // console.log("DATA SANEAMIENTO", dataSaneamiento);
         }
 
         // console.log("DATA", data)

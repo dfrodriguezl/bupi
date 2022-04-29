@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { servidorPost } from '../js/request.js'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Help from './help.js';
+import { getPermisos } from '../variables/permisos.js';
 
 const asignaciones = {
   tecnico: 2,
@@ -22,9 +23,14 @@ const CrearPredioMasivo = () => {
 
   const [expediente, setExpediente] = useState();
   const [exps, setExps] = React.useState([]);
+  const [permiso, setPermiso] = React.useState(false);
 
   useEffect(() => {
     getUltimoExpediente();
+    getPermisos().then((response) => {
+      console.log("PERMISOS", response.data)
+      setPermiso(response.some(r => [1,2].includes(r)))
+    })
   }, [])
 
   const getUltimoExpediente = () => {
@@ -130,16 +136,23 @@ const CrearPredioMasivo = () => {
     <div id="seccion">
       <div id="titulo_seccion">Creación masiva de predios</div>
       <p id="descripcion_seccion">En la siguiente sección, por favor seleccione el archivo csv con la estructura definida para hacer la creación y asignación masiva de predios</p>
-      <Help titulo="Modelo" doc='guia_crear_masivo.csv' />
-      <br />
-      <div >
-        <label htmlFor="file1" className="label-input" >Seleccionar csv
-          <input type="file" id="file1" onChange={onChange} className="input" />
-        </label>
-      </div>
-      <button type="button" className="primmary" onClick={() => crearExpedientes()}>Crear predios</button>
-      <p>Se crearan: {Object.keys(exps).length} Registros</p>
-      <ToastContainer />
+      {permiso ?
+        <Fragment>
+          <Help titulo="Modelo" doc='guia_crear_masivo.csv' />
+          <br />
+          <div >
+            <label htmlFor="file1" className="label-input" >Seleccionar csv
+              <input type="file" id="file1" onChange={onChange} className="input" />
+            </label>
+          </div>
+          <button type="button" className="primmary" onClick={() => crearExpedientes()}>Crear predios</button>
+          <p>Se crearan: {Object.keys(exps).length} Registros</p>
+          <ToastContainer />
+        </Fragment>
+        : <p className="no-permiso">No cuentas con permisos para usar esta herramienta</p>}
+
+
+
     </div>
   )
 }

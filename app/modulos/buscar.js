@@ -49,7 +49,7 @@ const Busqueda = () => {
     <div id="seccion">
 
       <div id="titulo_seccion">Consulta</div>
-      <p id="descripcion_seccion">Sección para la busqueda de registros, puede hacer busquedas concódigo bupi o matricula. (Se muestran máximo 50 resultados)</p>
+      <p id="descripcion_seccion">Sección para la busqueda de registros, puede hacer busquedas con código bupi o matricula. (Se muestran máximo 50 resultados)</p>
       <div className="search">
         <input type="text" className="searchTerm" onChange={onChangeHandler} value={filtro} />
         <button type="submit" className="searchButton primmary" onClick={() => ver_expediente()}>

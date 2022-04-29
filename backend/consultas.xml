@@ -405,7 +405,7 @@
 
     <Consulta id="get_proyectos">
         <sql>
-        select ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
+        select distinct ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
         iic.direccion_actual_igac 
 		from info1_fuente ig left join info2_adquisicion ip
 		on ig.id_expediente=ip.id_expediente
@@ -424,6 +424,7 @@
         upper(ip.serial_titulo) like  upper('%' || $filtro || '%') 
          or 
         ip.fecha_titulo::text like  ('%' || $filtro || '%')
+        order by ig.id_expediente
         limit 50
         </sql>
     </Consulta>
@@ -954,7 +955,8 @@
             'enum_name',m.enum,
             'caso_especial',m.caso_especial,
             'rol_edicion', m.rol_edicion,
-            'required', m.required
+            'required', m.required,
+            'moneda', m.moneda
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
@@ -3155,7 +3157,8 @@ group by dominio) as d
     <Consulta id="get_parametros_busqueda">
         <sql>
             select *    
-            from busqueda_avanzada_filtros;
+            from busqueda_avanzada_filtros
+            order by id;
         </sql>
     </Consulta>
 
@@ -3251,6 +3254,16 @@ group by dominio) as d
         insert into info1_fuente (id_expediente) values ($id_expediente);
         </sql>
     </Consulta>
+     <Consulta id="insert_expediente_5">
+        <sql>
+        insert into info7_control_calidad_juridico (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
+     <Consulta id="insert_expediente_6">
+        <sql>
+        insert into info8_control_calidad_catastral (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
 
     <Consulta id="insert_info5_juridicos">
         <sql>
@@ -3332,6 +3345,23 @@ group by dominio) as d
         from estado_saneamientos_juridicos
         where id_expediente = $id_expediente
         and consecutivo = $consecutivo
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_tarea_activa">
+        <sql>
+        select t.*,u.usuario_nombre usuario
+        from tareas.tareas t 
+        left join usuario u on t.usuario_responsable = u.usuario_usuario 
+        where id_expediente = $id_expediente
+        and estado = 1 and fecha_solucion is null
+        limit 1;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_enum">
+        <sql>
+            distinct_busqueda_saneamientos
         </sql>
     </Consulta>
 
