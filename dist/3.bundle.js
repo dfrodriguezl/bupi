@@ -1,4 +1,4 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{1272:function(A,e,t){
+(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{1268:function(A,e,t){
 /*!
  * html2canvas 1.3.3 <https://html2canvas.hertzen.com>
  * Copyright (c) 2021 Niklas von Hertzen <https://hertzen.com>
