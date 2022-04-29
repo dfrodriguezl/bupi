@@ -160,6 +160,8 @@ const consulta = (request, response) => {
           query_text = query_text.replace(/insert-dinamico/g, data.tabla);
         } else if (query_text.includes("where_parametros_avanzados")) {
           query_text = query_text.replace("where_parametros_avanzados", data.upd);
+        } else if (query_text.includes("distinct_busqueda_saneamientos")){
+          query_text = query_text.replace("distinct_busqueda_saneamientos", data.select);
         }
 
         console.log("QUERY TEXT", query_text);

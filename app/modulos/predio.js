@@ -514,7 +514,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
     const change = (msg, e) => {
-        console.log("MSG", msg);
+        // console.log("MSG", msg);
         // let value = msg[0].value;
         let value = msg.value;
         if (e.child_domain != null) {
@@ -528,8 +528,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         if (e.caso_especial != null) {
             if (e.caso_especial.includes("accion_saneamiento")) {
-                console.log("CASO ESPECIAL", e)
-                console.log("MSG", msg)
+                // console.log("CASO ESPECIAL", e)
+                // console.log("MSG", msg)
                 const dataSaneamiento = {
                     id_consulta: 'get_descripcion_saneamientos',
                     accion_saneamiento: msg[0].value,
@@ -538,7 +538,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 servidorPost('/backend', dataSaneamiento).then(function (response) {
                     console.log("RESPONSE ENUM", response)
                     const childs = e.field_child.split(",");
-                    console.log("CHILDS", childs);
+                    // console.log("CHILDS", childs);
                     setTextDomains({
                         [childs[0]]: response.data[0][childs[0]],
                         [childs[1]]: response.data[0][childs[1]]
@@ -781,7 +781,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     />
 
                                                 }
-                                                {console.log("ERRORS", errors)}
+                                                {/* {console.log("ERRORS", errors)} */}
                                                 {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
 
                                             </>
@@ -812,7 +812,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                         {i.doc.form == 'texto' ?
                                             <>
-                                                {console.log("ERT", i.doc.size)}
+                                                {/* {console.log("ERT", i.doc.size)} */}
                                                 {i.doc.field_father ?
                                                     <input type={i.doc.type}
                                                         className='form_input'
@@ -833,7 +833,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         name={i.doc.field}
                                                         disabled={lectura}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                        maxLength={10}
+                                                        maxLength={i.doc.size ? i.doc.size : undefined}
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),

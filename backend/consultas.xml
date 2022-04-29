@@ -3157,7 +3157,8 @@ group by dominio) as d
     <Consulta id="get_parametros_busqueda">
         <sql>
             select *    
-            from busqueda_avanzada_filtros;
+            from busqueda_avanzada_filtros
+            order by id;
         </sql>
     </Consulta>
 
@@ -3355,6 +3356,12 @@ group by dominio) as d
         where id_expediente = $id_expediente
         and estado = 1 and fecha_solucion is null
         limit 1;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_enum">
+        <sql>
+            distinct_busqueda_saneamientos
         </sql>
     </Consulta>
 

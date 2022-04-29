@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import FiltroBusqueda from "./filtro_busqueda.js";
 import MUIDataTable from "mui-datatables";
 
-const columns = ["Expediente", "Departamento", "Municipio", "Matrícula inmobiliaria", "Tradente", "Territorial", "Titular", "Serial título", "Número predial nal",
+const columns = ["Código BUPI", "Departamento", "Municipio", "Matrícula inmobiliaria", "Tradente", "Territorial", "Titular", "Serial título", "Número predial nal",
   "Cód. predial ant.", "Modo trans.", "Vía", "Tramo", "Administrador"];
 
 const options = {
@@ -44,7 +44,17 @@ const options = {
       deleteAria: 'Borrar filas seleccionadas',
     },
   },
-  responsive: 'standard'
+  responsive: 'standard',
+  onDownload: (buildHead, buildBody, columns, data) => {
+    data.forEach((d) => {
+      const object = d.data;
+      const id = object[0].props.children;
+      d.data[0] = id;
+
+    })
+
+    return "\uFEFF" + buildHead(columns) + buildBody(data);
+  }
 };
 
 const BusquedaAvanzada = () => {
@@ -55,6 +65,8 @@ const BusquedaAvanzada = () => {
   const [components, setComponents] = useState([]);
   const [values, setValues] = useState([]);
   const [dataTable, setDataTable] = useState([]);
+  const [fechaIni, setFechaIni] = useState(null);
+  const [fechaFin, setFechaFin] = useState(null);
 
 
   useEffect(() => {
@@ -63,13 +75,40 @@ const BusquedaAvanzada = () => {
     }
 
     servidorPost('/backend', datos).then((response) => {
+      const filtros = response.data;
       setListFiltros(response.data);
       setIsLoading(false);
-      setComponents((components) => [...components, response.data[0]])
+      setComponents({
+        [filtros[0].id]: {}
+      })
     });
   }, [])
 
   const onChangeHandle = (e, numFiltro) => {
+    if (Object.keys(components).length > 1) {
+      setComponents(prevState => ({
+        ...prevState,
+        [numFiltro]: {
+          id: e.id,
+          campo: e.campo,
+          etiqueta: e.etiqueta,
+          tipo: e.tipo,
+          enum: e.enum
+        }
+      }))
+    } else {
+      setComponents({
+        [numFiltro]: {
+          id: e.id,
+          campo: e.campo,
+          etiqueta: e.etiqueta,
+          tipo: e.tipo,
+          enum: e.enum
+        }
+      })
+    }
+
+
     setListFilteredOptions(prevState => ({
       ...prevState,
       [numFiltro]: e
@@ -77,12 +116,24 @@ const BusquedaAvanzada = () => {
   }
 
   const adicionarFiltro = (e) => {
-    setComponents((components) => [...components, e])
+    setComponents(prevState => ({
+      ...prevState,
+      [Object.keys(components).length]: {
+        id: e.id,
+        campo: e.campo,
+        etiqueta: e.etiqueta,
+        tipo: e.tipo,
+        enum: e.enum
+      }
+    }))
   }
 
   const borrarFiltro = (e, pos) => {
-    const newList = components.filter((component, i) => i !== pos);
-    setComponents(newList);
+    setComponents(prevState => {
+      const state = { ...prevState };
+      delete state[pos];
+      return state;
+    })
 
     let newFilteredOptions = listFilteredOptions;
     delete newFilteredOptions[pos];
@@ -99,6 +150,7 @@ const BusquedaAvanzada = () => {
   const buscar = (e) => {
     let data = {};
     let valuesDef = {};
+
     Object.keys(listFilteredOptions).forEach((key) => {
       valuesDef[key] = listFilteredOptions[key];
       valuesDef[key]["value"] = "%" + values[key] + "%";
@@ -107,12 +159,17 @@ const BusquedaAvanzada = () => {
 
     var key = ""
     for (var k in valuesDef) {
-      if (valuesDef[k].campo === "doc_num" || valuesDef[k].campo === "zona") {
-        key = key + "" + valuesDef[k].campo + " like $" + valuesDef[k].campo + " and "
+      if (valuesDef[k].tipo === "date_range") {
+        const fecha_1 = "'" + fechaIni.getFullYear() + "-" + (parseInt(fechaIni.getMonth()) + 1) + "-" + fechaIni.getDate() + " 00:00:00'";
+        const fecha_2 = "'" + fechaFin.getFullYear() + "-" + (parseInt(fechaFin.getMonth()) + 1) + "-" + fechaFin.getDate() + " 23:59:59'";
+        key = key + " " + valuesDef[k].campo + " between " + fecha_1 + " and " + fecha_2 + " and ";
       } else {
-        key = key + "lower(" + valuesDef[k].campo + ") like lower($" + valuesDef[k].campo + ") and "
+        if (valuesDef[k].campo === "doc_num" || valuesDef[k].campo === "zona") {
+          key = key + "" + valuesDef[k].campo + " like $" + valuesDef[k].campo + " and "
+        } else {
+          key = key + "lower(" + valuesDef[k].campo + ") like lower($" + valuesDef[k].campo + ") and "
+        }
       }
-
     }
 
     key = key.replace(/and\s*$/, "");
@@ -132,8 +189,9 @@ const BusquedaAvanzada = () => {
     });
   }
 
-  const updateValues = (e, numFiltro) => {
-    const val = e.target.value;
+  const updateValues = (e, numFiltro, tipo) => {
+    const val = tipo === "text" ? e.target.value :
+      tipo === "select" ? e.campo : null;
     setValues(prevState => ({
       ...prevState,
       [numFiltro]: val
@@ -145,11 +203,12 @@ const BusquedaAvanzada = () => {
       <div id="titulo_seccion">Consulta avanzada</div>
       <p id="descripcion_seccion">Sección para la consulta avanzada de registros, aquí puede seleccionar uno o más filtros de acuerdo a su necesidad</p>
       <div className="formulario2">
-        {console.log("COMPONENTS", components)}
-        {components.map((item, i) => (
+        {/* {console.log("COMPONENTS", components)} */}
+        {Object.keys(components).map((item, i) => (
           <div key={i}>
-            <FiltroBusqueda onChangeHandle={onChangeHandle} isLoading={isLoading} listFiltros={listFiltros} campo={item.campo ? item.campo : ""}
-              idx={i} borrarFiltro={borrarFiltro} updateValues={updateValues} tipo={item.tipo} />
+            <FiltroBusqueda onChangeHandle={onChangeHandle} isLoading={isLoading} listFiltros={listFiltros} campo={components[item].campo ? components[item].campo : ""}
+              idx={i} borrarFiltro={borrarFiltro} updateValues={updateValues} tipo={components[item].tipo} domain={components[item].enum ? components[item].enum : null}
+              setFechaIni={setFechaIni} setFechaFin={setFechaFin}/>
           </div>
         ))}
       </div>
