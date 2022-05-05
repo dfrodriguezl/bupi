@@ -178,7 +178,64 @@ body{
         }
     }
     .success{
-        border-left: 5px solid $color3;
+        border-left: 5px solid green;
+    }
+    .warning{
+        border-left: 5px solid #F1E305;
+    }
+    .danger{
+        border-left: 5px solid #CE3800;
+    }
+    p{
+        margin:0px;
+        font-size: 10pt;
+        color:black;
+    }
+    .form-input{
+        padding: 5px;
+    }
+    #listado-header{
+        padding: 5px;
+        background-color: #fff;
+    }
+    h3{
+        font-weight: 500;
+        margin: 0px;
+        margin-bottom: 5px;
+        color: $color1;
+        font-size: 1.3em;
+    }
+
+    .leyenda{
+        display: grid;
+        grid-template-columns: repeat(6,auto);
+        padding: 5px;
+    }
+
+}
+#tareas-inicio {
+    // position: absolute;
+    // top: 50px;
+    // right: 0;
+    // z-index: 100;
+    background-color: #ECECEC;
+    border-radius: 5px;
+    max-height: calc(100vh - 55px);
+    min-width: 300px;
+    overflow-y: scroll;
+    width: 100%;
+    .grupo{
+        background-color: white;
+        padding: 5px;
+        margin: 3px;
+        border-radius: 5px;
+        .titulo{
+            font-weight: 500;
+            font-size: 1.2em;
+        }
+    }
+    .success{
+        border-left: 5px solid green;
     }
     .warning{
         border-left: 5px solid #F1E305;
@@ -597,15 +654,15 @@ input[type="file"] {
 
     //border: 0.5px solid $color-gris;
     //border-radius: 5px;
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 10px;
+    // display:grid;
+    // grid-template-columns: 1fr 1fr 1fr 1fr;
+    // column-gap: 10px;
     margin: 10px 5px;
 
     div{
         padding: 10px;
         min-width: 80px;
-        background-color:#fff;
+        // background-color:#fff;
         border-radius: 10px;
     }
     p.valor {
@@ -762,6 +819,43 @@ input[type="file"] {
     outline: none;
   }
 
+  .modal-val {
+    font-size: 12px;
+    background-color: #Ffff;
+    width: 300px;
+    border: 1px solid $color-gris-oscuro;
+    border-radius: 5px;
+  }
+  .modal-val > .header {
+    border-bottom: 1px solid gray;
+    font-size: 18px;
+    text-align: center;
+    padding: 5px;
+  }
+  .modal-val > .content {
+    padding: 10px 5px;
+  }
+  .modal-val > .actions {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 20px;
+    margin: 10px;
+  }
+  .modal-val > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+    outline: none;
+  }
+
   .grupo-formularios{
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -863,4 +957,8 @@ input[type="file"] {
 
 .simple-home-img{
     background-image: url('https://www.grupovanti.com/wp-content/uploads/2020/05/gnv-moviles.jpg');
+}
+
+#estadisticas-inicio{
+    width: 100%;
 }

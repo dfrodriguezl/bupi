@@ -3015,7 +3015,8 @@ group by dominio) as d
             join validadores v on rv.id_validador = v.id_validador
             where rv.id_expediente = $expediente
             and rv.estado is not null
-            and v.id_formulario = $formulario;
+            and v.id_formulario = $formulario
+            order by estado, id_condicion ;
         </sql>
     </Consulta>
 
@@ -3060,15 +3061,6 @@ group by dominio) as d
             ON CONFLICT (id_validador,id_condicion,id_expediente) DO UPDATE
             SET estado = $estado
             returning id_validador,id_condicion,id_expediente
-        </sql>
-    </Consulta>
-
-    <Consulta id="validacion_masiva">
-        <sql>
-            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
-                from info2_general_predio pr, 
-                (select distinct id_formulario from validadores) va
-                order by pr.id_expediente, va.id_formulario;
         </sql>
     </Consulta>
 
@@ -3362,6 +3354,25 @@ group by dominio) as d
     <Consulta id="get_enum">
         <sql>
             distinct_busqueda_saneamientos
+        </sql>
+    </Consulta>
+
+    <Consulta id="validacion_expediente">
+        <sql>
+            select eval_validadores(va.id_formulario::integer,ia.id_expediente)
+               from info2_adquisicion ia,
+               (select distinct id_formulario from validadores) va
+               where ia.id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_validadores_expediente">
+        <sql>
+            select *, v.campo 
+                from resultados_validacion rv 
+                join validadores v on rv.id_validador = v.id_validador
+                where rv.id_expediente = $id_expediente and estado is not null
+                order by estado, rv.id_validador,rv.id_condicion;
         </sql>
     </Consulta>
 

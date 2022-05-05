@@ -149,10 +149,10 @@ export const notificacion = (data) => {
     else if (ruta == 3 || ruta === 11) {// tarea a cargo del sup tecnico
 
 
-        
-        if(data.id_expediente.includes("S_")){
+
+        if (data.id_expediente.includes("S_")) {
             data.id_consulta = "aprobado_tecnico_servidumbre";
-        }else{
+        } else {
             data.id_consulta = "aprobado_tecnico";
         }
 
@@ -199,10 +199,10 @@ export const notificacion = (data) => {
 
     } else if (ruta === 9) { // Tarea en usuario SIG
 
-        if(data.id_expediente.includes("S_")){
+        if (data.id_expediente.includes("S_")) {
             data.id_consulta = "info20_sig_servidumbre";
             data.id_servidumbre = data.id_expediente;
-        }else{
+        } else {
             data.id_consulta = "info23_sig";
         }
 
@@ -288,7 +288,7 @@ export const notificacion = (data) => {
 
         })()
 
-    } else if (ruta === -2){ // Tarea para asignar a supervisor documental
+    } else if (ruta === -2) { // Tarea para asignar a supervisor documental
 
         let post = {
             id_consulta: "insertar_notificacion_documental",
@@ -305,7 +305,7 @@ export const notificacion = (data) => {
 
         })()
 
-    } else if (ruta === -3){
+    } else if (ruta === -3) {
 
         let post = {
             id_consulta: "update_tareas_estado_documental",
@@ -322,3 +322,5 @@ export const notificacion = (data) => {
 
 
 }
+
+
