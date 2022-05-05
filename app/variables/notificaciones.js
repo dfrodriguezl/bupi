@@ -187,8 +187,8 @@ export const notificacion = (data) => {
                 //alert("se acabo todo el flujo de momento...");
 
                 data.id_consulta = "insertar_notificacion"
-                data.tarea_next = 6;
-                data.ruta_destino = 9;
+                data.tarea_next = 10;
+                data.ruta_destino = 14;
 
                 await back(data)
 
