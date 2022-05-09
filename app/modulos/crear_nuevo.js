@@ -12,8 +12,9 @@ const asignaciones = {
   sup_tec: 5,
   // sup_jur: 4,
   // sig: 6,
-  // doc: 8
-  coord: 10
+  doc: 8,
+  coord: 10,
+  contabilidad: 11
 }
 
 const tareas_iniciales = {
@@ -37,8 +38,9 @@ const CrearPredio = () => {
   const [supTec, setSupTec] = useState();
   const [supJur, setSupJur] = useState();
   const [usuarioSIG, setUsuarioSIG] = useState("jbartolo");
-  const [usuarioDoc, setUsuarioDoc] = useState("orojas");
+  const [usuarioDoc, setUsuarioDoc] = useState("documental");
   const [usuarioCoord, setUsuarioCoord] = useState("msanchezr");
+  const [usuarioContabilidad, setUsuarioContabilidad] = useState("contabilidad");
   const history = useHistory();
 
   useEffect(() => {
@@ -119,9 +121,10 @@ const CrearPredio = () => {
           supTec : asignacion === "sup_jur" ?
             supJur : asignacion === "sig" ?
               usuarioSIG : asignacion === "coord" ?
-                usuarioCoord :
-                asignacion === "doc" ?
-                  usuarioDoc : null;
+                usuarioCoord : asignacion === "contabilidad" ?
+                  usuarioContabilidad :
+                  asignacion === "doc" ?
+                    usuarioDoc : null;
 
       const datosAsignacion = {
         "id_consulta": "insertar_asignacion_tecnico",

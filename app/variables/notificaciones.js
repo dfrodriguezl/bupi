@@ -192,6 +192,18 @@ export const notificacion = (data) => {
 
                 await back(data)
 
+                data.id_consulta = "insertar_notificacion"
+                data.tarea_next = 11;
+                data.ruta_destino = 15;
+
+                await back(data)
+
+                data.id_consulta = "insertar_notificacion"
+                data.tarea_next = 12;
+                data.ruta_destino = 16;
+
+                await back(data)
+
             }
 
         })()
@@ -263,6 +275,29 @@ export const notificacion = (data) => {
             var result = await back(data);
 
             if (result.data[0].fecha_dev_usu_prestamo != null) { // Devolucion de geometria
+                (async () => {
+
+                    //alert()
+
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 5,
+                        ruta_destino: 11,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })()
+            }
+
+        })()
+    } else if (ruta === 14) {
+        data.id_consulta = "info44_asignacion_saneamiento";
+
+        (async () => {
+            var result = await back(data);
+
+            if (result.data[0].usuario != null) { // Devolucion de geometria
                 (async () => {
 
                     //alert()

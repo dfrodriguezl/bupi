@@ -76,6 +76,12 @@ const gestionPermisos = (index) => {
         tipo_permiso = [15];
     } else if ([40].includes(index)) {
         tipo_permiso = [16];
+    }  else if ([43].includes(index)) {
+        tipo_permiso = [17];
+    } else if ([11].includes(index)) {
+        tipo_permiso = [12];
+    } else if ([44].includes(index)) {
+        tipo_permiso = [2];
     }
 
 
@@ -236,7 +242,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             setSuperJur(true)
                         }
 
-                        if (response.some(r => r == 10) || response.some(r => r == 12)) {
+                        if (response.some(r => r == 10)) {
 
                             setpermiso(true)
                             setLectura(false)
@@ -270,7 +276,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             if (index === 37 && responseUp.some(r => r == 14)) {
                                                 setLectura(false)
                                             } else {
-                                                if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                                if (responseUp.some(r => r == 13)) {
                                                     setLectura(false)
                                                 } else {
                                                     if (!response.data[0].exists) {
@@ -289,7 +295,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         if (index === 37 && responseUp.some(r => r == 14)) {
                                             setLectura(false)
                                         } else {
-                                            if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                            if (responseUp.some(r => r == 13)) {
                                                 setLectura(false)
                                             } else {
                                                 if (!response.data[0].exists) {
@@ -1110,7 +1116,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             // console.log("permisos-multiple")
             // console.log(response)
             // console.log(tipo_permiso)
-            if (response.some(r => r == 10) || response.some(r => r === 12)) {
+            if (response.some(r => r == 10)) {
 
                 setPermiso(true)
                 // setLectura(false)
@@ -1413,6 +1419,7 @@ const Predio = () => {
                 <TabList>
                     <Tab>Estructuración</Tab>
                     <Tab>Saneamientos</Tab>
+                    <Tab>Asignaciones</Tab>
                     {/* <Tab>Jurídico</Tab>
                     <Tab>Financiera</Tab>
                     <Tab>Social</Tab>
@@ -1478,6 +1485,9 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
                             Control de calidad catastral
+                        </button>
+                        <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                            Contabilidad
                         </button>
 
                         {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
@@ -1668,6 +1678,15 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
+                        </button>
+                    </div>
+                </TabPanel>
+                <TabPanel>
+                    <h3>Asignaciones</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    <div className="grupo-formularios">
+                        <button onClick={() => getForm(44, "info44_asignacion_saneamiento", "Asignaciones")} className={active == 44 ? 'active' : ''}>
+                            Asignación saneamientos jurídicos
                         </button>
                     </div>
                 </TabPanel>

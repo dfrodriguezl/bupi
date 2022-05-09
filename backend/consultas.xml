@@ -402,6 +402,16 @@
         select * from info42_adquisicion_tradentes where id_expediente=$id_expediente and consecutivo = $consecutivo
         </sql>
     </Consulta>
+    <Consulta id="info43_contabilidad">
+        <sql>
+        select * from info43_contabilidad where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="info44_asignacion_saneamiento">
+        <sql>
+        select * from info44_asignacion_saneamiento where id_expediente=$id_expediente
+        </sql>
+    </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
@@ -841,6 +851,16 @@
             update info42_adquisicion_tradentes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
+    <Consulta id="update_info43_contabilidad">
+        <sql>
+            update info43_contabilidad set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
+    <Consulta id="update_info44_asignacion_saneamiento">
+        <sql>
+            update info44_asignacion_saneamiento set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+        </sql>
+    </Consulta>
 
 
 
@@ -965,7 +985,7 @@ group by dominio) as d
         on m.enum=d.dominio
         left join (select 'usuarios' as dominio,
 								  json_agg(json_build_object('value',usuario_usuario,'label',usuario_nombre,'padre',null,'padre_valor',null)) as enum
-								  from usuario) as u
+								  from usuario where usuario_rol = 10) as u
         on m.enum=u.dominio
         left join (select dominio,
 				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
