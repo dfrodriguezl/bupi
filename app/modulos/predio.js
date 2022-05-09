@@ -42,7 +42,7 @@ import EditarComunicado from './editar_comunicado';
 import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
-import CurrencyInput, {formatValue} from 'react-currency-input-field';
+import CurrencyInput, { formatValue } from 'react-currency-input-field';
 
 
 const gestionPermisos = (index) => {
@@ -76,6 +76,12 @@ const gestionPermisos = (index) => {
         tipo_permiso = [15];
     } else if ([40].includes(index)) {
         tipo_permiso = [16];
+    }  else if ([43].includes(index)) {
+        tipo_permiso = [17];
+    } else if ([11].includes(index)) {
+        tipo_permiso = [12];
+    } else if ([44].includes(index)) {
+        tipo_permiso = [2];
     }
 
 
@@ -236,7 +242,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             setSuperJur(true)
                         }
 
-                        if (response.some(r => r == 10) || response.some(r => r == 12)) {
+                        if (response.some(r => r == 10)) {
 
                             setpermiso(true)
                             setLectura(false)
@@ -270,7 +276,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             if (index === 37 && responseUp.some(r => r == 14)) {
                                                 setLectura(false)
                                             } else {
-                                                if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                                if (responseUp.some(r => r == 13)) {
                                                     setLectura(false)
                                                 } else {
                                                     if (!response.data[0].exists) {
@@ -289,7 +295,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         if (index === 37 && responseUp.some(r => r == 14)) {
                                             setLectura(false)
                                         } else {
-                                            if (responseUp.some(r => r == 12) || responseUp.some(r => r == 13)) {
+                                            if (responseUp.some(r => r == 13)) {
                                                 setLectura(false)
                                             } else {
                                                 if (!response.data[0].exists) {
@@ -425,9 +431,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             if (typeof data[key] === 'undefined') {
                 delete data[key];
             }
-
-            if(itemMoneda[0]){
-                data[key] = parseFloat(data[key].replaceAll(".","").replaceAll("$","").replaceAll(",","."));
+            
+            if (itemMoneda[0]) {
+                console.log("DATA KEY", data[key])
+                if(data[key] !== null || data[key] === ''){
+                    data[key] = parseFloat(data[key].replaceAll(".", "").replaceAll("$", "").replaceAll(",", "."));
+                }
+                
             }
         });
         // console.log(data)
@@ -479,7 +489,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 delete dataNot.opcion;
             }
         }
-        
+
 
         delete data.ruta;
 
@@ -614,41 +624,42 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         let resultados_validacion = {};
 
-        let serv = servidorPost('/backend', dataServicios).then(function (response_servicios) {
-            let data_res = response_servicios.data;
+        // let serv = servidorPost('/backend', dataServicios).then(function (response_servicios) {
+        //     let data_res = response_servicios.data;
 
-            if (data_res.length > 0) {
-                let results2 = [];
-                data_res.forEach((dr) => {
-                    let url_completa = dr.url + "?where=PRECHIP='" + chip + "' and " + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
-                    servidorGetAbs(url_completa).then((res_serv) => {
-                        let features = res_serv.data.features;
-                        let dataValServ = {
-                            id_validador: dr.id_validador,
-                            id_condicion: dr.id_servicio,
-                            id_expediente: id_exp,
-                            estado: features.length > 0 ? true : false,
-                            id_consulta: 'insert_valor_validacion'
-                        }
-                        // console.log(features)
-                        // console.log(dataValServ)
+        //     if (data_res.length > 0) {
+        //         let results2 = [];
+        //         data_res.forEach((dr) => {
+        //             let url_completa = dr.url + "?where=PRECHIP='" + chip + "' and " + dr.query_external + "='" + datos_guardar[dr.query_local] + "'&outFields=*&f=json";
+        //             servidorGetAbs(url_completa).then((res_serv) => {
+        //                 let features = res_serv.data.features;
+        //                 let dataValServ = {
+        //                     id_validador: dr.id_validador,
+        //                     id_condicion: dr.id_servicio,
+        //                     id_expediente: id_exp,
+        //                     estado: features.length > 0 ? true : false,
+        //                     id_consulta: 'insert_valor_validacion'
+        //                 }
+        //                 // console.log(features)
+        //                 // console.log(dataValServ)
 
-                        let promise = servidorPost('/backend', dataValServ).then(function (response_insert) {
-                            return response_insert.data;
-                        })
+        //                 let promise = servidorPost('/backend', dataValServ).then(function (response_insert) {
+        //                     return response_insert.data;
+        //                 })
 
 
 
-                        resultsList.push(promise);
+        //                 resultsList.push(promise);
 
-                    })
-                })
-            }
-        })
+        //             })
+        //         })
+        //     }
+        // })
 
         let promiseJur = servidorPost('/backend', data).then(function (response) {
             return response.data;
         })
+
 
         resultsList.push(promiseJur);
 
@@ -856,7 +867,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                                     ref={register}
                                                     prefix="$"
-                                                    decimalSeparator="," 
+                                                    decimalSeparator=","
                                                     groupSeparator="."
                                                 />
                                                 : <input type="text"
@@ -1105,7 +1116,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             // console.log("permisos-multiple")
             // console.log(response)
             // console.log(tipo_permiso)
-            if (response.some(r => r == 10) || response.some(r => r === 12)) {
+            if (response.some(r => r == 10)) {
 
                 setPermiso(true)
                 // setLectura(false)
@@ -1337,33 +1348,36 @@ const ModalValidacion = ({ open, lista }) => {
             nested
         >
             {Object.keys(lista).length > 0 ?
-                <div className="modal" style={{ maxHeight: '400px', overflow: 'auto' }}>
+                <div className="modal" style={{ maxHeight: '400px', overflow: 'auto', width: '1000px' }}>
                     <div id="seccion">
                         <div id="titulo_seccion">Resultados validación</div>
                         <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el formulario</p>
 
-                        {Object.keys(lista).map((v) => {
-                            return (
-                                <Fragment>
-                                    <p>Campo: {v}</p>
-                                    <ul>
+                        <div id="documentos">
+                            <div className="item head" >
+                                <p>Campo</p>
+                                <p>Condición</p>
+                                <p style={{ textAlign: 'center' }}>Estado</p>
+                            </div>
+                            {Object.keys(lista).map((v) => {
+                                return (
+                                    <Fragment>
                                         {lista[v].map((c) => {
                                             return (
-                                                <li>
-                                                    Condición: {c.id_condicion} - {c.etiqueta}, estado: {
-                                                        c.estado ?
-                                                            <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
-                                                            <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />
-                                                    }
-
-                                                </li>
+                                                <div className="item" key={c.id_condicion}>
+                                                    <p>{v}</p>
+                                                    <p>{c.etiqueta}</p>
+                                                    <p style={{ textAlign: 'center' }}> {c.estado ?
+                                                        <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
+                                                        <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />}
+                                                    </p>
+                                                </div>
                                             )
                                         })}
-                                    </ul>
-                                </Fragment>
-
-                            )
-                        })}
+                                    </Fragment>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div> : null}
 
@@ -1405,6 +1419,7 @@ const Predio = () => {
                 <TabList>
                     <Tab>Estructuración</Tab>
                     <Tab>Saneamientos</Tab>
+                    <Tab>Asignaciones</Tab>
                     {/* <Tab>Jurídico</Tab>
                     <Tab>Financiera</Tab>
                     <Tab>Social</Tab>
@@ -1470,6 +1485,9 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
                             Control de calidad catastral
+                        </button>
+                        <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                            Contabilidad
                         </button>
 
                         {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
@@ -1660,6 +1678,15 @@ const Predio = () => {
                         </button>
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
+                        </button>
+                    </div>
+                </TabPanel>
+                <TabPanel>
+                    <h3>Asignaciones</h3>
+                    <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
+                    <div className="grupo-formularios">
+                        <button onClick={() => getForm(44, "info44_asignacion_saneamiento", "Asignaciones")} className={active == 44 ? 'active' : ''}>
+                            Asignación saneamientos jurídicos
                         </button>
                     </div>
                 </TabPanel>

@@ -149,10 +149,10 @@ export const notificacion = (data) => {
     else if (ruta == 3 || ruta === 11) {// tarea a cargo del sup tecnico
 
 
-        
-        if(data.id_expediente.includes("S_")){
+
+        if (data.id_expediente.includes("S_")) {
             data.id_consulta = "aprobado_tecnico_servidumbre";
-        }else{
+        } else {
             data.id_consulta = "aprobado_tecnico";
         }
 
@@ -187,8 +187,20 @@ export const notificacion = (data) => {
                 //alert("se acabo todo el flujo de momento...");
 
                 data.id_consulta = "insertar_notificacion"
-                data.tarea_next = 6;
-                data.ruta_destino = 9;
+                data.tarea_next = 10;
+                data.ruta_destino = 14;
+
+                await back(data)
+
+                data.id_consulta = "insertar_notificacion"
+                data.tarea_next = 11;
+                data.ruta_destino = 15;
+
+                await back(data)
+
+                data.id_consulta = "insertar_notificacion"
+                data.tarea_next = 12;
+                data.ruta_destino = 16;
 
                 await back(data)
 
@@ -199,10 +211,10 @@ export const notificacion = (data) => {
 
     } else if (ruta === 9) { // Tarea en usuario SIG
 
-        if(data.id_expediente.includes("S_")){
+        if (data.id_expediente.includes("S_")) {
             data.id_consulta = "info20_sig_servidumbre";
             data.id_servidumbre = data.id_expediente;
-        }else{
+        } else {
             data.id_consulta = "info23_sig";
         }
 
@@ -279,6 +291,29 @@ export const notificacion = (data) => {
             }
 
         })()
+    } else if (ruta === 14) {
+        data.id_consulta = "info44_asignacion_saneamiento";
+
+        (async () => {
+            var result = await back(data);
+
+            if (result.data[0].usuario != null) { // Devolucion de geometria
+                (async () => {
+
+                    //alert()
+
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 5,
+                        ruta_destino: 11,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })()
+            }
+
+        })()
     } else if (ruta === -1) {//esta es la forma de quitarme una tarea actualizando su estado
 
         data.id_consulta = "update_tareas_estado";
@@ -288,7 +323,7 @@ export const notificacion = (data) => {
 
         })()
 
-    } else if (ruta === -2){ // Tarea para asignar a supervisor documental
+    } else if (ruta === -2) { // Tarea para asignar a supervisor documental
 
         let post = {
             id_consulta: "insertar_notificacion_documental",
@@ -305,7 +340,7 @@ export const notificacion = (data) => {
 
         })()
 
-    } else if (ruta === -3){
+    } else if (ruta === -3) {
 
         let post = {
             id_consulta: "update_tareas_estado_documental",
@@ -322,3 +357,5 @@ export const notificacion = (data) => {
 
 
 }
+
+

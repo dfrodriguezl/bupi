@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import Popup from 'reactjs-popup';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -6,14 +6,62 @@ import { servidorPost } from '../js/request'
 import { ToastContainer, toast } from 'react-toastify';
 import { notificacion } from '../variables/notificaciones'
 import { notificacion_saneamientos } from '../variables/notificaciones_saneamientos';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
   const toastId = React.useRef(null);
 
+  const [openValidacion, setOpenValidacion] = useState(false);
+  const [listaValidacion, setListaValidacion] = useState([]);
+  const [estadoValidacion, setEstadoValidacion] = useState(true);
+
+  const generarValidaciones = (id_exp) => {
+
+    const data = {
+      id_consulta: 'validacion_expediente',
+      id_expediente: id_exp
+    };
+
+    servidorPost("/backend", data).then((r) => {
+      const dataGet = {
+        id_consulta: 'get_validadores_expediente',
+        id_expediente: id_exp
+      }
+      servidorPost('/backend', dataGet).then(response => {
+        const lista = response.data;
+        lista.map((l) => {
+          if (!l.estado) {
+            setEstadoValidacion(false)
+          }
+        })
+
+        setListaValidacion(response.data)
+        setOpenValidacion(true)
+      })
+    })
+  }
+
+  const pasarTareaExitosa = () => {
+    var data = {
+      "id": id,
+      "ruta": -1
+    }
+    notificacion(data)
+
+
+    var datos = {
+      "id_expediente": nombre,
+      "ruta": tareacod,
+    }
+    notificacion(datos)
+  }
+
   return (
     <>
-      <Popup
+      {/* <ModalValidacion open={openValidacion} lista={listaValidacion} ref={ref} /> */}
+      {!openValidacion ? <Popup
         trigger={<button>Finalizar actividad</button>}
         modal
         nested
@@ -25,7 +73,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
             </button>
             <div className="header"> Confirmación </div>
             <div className="content">
-              Se encuentra seguro de haber diligenciado el formulario para el expediente:  {nombre}
+              Se encuentra seguro de haber diligenciado el formulario para el registro predial:  {nombre}
             </div>
             <div className="actions">
               <button
@@ -41,7 +89,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
                       "ruta": -1
                     }
 
-                    notificacion_saneamientos(data,tipo,consecutivo)
+                    notificacion_saneamientos(data, tipo, consecutivo)
 
 
                     var datos = {
@@ -49,20 +97,42 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
                       "ruta": tareacod,
                     }
 
-                    notificacion_saneamientos(datos,tipo,consecutivo)
+                    notificacion_saneamientos(datos, tipo, consecutivo)
+                    close();
                   } else {
-                    var data = {
-                      "id": id,
-                      "ruta": -1
-                    }
-                    notificacion(data)
+
+                    if (tareacod === 1 || tareacod === 7) {
+                      generarValidaciones(nombre)
+
+                      // var data = {
+                      //   "id": id,
+                      //   "ruta": -1
+                      // }
+                      // notificacion(data)
 
 
-                    var datos = {
-                      "id_expediente": nombre,
-                      "ruta": tareacod,
+                      // var datos = {
+                      //   "id_expediente": nombre,
+                      //   "ruta": tareacod,
+                      // }
+                      // notificacion(datos)
+                    } else {
+                      var data = {
+                        "id": id,
+                        "ruta": -1
+                      }
+                      notificacion(data)
+
+
+                      var datos = {
+                        "id_expediente": nombre,
+                        "ruta": tareacod,
+                      }
+                      notificacion(datos)
+                      close();
                     }
-                    notificacion(datos)
+
+
                   }
 
 
@@ -76,7 +146,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
 
-                  close();
+
 
 
 
@@ -98,7 +168,48 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
           </div>
 
         )}
-      </Popup>
+      </Popup> : <Popup
+        trigger={<button>Finalizar actividad</button>}
+        modal
+        nested
+      >
+        {close => (<div className="modal" style={{ maxHeight: '400px', overflow: 'auto', width: '1000px' }}>
+          <button className="close" onClick={close}>
+            &times;
+          </button>
+          <div id="seccion">
+            <div id="titulo_seccion">Resultados validación</div>
+            <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el registro predial {nombre}</p>
+            <p style={{ color: 'red' }}>{!estadoValidacion ? "DEBE AJUSTAR LAS VALIDACIONES QUE NO HAN SIDO EXITOSAS PARA PASAR A CONTROL DE CALIDAD" : null}</p>
+            <div id="documentos">
+              <div className="item head" >
+                <p>Campo</p>
+                <p>Condición</p>
+                <p style={{ textAlign: 'center' }}>Estado</p>
+              </div>
+              {listaValidacion.map((v) => {
+                return (
+                  <Fragment>
+                    <div className="item" key={v.id_condicion}>
+                      <p>{v.campo}</p>
+                      <p>{v.etiqueta}</p>
+                      <p style={{ textAlign: 'center' }}> {v.estado ?
+                        <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
+                        <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />}
+                      </p>
+                    </div>
+                  </Fragment>
+                )
+              })}
+              {estadoValidacion ? <button onClick={() => {
+                pasarTareaExitosa();
+                close();
+                }}>Pasar a control de calidad</button> : null}
+            </div>
+          </div>
+        </div>)}
+      </Popup>}
+
       <ToastContainer />
     </>
   )
@@ -107,3 +218,5 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
 export { Modal }
+
+
