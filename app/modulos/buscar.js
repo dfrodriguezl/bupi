@@ -61,6 +61,7 @@ const Busqueda = () => {
           <div className="item" key={key} >
             <div>
               <p className="item_titulo"> {el.id_expediente}</p>
+              <p className="item_des">Matrícula inmobiliaria: {el.calculo_matricula}</p>
               <p className="item_des">Departamento: {el.departamento}</p>
               <p className="item_des">Municipio: {el.municipio}</p>
               <p className="item_des">Dirección: {el.direccion_actual_igac}</p>

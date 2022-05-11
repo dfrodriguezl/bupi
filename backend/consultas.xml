@@ -417,7 +417,7 @@
         <sql>
         select distinct ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
         iic.direccion_actual_igac 
-		from info1_fuente ig left join info2_adquisicion ip
+		from info1_fuente ig left join info2_adquisicion_vw ip
 		on ig.id_expediente=ip.id_expediente
 		left join info4_informacion_catastral iic
         on ig.id_expediente=iic.id_expediente
@@ -1651,7 +1651,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info3_predios_segregados">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.fmi_segregado, "Técnico", "Jurídico", "Sup. Juridico", "Sup. Técnico"
             from info3_predios_segregados i1
             join (
                 SELECT *
@@ -1667,7 +1667,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info6_avaluos">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.avaluo, i1.vigencia, "Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info6_avaluos i1
             join (
                 SELECT *
@@ -1683,7 +1683,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info7_control_calidad_juridico">
         <sql>
-            select *
+             select i1.id_expediente codigo_bupi, i1.aprobado, i1.observacion, "Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info7_control_calidad_juridico i1
             join (
                 SELECT *
@@ -1699,7 +1699,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info8_control_calidad_catastral">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.aprobado, i1.observacion,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info8_control_calidad_catastral i1
             join (
                 SELECT *
@@ -1715,7 +1715,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info42_adquisicion_tradentes">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.tradente, i1.tipo_documento_tradente, i1.numero_documento_tradente,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info42_adquisicion_tradentes i1
             join (
                 SELECT *
@@ -1731,7 +1731,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info41_adquisicion_matrices">
         <sql>
-            select *
+             select i1.id_expediente codigo_bupi, i1.consecutivo, i1.orip_matriz, i1.fmi_matriz, i1.calculo_fmi_matriz,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info41_adquisicion_matrices i1
             join (
                 SELECT *
@@ -1747,7 +1747,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info14_saneamiento_juridico">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.saneamientos,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info14_saneamiento_juridico i1
             join (
                 SELECT *
@@ -1763,7 +1763,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info13_saneamiento_catastral">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.saneamientos_catastrales ,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info13_saneamiento_catastral i1
             join (
                 SELECT *
@@ -1779,7 +1779,8 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info11_adquisicion_escritura">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.escritura , i1.caja , i1.carpeta ,i1.fecha_entrega_carpeta ,i1.proyecto_vial ,i1.convenio_contrato ,
+           i1.fecha_cargue_teams , i1.estado_busqueda , i1.enlace_teams , i1.observacion_documental ,"Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info11_adquisicion_escritura i1
             join (
                 SELECT *
@@ -1795,7 +1796,7 @@ group by dominio) as d
     </Consulta>
     <Consulta id="reporte_info12_pago">
         <sql>
-            select *
+            select i1.id_expediente codigo_bupi, i1.consecutivo , i1.no_ficha_predial , i1.valor_pago , "Técnico","Jurídico","Sup. Juridico","Sup. Técnico"
             from info12_pago i1
             join (
                 SELECT *
@@ -2405,7 +2406,7 @@ group by dominio) as d
 
         select *
         from reporte_actividades
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
 
@@ -3034,7 +3035,7 @@ group by dominio) as d
             from resultados_validacion rv
             join validadores v on rv.id_validador = v.id_validador
             where rv.id_expediente = $expediente
-            and rv.estado is not null
+            and rv.estado = false
             and v.id_formulario = $formulario
             order by estado, id_condicion ;
         </sql>
@@ -3391,7 +3392,7 @@ group by dominio) as d
             select *, v.campo 
                 from resultados_validacion rv 
                 join validadores v on rv.id_validador = v.id_validador
-                where rv.id_expediente = $id_expediente and estado is not null
+                where rv.id_expediente = $id_expediente and estado = false
                 order by estado, rv.id_validador,rv.id_condicion;
         </sql>
     </Consulta>
