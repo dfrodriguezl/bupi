@@ -43,6 +43,7 @@ import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
 import CurrencyInput, { formatValue } from 'react-currency-input-field';
+import CheckMultiple from './componentes/check_multiple';
 
 
 const gestionPermisos = (index) => {
@@ -76,7 +77,7 @@ const gestionPermisos = (index) => {
         tipo_permiso = [15];
     } else if ([40].includes(index)) {
         tipo_permiso = [16];
-    }  else if ([43].includes(index)) {
+    } else if ([43].includes(index)) {
         tipo_permiso = [17];
     } else if ([11].includes(index)) {
         tipo_permiso = [12];
@@ -375,8 +376,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     const onSubmit = datos => {
 
-        console.log("datos-------")
-        console.log(datos)
+        // console.log("datos-------")
+        // console.log(datos)
         var data = datos;
         // console.log("TBL", index)
 
@@ -391,7 +392,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 return item.doc.moneda
             });
 
-
             if (data[key] != "") {
                 if (Array.isArray(data[key])) {
                     // console.log("array")
@@ -401,9 +401,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     // console.log(item)
 
 
-
                     if (item[0] === "select") {
-
+                        
                         if (data[key][0] === null) {
                             data[key] = null
 
@@ -421,6 +420,18 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                     }
 
+                } 
+                else {
+                    if (item[0] === "select") {
+                        if (data[key] === null || data[key] === undefined) {
+                            data[key] = null
+
+                        } else {
+                            
+                            data[key] = data[key].value
+
+                        }
+                    }
                 }
             } else {
                 if (item == "select" || item == "fecha" || item == "numero" || item == "consulta") {
@@ -431,13 +442,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             if (typeof data[key] === 'undefined') {
                 delete data[key];
             }
-            
+
             if (itemMoneda[0]) {
-                console.log("DATA KEY", data[key])
-                if(data[key] !== null || data[key] === ''){
+                // console.log("DATA KEY", data[key])
+                if (data[key] !== null || data[key] === '') {
                     data[key] = parseFloat(data[key].replaceAll(".", "").replaceAll("$", "").replaceAll(",", "."));
                 }
-                
+
             }
         });
         // console.log(data)
@@ -546,7 +557,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     dominio: e.enum_name
                 }
                 servidorPost('/backend', dataSaneamiento).then(function (response) {
-                    console.log("RESPONSE ENUM", response)
+                    // console.log("RESPONSE ENUM", response)
                     const childs = e.field_child.split(",");
                     // console.log("CHILDS", childs);
                     setTextDomains({
@@ -588,6 +599,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         //setValue('mot_dev_tec', selectedOption);
         return selectedOption[0];
     };
+
+    // const handleMultiCheckChange = (selectedOption) => {
+    //     // console.log(selectedOption)
+    //     //setValue('mot_dev_tec', selectedOption);
+    //     return selectedOption[0];
+    // };
 
     const default_multiple = (listado, compare) => {
 
@@ -733,25 +750,41 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                                
                                                 {i.doc.field_father ?
+                                                
+                                                    // <Controller
+                                                    //     as={<ReactSelect />}
+                                                    //     options={
+                                                    //         listDomains[i.doc.field]
+                                                    //     }
+
+
+                                                    //     isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    //     name={i.doc.field}
+                                                    //     isClearable={true}
+                                                    //     control={control}
+                                                    //     defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                    //     onChange={(e) => {change(e, i.doc)}}
+                                                    //     // rules={{
+                                                    //     //     required: true
+                                                    //     // }}
+
+                                                    // />
                                                     <Controller
-                                                        as={<ReactSelect />}
-                                                        options={
-                                                            listDomains[i.doc.field]
-                                                        }
-
-
-                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
-                                                        isClearable={true}
-
                                                         control={control}
-                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                        onChange={(e) => change(e, i.doc)}
-                                                        rules={{
-                                                            required: true
-                                                        }}
-
+                                                        render={(props) => 
+                                                            <ReactSelect onChange={(e) => {
+                                                                props.onChange(e); 
+                                                                change(e, i.doc);}} 
+                                                                options={listDomains[i.doc.field]}
+                                                                isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                name={props.name}
+                                                                isClearable={true}
+                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                                />
+                                                        }
                                                     />
                                                     // <ReactSelect
                                                     //     name={i.doc.field}
@@ -777,18 +810,19 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                                                     <Controller
-                                                        as={<ReactSelect />}
-                                                        // render={({field}) => (<RenderSelect field={field} data={i.doc.enum}/>)}
-                                                        options={
-                                                            i.doc.enum
-                                                        }
-                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
-                                                        isClearable={true}
                                                         control={control}
-                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                        onChange={(e) => change(e, i.doc)}
-                                                        rules={{ required: true }}
+                                                        render={(props) => 
+                                                            <ReactSelect onChange={(e) => {
+                                                                props.onChange(e); 
+                                                                change(e, i.doc);}} 
+                                                                options={i.doc.enum}
+                                                                isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                name={props.name}
+                                                                isClearable={true}
+                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                                />
+                                                        }
                                                     />
 
                                                 }
@@ -821,6 +855,32 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                             : ''
                                         }
 
+                                        {i.doc.form == 'check_multiple' ?
+
+                                            <>
+                                                <CheckMultiple
+                                                    isDisabled={lectura}
+                                                    name={i.doc.field}
+                                                    options={i.doc.enum}
+                                                    control={control}
+                                                    defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                    // onChange={handleMultiChange}
+                                                    // ref={register}
+                                                />
+                                                {/* <Controller 
+                                                    as={CheckMultiple}
+                                                    control={control}
+                                                    isDisabled={lectura}
+                                                    name={i.doc.field}
+                                                    options={i.doc.enum}
+                                                    defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                    onChange={handleMultiChange}
+                                                /> */}
+                                            </>
+
+                                            : ''
+                                        }
+
                                         {i.doc.form == 'texto' ?
                                             <>
                                                 {/* {console.log("ERT", i.doc.size)} */}
@@ -845,6 +905,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         disabled={lectura}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                                         maxLength={i.doc.size ? i.doc.size : undefined}
+                                                        minLength={i.doc.min_size ? i.doc.min_size : undefined}
                                                         ref={register({
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),

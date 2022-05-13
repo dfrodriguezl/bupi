@@ -976,7 +976,8 @@
             'caso_especial',m.caso_especial,
             'rol_edicion', m.rol_edicion,
             'required', m.required,
-            'moneda', m.moneda
+            'moneda', m.moneda,
+            'min_size', m.min_size
             ) as doc
         from modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
