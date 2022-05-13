@@ -51,12 +51,12 @@ const FlujoSan = (props) => {
   [{ id: '1', type: 'input', data: { label: 'Inicio' }, position: { x: 0, y: 200 }, draggable: false, connectable: false, selectable: false, sourcePosition: 'right' },
   // you can also pass a React Node as a label
 
-  { id: '2', type: 'oneTwo', data: { label: 'Técnico' }, position: { x: 400, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
+  { id: '2', type: 'oneTwo', data: { label: 'Estructurador' }, position: { x: 400, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
   // { id: '3', type: 'oneTwo', data: { label: 'Juridico' }, position: { x: 300, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
   // { id: '4', type: 'TwoOne', data: { label: 'Sup. Juridico' }, position: { x: 700, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
-  { id: '5', type: 'twoTwo', data: { label: 'Sup. Técnico' }, position: { x: 800, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
+  { id: '5', type: 'twoTwo', data: { label: 'Control de calidad' }, position: { x: 800, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
   // { id: '6', type: 'TwoOne', data: { label: 'SIG' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
-  { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1200, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
+  { id: '6', type: 'output', data: { label: 'Fin catastral' }, position: { x: 1200, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
   // { id: '7', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1500, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
   // { id: '8', type: 'output', data: { label: 'Fin jurídico' }, position: { x: 1500, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },
   // { id: '9', data: { label: 'Social' }, position: { x: 300, y: 400 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
@@ -82,8 +82,8 @@ const FlujoSan = (props) => {
   // you can also pass a React Node as a label
 
   // { id: '2', type: 'oneTwo', data: { label: 'Técnico' }, position: { x: 300, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
-  { id: '3', type: 'oneTwo', data: { label: 'Juridico' }, position: { x: 400, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
-  { id: '4', type: 'TwoOne', data: { label: 'Sup. Juridico' }, position: { x: 800, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
+  { id: '3', type: 'oneTwo', data: { label: 'Abogado' }, position: { x: 400, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left', sourcePosition: 'right' },
+  { id: '4', type: 'TwoOne', data: { label: 'Control de calidad' }, position: { x: 800, y: 200 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
   // { id: '5', type: 'twoTwo', data: { label: 'Sup. Técnico' }, position: { x: 700, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
   // { id: '6', type: 'TwoOne', data: { label: 'SIG' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, sourcePosition: 'right' },
   // { id: '6', type: 'output', data: { label: 'Fin técnico' }, position: { x: 1100, y: 0 }, draggable: false, className: 'nodo', connectable: false, selectable: false, targetPosition: 'left' },

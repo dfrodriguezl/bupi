@@ -44,6 +44,7 @@ import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
 import CurrencyInput, { formatValue } from 'react-currency-input-field';
 import CheckMultiple from './componentes/check_multiple';
+import { ErrorMessage } from '@hookform/error-message';
 
 
 const gestionPermisos = (index) => {
@@ -402,7 +403,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                     if (item[0] === "select") {
-                        
+
                         if (data[key][0] === null) {
                             data[key] = null
 
@@ -420,14 +421,14 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                     }
 
-                } 
+                }
                 else {
                     if (item[0] === "select") {
                         if (data[key] === null || data[key] === undefined) {
                             data[key] = null
 
                         } else {
-                            
+
                             data[key] = data[key].value
 
                         }
@@ -750,9 +751,9 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                                
+
                                                 {i.doc.field_father ?
-                                                
+
                                                     // <Controller
                                                     //     as={<ReactSelect />}
                                                     //     options={
@@ -774,16 +775,18 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     <Controller
                                                         name={i.doc.field}
                                                         control={control}
-                                                        render={(props) => 
+                                                        render={(props) =>
                                                             <ReactSelect onChange={(e) => {
-                                                                props.onChange(e); 
-                                                                change(e, i.doc);}} 
+                                                                props.onChange(e);
+                                                                change(e, i.doc);
+                                                            }}
                                                                 options={listDomains[i.doc.field]}
                                                                 isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                                 name={props.name}
                                                                 isClearable={true}
                                                                 defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                                />
+                                                                rules={i.doc.required ? { required: i.doc.message } : undefined}
+                                                            />
                                                         }
                                                     />
                                                     // <ReactSelect
@@ -812,22 +815,22 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     <Controller
                                                         name={i.doc.field}
                                                         control={control}
-                                                        render={(props) => 
+                                                        render={(props) =>
                                                             <ReactSelect onChange={(e) => {
-                                                                props.onChange(e); 
-                                                                change(e, i.doc);}} 
+                                                                props.onChange(e);
+                                                                change(e, i.doc);
+                                                            }}
                                                                 options={i.doc.enum}
                                                                 isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                                 name={props.name}
                                                                 isClearable={true}
                                                                 defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                                />
+                                                            />
                                                         }
+                                                        rules={i.doc.required ? { required: i.doc.message } : undefined}
                                                     />
 
                                                 }
-                                                {/* {console.log("ERRORS", errors)} */}
-                                                {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
 
                                             </>
 
@@ -849,6 +852,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     control={control}
                                                     onChange={handleMultiChange}
                                                     defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                    rules={i.doc.required ? { required: i.doc.message } : undefined}
                                                 />
                                             </>
 
@@ -864,8 +868,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     options={i.doc.enum}
                                                     control={control}
                                                     defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
-                                                    // onChange={handleMultiChange}
-                                                    // ref={register}
+                                                // onChange={handleMultiChange}
+                                                // ref={register}
                                                 />
                                                 {/* <Controller 
                                                     as={CheckMultiple}
@@ -892,10 +896,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         value={textDomains ? textDomains[i.doc.field] : ''}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                                         ref={register({
+                                                            required: i.doc.required ? { required: i.doc.message } : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
-                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined,
                                                             }
                                                         })} />
 
@@ -907,10 +912,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         maxLength={i.doc.size ? i.doc.size : undefined}
                                                         minLength={i.doc.min_size ? i.doc.min_size : undefined}
                                                         ref={register({
+                                                            required: i.doc.required ? { required: i.doc.message } : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
-                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined,
                                                             }
                                                         })} />}
 
@@ -978,6 +984,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                                         }
+                                        {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
+                                        {/* <ErrorMessage errors={errors} name={i.doc.field} /> */}
                                     </>
                                     : <input type={i.doc.type}
                                         className='form_input_static'
@@ -1000,6 +1008,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         {index === 7 || index === 8 ?
                             <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" /> : null}
+                        {Object.keys(errors).length > 0 ? <span className="msg-error">Existen validaciones pendientes, revise en cual campo falta</span> : null}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
@@ -1530,22 +1539,22 @@ const Predio = () => {
                         {/* <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
                             SIG
                         </button> */}
-                        <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Adquisición - escritura")} className={active == 11 ? 'active' : ''}>
-                            Adquisición - escritura
+                        <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
+                            Información expediente
                         </button>
-                        <button onClick={() => getForm(12, "info12_pago", "Pago")} className={active == 12 ? 'active' : ''}>
-                            Pago
+                        <button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
+                            Relación de pagos parciales
                         </button>
 
 
                         <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
                             Áreas
                         </button>
-                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Control de calidad jurídico")} className={active == 7 ? 'active' : ''}>
-                            Control de calidad jurídico
+                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
+                            Validación jurídica
                         </button>
-                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
-                            Control de calidad catastral
+                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
+                            Control de calidad
                         </button>
                         <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
                             Contabilidad
@@ -1734,8 +1743,8 @@ const Predio = () => {
                         <button onClick={() => getForm(41, "info41_observaciones_predio", "Observaciones predios")} className={active == 41 ? 'active' : ''}>
                             Observaciones predio
                         </button> */}
-                        <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento técnico")} className={active == 39 ? 'active' : ''}>
-                            Gestión saneamiento técnico
+                        <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento catastral")} className={active == 39 ? 'active' : ''}>
+                            Gestión saneamiento catastral
                         </button>
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
