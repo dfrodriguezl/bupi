@@ -45,6 +45,7 @@ import RenderSelect from './componentes/render_select';
 import CurrencyInput, { formatValue } from 'react-currency-input-field';
 import CheckMultiple from './componentes/check_multiple';
 import { ErrorMessage } from '@hookform/error-message';
+import PopupAdvertencia from './popup_advertencia';
 
 
 const gestionPermisos = (index) => {
@@ -1503,120 +1504,111 @@ const Predio = () => {
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
 
                     <div className="grupo-formularios">
-
-                        <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
-                            className={active == 1 ? 'active' : ''}    >
-                            Fuente
-                        </button>
-                        <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
-                            Adquisición
-                        </button>
-                        <button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
-                            Adquisición-tradentes
-                        </button>
-                        <button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
-                            Adquisición-matrices
-                        </button>
-                        <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
-                            Predios segregados
-                        </button>
-                        <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
-                            Saneamiento jurídico
-                        </button>
-                        <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
-                            Información catastral
-                        </button>
-                        <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
-                            Saneamiento catastral
-                        </button>
-                        <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
-                            Información INVIAS
-                        </button>
-                        <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
-                            Avalúos
-                        </button>
-
-                        {/* <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
-                            SIG
-                        </button> */}
-                        <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
-                            Información expediente
-                        </button>
-                        <button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
-                            Relación de pagos parciales
-                        </button>
-
-
-                        <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
-                            Áreas
-                        </button>
-                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
-                            Validación jurídica
-                        </button>
-                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
-                            Control de calidad
-                        </button>
-                        <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
-                            Contabilidad
-                        </button>
-
-                        {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
-                            className={active == 1 ? 'active' : ''}    >
-                            general del proyecto
-                        </button> */}
-                        {/* <button onClick={() => getForm(2, "info2_general_predio", "Información general del predio")} className={active == 2 ? 'active' : ''}>
-                            general del predio
-                        </button> */}
-                        {/* <button onClick={() => getForm(3, "info3_areas_usos", "Información de áreas y usos")} className={active == 3 ? 'active' : ''} >
-                            areas y usos
-                        </button> */}
-                        {/* <button onClick={() => getForm(4, "info4_avaluos", "Información de avalúos")} className={active == 4 ? 'active' : ''}>
-                            avaluos
-                        </button> */}
-
-                        {/* <button onClick={() => getForm(9, "info9_zmpa", "ZMPA")} className={active == 9 ? 'active' : ''}>
-                            ZMPA
-                        </button> */}
-                        {/* <button onClick={() => getForm(10, "info10_infraestructura", "Infraestructura")} className={active == 10 ? 'active' : ''} >
-                            infraestructura
-                        </button> */}
-                        {/* <button onClick={() => getForm(11, "info11_estudios_detallados", "Estudios detallados")} className={active == 11 ? 'active' : ''}>
-                            estudios detallados
-                        </button>
-                        <button onClick={() => getForm(7, "info7_propietario_catastral", "Propietario Catastral")} className={active == 7 ? 'active' : ''}>
-                            propietario catastral
-                        </button>
-
-
-                        <button onClick={() => getForm(14, "info14_saneamiento_basico", "Saneamiento técnico")} className={active == 14 ? 'active' : ''}>
-                            saneamiento técnico
-                        </button>
-
-
-                        <button onClick={() => getForm(17, "info17_documentos_requeridos", "Documentos requeridos")} className={active == 17 ? 'active' : ''}>
-                            Documentos requeridos
-                        </button>
-
-                        <button onClick={() => getForm(19, "info19_mutacion_predial", "Mutación predial")} className={active == 19 ? 'active' : ''}>
-                            Mutación predial
-                        </button>
-
-                        <button onClick={() => getForm(18, "info18_municipios_intersectados", "Municipios intersectados")} className={active == 18 ? 'active' : ''}>
-                            Municipios intersectados
-                        </button>
-
-                        <button onClick={() => getForm(12, "info12_control_calidad_tecnico", "Control de calidad técnico")} className={active == 12 ? 'active' : ''} >
-                            control de calidad técnico
-                        </button>
-
-                        <button onClick={() => getForm(22, "info22_factura_municipio", "Factura municipio")} className={active == 22 ? 'active' : ''} >
-                            Factura municipio
-                        </button>
-
-                        <button onClick={() => getForm(23, "info23_sig", "SIG")} className={active == 23 ? 'active' : ''} >
-                            SIG
-                        </button> */}
-
+                        {console.log("ACTIVE", active)}
+                        {active === 0 ?
+                            <Fragment>
+                                <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
+                                    className={active == 1 ? 'active' : ''}  >
+                                    Fuente
+                                </button>
+                                <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
+                                    Adquisición
+                                </button>
+                                <button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
+                                    Adquisición-tradentes
+                                </button>
+                                <button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
+                                    Adquisición-matrices
+                                </button>
+                                <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
+                                    Predios segregados
+                                </button>
+                                <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                                    Saneamiento jurídico
+                                </button>
+                                <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
+                                    Información catastral
+                                </button>
+                                <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                                    Saneamiento catastral
+                                </button>
+                                <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
+                                    Información INVIAS
+                                </button>
+                                <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
+                                    Avalúos
+                                </button>
+                                <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
+                                    Información expediente
+                                </button>
+                                <button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
+                                    Relación de pagos parciales
+                                </button>
+                                <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
+                                    Áreas
+                                </button>
+                                <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
+                                    Validación jurídica
+                                </button>
+                                <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
+                                    Control de calidad
+                                </button>
+                                <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                                    Contabilidad
+                                </button>
+                            </Fragment> :
+                            <Fragment>
+                                <PopupAdvertencia open={<button onClick={() => getForm(1, "info1_fuente", "Fuente")}
+                                    className={active == 1 ? 'active' : ''}    >
+                                    Fuente
+                                </button>} getForm={getForm} active={1} tbl="info1_fuente" descripcion="Fuente" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
+                                    Adquisición
+                                </button>} getForm={getForm} active={2} tbl="info2_adquisicion" descripcion="Adquisición" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
+                                    Adquisición-tradentes
+                                </button>} getForm={getForm} active={42} tbl="info42_adquisicion_tradentes" descripcion="Adquisición-tradentes" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
+                                    Adquisición-matrices
+                                </button>} getForm={getForm} active={41} tbl="info41_adquisicion_matrices" descripcion="Adquisición-matrices" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
+                                    Predios segregados
+                                </button>} getForm={getForm} active={3} tbl="info3_predios_segregados" descripcion="Predios segregados" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                                    Saneamiento jurídico
+                                </button>} getForm={getForm} active={14} tbl="info14_saneamiento_juridico" descripcion="Saneamiento jurídico" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
+                                    Información catastral
+                                </button>} getForm={getForm} active={4} tbl="info4_informacion_catastral" descripcion="Información catastral" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                                    Saneamiento catastral
+                                </button>} getForm={getForm} active={13} tbl="info13_saneamiento_catastral" descripcion="Saneamiento catastral" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
+                                    Información INVIAS
+                                </button>} getForm={getForm} active={5} tbl="info5_informacion_invias" descripcion="Información INVIAS" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
+                                    Avalúos
+                                </button>} getForm={getForm} active={6} tbl="info6_avaluos" descripcion="Avalúos" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
+                                    Información expediente
+                                </button>} getForm={getForm} active={11} tbl="info11_adquisicion_escritura" descripcion="Información expediente" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
+                                    Relación de pagos parciales
+                                </button>} getForm={getForm} active={12} tbl="info12_pago" descripcion="Relación de pagos parciales" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
+                                    Áreas
+                                </button>} getForm={getForm} active={15} tbl="info15_areas" descripcion="Áreas" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
+                                    Validación jurídica
+                                </button>} getForm={getForm} active={7} tbl="info7_control_calidad_juridico" descripcion="Validación jurídica" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
+                                    Control de calidad
+                                </button>} getForm={getForm} active={8} tbl="info8_control_calidad_catastral" descripcion="Control de calidad" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                                    Contabilidad
+                                </button>} getForm={getForm} active={43} tbl="info43_contabilidad" descripcion="Contabilidad" />
+                            </Fragment>
+                        }
 
                     </div>
 

@@ -257,7 +257,8 @@ const CrearPredio = () => {
             </button>
             <div className="header"> Confirmación </div>
             <div className="content">
-              Se encuentra seguro de crear el registro correspondiente al código BUPI : {expediente}
+              Antes de crear el registro predial verifique si ya existe la matrícula en el sistema mediante las herramientas de consulta avanzada o 
+              consulta código BUPI. ¿Se encuentra seguro de crear el registro correspondiente al código BUPI : {expediente}?
             </div>
             <div className="actions">
               <button
