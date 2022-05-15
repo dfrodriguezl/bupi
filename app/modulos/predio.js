@@ -1504,7 +1504,6 @@ const Predio = () => {
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
 
                     <div className="grupo-formularios">
-                        {console.log("ACTIVE", active)}
                         {active === 0 ?
                             <Fragment>
                                 <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
