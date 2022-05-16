@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <Grid container item style={{ height: '100vh' }}>
       <Grid xs={6} item style={{ alignSelf: 'center' }}>
-        <img src="https://www.invias.gov.co/images/Photos/0011111ComunicadoCP.jpg" alt="inicio" width="100%" />
+        <img src="https://crucecordilleracentral.invias.gov.co/img/galeria/foto_01.jpg" alt="inicio" width="100%" />
       </Grid>
       <Grid xs={6} item container alignItems='center' alignContent='center' justify="center">
         {/* <div id="login">

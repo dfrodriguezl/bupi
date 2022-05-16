@@ -43,6 +43,9 @@ import EncabezadoSaneamiento from './componentes/encabezado_saneamiento';
 import ExcelAll from './componentes/excell_all';
 import RenderSelect from './componentes/render_select';
 import CurrencyInput, { formatValue } from 'react-currency-input-field';
+import CheckMultiple from './componentes/check_multiple';
+import { ErrorMessage } from '@hookform/error-message';
+import PopupAdvertencia from './popup_advertencia';
 
 
 const gestionPermisos = (index) => {
@@ -76,7 +79,7 @@ const gestionPermisos = (index) => {
         tipo_permiso = [15];
     } else if ([40].includes(index)) {
         tipo_permiso = [16];
-    }  else if ([43].includes(index)) {
+    } else if ([43].includes(index)) {
         tipo_permiso = [17];
     } else if ([11].includes(index)) {
         tipo_permiso = [12];
@@ -375,8 +378,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     const onSubmit = datos => {
 
-        console.log("datos-------")
-        console.log(datos)
+        // console.log("datos-------")
+        // console.log(datos)
         var data = datos;
         // console.log("TBL", index)
 
@@ -391,7 +394,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 return item.doc.moneda
             });
 
-
             if (data[key] != "") {
                 if (Array.isArray(data[key])) {
                     // console.log("array")
@@ -399,7 +401,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     //     return item.doc.form
                     // });
                     // console.log(item)
-
 
 
                     if (item[0] === "select") {
@@ -422,6 +423,18 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     }
 
                 }
+                else {
+                    if (item[0] === "select") {
+                        if (data[key] === null || data[key] === undefined) {
+                            data[key] = null
+
+                        } else {
+
+                            data[key] = data[key].value
+
+                        }
+                    }
+                }
             } else {
                 if (item == "select" || item == "fecha" || item == "numero" || item == "consulta") {
                     data[key] = null
@@ -431,13 +444,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             if (typeof data[key] === 'undefined') {
                 delete data[key];
             }
-            
+
             if (itemMoneda[0]) {
-                console.log("DATA KEY", data[key])
-                if(data[key] !== null || data[key] === ''){
+                // console.log("DATA KEY", data[key])
+                if (data[key] !== null || data[key] === '') {
                     data[key] = parseFloat(data[key].replaceAll(".", "").replaceAll("$", "").replaceAll(",", "."));
                 }
-                
+
             }
         });
         // console.log(data)
@@ -546,7 +559,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                     dominio: e.enum_name
                 }
                 servidorPost('/backend', dataSaneamiento).then(function (response) {
-                    console.log("RESPONSE ENUM", response)
+                    // console.log("RESPONSE ENUM", response)
                     const childs = e.field_child.split(",");
                     // console.log("CHILDS", childs);
                     setTextDomains({
@@ -588,6 +601,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         //setValue('mot_dev_tec', selectedOption);
         return selectedOption[0];
     };
+
+    // const handleMultiCheckChange = (selectedOption) => {
+    //     // console.log(selectedOption)
+    //     //setValue('mot_dev_tec', selectedOption);
+    //     return selectedOption[0];
+    // };
 
     const default_multiple = (listado, compare) => {
 
@@ -733,25 +752,43 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+
                                                 {i.doc.field_father ?
+
+                                                    // <Controller
+                                                    //     as={<ReactSelect />}
+                                                    //     options={
+                                                    //         listDomains[i.doc.field]
+                                                    //     }
+
+
+                                                    //     isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                    //     name={i.doc.field}
+                                                    //     isClearable={true}
+                                                    //     control={control}
+                                                    //     defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                    //     onChange={(e) => {change(e, i.doc)}}
+                                                    //     // rules={{
+                                                    //     //     required: true
+                                                    //     // }}
+
+                                                    // />
                                                     <Controller
-                                                        as={<ReactSelect />}
-                                                        options={
-                                                            listDomains[i.doc.field]
-                                                        }
-
-
-                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
-                                                        isClearable={true}
-
                                                         control={control}
-                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                        onChange={(e) => change(e, i.doc)}
-                                                        rules={{
-                                                            required: true
-                                                        }}
-
+                                                        render={(props) =>
+                                                            <ReactSelect onChange={(e) => {
+                                                                props.onChange(e);
+                                                                change(e, i.doc);
+                                                            }}
+                                                                options={listDomains[i.doc.field]}
+                                                                isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                name={props.name}
+                                                                isClearable={true}
+                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                                rules={i.doc.required ? { required: i.doc.message } : undefined}
+                                                            />
+                                                        }
                                                     />
                                                     // <ReactSelect
                                                     //     name={i.doc.field}
@@ -777,23 +814,24 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                                                     <Controller
-                                                        as={<ReactSelect />}
-                                                        // render={({field}) => (<RenderSelect field={field} data={i.doc.enum}/>)}
-                                                        options={
-                                                            i.doc.enum
-                                                        }
-                                                        isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                         name={i.doc.field}
-                                                        isClearable={true}
                                                         control={control}
-                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                        onChange={(e) => change(e, i.doc)}
-                                                        rules={{ required: true }}
+                                                        render={(props) =>
+                                                            <ReactSelect onChange={(e) => {
+                                                                props.onChange(e);
+                                                                change(e, i.doc);
+                                                            }}
+                                                                options={i.doc.enum}
+                                                                isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                name={props.name}
+                                                                isClearable={true}
+                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                            />
+                                                        }
+                                                        rules={i.doc.required ? { required: i.doc.message } : undefined}
                                                     />
 
                                                 }
-                                                {/* {console.log("ERRORS", errors)} */}
-                                                {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
 
                                             </>
 
@@ -815,7 +853,34 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     control={control}
                                                     onChange={handleMultiChange}
                                                     defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                    rules={i.doc.required ? { required: i.doc.message } : undefined}
                                                 />
+                                            </>
+
+                                            : ''
+                                        }
+
+                                        {i.doc.form == 'check_multiple' ?
+
+                                            <>
+                                                <CheckMultiple
+                                                    isDisabled={lectura}
+                                                    name={i.doc.field}
+                                                    options={i.doc.enum}
+                                                    control={control}
+                                                    defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                // onChange={handleMultiChange}
+                                                // ref={register}
+                                                />
+                                                {/* <Controller 
+                                                    as={CheckMultiple}
+                                                    control={control}
+                                                    isDisabled={lectura}
+                                                    name={i.doc.field}
+                                                    options={i.doc.enum}
+                                                    defaultValue={defecto ? default_multiple(i.doc.enum, fields.info[i.doc.field]) : ''}
+                                                    onChange={handleMultiChange}
+                                                /> */}
                                             </>
 
                                             : ''
@@ -832,10 +897,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         value={textDomains ? textDomains[i.doc.field] : ''}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                                         ref={register({
+                                                            required: i.doc.required ? { required: i.doc.message } : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
-                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined,
                                                             }
                                                         })} />
 
@@ -845,11 +911,13 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         disabled={lectura}
                                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                                         maxLength={i.doc.size ? i.doc.size : undefined}
+                                                        minLength={i.doc.min_size ? i.doc.min_size : undefined}
                                                         ref={register({
+                                                            required: i.doc.required ? { required: i.doc.message } : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
-                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined
+                                                                maxLength: i.doc.size !== null ? i.doc.size : undefined,
                                                             }
                                                         })} />}
 
@@ -917,6 +985,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                                         }
+                                        {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
+                                        {/* <ErrorMessage errors={errors} name={i.doc.field} /> */}
                                     </>
                                     : <input type={i.doc.type}
                                         className='form_input_static'
@@ -939,6 +1009,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         {index === 7 || index === 8 ?
                             <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" /> : null}
+                        {Object.keys(errors).length > 0 ? <span className="msg-error">Existen validaciones pendientes, revise en cual campo falta</span> : null}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
@@ -1433,120 +1504,110 @@ const Predio = () => {
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
 
                     <div className="grupo-formularios">
-
-                        <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
-                            className={active == 1 ? 'active' : ''}    >
-                            Fuente
-                        </button>
-                        <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
-                            Adquisición
-                        </button>
-                        <button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
-                            Adquisición-tradentes
-                        </button>
-                        <button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
-                            Adquisición-matrices
-                        </button>
-                        <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
-                            Predios segregados
-                        </button>
-                        <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
-                            Saneamiento jurídico
-                        </button>
-                        <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
-                            Información catastral
-                        </button>
-                        <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
-                            Saneamiento catastral
-                        </button>
-                        <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
-                            Información INVIAS
-                        </button>
-                        <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
-                            Avalúos
-                        </button>
-
-                        {/* <button onClick={() => getForm(10, "info10_sig", "SIG")} className={active == 10 ? 'active' : ''}>
-                            SIG
-                        </button> */}
-                        <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Adquisición - escritura")} className={active == 11 ? 'active' : ''}>
-                            Adquisición - escritura
-                        </button>
-                        <button onClick={() => getForm(12, "info12_pago", "Pago")} className={active == 12 ? 'active' : ''}>
-                            Pago
-                        </button>
-
-
-                        <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
-                            Áreas
-                        </button>
-                        <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Control de calidad jurídico")} className={active == 7 ? 'active' : ''}>
-                            Control de calidad jurídico
-                        </button>
-                        <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad catastral")} className={active == 8 ? 'active' : ''}>
-                            Control de calidad catastral
-                        </button>
-                        <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
-                            Contabilidad
-                        </button>
-
-                        {/* <button onClick={() => getForm(1, "info1_general_proyecto", "Información general del proyecto")}
-                            className={active == 1 ? 'active' : ''}    >
-                            general del proyecto
-                        </button> */}
-                        {/* <button onClick={() => getForm(2, "info2_general_predio", "Información general del predio")} className={active == 2 ? 'active' : ''}>
-                            general del predio
-                        </button> */}
-                        {/* <button onClick={() => getForm(3, "info3_areas_usos", "Información de áreas y usos")} className={active == 3 ? 'active' : ''} >
-                            areas y usos
-                        </button> */}
-                        {/* <button onClick={() => getForm(4, "info4_avaluos", "Información de avalúos")} className={active == 4 ? 'active' : ''}>
-                            avaluos
-                        </button> */}
-
-                        {/* <button onClick={() => getForm(9, "info9_zmpa", "ZMPA")} className={active == 9 ? 'active' : ''}>
-                            ZMPA
-                        </button> */}
-                        {/* <button onClick={() => getForm(10, "info10_infraestructura", "Infraestructura")} className={active == 10 ? 'active' : ''} >
-                            infraestructura
-                        </button> */}
-                        {/* <button onClick={() => getForm(11, "info11_estudios_detallados", "Estudios detallados")} className={active == 11 ? 'active' : ''}>
-                            estudios detallados
-                        </button>
-                        <button onClick={() => getForm(7, "info7_propietario_catastral", "Propietario Catastral")} className={active == 7 ? 'active' : ''}>
-                            propietario catastral
-                        </button>
-
-
-                        <button onClick={() => getForm(14, "info14_saneamiento_basico", "Saneamiento técnico")} className={active == 14 ? 'active' : ''}>
-                            saneamiento técnico
-                        </button>
-
-
-                        <button onClick={() => getForm(17, "info17_documentos_requeridos", "Documentos requeridos")} className={active == 17 ? 'active' : ''}>
-                            Documentos requeridos
-                        </button>
-
-                        <button onClick={() => getForm(19, "info19_mutacion_predial", "Mutación predial")} className={active == 19 ? 'active' : ''}>
-                            Mutación predial
-                        </button>
-
-                        <button onClick={() => getForm(18, "info18_municipios_intersectados", "Municipios intersectados")} className={active == 18 ? 'active' : ''}>
-                            Municipios intersectados
-                        </button>
-
-                        <button onClick={() => getForm(12, "info12_control_calidad_tecnico", "Control de calidad técnico")} className={active == 12 ? 'active' : ''} >
-                            control de calidad técnico
-                        </button>
-
-                        <button onClick={() => getForm(22, "info22_factura_municipio", "Factura municipio")} className={active == 22 ? 'active' : ''} >
-                            Factura municipio
-                        </button>
-
-                        <button onClick={() => getForm(23, "info23_sig", "SIG")} className={active == 23 ? 'active' : ''} >
-                            SIG
-                        </button> */}
-
+                        {active === 0 ?
+                            <Fragment>
+                                <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
+                                    className={active == 1 ? 'active' : ''}  >
+                                    Fuente
+                                </button>
+                                <button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
+                                    Adquisición
+                                </button>
+                                <button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
+                                    Adquisición-tradentes
+                                </button>
+                                <button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
+                                    Adquisición-matrices
+                                </button>
+                                <button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
+                                    Predios segregados
+                                </button>
+                                <button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                                    Saneamiento jurídico
+                                </button>
+                                <button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
+                                    Información catastral
+                                </button>
+                                <button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                                    Saneamiento catastral
+                                </button>
+                                <button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
+                                    Información INVIAS
+                                </button>
+                                <button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
+                                    Avalúos
+                                </button>
+                                <button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
+                                    Información expediente
+                                </button>
+                                <button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
+                                    Relación de pagos parciales
+                                </button>
+                                <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
+                                    Áreas
+                                </button>
+                                <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
+                                    Validación jurídica
+                                </button>
+                                <button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
+                                    Control de calidad
+                                </button>
+                                <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                                    Contabilidad
+                                </button>
+                            </Fragment> :
+                            <Fragment>
+                                <PopupAdvertencia open={<button onClick={() => getForm(1, "info1_fuente", "Fuente")}
+                                    className={active == 1 ? 'active' : ''}    >
+                                    Fuente
+                                </button>} getForm={getForm} active={1} tbl="info1_fuente" descripcion="Fuente" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(2, "info2_adquisicion", "Adquisición")} className={active == 2 ? 'active' : ''}>
+                                    Adquisición
+                                </button>} getForm={getForm} active={2} tbl="info2_adquisicion" descripcion="Adquisición" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(42, "info42_adquisicion_tradentes", "Adquisición-tradentes")} className={active == 42 ? 'active' : ''}>
+                                    Adquisición-tradentes
+                                </button>} getForm={getForm} active={42} tbl="info42_adquisicion_tradentes" descripcion="Adquisición-tradentes" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(41, "info41_adquisicion_matrices", "Adquisición-matrices")} className={active == 41 ? 'active' : ''}>
+                                    Adquisición-matrices
+                                </button>} getForm={getForm} active={41} tbl="info41_adquisicion_matrices" descripcion="Adquisición-matrices" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(3, "info3_predios_segregados", "Predios segregados")} className={active == 3 ? 'active' : ''} >
+                                    Predios segregados
+                                </button>} getForm={getForm} active={3} tbl="info3_predios_segregados" descripcion="Predios segregados" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(14, "info14_saneamiento_juridico", "Saneamiento jurídico")} className={active == 14 ? 'active' : ''}>
+                                    Saneamiento jurídico
+                                </button>} getForm={getForm} active={14} tbl="info14_saneamiento_juridico" descripcion="Saneamiento jurídico" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(4, "info4_informacion_catastral", "Información catastral")} className={active == 4 ? 'active' : ''}>
+                                    Información catastral
+                                </button>} getForm={getForm} active={4} tbl="info4_informacion_catastral" descripcion="Información catastral" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(13, "info13_saneamiento_catastral", "Saneamiento catastral")} className={active == 13 ? 'active' : ''}>
+                                    Saneamiento catastral
+                                </button>} getForm={getForm} active={13} tbl="info13_saneamiento_catastral" descripcion="Saneamiento catastral" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(5, "info5_informacion_invias", "Información INVIAS")} className={active == 5 ? 'active' : ''}>
+                                    Información INVIAS
+                                </button>} getForm={getForm} active={5} tbl="info5_informacion_invias" descripcion="Información INVIAS" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(6, "info6_avaluos", "Avalúos")} className={active == 6 ? 'active' : ''} >
+                                    Avalúos
+                                </button>} getForm={getForm} active={6} tbl="info6_avaluos" descripcion="Avalúos" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(11, "info11_adquisicion_escritura", "Información expediente")} className={active == 11 ? 'active' : ''}>
+                                    Información expediente
+                                </button>} getForm={getForm} active={11} tbl="info11_adquisicion_escritura" descripcion="Información expediente" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
+                                    Relación de pagos parciales
+                                </button>} getForm={getForm} active={12} tbl="info12_pago" descripcion="Relación de pagos parciales" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
+                                    Áreas
+                                </button>} getForm={getForm} active={15} tbl="info15_areas" descripcion="Áreas" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
+                                    Validación jurídica
+                                </button>} getForm={getForm} active={7} tbl="info7_control_calidad_juridico" descripcion="Validación jurídica" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(8, "info8_control_calidad_catastral", "Control de calidad")} className={active == 8 ? 'active' : ''}>
+                                    Control de calidad
+                                </button>} getForm={getForm} active={8} tbl="info8_control_calidad_catastral" descripcion="Control de calidad" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
+                                    Contabilidad
+                                </button>} getForm={getForm} active={43} tbl="info43_contabilidad" descripcion="Contabilidad" />
+                            </Fragment>
+                        }
 
                     </div>
 
@@ -1673,8 +1734,8 @@ const Predio = () => {
                         <button onClick={() => getForm(41, "info41_observaciones_predio", "Observaciones predios")} className={active == 41 ? 'active' : ''}>
                             Observaciones predio
                         </button> */}
-                        <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento técnico")} className={active == 39 ? 'active' : ''}>
-                            Gestión saneamiento técnico
+                        <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento catastral")} className={active == 39 ? 'active' : ''}>
+                            Gestión saneamiento catastral
                         </button>
                         <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
