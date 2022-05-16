@@ -13,9 +13,8 @@ const CheckMultiple = (props) => {
 
   useEffect(() => {
     let valueCopy = [...value];
-    console.log("DEFAULT VALUE", defaultValue);
+
     if(defaultValue){
-      console.log("DEFAULT VALUE 2", defaultValue);
      const actValue = defaultValue.map((df, idx) => {
         valueCopy[idx] = df.value;
       },[])
@@ -27,7 +26,7 @@ const CheckMultiple = (props) => {
 
   const onHandleChange = (e, index) => {
     const valueCopy = [...value];
-    console.log("VALUE COPY", valueCopy)
+    
     valueCopy.map((vc, idx) => {
       if(vc === e.target.value){
         valueCopy[idx] = e.target.checked ? e.target.value : null;
