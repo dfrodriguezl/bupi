@@ -1429,6 +1429,7 @@ const ModalValidacion = ({ open, lista }) => {
                                 <p>Campo</p>
                                 <p>Condición</p>
                                 <p style={{ textAlign: 'center' }}>Estado</p>
+                                <p style={{ textAlign: 'center' }}>Obligatorio</p>
                             </div>
                             {Object.keys(lista).map((v) => {
                                 return (
@@ -1442,6 +1443,7 @@ const ModalValidacion = ({ open, lista }) => {
                                                         <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
                                                         <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />}
                                                     </p>
+                                                    <p style={{ textAlign: 'center' }}>{c.obligatorio ? "SI" : "NO"}</p>
                                                 </div>
                                             )
                                         })}
