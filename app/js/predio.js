@@ -20,7 +20,7 @@ const Predio = () => {
             {/* <CustomizedTimeline/> */}
             {/* <Flujo /> */}
             <Pred />
-            <Mapa />
+            {/* <Mapa /> */}
             <Documentos />
 
         </Estructura>
