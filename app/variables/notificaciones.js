@@ -209,6 +209,43 @@ export const notificacion = (data) => {
         })()
 
 
+    } else if (ruta === 14) {
+
+        data.id_consulta = "info44_asignacion_saneamiento";
+
+        (async () => {
+            var result = await back(data);
+            
+            if(result.data[0].usuario !== null){
+                
+                console.log("USUARIO", info);
+                (async () => {
+                    var info = {
+                        id_consulta: "insertar_asignacion_tecnico",
+                        id_expediente: data.id_expediente,
+                        id_tarea: 13,
+                        usuario_responsable: result.data[0].usuario
+                    };
+                    await back(info);
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 13,
+                        ruta_destino: 17,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })();
+            }
+
+            //alert()
+
+            
+
+
+
+        })()
+
     } else if (ruta === 9) { // Tarea en usuario SIG
 
         if (data.id_expediente.includes("S_")) {
@@ -275,29 +312,6 @@ export const notificacion = (data) => {
             var result = await back(data);
 
             if (result.data[0].fecha_dev_usu_prestamo != null) { // Devolucion de geometria
-                (async () => {
-
-                    //alert()
-
-                    var post2 = {
-                        id_consulta: "insertar_notificacion",
-                        tarea_next: 5,
-                        ruta_destino: 11,
-                        opcion: 1,
-                        id_expediente: data.id_expediente
-                    }
-                    await back(post2)
-                })()
-            }
-
-        })()
-    } else if (ruta === 14) {
-        data.id_consulta = "info44_asignacion_saneamiento";
-
-        (async () => {
-            var result = await back(data);
-
-            if (result.data[0].usuario != null) { // Devolucion de geometria
                 (async () => {
 
                     //alert()
