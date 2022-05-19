@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { servidorPost } from './request'
 import { Redirect } from 'react-router'
 import HomeDialogo from '../modulos/componentes/HomeDialogo';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Link } from '@material-ui/core';
 
 const Login = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -39,58 +39,52 @@ const Login = () => {
   console.log(errors);
 
   return (
-    <Grid container item style={{ height: '100vh' }}>
-      <Grid xs={6} item style={{ alignSelf: 'center' }}>
-        <img src="https://crucecordilleracentral.invias.gov.co/img/galeria/foto_01.jpg" alt="inicio" width="100%" />
-      </Grid>
-      <Grid xs={6} item container alignItems='center' alignContent='center' justify="center">
-        {/* <div id="login">
-          <div id="contenido"> */}
-        <Grid item container direction="column" justify="center" alignContent='center'>
-          <HomeDialogo open={open} user={user} />
-          {ok ? <Redirect to="/" /> : ''}
-          <Typography variant="h6">Registro y administración de bienes de uso público - BUPI</Typography>
-          <Typography variant="subtitle1">Bienvenido</Typography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <p>Nombre de usuario</p>
-            <input type="text" name="usuario_usuario" ref={register({ required: true, maxLength: 80 })} />
-            <p>Clave</p>
-            <input type="password" name="usuario_pwd" ref={register({ required: true, maxLength: 100 })} />
-            {msg ? <p>Revise sus credenciales de acceso</p> : ''}
-            <button type="submit" className="primmary">Iniciar sesión</button>
-          </form>
-          {/* <h2>BUPI</h2> */}
-          {/* <p>Bienvenido a BUPI</p> */}
-
+    <Grid container item>
+      <Grid container xs={12} >
+        <Grid item container xs={12} className="contenedor-superior">
+          <Link href="https://www.gov.co/" target="_blank" rel="noreferrer">
+            <img src="https://www.invias.gov.co/images/logotipos/gov.png" alt="logo gobierno de colombia" />
+          </Link>
         </Grid>
-
-        {/* </div>
-        </div> */}
+        <Grid container className="container-images">
+          <Grid item xs={6}>
+          <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
+            <img src="https://www.invias.gov.co/images/0logo.png" alt="logo invias" />
+          </Link> 
+          </Grid>
+          <Grid item xs={6}>
+          <Link href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
+          <img src="https://www.invias.gov.co/images/nuevo_pais.png" alt="logo ministerio de transporte" />
+          </Link>
+            
+          </Grid>
+        </Grid>
+        <Grid container className="login-container">
+          <Grid xs={6} item style={{ alignSelf: 'center' }}>
+            <img src="https://crucecordilleracentral.invias.gov.co/img/galeria/foto_01.jpg" alt="inicio" width="100%" />
+          </Grid>
+          <Grid xs={6} item container alignItems='center' alignContent='center' justify="center">
+            <Grid item container direction="column" justify="center" alignContent='center'>
+              <HomeDialogo open={open} user={user} />
+              {ok ? <Redirect to="/" /> : ''}
+              <h1 className="texto-azul">Registro y Administración de Predios de Uso Público - BUPI</h1>
+              <h2 className="texto-azul">Bienvenido</h2>
+              {/* <Typography variant="h6">Registro y Administración de Predios de Uso Público - BUPI</Typography> */}
+              {/* <Typography variant="subtitle1">Bienvenido</Typography> */}
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <h3>Nombre de usuario</h3>
+                <input type="text" name="usuario_usuario" ref={register({ required: true, maxLength: 80 })} />
+                <h3>Contraseña</h3>
+                <input type="password" name="usuario_pwd" ref={register({ required: true, maxLength: 100 })} />
+                {msg ? <p>Revise sus credenciales de acceso</p> : ''}
+                <br />
+                <button type="submit" className="primmary">Iniciar sesión</button>
+              </form>
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
-    // <div id="login">
-    //   {/* <HomeDialogo open={open} user={user}/> */}
-    //   {ok ? <Redirect to="/" /> : ''}
-
-    //   <div id="contenido">
-    //     <div className="crop">
-    //       <img src="https://www.invias.gov.co/images/Photos/0011111ComunicadoCP.jpg" alt="" />
-    //     </div>
-    //     <h2>BUPI</h2>
-    //     {/* <div className="azul">
-    //       <img height="70px" width="256px" src="https://www.invias.gov.co/images/0logo.png" alt="" style={{paddingTop: 10}}/>
-    //     </div> */}
-    //     <p>Bienvenido a BUPI</p>
-    //     <form onSubmit={handleSubmit(onSubmit)}>
-    //       <p>Nombre de usuario</p>
-    //       <input type="text" name="usuario_usuario" ref={register({ required: true, maxLength: 80 })} />
-    //       <p>Clave</p>
-    //       <input type="password" name="usuario_pwd" ref={register({ required: true, maxLength: 100 })} />
-    //       {msg ? <p>Revise sus credenciales de acceso</p> : ''}
-    //       <button type="submit" className="primmary">Iniciar sesión</button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 }
 export default Login;

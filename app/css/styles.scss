@@ -963,3 +963,25 @@ input[type="file"] {
 #estadisticas-inicio{
     width: 100%;
 }
+
+.container-images{
+    align-items: flex-start;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.contenedor-superior {
+    height: 68px;
+    background-color: $color1;
+    align-items: center;
+    padding-left: 12px;
+}
+
+.login-container{
+    height: '100%';
+    margin-top: 60px;
+}
+
+.texto-azul {
+    color: $color1;
+}
