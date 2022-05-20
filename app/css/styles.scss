@@ -8,13 +8,13 @@ $color5:#CEF5F9;
 $color-gris-oscuro:#707070;
 //iconos se traen en css puro
 
-
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;400;500&display=swap');
 
 
 body{
     padding: 0px;
     margin: 0px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Work Sans';
     font-size: 12px;
     box-sizing: border-box;
   
@@ -70,7 +70,7 @@ body{
     background-color: #fff;
     padding: 10px 0;
     img{
-        width: 90%;
+        // width: 100%;
         display:block;
         margin: auto auto;
     }
@@ -322,6 +322,7 @@ button{
     border-radius: 3px;
     padding:5px;
     margin-top: 5px;
+    font-family: 'Work Sans';
     a{
         text-decoration: none;
     }
@@ -961,4 +962,26 @@ input[type="file"] {
 
 #estadisticas-inicio{
     width: 100%;
+}
+
+.container-images{
+    align-items: flex-start;
+    padding-top: 15px;
+    padding-left: 30px;
+}
+
+.contenedor-superior {
+    height: 68px;
+    background-color: $color1;
+    align-items: center;
+    padding-left: 12px;
+}
+
+.login-container{
+    height: '100%';
+    margin-top: 60px;
+}
+
+.texto-azul {
+    color: $color1;
 }

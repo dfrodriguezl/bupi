@@ -257,18 +257,20 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                             var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', id_expediente: id }
 
-                            servidorPost('/backend', data).then((response) => {
-                                if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
-                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
-                                    servidorPost('/backend', data2).then((responseSan) => {
-                                        if (responseSan.data[0].exists) {
+                            var data = { id_consulta: 'tengo_predio', id_expediente: id }
 
-                                        } else {
+                            // servidorPost('/backend', data).then((response) => {
+                            //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
+                            //         let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                            //         servidorPost('/backend', data2).then((responseSan) => {
+                            //             if (responseSan.data[0].exists) {
 
-                                        }
-                                    });
-                                }
-                            })
+                            //             } else {
+
+                            //             }
+                            //         });
+                            //     }
+                            // })
 
                             servidorPost('/backend', data).then((response) => {
                                 getBloqueo(id).then((r) => {
@@ -555,7 +557,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                 // console.log("MSG", msg)
                 const dataSaneamiento = {
                     id_consulta: 'get_descripcion_saneamientos',
-                    accion_saneamiento: msg[0].value,
+                    accion_saneamiento: msg.value,
                     dominio: e.enum_name
                 }
                 servidorPost('/backend', dataSaneamiento).then(function (response) {
@@ -776,6 +778,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     <Controller
                                                         name={i.doc.field}
                                                         control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         render={(props) =>
                                                             <ReactSelect onChange={(e) => {
                                                                 props.onChange(e);
@@ -785,8 +788,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                                 isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                                 name={props.name}
                                                                 isClearable={true}
-                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                                 rules={i.doc.required ? { required: i.doc.message } : undefined}
+                                                                defaultValue={props.value}
                                                             />
                                                         }
                                                     />
@@ -816,6 +819,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     <Controller
                                                         name={i.doc.field}
                                                         control={control}
+                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
                                                         render={(props) =>
                                                             <ReactSelect onChange={(e) => {
                                                                 props.onChange(e);
@@ -825,7 +829,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                                 isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                                 name={props.name}
                                                                 isClearable={true}
-                                                                defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                                defaultValue={props.value}
                                                             />
                                                         }
                                                         rules={i.doc.required ? { required: i.doc.message } : undefined}
@@ -1429,6 +1433,7 @@ const ModalValidacion = ({ open, lista }) => {
                                 <p>Campo</p>
                                 <p>Condición</p>
                                 <p style={{ textAlign: 'center' }}>Estado</p>
+                                <p style={{ textAlign: 'center' }}>Obligatorio</p>
                             </div>
                             {Object.keys(lista).map((v) => {
                                 return (
@@ -1442,6 +1447,7 @@ const ModalValidacion = ({ open, lista }) => {
                                                         <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
                                                         <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />}
                                                     </p>
+                                                    <p style={{ textAlign: 'center' }}>{c.obligatorio ? "SI" : "NO"}</p>
                                                 </div>
                                             )
                                         })}
@@ -1720,10 +1726,10 @@ const Predio = () => {
                 <TabPanel>
                     <h3>Formularios saneamientos</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
-                    {index === 39 ?
+                    {/* {index === 39 ?
                         <FlujoSan /> :
                         null
-                    }
+                    } */}
                     <div className="grupo-formularios">
                         {/* <button onClick={() => getForm(34, "info34_estado_saneamiento_basico", "Estado saneamiento básico")} className={active == 34 ? 'active' : ''}>
                             Estado saneamiento básico

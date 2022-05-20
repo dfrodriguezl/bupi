@@ -33,7 +33,9 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
         const lista = response.data;
         lista.map((l) => {
           if (!l.estado) {
-            setEstadoValidacion(false)
+            if (l.obligatorio) {
+              setEstadoValidacion(false)
+            }
           }
         })
 
@@ -180,12 +182,13 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
           <div id="seccion">
             <div id="titulo_seccion">Resultados validación</div>
             <p id="descripcion_seccion">A continuación se listan los resultados de la validación para el registro predial {nombre}</p>
-            <p style={{ color: 'red' }}>{!estadoValidacion ? "DEBE AJUSTAR LAS VALIDACIONES QUE NO HAN SIDO EXITOSAS PARA PASAR A CONTROL DE CALIDAD" : null}</p>
+            <p style={{ color: 'red' }}>{!estadoValidacion ? "EXISTEN " + listaValidacion.length + " VALIDACIONES QUE NO HAN SIDO EXITOSAS, DEBE AJUSTARLAS PARA PASAR A CONTROL DE CALIDAD" : null}</p>
             <div id="documentos">
               <div className="item head" >
                 <p>Campo</p>
                 <p>Condición</p>
                 <p style={{ textAlign: 'center' }}>Estado</p>
+                <p style={{ textAlign: 'center' }}>Obligatorio</p>
               </div>
               {listaValidacion.map((v) => {
                 return (
@@ -197,6 +200,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
                         <CheckIcon style={{ color: '#07bc0c', fontSize: '1rem' }} /> :
                         <CloseIcon style={{ color: 'red', fontSize: '1rem' }} />}
                       </p>
+                      <p style={{ textAlign: 'center' }}>{v.obligatorio ? "SI" : "NO"}</p>
                     </div>
                   </Fragment>
                 )
@@ -204,7 +208,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
               {estadoValidacion ? <button onClick={() => {
                 pasarTareaExitosa();
                 close();
-                }}>Pasar a control de calidad</button> : null}
+              }}>Pasar a control de calidad</button> : null}
             </div>
           </div>
         </div>)}
