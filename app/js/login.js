@@ -64,7 +64,7 @@ const Login = () => {
             <img src="https://crucecordilleracentral.invias.gov.co/img/galeria/foto_01.jpg" alt="inicio" width="100%" />
           </Grid>
           <Grid xs={6} item container alignItems='center' alignContent='center' justify="center">
-            <Grid item container direction="column" justify="center" alignContent='center'>
+            <Grid item container direction="column" justify="center" alignContent='center' style={{paddingLeft: 50, paddingRight: 50}}>
               <HomeDialogo open={open} user={user} />
               {ok ? <Redirect to="/" /> : ''}
               <h1 className="texto-azul">Registro y Administración de Predios de Uso Público - BUPI</h1>
