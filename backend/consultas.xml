@@ -3397,5 +3397,64 @@ group by dominio) as d
                 order by estado, rv.id_validador,rv.id_condicion;
         </sql>
     </Consulta>
+    <Consulta id="grafico_titularidad">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(titular) as cuenta
+            from info2_adquisicion ia
+            left join dominios d on ia.titular::text = d.valor and d.dominio = 'DOM_TRANSFERENCIA'
+            where titular is not null
+            group by d.descripcion) sub
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_departamento">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(departamento) as cuenta
+            from info4_informacion_catastral ia
+            left join dominios d on ia.departamento::text = d.valor and d.dominio = 'DOM_DEPTO'
+            where departamento is not null
+            group by d.descripcion
+            limit 10) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_administrador">
+        <sql>
+             select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(administrador) as cuenta
+            from info5_informacion_invias ia
+            left join dominios d on ia.administrador::text = d.valor and d.dominio = 'DOM_ADMIN'
+            where administrador is not null
+            group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_publico">
+        <sql>
+              select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(tipo_bien) as cuenta
+            from info5_informacion_invias ia
+            left join dominios d on ia.tipo_bien::text = d.valor and d.dominio = 'DOM_TIPO_BIEN'
+            where tipo_bien is not null
+            group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_transporte">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+           select d.descripcion as grupo , count(modo_trans) as cuenta
+           from (select unnest(modo_trans) modo_trans 
+           from info5_informacion_invias
+           where modo_trans is not null) a
+           left join dominios d on a.modo_trans::text = d.valor and d.dominio = 'DOM_MODO_TRANS'
+           group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="estadistica_contable">
+        <sql>
+        select count(*) as estadistica 
+        from info43_contabilidad
+        where clasificacion_contable = 9;
+        </sql>
+    </Consulta>
 
 </Consultas>

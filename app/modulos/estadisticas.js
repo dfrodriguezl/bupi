@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Modal } from './popup_tarea'
 import SearchIcon from '@material-ui/icons/Search';
 import { Grid } from '@material-ui/core';
+import Form from './graficos';
 moment.locale('es');
 
 const Estadistica = (props) => {
@@ -38,10 +39,10 @@ const Estadistica = (props) => {
 
   return (
 
-    <div>
+    <div style={{alignSelf: 'center'}}>
       <p className={`titulo ${props.clase}`}>{props.titulo}</p>
-      <p className={`valor ${props.clase}`}> 0 </p>
-      {/* <p className={`valor ${props.clase}`}> {info.estadistica}</p> */}
+      {/* <p className={`valor ${props.clase}`}> 0 </p> */}
+      <p className={`valor ${props.clase}`}> {info.estadistica}</p>
     </div>
 
 
@@ -57,6 +58,10 @@ const Graficos = () => {
   const [filtro, setFiltro] = React.useState([]);
 
   const [refresh, setRefresh] = React.useState(false);
+  const [grupoVerde, setGrupoVerde] = React.useState(0);
+  const [grupoRojo, setGrupoRojo] = React.useState(0);
+  let rojo = 0;
+  let verde = 0;
 
   React.useEffect(() => {
 
@@ -71,6 +76,25 @@ const Graficos = () => {
 
       setData(result.data);
       setFiltro(result.data)
+
+      result.data.forEach((d) => {
+        sumEstado(d.fecha_asignacion);
+      });
+      setGrupoRojo(rojo);
+      setGrupoVerde(verde);
+    }
+
+    const sumEstado = (fecha) => {
+
+      const f_noti = moment.utc(fecha);
+
+      const f_15 = moment().subtract(30, 'days');
+
+      if (f_noti > f_15) {
+        verde = verde + 1;
+      } else {
+        rojo = rojo + 1;
+      }
     }
 
 
@@ -99,7 +123,7 @@ const Graficos = () => {
 
     const f_noti = moment.utc(fecha);
 
-    const f_15 = ruta !== 13 ? moment().subtract(15, 'days') : moment().subtract(3, 'days');
+    const f_15 = ruta !== 13 ? moment().subtract(30, 'days') : moment().subtract(3, 'days');
 
     var msg = "";
 
@@ -107,11 +131,7 @@ const Graficos = () => {
       msg = "success"
     } else {
       const f_30 = ruta !== 13 ? moment().subtract(30, 'days') : moment().subtract(5, 'days');
-      if (f_noti > f_30) {
-        msg = "warning"
-      } else {
-        msg = "danger"
-      }
+      msg = "danger"
     }
 
 
@@ -127,11 +147,11 @@ const Graficos = () => {
         <Estadistica titulo="Predios aprobados técnico" consulta="estadistica3" clase="orange" />
         <Estadistica titulo="Transacciones en el sistema" consulta="estadistica4" clase="green" /> */}
         <h1>Inicio</h1>
-        
+
         <Grid container direction="row">
           <Grid xs={4} container>
             <div id="tareas-inicio" style={{ display: 'inline-block' }}>
-            <h2>Tareas</h2>
+              <h2>Tareas</h2>
               <div id="listado">
 
                 <div id="listado-header">
@@ -147,11 +167,9 @@ const Graficos = () => {
                 <div className="leyenda">
                   {/* {console.log("ITEM",item)} */}
                   <span className="bolita success"></span>
-                  <p> menos de 15 días</p>
-                  <span className="bolita warning"></span>
-                  <p> entre 15 y 30 días</p>
+                  <p> menos de 30 días ({grupoVerde} tareas)</p>
                   <span className="bolita danger"></span>
-                  <p> más de 30 días</p>
+                  <p> más de un mes ({grupoRojo} tareas)</p>
                 </div>
                 {filtro.map((item, index) =>
                   <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
@@ -201,6 +219,10 @@ const Graficos = () => {
           <Grid xs={8} container>
             <div id="estadisticas-inicio" style={{ display: 'inline-block' }}>
               <h2>Estadísticas</h2>
+              <Form estadistica1={<Estadistica titulo="Predios registrados en contabilidad" consulta="estadistica_contable" clase="green" />}/>
+              {/* <div id="seccion" className="sec2">
+                <Estadistica titulo="Predios registrados en contabilidad" consulta="estadistica5" clase="green" />
+              </div> */}
             </div>
           </Grid>
         </Grid>

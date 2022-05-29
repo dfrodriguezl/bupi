@@ -42,7 +42,7 @@ body{
         grid-column: 1;
         grid-row: 1 / 3;
         height: 100vh;
-        background-color:$color1;
+        background-color:$color2;
     }
     #panel_superior{
         display: grid;
@@ -98,13 +98,13 @@ body{
     .elemento.active{
         background-color: #fff;
         a{
-            color:$color1;
+            color:$color2;
         }
     }
     .elemento:hover{
         background-color: #fff;
         a{
-            color:$color1;
+            color:$color2;
         }
     }
 }
@@ -318,7 +318,7 @@ a.button:hover{
 button{
     display: block;
     background-color: #fff;
-    border: 1px solid $color1;
+    border: 1px solid black;
     border-radius: 3px;
     padding:5px;
     margin-top: 5px;
@@ -661,8 +661,8 @@ input[type="file"] {
     margin: 10px 5px;
 
     div{
-        padding: 10px;
-        min-width: 80px;
+        // padding: 10px;
+        // min-width: 80px;
         // background-color:#fff;
         border-radius: 10px;
     }
@@ -862,9 +862,11 @@ input[type="file"] {
       grid-template-columns: 1fr 1fr 1fr 1fr;
       column-gap: 20px;
       row-gap: 5px;
+      
       .active{
           background-color: $color3;
           color: #fff;
+          border: 1px solid black;
       }
   }
 
