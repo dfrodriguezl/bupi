@@ -20,6 +20,8 @@ const Estructura = ({ children }) => {
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [isConsulta, setIsConsulta] = React.useState(false);
   const [isEstructurador, setIsEstructurador] = React.useState(false);
+  const [isControlCalidad, setIsControlCalidad] = React.useState(false);
+  const [isCoordinador, setIsCoordinador] = React.useState(false);
   const history = useHistory();
   const isServidumbre = history.location.pathname.indexOf('servidumbres') > -1;
 
@@ -33,6 +35,8 @@ const Estructura = ({ children }) => {
       setSession(datos)
       setIsConsulta(datos.usuario_rol === 0 ? true : false);
       setIsEstructurador(datos.usuario_rol === 9 ? true : false);
+      setIsControlCalidad(datos.usuario_rol === 6 ? true : false);
+      setIsCoordinador(datos.usuario_rol === 1 ? true : false);
     });
 
     getPermisos().then((response) => {
@@ -169,14 +173,21 @@ const Estructura = ({ children }) => {
                 </Link>
               </div>
             </Fragment> :
-            isEstructurador ?
+            isEstructurador || isControlCalidad ?
               <div className="elemento">
                 <Link to="/actualizar">
                   <PublishIcon />
                   <p>Actualizar</p>
                 </Link>
               </div> :
-              null
+              isCoordinador ?
+                <div className="elemento">
+                  <Link to="/asignar">
+                    <GroupAdd />
+                    <p>Asignar</p>
+                  </Link>
+                </div>
+                : null
           }
 
         </div>

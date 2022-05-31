@@ -774,6 +774,15 @@ input[type="file"] {
           align-items: center;
           margin-bottom: 5px;
       }
+      .item-com{
+        padding: 3px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto auto;
+        border-bottom: 1px solid $color3;
+
+        align-items: center;
+        margin-bottom: 5px;
+    }
       .head{
           border:none;
       }

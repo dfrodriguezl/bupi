@@ -1,6 +1,4 @@
-id_expediente,tec,jur,sup_tec,sup_jur
-16151,mydiaz,mydiaz,mydiazmydiaz
-16152,,,,,
-16153,,,,,
-16154,,,,,
-16155,,,,,
+codigo_bupi,tipo,usuario
+16151,saneamiento juridico,juridico1
+16152,saneamiento catastral,sc
+16153,predio,catastral1

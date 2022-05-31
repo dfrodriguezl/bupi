@@ -5,13 +5,25 @@ import Popup from 'reactjs-popup';
 import { servidorPost } from "../js/request";
 var moment = require('moment');
 import date from 'date-and-time';
+import ReactSelect from "react-select";
 
 const EditarComunicado = (props) => {
-  const { open, id_exp, index, consecutivo, tipo, setRefreshTabla, consecutivo_com } = props;
+  const { open, id_exp, index, consecutivo, tipo, setRefreshTabla, consecutivo_com, entregable } = props;
   const { register, handleSubmit, watch, errors, control, setValue } = useForm();
   const [datosForm, setDatosForm] = useState({})
+  const [listEntregables, setListEntregables] = useState([]);
 
   useEffect(() => {
+
+    const dataDomain = {
+      id_consulta: "get_valores_dominios",
+      dominio: 'DOM_ENTREGABLE'
+    }
+
+    servidorPost("/backend", dataDomain).then((response) => {
+      setListEntregables(response.data)
+    })
+
     if (tipo === "update") {
       const consulta = {
         id_consulta: "get_comunicado",
@@ -31,6 +43,10 @@ const EditarComunicado = (props) => {
   const onSubmit = (datos) => {
     datos.id_consulta = tipo === "save" ? "insertar_comunicado" : "editar_comunicado";
     datos.tabla = index;
+    datos.id_expediente = id_exp;
+    datos.consecutivo_saneamiento = consecutivo;
+    datos.entregable = datos.entregable.valor;
+    datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
     servidorPost("/backend", datos).then((response) => {
       setRefreshTabla(true)
     })
@@ -60,7 +76,7 @@ const EditarComunicado = (props) => {
       nested
     >
       {close => (
-        <div className="modal" style={{ height: '400px', overflow: 'auto' }}>
+        <div className="modal" style={{ height: '400px', overflow: 'auto', width: '50vw' }}>
           <div id="seccion" >
             <div id="titulo_seccion">Crear comunicado</div>
             <p id="descripcion_seccion">Diligencie los campos y de clic en guardar</p>
@@ -71,7 +87,8 @@ const EditarComunicado = (props) => {
                   className='form_input'
                   name='id_expediente'
                   disabled
-                  value={id_exp}
+
+                  defaultValue={id_exp}
                   ref={register} />
               </div>
               <div className="formulario">
@@ -80,7 +97,8 @@ const EditarComunicado = (props) => {
                   className='form_input'
                   name='consecutivo_saneamiento'
                   disabled
-                  value={consecutivo}
+
+                  defaultValue={consecutivo}
                   ref={register} />
               </div>
               {tipo === "update" ?
@@ -94,7 +112,28 @@ const EditarComunicado = (props) => {
                     ref={register} />
                 </div> : null}
               <div className="formulario">
-                <p className="form_title">Fecha comunicado</p>
+                <p className="form_title">Entregable</p>
+                <Controller
+                  name='entregable'
+                  control={control}
+                  defaultValue={listEntregables.filter((o) => Number(o.valor) === Number(entregable))}
+                  render={(props) =>
+                    <ReactSelect onChange={(e) => {
+                      props.onChange(e);
+                      // change(e, i.doc);
+                    }}
+                      options={listEntregables}
+                      name={props.name}
+                      isClearable={true}
+                      defaultValue={props.value}
+                      getOptionValue={(o) => o.valor}
+                      getOptionLabel={(o) => o.descripcion}
+                    />
+                  }
+                />
+              </div>
+              <div className="formulario">
+                <p className="form_title">Fecha radicado</p>
                 <Controller
                   as={DatePicker}
                   control={control}
@@ -105,7 +144,7 @@ const EditarComunicado = (props) => {
                 />
               </div>
               <div className="formulario">
-                <p className="form_title">Radicado INVIAS</p>
+                <p className="form_title">Radicado</p>
                 <input type="text"
                   className='form_input'
                   name='radicado_invias_comunicado'
@@ -113,7 +152,7 @@ const EditarComunicado = (props) => {
                   ref={register} />
               </div>
               <div className="formulario">
-                <p className="form_title">Objeto</p>
+                <p className="form_title">Tema solicitud</p>
                 <input type="text"
                   className='form_input'
                   name='objeto_comunicado'
@@ -121,7 +160,7 @@ const EditarComunicado = (props) => {
                   ref={register} />
               </div>
               <div className="formulario">
-                <p className="form_title">Entidad</p>
+                <p className="form_title">Dirigido a</p>
                 <input type="text"
                   className='form_input'
                   name='entidad_comunicado'

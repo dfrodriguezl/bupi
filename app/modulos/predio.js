@@ -1266,26 +1266,26 @@ const FormMultiple = ({ tbl, index, titulo }) => {
             data.tabla = tbl;
         }
 
-        if (index === 39 || index === 40) {
-            const dataSaneamiento = {
-                id_consulta: "insertar_notificacion_saneamiento",
-                id_expediente: id,
-                ruta_destino: index === 39 ? 1 : 2,
-                tarea_next: index === 39 ? 2 : 3,
-                consecutivo: opciones.length + 1,
-                tabla: index
-            }
+        // if (index === 39 || index === 40) {
+        //     const dataSaneamiento = {
+        //         id_consulta: "insertar_notificacion_saneamiento",
+        //         id_expediente: id,
+        //         ruta_destino: index === 39 ? 1 : 2,
+        //         tarea_next: index === 39 ? 2 : 3,
+        //         consecutivo: opciones.length + 1,
+        //         tabla: index
+        //     }
 
-            servidorPost('/backend', dataSaneamiento).then((response) => {
+        //     servidorPost('/backend', dataSaneamiento).then((response) => {
 
-                // console.log(response)
-                if (response.data.length > 0) {
+        //         // console.log(response)
+        //         if (response.data.length > 0) {
 
-                }
-            });
+        //         }
+        //     });
 
-            // console.log("DATA SANEAMIENTO", dataSaneamiento);
-        }
+        //     // console.log("DATA SANEAMIENTO", dataSaneamiento);
+        // }
 
         // console.log("DATA", data)
 
@@ -1743,7 +1743,7 @@ const Predio = () => {
                         <button onClick={() => getForm(39, "info39_gestion_san_tec", "Gestión saneamiento catastral")} className={active == 39 ? 'active' : ''}>
                             Gestión saneamiento catastral
                         </button>
-                        <button onClick={() => getForm(40, "info40_gestion_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
+                        <button onClick={() => getForm(40, "info40_san_jur", "Gestión saneamiento jurídico")} className={active == 40 ? 'active' : ''}>
                             Gestión saneamiento jurídico
                         </button>
                     </div>
@@ -1753,7 +1753,7 @@ const Predio = () => {
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
                     <div className="grupo-formularios">
                         <button onClick={() => getForm(44, "info44_asignacion_saneamiento", "Asignaciones")} className={active == 44 ? 'active' : ''}>
-                            Asignación saneamientos jurídicos
+                            Asignación saneamientos
                         </button>
                     </div>
                 </TabPanel>
