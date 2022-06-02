@@ -3468,5 +3468,12 @@ group by dominio) as d
         where id_expediente = $id_expediente;
         </sql>
     </Consulta>
+    <Consulta id="get_entregables_saneamiento">
+        <sql>
+        select *
+        from entregable_saneamiento
+        where id_saneamiento = $id_saneamiento;
+        </sql>
+    </Consulta>
 
 </Consultas>

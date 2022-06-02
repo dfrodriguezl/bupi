@@ -6,10 +6,11 @@ import ModalDelete from './componentes/modal_delete';
 
 
 const ListaComunicados = (props) => {
-  const { id_expediente, consecutivo, tabla } = props;
+  const { id_expediente, consecutivo, tabla, tipoSaneamiento } = props;
   const [items, setItems] = useState([]);
   const [refreshTabla, setRefreshTabla] = useState(false)
   const [listEntregables, setListEntregables] = useState([])
+  const [sanSeleccionado, setSanSeleccionado] = useState("")
 
   useEffect(() => {
     const consulta = {
@@ -33,14 +34,17 @@ const ListaComunicados = (props) => {
       setListEntregables(response.data)
     })
 
-  }, [refreshTabla])
+    setSanSeleccionado(tipoSaneamiento)
+
+  }, [refreshTabla, tipoSaneamiento])
 
 
   return (
     <div id="seccion">
       <div id="titulo_seccion">Entregables</div>
       <p id="descripcion_seccion">Sección para visualizar los entregables asociados al saneamiento</p>
-      <EditarComunicado open={<button className='primmary'>Nuevo entregable</button>} id_exp={id_expediente} index={tabla} consecutivo={consecutivo} setRefreshTabla={setRefreshTabla} tipo="save" />
+      <EditarComunicado open={<button className='primmary'>Nuevo entregable</button>} id_exp={id_expediente} index={tabla} consecutivo={consecutivo} setRefreshTabla={setRefreshTabla} tipo="save" 
+        tipoSaneamiento={sanSeleccionado}/>
       <p className="enfasis">Total: {items.length} </p>
       <div id="documentos">
         <div className="head item-com" >
@@ -61,7 +65,7 @@ const ListaComunicados = (props) => {
             <p>{e.objeto_comunicado}</p>
             <p>{e.entidad_comunicado}</p>
             <p><EditarComunicado open={<EditIcon />} id_exp={e.id_expediente} index={e.tabla} consecutivo={e.consecutivo_saneamiento} setRefreshTabla={setRefreshTabla} tipo="update" 
-                consecutivo_com={e.consecutivo_comunicado} entregable={e.entregable}/></p>
+                consecutivo_com={e.consecutivo_comunicado} entregable={e.entregable} tipoSaneamiento={tipoSaneamiento}/></p>
             <p><ModalDelete id_expediente={e.id_expediente} consec_san={e.consecutivo_saneamiento} consec_com={e.consecutivo_comunicado} tabla={e.tabla} setRefreshTabla={setRefreshTabla} /></p>
             {/* <DescriptionIcon onClick={() => verDocumento(e)} /> */}
             {/* <Comunicados open={<EditIcon />} id_exp={id_expediente} index={index} consecutivo={consecutivo} setRefreshTablas={setRefreshTablas}/> */}

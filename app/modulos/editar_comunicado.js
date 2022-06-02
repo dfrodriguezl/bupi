@@ -8,7 +8,7 @@ import date from 'date-and-time';
 import ReactSelect from "react-select";
 
 const EditarComunicado = (props) => {
-  const { open, id_exp, index, consecutivo, tipo, setRefreshTabla, consecutivo_com, entregable } = props;
+  const { open, id_exp, index, consecutivo, tipo, setRefreshTabla, consecutivo_com, entregable, tipoSaneamiento } = props;
   const { register, handleSubmit, watch, errors, control, setValue } = useForm();
   const [datosForm, setDatosForm] = useState({})
   const [listEntregables, setListEntregables] = useState([]);
@@ -20,9 +20,17 @@ const EditarComunicado = (props) => {
       dominio: 'DOM_ENTREGABLE'
     }
 
+    const dataEntregable = {
+      id_consulta: "get_entregables_saneamiento",
+      id_saneamiento: tipoSaneamiento
+    }
+
     servidorPost("/backend", dataDomain).then((response) => {
-      setListEntregables(response.data)
-    })
+      servidorPost("/backend", dataEntregable).then((responseEntregable) => {
+        const dataFiltrada = response.data.filter((o) => responseEntregable.data.filter((re) => re.id_entregable === o.valor).length > 0);
+        setListEntregables(dataFiltrada)
+      })
+    });
 
     if (tipo === "update") {
       const consulta = {
@@ -38,7 +46,7 @@ const EditarComunicado = (props) => {
         setDatosForm(data)
       })
     }
-  }, [])
+  }, [tipoSaneamiento])
 
   const onSubmit = (datos) => {
     datos.id_consulta = tipo === "save" ? "insertar_comunicado" : "editar_comunicado";
@@ -78,11 +86,11 @@ const EditarComunicado = (props) => {
       {close => (
         <div className="modal" style={{ height: '400px', overflow: 'auto', width: '50vw' }}>
           <div id="seccion" >
-            <div id="titulo_seccion">Crear comunicado</div>
+            <div id="titulo_seccion">Crear entregable</div>
             <p id="descripcion_seccion">Diligencie los campos y de clic en guardar</p>
             <form onSubmit={handleSubmit(onSubmit)} className="form-container">
               <div className="formulario">
-                <p className="form_title">Id expediente</p>
+                <p className="form_title">Código BUPI</p>
                 <input type="text"
                   className='form_input'
                   name='id_expediente'

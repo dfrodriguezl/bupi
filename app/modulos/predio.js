@@ -134,6 +134,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [textDomains, setTextDomains] = React.useState({});
     const [superTec, setSuperTec] = React.useState(false);
     const [superJur, setSuperJur] = React.useState(false);
+    const [saneamientoSeleccionado, setSaneamientoSeleccionado] = React.useState(false);
 
 
 
@@ -327,6 +328,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                     if (response1.data.length > 0) {
+                        response1.data.map((rd1) => {
+                            if(index === 40 && rd1.saneamiento != null){
+                                setSaneamientoSeleccionado(rd1.saneamiento)
+                            }
+                            
+                        },[])
                         setFields({ data: datosNorm, info: response1.data[0] });
 
                         setView(true)
@@ -573,6 +580,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         }
 
+        if(e.field === "saneamiento" && index === 40){
+            setSaneamientoSeleccionado(msg.value)
+        }
+
         return msg;
     }
 
@@ -754,6 +765,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
+                                        
 
                                                 {i.doc.field_father ?
 
@@ -815,7 +827,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     //      />
 
 
-
+                                                    
                                                     <Controller
                                                         name={i.doc.field}
                                                         control={control}
@@ -824,6 +836,9 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                             <ReactSelect onChange={(e) => {
                                                                 props.onChange(e);
                                                                 change(e, i.doc);
+                                                                // if(i.doc.field === "saneamiento" && index === 40){
+                                                                //     setSaneamientoSeleccionado(e.valor)
+                                                                // }
                                                             }}
                                                                 options={i.doc.enum}
                                                                 isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
@@ -913,11 +928,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                         className='form_input'
                                                         name={i.doc.field}
                                                         disabled={lectura}
-                                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                                        defaultValue={defecto ? fields.info[i.doc.field] : null}
                                                         maxLength={i.doc.size ? i.doc.size : undefined}
                                                         minLength={i.doc.min_size ? i.doc.min_size : undefined}
                                                         ref={register({
-                                                            required: i.doc.required ? { required: i.doc.message } : undefined,
+                                                            required: i.doc.required ? { required: true } : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
@@ -1007,7 +1022,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         {index === 40 ?
                             <Fragment>
                                 {/* <EditarComunicado open={<button className='primmary'>Nuevo comunicado</button>} id_exp={id} index={index} consecutivo={consecutivo} /> */}
-                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} />
+                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado}/>
                             </Fragment>
                             : null}
 
