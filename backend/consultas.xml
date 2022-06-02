@@ -3312,7 +3312,7 @@ group by dominio) as d
            INSERT INTO comunicados
             VALUES ($id_expediente, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
                 from comunicados where id_expediente = $id_expediente and consecutivo_saneamiento = $consecutivo_saneamiento),
-                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable);
+                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta);
         </sql>
     </Consulta>
 
@@ -3341,7 +3341,8 @@ group by dominio) as d
         <sql>
             update comunicados
             set fecha_comunicado = $fecha_comunicado, radicado_invias_comunicado = $radicado_invias_comunicado, 
-            objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado, entregable = $entregable
+            objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado, entregable = $entregable, 
+            enlace = $enlace, observacion = $observacion, tipo_respuesta = $tipo_respuesta
             where id_expediente = $id_expediente
             and consecutivo_saneamiento = $consecutivo_saneamiento
             and consecutivo_comunicado = $consecutivo_comunicado
@@ -3473,6 +3474,14 @@ group by dominio) as d
         select *
         from entregable_saneamiento
         where id_saneamiento = $id_saneamiento;
+        </sql>
+    </Consulta>
+    <Consulta id="get_campos_entregable">
+        <sql>
+        select ms.*
+        from entregables_campos ec 
+        join modulos_saneamientos ms on ec.id_campo = ms.id_campo 
+        where id_entregable = $id_entregable;
         </sql>
     </Consulta>
 

@@ -12,6 +12,8 @@ const EditarComunicado = (props) => {
   const { register, handleSubmit, watch, errors, control, setValue } = useForm();
   const [datosForm, setDatosForm] = useState({})
   const [listEntregables, setListEntregables] = useState([]);
+  const [entregableSeleccionado, setEntregableSeleccionado] = useState();
+  const [campos, setCampos] = useState([]);
 
   useEffect(() => {
 
@@ -28,7 +30,11 @@ const EditarComunicado = (props) => {
     servidorPost("/backend", dataDomain).then((response) => {
       servidorPost("/backend", dataEntregable).then((responseEntregable) => {
         const dataFiltrada = response.data.filter((o) => responseEntregable.data.filter((re) => re.id_entregable === o.valor).length > 0);
+        console.log("DATA FILTRADA", dataFiltrada)
         setListEntregables(dataFiltrada)
+        if(entregable){
+          setEntregableSeleccionado(dataFiltrada.filter((o) => Number(o.valor) === Number(entregable))[0]);
+        }
       })
     });
 
@@ -46,15 +52,47 @@ const EditarComunicado = (props) => {
         setDatosForm(data)
       })
     }
-  }, [tipoSaneamiento])
+
+    if (entregable) {
+      actualizarCampos(entregable)
+      
+    }
+
+
+  }, [tipoSaneamiento, entregable, setListEntregables, setDatosForm, setEntregableSeleccionado])
+
+  const onChangeEntregable = (e) => {
+    setEntregableSeleccionado(e);
+    actualizarCampos(e.valor)
+  }
+
+  const actualizarCampos = (entregable) => {
+    const dataCampos = {
+      id_consulta: "get_campos_entregable",
+      id_entregable: entregable
+    }
+
+    servidorPost("/backend", dataCampos).then((response) => {
+      setCampos(response.data)
+    })
+
+  }
 
   const onSubmit = (datos) => {
+    
     datos.id_consulta = tipo === "save" ? "insertar_comunicado" : "editar_comunicado";
     datos.tabla = index;
     datos.id_expediente = id_exp;
     datos.consecutivo_saneamiento = consecutivo;
-    datos.entregable = datos.entregable.valor;
+    datos.entregable = entregableSeleccionado.valor;
     datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
+    datos.observacion = datos.observacion || "";
+    datos.tipo_respuesta = datos.tipo_respuesta || "";
+    datos.fecha_comunicado = datos.fecha_comunicado || null;
+    datos.radicado_invias_comunicado = datos.radicado_invias_comunicado || "";
+    datos.objeto_comunicado = datos.objeto_comunicado || "";
+    datos.entidad_comunicado = datos.entidad_comunicado || "";
+
     servidorPost("/backend", datos).then((response) => {
       setRefreshTabla(true)
     })
@@ -95,7 +133,6 @@ const EditarComunicado = (props) => {
                   className='form_input'
                   name='id_expediente'
                   disabled
-
                   defaultValue={id_exp}
                   ref={register} />
               </div>
@@ -128,6 +165,7 @@ const EditarComunicado = (props) => {
                   render={(props) =>
                     <ReactSelect onChange={(e) => {
                       props.onChange(e);
+                      onChangeEntregable(e);
                       // change(e, i.doc);
                     }}
                       options={listEntregables}
@@ -136,11 +174,34 @@ const EditarComunicado = (props) => {
                       defaultValue={props.value}
                       getOptionValue={(o) => o.valor}
                       getOptionLabel={(o) => o.descripcion}
+                      value={props.value}
                     />
                   }
                 />
               </div>
-              <div className="formulario">
+              {campos ?
+                campos.map((a) =>
+                  <div className="formulario">
+                    <p className="form_title">{a.label}</p>
+                    {a.form === 'texto' ?
+                      <input type="text"
+                        className='form_input'
+                        name={a.field}
+                        defaultValue={datosForm[a.field] && tipo === "update" ? datosForm[a.field] : undefined}
+                        ref={register({ required: true })} /> :
+                      a.form === 'fecha' ?
+                        <Controller
+                          as={DatePicker}
+                          control={control}
+                          name={a.field}
+                          defaultValue={(datosForm[a.field]? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
+                          selected={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
+                          onChange={([selected]) => selected}
+                        /> : null}
+                  </div>
+                ) : null}
+
+              {/* <div className="formulario">
                 <p className="form_title">Fecha radicado</p>
                 <Controller
                   as={DatePicker}
@@ -174,7 +235,7 @@ const EditarComunicado = (props) => {
                   name='entidad_comunicado'
                   defaultValue={datosForm.entidad_comunicado && tipo === "update" ? datosForm.entidad_comunicado : undefined}
                   ref={register} />
-              </div>
+              </div> */}
               <button className='primmary' type="submit" >Guardar</button>
             </form>
           </div>
