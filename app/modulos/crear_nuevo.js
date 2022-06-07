@@ -176,7 +176,13 @@ const CrearPredio = () => {
           id_consulta: "insert_expediente_6"
         }
         servidorPost('/backend', datosCalJur).then((responseTareas) => {
-          history.push("predio/" + expediente);
+          const datosCalJur = {
+            id_expediente: expediente,
+            id_consulta: "insert_expediente_7"
+          }
+          servidorPost('/backend', datosCalJur).then((responseTareas) => {
+            history.push("predio/" + expediente);
+          })
         })
       })
 

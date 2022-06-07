@@ -134,7 +134,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
     const [textDomains, setTextDomains] = React.useState({});
     const [superTec, setSuperTec] = React.useState(false);
     const [superJur, setSuperJur] = React.useState(false);
-    const [saneamientoSeleccionado, setSaneamientoSeleccionado] = React.useState(false);
+    const [saneamientoSeleccionado, setSaneamientoSeleccionado] = React.useState(null);
 
 
 

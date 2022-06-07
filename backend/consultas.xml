@@ -1022,9 +1022,9 @@ group by dominio) as d
 					from info14_saneamiento_juridico
 					where id_expediente = $id_expediente) as a
 					left join 
-				(select id_expediente, accion_saneamiento 
-				from info40_gestion_san_jur igsj
-				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
+				(select id_expediente, saneamiento 
+				from info40_san_jur igsj
+				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.saneamiento) as b on a.valor = b.accion_saneamiento
 			  		where b.id_expediente = $id_expediente
 					group by a.dominio) as e on m.enum=e.dominio
         where tabla=$tabla order by orden;
@@ -3283,6 +3283,11 @@ group by dominio) as d
         insert into info8_control_calidad_catastral (id_expediente) values ($id_expediente);
         </sql>
     </Consulta>
+    <Consulta id="insert_expediente_7">
+        <sql>
+        insert into info5_informacion_invias (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
 
     <Consulta id="insert_info5_juridicos">
         <sql>
@@ -3304,6 +3309,7 @@ group by dominio) as d
             where id_expediente = $id_expediente
             and consecutivo_saneamiento = $consecutivo
             and tabla = $tabla
+            and saneamiento = $saneamiento
         </sql>
     </Consulta>
 
@@ -3312,7 +3318,7 @@ group by dominio) as d
            INSERT INTO comunicados
             VALUES ($id_expediente, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
                 from comunicados where id_expediente = $id_expediente and consecutivo_saneamiento = $consecutivo_saneamiento),
-                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta);
+                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta, $saneamiento);
         </sql>
     </Consulta>
 
@@ -3482,6 +3488,30 @@ group by dominio) as d
         from entregables_campos ec 
         join modulos_saneamientos ms on ec.id_campo = ms.id_campo 
         where id_entregable = $id_entregable;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_contabilidad">
+        <sql>
+        select ic.id_expediente, d.descripcion 
+        from info43_contabilidad ic 
+        left join dominios d on ic.clasificacion_contable::text = d.valor and d.dominio = 'DOM_CLAS_CONTABLE'
+        where ic.id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_documental">
+        <sql>
+        select iae.id_expediente, d.descripcion 
+        from info11_adquisicion_escritura iae 
+        left join dominios d on iae.estado_busqueda::text = d.valor and d.dominio = 'DOM_ESTADO_BUSQUEDA'
+        where iae.id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_san_juridico">
+        <sql>
+        select *
+        from estado_san_juridicos
+        where id_expediente = $id_expediente
+        order by id_expediente;
         </sql>
     </Consulta>
 

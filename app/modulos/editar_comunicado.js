@@ -32,7 +32,7 @@ const EditarComunicado = (props) => {
         const dataFiltrada = response.data.filter((o) => responseEntregable.data.filter((re) => re.id_entregable === o.valor).length > 0);
         console.log("DATA FILTRADA", dataFiltrada)
         setListEntregables(dataFiltrada)
-        if(entregable){
+        if (entregable) {
           setEntregableSeleccionado(dataFiltrada.filter((o) => Number(o.valor) === Number(entregable))[0]);
         }
       })
@@ -55,7 +55,7 @@ const EditarComunicado = (props) => {
 
     if (entregable) {
       actualizarCampos(entregable)
-      
+
     }
 
 
@@ -79,7 +79,7 @@ const EditarComunicado = (props) => {
   }
 
   const onSubmit = (datos) => {
-    
+
     datos.id_consulta = tipo === "save" ? "insertar_comunicado" : "editar_comunicado";
     datos.tabla = index;
     datos.id_expediente = id_exp;
@@ -92,6 +92,7 @@ const EditarComunicado = (props) => {
     datos.radicado_invias_comunicado = datos.radicado_invias_comunicado || "";
     datos.objeto_comunicado = datos.objeto_comunicado || "";
     datos.entidad_comunicado = datos.entidad_comunicado || "";
+    datos.saneamiento = tipoSaneamiento;
 
     servidorPost("/backend", datos).then((response) => {
       setRefreshTabla(true)
@@ -188,16 +189,37 @@ const EditarComunicado = (props) => {
                         className='form_input'
                         name={a.field}
                         defaultValue={datosForm[a.field] && tipo === "update" ? datosForm[a.field] : undefined}
-                        ref={register({ required: true })} /> :
+                        ref={register({
+                          required: a.required ? a.message : undefined,
+                          pattern: {
+                            value: a.patron ? /^SS-.*$/ : undefined,
+                            message: a.patron ? "Debe cumplir con SS-" : undefined
+                          }
+                        })} /> :
                       a.form === 'fecha' ?
                         <Controller
                           as={DatePicker}
                           control={control}
                           name={a.field}
-                          defaultValue={(datosForm[a.field]? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
+                          defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.fild], 'YYYY-MM-DD') : '')}
                           selected={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
                           onChange={([selected]) => selected}
-                        /> : null}
+                          rules={{
+                            required: a.required ? a.message : undefined,
+                          }}
+                        /> : 
+                        a.form === 'area' ?
+                        <textarea
+                        className='form_input'
+                        name={a.field}
+                        defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
+                        ref={register({
+                          required: a.required ? a.message : undefined,
+                        })}
+                        rows="4"
+                    />
+                        : null}
+                    {errors[a.field] && <span className="msg-error">{errors[a.field].message}</span>}
                   </div>
                 ) : null}
 
