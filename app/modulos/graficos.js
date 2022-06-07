@@ -158,7 +158,7 @@ class Dona extends React.Component {
         series: data["data"].map(i => Number(i)),
         options: {
           chart: {
-            type: 'pie',
+            type: 'pie'
           },
           labels: data["categoria"],
           title: {
@@ -169,7 +169,10 @@ class Dona extends React.Component {
               color: '#263238'
             },
           },
-
+          legend: {
+            show: true,
+            position: 'bottom'
+          }
         },
       })
 
@@ -325,19 +328,24 @@ class Date extends React.Component {
 var component = ReactDOM.render(<Date id_consulta="grafico6" titulo="Avalúos solicitados por fecha" width="700"/>, document.getElementById('grafico6'));
 */
 
-const Form = () => {
-
+const Form = (props) => {
+  const { estadistica1 } = props;
 
   return (
     <>
-      {/* <div id="seccion" className="sec2">
-
-
-
-        <Barras id_consulta="grafico1" titulo="Número de predios por zona" paleta="palette10" />
-        <Barras id_consulta="grafico5" titulo="Número de predios por prioridad" paleta="palette10" />
-
-      </div> */}
+      <div id="seccion" className="sec2">
+        <Dona id_consulta="grafico_departamento" titulo="Número de predios por departamento" paleta="palette1" />
+        <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
+      </div>
+      <div id="seccion" className="sec2">
+        <Dona id_consulta="grafico_publico" titulo="Número de predios uso público/fiscal" paleta="palette1" />
+        <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" />
+      </div>
+      <div id="seccion" className="sec2">
+        <Dona id_consulta="grafico_transporte" titulo="Número de predios por modo de transporte" paleta="palette1" />
+        {estadistica1}
+        {/* <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" /> */}
+      </div>
 
       {/* <div id="seccion" className="sec2">
 

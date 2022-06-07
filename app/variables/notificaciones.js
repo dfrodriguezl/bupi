@@ -216,15 +216,16 @@ export const notificacion = (data) => {
         (async () => {
             var result = await back(data);
             
-            if(result.data[0].usuario !== null){
+            if((result.data[0].usuario !== null && result.data[0].usuario_catastral !== null) || 
+                (data.usuario_jur !== null && data.usuario_cat !== null)){
                 
-                console.log("USUARIO", info);
+                // console.log("USUARIO", info);
                 (async () => {
                     var info = {
                         id_consulta: "insertar_asignacion_tecnico",
                         id_expediente: data.id_expediente,
                         id_tarea: 13,
-                        usuario_responsable: result.data[0].usuario
+                        usuario_responsable: result.data[0].usuario || data.usuario_jur
                     };
                     await back(info);
                     var post2 = {
@@ -235,6 +236,22 @@ export const notificacion = (data) => {
                         id_expediente: data.id_expediente
                     }
                     await back(post2)
+
+                    var info2 = {
+                        id_consulta: "insertar_asignacion_tecnico",
+                        id_expediente: data.id_expediente,
+                        id_tarea: 14,
+                        usuario_responsable: result.data[0].usuario_catastral || data.usuario_cat
+                    };
+                    await back(info2);
+                    var post3 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 14,
+                        ruta_destino: 18,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post3)
                 })();
             }
 

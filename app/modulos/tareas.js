@@ -18,6 +18,10 @@ const Tarea = ({ refresh_number }) => {
     const [filtro, setFiltro] = React.useState([]);
 
     const [refresh, setRefresh] = React.useState(false);
+    const [grupoVerde, setGrupoVerde] = React.useState(0);
+    const [grupoRojo, setGrupoRojo] = React.useState(0);
+    let rojo = 0;
+    let verde = 0;
 
     React.useEffect(() => {
 
@@ -32,6 +36,24 @@ const Tarea = ({ refresh_number }) => {
 
             setData(result.data);
             setFiltro(result.data)
+            result.data.forEach((d) => {
+                sumEstado(d.fecha_asignacion);
+            });
+            setGrupoRojo(rojo);
+            setGrupoVerde(verde);
+        }
+
+        const sumEstado = (fecha) => {
+
+            const f_noti = moment.utc(fecha);
+
+            const f_15 = moment().subtract(30, 'days');
+
+            if (f_noti > f_15) {
+                verde = verde + 1;
+            } else {
+                rojo = rojo + 1;
+            }
         }
 
 
@@ -61,25 +83,23 @@ const Tarea = ({ refresh_number }) => {
 
         const f_noti = moment.utc(fecha);
 
-        const f_15 = ruta !== 13 ? moment().subtract(15, 'days') : moment().subtract(3, 'days');
+        const f_15 = moment().subtract(30, 'days');
 
         var msg = "";
 
         if (f_noti > f_15) {
             msg = "success"
         } else {
-            const f_30 = ruta !== 13 ? moment().subtract(30, 'days') : moment().subtract(5, 'days');
-            if (f_noti > f_30) {
-                msg = "warning"
-            } else {
-                msg = "danger"
-            }
+            const f_30 = moment().subtract(30, 'days');
+            msg = "danger"
         }
 
 
 
         return msg;
     }
+
+
 
 
     return (
@@ -98,11 +118,11 @@ const Tarea = ({ refresh_number }) => {
             <div className="leyenda">
                 {/* {console.log("ITEM",item)} */}
                 <span className="bolita success"></span>
-                <p> menos de 15 días</p>
-                <span className="bolita warning"></span>
-                <p> entre 15 y 30 días</p>
+                <p> menos de 30 días ({grupoVerde} tareas) </p>
+                {/* <span className="bolita warning"></span>
+                <p> entre 15 y 30 días</p> */}
                 <span className="bolita danger"></span>
-                <p> más de 30 días</p>
+                <p> más de un mes ({grupoRojo} tareas)</p>
             </div>
 
 

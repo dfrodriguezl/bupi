@@ -382,9 +382,9 @@
         select * from info39_gestion_san_tec_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
         </sql>
     </Consulta>
-    <Consulta id="info40_gestion_san_jur">
+    <Consulta id="info40_san_jur">
         <sql>
-        select * from info40_gestion_san_jur_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info40_san_jur where id_expediente=$id_expediente and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info41_observaciones_predio">
@@ -831,9 +831,9 @@
             update info39_gestion_san_tec set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
-    <Consulta id="update_info40_gestion_san_jur">
+    <Consulta id="update_info40_san_jur">
         <sql>
-            update info40_gestion_san_jur set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info40_san_jur set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
         </sql>
     </Consulta>
     <Consulta id="update_info41_observaciones_predio">
@@ -956,8 +956,9 @@
 				WHEN m.caso_especial = 'accion_saneamiento' THEN c.enum
                 WHEN m.caso_especial = 'accion_saneamiento_jur' THEN e.enum
 				ELSE 
-					CASE
-						WHEN u.enum is not null then u.enum
+					case
+						when m.rol_edicion = 10 then u.enum
+						when m.rol_edicion = 14 then usc.enum
 						WHEN d.enum is not null then d.enum
 						ELSE NULL
 					END
@@ -988,6 +989,10 @@ group by dominio) as d
 								  json_agg(json_build_object('value',usuario_usuario,'label',usuario_nombre,'padre',null,'padre_valor',null)) as enum
 								  from usuario where usuario_rol = 10) as u
         on m.enum=u.dominio
+        left join (select 'usuarios' as dominio,
+								  json_agg(json_build_object('value',usuario_usuario,'label',usuario_nombre,'padre',null,'padre_valor',null)) as enum
+								  from usuario where usuario_rol = 14) as usc
+        on m.enum=usc.dominio
         left join (select dominio,
 				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 				  from dominios a join (
@@ -1017,9 +1022,9 @@ group by dominio) as d
 					from info14_saneamiento_juridico
 					where id_expediente = $id_expediente) as a
 					left join 
-				(select id_expediente, accion_saneamiento 
-				from info40_gestion_san_jur igsj
-				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
+				(select id_expediente, saneamiento 
+				from info40_san_jur igsj
+				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.saneamiento) as b on a.valor = b.accion_saneamiento
 			  		where b.id_expediente = $id_expediente
 					group by a.dominio) as e on m.enum=e.dominio
         where tabla=$tabla order by orden;
@@ -2951,10 +2956,10 @@ group by dominio) as d
 
     <Consulta id="insert_calidad_tecnico">
         <sql>
-        INSERT INTO info12_control_calidad_tecnico
-            VALUES ($id_expediente,$aprobado, null,$obs, null, now())
+        INSERT INTO info8_control_calidad_catastral
+            VALUES ($id_expediente,$aprobado, $obs)
             ON CONFLICT (id_expediente) DO UPDATE
-            SET aprobado = $aprobado, obs = $obs, fecha_aprob = now()
+            SET aprobado = $aprobado, observacion = $obs
             returning id_expediente
         </sql>
     </Consulta>
@@ -3278,6 +3283,11 @@ group by dominio) as d
         insert into info8_control_calidad_catastral (id_expediente) values ($id_expediente);
         </sql>
     </Consulta>
+    <Consulta id="insert_expediente_7">
+        <sql>
+        insert into info5_informacion_invias (id_expediente) values ($id_expediente);
+        </sql>
+    </Consulta>
 
     <Consulta id="insert_info5_juridicos">
         <sql>
@@ -3299,6 +3309,7 @@ group by dominio) as d
             where id_expediente = $id_expediente
             and consecutivo_saneamiento = $consecutivo
             and tabla = $tabla
+            and saneamiento = $saneamiento
         </sql>
     </Consulta>
 
@@ -3307,7 +3318,7 @@ group by dominio) as d
            INSERT INTO comunicados
             VALUES ($id_expediente, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
                 from comunicados where id_expediente = $id_expediente and consecutivo_saneamiento = $consecutivo_saneamiento),
-                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla);
+                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta, $saneamiento);
         </sql>
     </Consulta>
 
@@ -3336,7 +3347,8 @@ group by dominio) as d
         <sql>
             update comunicados
             set fecha_comunicado = $fecha_comunicado, radicado_invias_comunicado = $radicado_invias_comunicado, 
-            objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado
+            objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado, entregable = $entregable, 
+            enlace = $enlace, observacion = $observacion, tipo_respuesta = $tipo_respuesta
             where id_expediente = $id_expediente
             and consecutivo_saneamiento = $consecutivo_saneamiento
             and consecutivo_comunicado = $consecutivo_comunicado
@@ -3395,6 +3407,111 @@ group by dominio) as d
                 join validadores v on rv.id_validador = v.id_validador
                 where rv.id_expediente = $id_expediente and estado = false
                 order by estado, rv.id_validador,rv.id_condicion;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_titularidad">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(titular) as cuenta
+            from info2_adquisicion ia
+            left join dominios d on ia.titular::text = d.valor and d.dominio = 'DOM_TRANSFERENCIA'
+            where titular is not null
+            group by d.descripcion) sub
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_departamento">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(departamento) as cuenta
+            from info4_informacion_catastral ia
+            left join dominios d on ia.departamento::text = d.valor and d.dominio = 'DOM_DEPTO'
+            where departamento is not null
+            group by d.descripcion
+            limit 10) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_administrador">
+        <sql>
+             select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(administrador) as cuenta
+            from info5_informacion_invias ia
+            left join dominios d on ia.administrador::text = d.valor and d.dominio = 'DOM_ADMIN'
+            where administrador is not null
+            group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_publico">
+        <sql>
+              select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+            select d.descripcion as grupo, count(tipo_bien) as cuenta
+            from info5_informacion_invias ia
+            left join dominios d on ia.tipo_bien::text = d.valor and d.dominio = 'DOM_TIPO_BIEN'
+            where tipo_bien is not null
+            group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="grafico_transporte">
+        <sql>
+            select array_agg(grupo) as categoria,array_agg(cuenta) as data from(
+           select d.descripcion as grupo , count(modo_trans) as cuenta
+           from (select unnest(modo_trans) modo_trans 
+           from info5_informacion_invias
+           where modo_trans is not null) a
+           left join dominios d on a.modo_trans::text = d.valor and d.dominio = 'DOM_MODO_TRANS'
+           group by d.descripcion) sub;
+        </sql>
+    </Consulta>
+    <Consulta id="estadistica_contable">
+        <sql>
+        select count(*) as estadistica 
+        from info43_contabilidad
+        where clasificacion_contable = 9;
+        </sql>
+    </Consulta>
+    <Consulta id="aprobar_tecnico">
+        <sql>
+        update info12_control_calidad_tecnico
+        set aprobado = $aprobado
+        where id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_entregables_saneamiento">
+        <sql>
+        select *
+        from entregable_saneamiento
+        where id_saneamiento = $id_saneamiento;
+        </sql>
+    </Consulta>
+    <Consulta id="get_campos_entregable">
+        <sql>
+        select ms.*
+        from entregables_campos ec 
+        join modulos_saneamientos ms on ec.id_campo = ms.id_campo 
+        where id_entregable = $id_entregable;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_contabilidad">
+        <sql>
+        select ic.id_expediente, d.descripcion 
+        from info43_contabilidad ic 
+        left join dominios d on ic.clasificacion_contable::text = d.valor and d.dominio = 'DOM_CLAS_CONTABLE'
+        where ic.id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_documental">
+        <sql>
+        select iae.id_expediente, d.descripcion 
+        from info11_adquisicion_escritura iae 
+        left join dominios d on iae.estado_busqueda::text = d.valor and d.dominio = 'DOM_ESTADO_BUSQUEDA'
+        where iae.id_expediente = $id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_estado_san_juridico">
+        <sql>
+        select *
+        from estado_san_juridicos
+        where id_expediente = $id_expediente
+        order by id_expediente;
         </sql>
     </Consulta>
 
