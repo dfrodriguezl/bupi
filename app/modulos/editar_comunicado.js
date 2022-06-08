@@ -198,27 +198,31 @@ const EditarComunicado = (props) => {
                         })} /> :
                       a.form === 'fecha' ?
                         <Controller
-                          as={DatePicker}
+                          render={(props) =>
+                            <DatePicker
+                              selected={props.value}
+                              onChange={props.onChange}
+                              defaultValue={props.value}
+                            />
+                          }
                           control={control}
                           name={a.field}
-                          defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.fild], 'YYYY-MM-DD') : '')}
-                          selected={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
-                          onChange={([selected]) => selected}
+                          defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
                           rules={{
                             required: a.required ? a.message : undefined,
                           }}
-                        /> : 
+                        /> :
                         a.form === 'area' ?
-                        <textarea
-                        className='form_input'
-                        name={a.field}
-                        defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
-                        ref={register({
-                          required: a.required ? a.message : undefined,
-                        })}
-                        rows="4"
-                    />
-                        : null}
+                          <textarea
+                            className='form_input'
+                            name={a.field}
+                            defaultValue={(datosForm[a.field] ? date.parse(datosForm[a.field], 'YYYY-MM-DD') : '')}
+                            ref={register({
+                              required: a.required ? a.message : undefined,
+                            })}
+                            rows="4"
+                          />
+                          : null}
                     {errors[a.field] && <span className="msg-error">{errors[a.field].message}</span>}
                   </div>
                 ) : null}
