@@ -199,7 +199,7 @@ export const notificacion = (data) => {
                 await back(data)
 
                 data.id_consulta = "insertar_notificacion"
-                data.tarea_next = 12;
+                data.tarea_next = 8;
                 data.ruta_destino = 16;
 
                 await back(data)
@@ -337,6 +337,29 @@ export const notificacion = (data) => {
                         id_consulta: "insertar_notificacion",
                         tarea_next: 5,
                         ruta_destino: 11,
+                        opcion: 1,
+                        id_expediente: data.id_expediente
+                    }
+                    await back(post2)
+                })()
+            }
+
+        })()
+    } else if (ruta === 15) {
+        data.id_consulta = "info43_contabilidad";
+
+        (async () => {
+            var result = await back(data);
+
+            if (result.data[0].clasificacion_contable_mensual != '' && result.data[0].clasificacion_contable_mensual != null) { // Devolucion de geometria
+                (async () => {
+
+                    //alert()
+
+                    var post2 = {
+                        id_consulta: "insertar_notificacion",
+                        tarea_next: 10,
+                        ruta_destino: 19,
                         opcion: 1,
                         id_expediente: data.id_expediente
                     }

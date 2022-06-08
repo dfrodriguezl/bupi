@@ -746,7 +746,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             {index === 39 || index === 40 ?
                                 <Fragment>
                                     <EncabezadoSaneamiento tipo={index} id_expediente={id} consecutivo={consecutivo} />
-                                    <FlujoSan tipo={index} consecutivo={consecutivo} />
+                                    {/* <FlujoSan tipo={index} consecutivo={consecutivo} /> */}
                                 </Fragment>
                                 : null}
                         </Fragment>
