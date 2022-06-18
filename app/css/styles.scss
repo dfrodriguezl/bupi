@@ -86,23 +86,24 @@ body{
             grid-template-columns: 20px 1fr;
             margin:0;
             cursor: pointer;
-            color: #ffff;
+            color: black;
             column-gap: 10px;
             text-decoration: none;
             p{
                 font-size: 1.3em;
+                font-weight: 500 !important;
             }
         }
 
     }
     .elemento.active{
-        background-color: #fff;
+        background-color: black;
         a{
             color:$color2;
         }
     }
     .elemento:hover{
-        background-color: #fff;
+        background-color: black;
         a{
             color:$color2;
         }

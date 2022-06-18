@@ -87,7 +87,7 @@ const DetallePredio = () => {
     <div id="seccion">
 
       <div id="titulo_seccion">
-        Código BUPI: {expediente}
+        CÓDIGO BUPI: {expediente}
         {/* {tipologia ?
           tipologia.descripcion ?
             <Fragment>
@@ -103,7 +103,7 @@ const DetallePredio = () => {
         } */}
         <Grid container justify="center" xs={12}>
           <Grid item container xs={12} justify="center">
-            <Typography variant="h6">Estados</Typography>
+            <Typography variant="h6">ESTADOS</Typography>
           </Grid>
           <Grid item container xs={3} direction="column" alignItems="center">
             <Typography variant="subtitle1">Estructuración</Typography>

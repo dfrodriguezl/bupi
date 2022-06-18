@@ -2390,9 +2390,8 @@ group by dominio) as d
     </Consulta>
     <Consulta id="get_estados_depuracion">
         <sql>
-             select t.id_expediente, dep_tec, f_tec, dep_jur, f_jur
+             select t.id_expediente, dep_tec, f_tec
             from estado_aprobacion_tecnico t
-            join estado_aprobacion_juridico j on t.id_expediente = j.id_expediente
             where t.id_expediente=$id_expediente
         </sql>
     </Consulta>
