@@ -1503,7 +1503,7 @@ const Predio = () => {
 
     return (
         <div id="seccion">
-            <div id="titulo_seccion">Predio</div>
+            <div id="titulo_seccion">PREDIO</div>
             <p id="descripcion_seccion">Sección para edición de la  información predial, por favor seleccione un item y luego un formulario para observar el detalle.</p>
 
 

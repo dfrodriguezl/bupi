@@ -101,7 +101,7 @@ const Documentos = () => {
 
     <div id="seccion">
 
-      <div id="titulo_seccion">Documentos</div>
+      <div id="titulo_seccion">DOCUMENTOS</div>
       <p id="descripcion_seccion">Sección para visualizar los documentos escaneados</p>
 
       <p className="enfasis">Total de documentos: {info.length}</p>
