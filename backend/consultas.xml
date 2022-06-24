@@ -3379,7 +3379,7 @@ group by dominio) as d
         from tareas.tareas t 
         left join usuario u on t.usuario_responsable = u.usuario_usuario 
         where id_expediente = $id_expediente
-        and estado = 1 and fecha_solucion is null
+        and ruta = 1
         limit 1;
         </sql>
     </Consulta>
