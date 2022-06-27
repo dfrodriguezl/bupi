@@ -57,10 +57,10 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([1, 2, 42, 41, 3, 14, 4, 13, 5, 6, 12, 15].includes(index)) {
+    else if ([1, 2, 42, 41, 3, 4, 13, 5, 6, 12, 15].includes(index)) {
 
         tipo_permiso = [6];//editar formulario técnico  
-    } else if ([5, 6, 15, 16, 20, 21, 22].includes(index)) {
+    } else if ([5, 6, 15, 16, 20, 21, 22, 14].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
     } else if ([7].includes(index)) {
@@ -329,11 +329,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                     if (response1.data.length > 0) {
                         response1.data.map((rd1) => {
-                            if(index === 40 && rd1.saneamiento != null){
+                            if (index === 40 && rd1.saneamiento != null) {
                                 setSaneamientoSeleccionado(rd1.saneamiento)
                             }
-                            
-                        },[])
+
+                        }, [])
                         setFields({ data: datosNorm, info: response1.data[0] });
 
                         setView(true)
@@ -580,7 +580,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         }
 
-        if(e.field === "saneamiento" && index === 40){
+        if (e.field === "saneamiento" && index === 40) {
             setSaneamientoSeleccionado(msg.value)
         }
 
@@ -756,7 +756,11 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                             <div className="formulario">
 
-                                <p className="form_title">{i.doc.label}</p>
+                                {index === 40 && i.doc.field === "gravamen" ?
+                                    saneamientoSeleccionado === "2" &&
+                                    <p className="form_title">{i.doc.label}</p> : null
+                                }
+
 
 
                                 {i.doc.editable ?
@@ -765,7 +769,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {i.doc.form == 'select' ?
 
                                             <>
-                                        
+
 
                                                 {i.doc.field_father ?
 
@@ -826,29 +830,50 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                                     //     ref={register}
                                                     //      />
 
-
-                                                    
-                                                    <Controller
-                                                        name={i.doc.field}
-                                                        control={control}
-                                                        defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
-                                                        render={(props) =>
-                                                            <ReactSelect onChange={(e) => {
-                                                                props.onChange(e);
-                                                                change(e, i.doc);
-                                                                // if(i.doc.field === "saneamiento" && index === 40){
-                                                                //     setSaneamientoSeleccionado(e.valor)
-                                                                // }
-                                                            }}
-                                                                options={i.doc.enum}
-                                                                isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
-                                                                name={props.name}
-                                                                isClearable={true}
-                                                                defaultValue={props.value}
-                                                            />
-                                                        }
-                                                        rules={i.doc.required ? { required: i.doc.message } : undefined}
-                                                    />
+                                                    index === 40 && i.doc.field === "gravamen" ?
+                                                        saneamientoSeleccionado === "2" &&
+                                                        <Controller
+                                                            name={i.doc.field}
+                                                            control={control}
+                                                            defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                            render={(props) =>
+                                                                <ReactSelect onChange={(e) => {
+                                                                    props.onChange(e);
+                                                                    change(e, i.doc);
+                                                                    // if(i.doc.field === "saneamiento" && index === 40){
+                                                                    //     setSaneamientoSeleccionado(e.valor)
+                                                                    // }
+                                                                }}
+                                                                    options={i.doc.enum}
+                                                                    isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                    name={props.name}
+                                                                    isClearable={true}
+                                                                    defaultValue={props.value}
+                                                                />
+                                                            }
+                                                            rules={i.doc.required ? { required: i.doc.message } : undefined}
+                                                        />
+                                                        : <Controller
+                                                            name={i.doc.field}
+                                                            control={control}
+                                                            defaultValue={defecto ? i.doc.enum.filter(option => (option.value) === String(fields.info[i.doc.field])) : ''}
+                                                            render={(props) =>
+                                                                <ReactSelect onChange={(e) => {
+                                                                    props.onChange(e);
+                                                                    change(e, i.doc);
+                                                                    // if(i.doc.field === "saneamiento" && index === 40){
+                                                                    //     setSaneamientoSeleccionado(e.valor)
+                                                                    // }
+                                                                }}
+                                                                    options={i.doc.enum}
+                                                                    isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
+                                                                    name={props.name}
+                                                                    isClearable={true}
+                                                                    defaultValue={props.value}
+                                                                />
+                                                            }
+                                                            rules={i.doc.required ? { required: i.doc.message } : undefined}
+                                                        />
 
                                                 }
 
@@ -1022,7 +1047,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         {index === 40 ?
                             <Fragment>
                                 {/* <EditarComunicado open={<button className='primmary'>Nuevo comunicado</button>} id_exp={id} index={index} consecutivo={consecutivo} /> */}
-                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado}/>
+                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado} />
                             </Fragment>
                             : null}
 

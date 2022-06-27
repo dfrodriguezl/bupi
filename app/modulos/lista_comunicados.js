@@ -3,10 +3,11 @@ import { servidorPost } from '../js/request';
 import EditarComunicado from './editar_comunicado';
 import EditIcon from '@material-ui/icons/Edit';
 import ModalDelete from './componentes/modal_delete';
+import ReactSelect from 'react-select';
 
 
 const ListaComunicados = (props) => {
-  const { id_expediente, consecutivo, tabla, tipoSaneamiento } = props;
+  const { id_expediente, consecutivo, tabla, tipoSaneamiento, gravamen } = props;
   const [items, setItems] = useState([]);
   const [refreshTabla, setRefreshTabla] = useState(false)
   const [listEntregables, setListEntregables] = useState([])
@@ -38,6 +39,10 @@ const ListaComunicados = (props) => {
     setSanSeleccionado(tipoSaneamiento)
 
   }, [refreshTabla, tipoSaneamiento])
+
+  const onChangeSelect = (e) => {
+    setGravamenSeleccionado(e)
+  }
 
 
   return (
