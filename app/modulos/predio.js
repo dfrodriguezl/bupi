@@ -757,8 +757,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                             <div className="formulario">
 
                                 {index === 40 && i.doc.field === "gravamen" ?
-                                    saneamientoSeleccionado === "2" &&
-                                    <p className="form_title">{i.doc.label}</p> : null
+                                    saneamientoSeleccionado === "2" ?
+                                        <p className="form_title">{i.doc.label}</p> : null :
+                                    (i.doc.type === "hidden" ? null : <p className="form_title">{i.doc.label}</p>)
+
                                 }
 
 
@@ -1029,6 +1031,22 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
                                         }
+                                        {i.doc.form == 'check' ?
+
+                                            <>
+                                                <input type="checkbox"
+                                                    name={i.doc.field}
+                                                    id={i.doc.field}
+                                                    defaultChecked={defecto ? fields.info[i.doc.field] : false}
+                                                    style={{ width: '2%' }}
+                                                    ref={register}
+                                                />
+                                                {/* <label htmlFor={i.doc.field}> {i.doc.label}</label><br /> */}
+
+                                            </>
+
+                                            : ''
+                                        }
                                         {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
                                         {/* <ErrorMessage errors={errors} name={i.doc.field} /> */}
                                     </>
@@ -1039,7 +1057,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         defaultValue={defecto ? fields.info[i.doc.field] : ''}
                                         ref={register} />}
 
-                                <p className="form_helper">{i.doc.helper}</p>
+                                {i.doc.type === "hidden" ? null : <p className="form_helper">{i.doc.helper}</p>}
                             </div>
 
                         )}
@@ -1505,7 +1523,7 @@ const ModalValidacion = ({ open, lista }) => {
 }
 
 
-const Predio = () => {
+const Predio = (props) => {
 
     const [index, setIndex] = React.useState(0)
     const [tbl, setTbl] = React.useState(null)
@@ -1513,6 +1531,10 @@ const Predio = () => {
     const [active, setActive] = React.useState(0)
     const [recarga, setRecarga] = React.useState(null)
     const [titulo, setTitulo] = React.useState(null)
+    const { session } = props;
+    const [usuario, setUsuario] = React.useState(session);
+    const [tabIndex, setTabIndex] = React.useState(0);
+
 
     const getForm = (id, form, descripcion) => {
 
@@ -1524,15 +1546,25 @@ const Predio = () => {
         setRecarga(Math.random())
     }
 
+    useEffect(() => {
+        setUsuario(session);
+        setTabIndex(usuario.usuario_rol === 10 ? 1 : 0);
+        if (session.usuario_rol === 10) {
+            getForm(40, "info40_san_jur", "Gestión saneamiento jurídico");
+        }
+    }, [session, setUsuario, setTabIndex, usuario])
+
 
 
     return (
         <div id="seccion">
             <div id="titulo_seccion">PREDIO</div>
             <p id="descripcion_seccion">Sección para edición de la  información predial, por favor seleccione un item y luego un formulario para observar el detalle.</p>
-
-
-            <Tabs onSelect={() => setIndex(0)}>
+            <Tabs onSelect={(index) => {
+                setIndex(0)
+                setTabIndex(index)
+            }}
+                selectedIndex={tabIndex}>
                 <TabList>
                     <Tab>Estructuración</Tab>
                     <Tab>Saneamientos</Tab>
