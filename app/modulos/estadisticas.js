@@ -39,7 +39,7 @@ const Estadistica = (props) => {
 
   return (
 
-    <div style={{alignSelf: 'center'}}>
+    <div style={{ alignSelf: 'center' }}>
       <p className={`titulo ${props.clase}`}>{props.titulo}</p>
       {/* <p className={`valor ${props.clase}`}> 0 </p> */}
       <p className={`valor ${props.clase}`}> {info.estadistica}</p>
@@ -60,6 +60,7 @@ const Graficos = () => {
   const [refresh, setRefresh] = React.useState(false);
   const [grupoVerde, setGrupoVerde] = React.useState(0);
   const [grupoRojo, setGrupoRojo] = React.useState(0);
+  const [tareasGestionadas, setTareasGestionadas] = React.useState(0);
   let rojo = 0;
   let verde = 0;
 
@@ -97,8 +98,16 @@ const Graficos = () => {
       }
     }
 
+    async function getTareasGestionados() {
+      var datos = { "id_consulta": "get_tareas_gestionadas" }
+      const result = await servidorPost('/backend', datos);
+
+      setTareasGestionadas(result.data[0].conteo);
+    }
+
 
     getTareas();
+    getTareasGestionados();
 
     // refresh_number(Math.random())
 
@@ -170,7 +179,9 @@ const Graficos = () => {
                   <p> menos de 30 días ({grupoVerde} tareas)</p>
                   <span className="bolita danger"></span>
                   <p> más de un mes ({grupoRojo} tareas)</p>
+
                 </div>
+                <p style={{ textAlign: 'center' }}> Tareas gestionadas ({tareasGestionadas} tareas)</p>
                 {filtro.map((item, index) =>
                   <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
                     <p className="titulo" style={{ textAlign: 'left' }}>Registro predial: {!item.consecutivo ? item.id_expediente : item.id_expediente + " - Saneamiento " + item.consecutivo}</p>
@@ -189,7 +200,18 @@ const Graficos = () => {
 
                     </button>
 
-                    {item.ruta === 13 && item.tabla ?
+                    {item.ruta === 17 && item.comp ?
+                      <Modal
+                      nombre={item.id_expediente}
+                      id={item.id}
+                      refresh={setRefresh}
+                      tareacod={item.ruta}
+                      tipo={item.tabla}
+                      consecutivo={item.consecutivo} /> :
+                      null
+                  }
+
+                    {/* {item.ruta === 13 && item.tabla ?
                       <Modal
                         nombre={item.id_expediente}
                         id={item.id}
@@ -197,9 +219,9 @@ const Graficos = () => {
                         tareacod={item.ruta}
                         tipo={item.tabla}
                         consecutivo={item.consecutivo} />
-                      : null}
+                      : null} */}
 
-                    {item.ruta !== 13 ?
+                    {item.ruta !== 17 ?
                       <Modal
                         nombre={item.id_expediente}
                         id={item.id}
@@ -219,7 +241,7 @@ const Graficos = () => {
           <Grid xs={8} container>
             <div id="estadisticas-inicio" style={{ display: 'inline-block' }}>
               <h2>Estadísticas</h2>
-              <Form estadistica1={<Estadistica titulo="Predios registrados en contabilidad" consulta="estadistica_contable" clase="green" />}/>
+              <Form estadistica1={<Estadistica titulo="Predios registrados en contabilidad" consulta="estadistica_contable" clase="green" />} />
               {/* <div id="seccion" className="sec2">
                 <Estadistica titulo="Predios registrados en contabilidad" consulta="estadistica5" clase="green" />
               </div> */}

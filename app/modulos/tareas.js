@@ -20,6 +20,7 @@ const Tarea = ({ refresh_number }) => {
     const [refresh, setRefresh] = React.useState(false);
     const [grupoVerde, setGrupoVerde] = React.useState(0);
     const [grupoRojo, setGrupoRojo] = React.useState(0);
+    const [tareasGestionadas, setTareasGestionadas] = React.useState(0);
     let rojo = 0;
     let verde = 0;
 
@@ -56,8 +57,16 @@ const Tarea = ({ refresh_number }) => {
             }
         }
 
+        async function getTareasGestionados() {
+            var datos = { "id_consulta": "get_tareas_gestionadas" }
+            const result = await servidorPost('/backend', datos);
+      
+            setTareasGestionadas(result.data[0].conteo);
+          }
+
 
         getTareas();
+        getTareasGestionados();
 
         refresh_number(Math.random())
 
@@ -126,7 +135,7 @@ const Tarea = ({ refresh_number }) => {
             </div>
 
 
-
+            <p style={{ textAlign: 'center' }}> Tareas gestionadas ({tareasGestionadas} tareas)</p>
             {filtro.map((item, index) =>
                 <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
                     <p className="titulo">{!item.consecutivo ? item.id_expediente : item.id_expediente + " - Saneamiento " + item.consecutivo}</p>

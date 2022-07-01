@@ -1326,20 +1326,22 @@ group by dominio) as d
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_responsable)as usuario_responsable
         from tareas.tareas as t
+        join (select a.id_expediente,
+			case
+				when a.c = b.c then true
+				else false
+			end as comp
+			from 
+			(select id_expediente,count(*) c
+			from estado_san_juridicos esj 
+			group by id_expediente) a
+			full join
+			(select id_expediente,count(*) c
+			from estado_san_juridicos esj 
+			where estado_actual in ('RESUELTO','NO APLICA')
+			group by id_expediente) b on a.id_expediente = b.id_expediente) a on a.id_expediente = t.id_expediente 
         where
-        usuario_responsable=token and estado=1 and visible=true
-		union
-        select *,
-        (select descripcion from tareas.flujo_saneamientos as tf where
-        tf.ruta=t.ruta), 
-        (select usuario_nombre from usuario as u where
-        u.usuario_usuario=t.usuario_asigna)as usuario_nombre,
-        (select usuario_nombre from usuario as u where
-        u.usuario_usuario=t.usuario_responsable)as usuario_responsable
-        from tareas.tareas_saneamientos as t
-        where
-        usuario_responsable=token and estado=1 and visible=true
-        order by fecha_asignacion desc;
+        usuario_responsable='juridico1' and estado=1 and visible=true;
         </sql>
     </Consulta>
 
@@ -2882,7 +2884,7 @@ group by dominio) as d
         select *
             from dominios
             where dominio = $dominio
-            order by valor
+            order by valor::int
         </sql>
     </Consulta>
 
@@ -3511,6 +3513,14 @@ group by dominio) as d
         from estado_san_juridicos
         where id_expediente = $id_expediente
         order by id_expediente;
+        </sql>
+    </Consulta>
+    <Consulta id="get_tareas_gestionadas">
+        <sql>
+        select count(*) conteo
+            from tareas.tareas t 
+            where usuario_responsable = token
+            and estado = 2;
         </sql>
     </Consulta>
 

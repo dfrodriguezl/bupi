@@ -124,6 +124,9 @@ const EditarComunicado = (props) => {
     >
       {close => (
         <div className="modal" style={{ height: '400px', overflow: 'auto', width: '50vw' }}>
+          <button className="close" onClick={close}>
+            &times;
+          </button>
           <div id="seccion" >
             <div id="titulo_seccion">Crear entregable</div>
             <p id="descripcion_seccion">Diligencie los campos y de clic en guardar</p>
@@ -176,6 +179,11 @@ const EditarComunicado = (props) => {
                       getOptionValue={(o) => o.valor}
                       getOptionLabel={(o) => o.descripcion}
                       value={props.value}
+                      styles={{
+                        menu: (base) => {
+
+                        }
+                      }}
                     />
                   }
                 />
