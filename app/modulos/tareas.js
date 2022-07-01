@@ -154,25 +154,36 @@ const Tarea = ({ refresh_number }) => {
 
                     </button>
 
-                    {item.ruta === 13 && item.tabla ?
-                        <Modal
-                            nombre={item.id_expediente}
-                            id={item.id}
-                            refresh={setRefresh}
-                            tareacod={item.ruta}
-                            tipo={item.tabla}
-                            consecutivo={item.consecutivo} />
-                        : null}
+                    {item.ruta === 17 && item.comp ?
+                      <Modal
+                      nombre={item.id_expediente}
+                      id={item.id}
+                      refresh={setRefresh}
+                      tareacod={item.ruta}
+                      tipo={item.tabla}
+                      consecutivo={item.consecutivo} /> :
+                      null
+                  }
 
-                    {item.ruta !== 13 ?
-                        <Modal
-                            nombre={item.id_expediente}
-                            id={item.id}
-                            refresh={setRefresh}
-                            tareacod={item.ruta}
-                            tipo={item.tabla}
-                            consecutivo={item.consecutivo}
-                        /> : null}
+                    {/* {item.ruta === 13 && item.tabla ?
+                      <Modal
+                        nombre={item.id_expediente}
+                        id={item.id}
+                        refresh={setRefresh}
+                        tareacod={item.ruta}
+                        tipo={item.tabla}
+                        consecutivo={item.consecutivo} />
+                      : null} */}
+
+                    {item.ruta !== 17 ?
+                      <Modal
+                        nombre={item.id_expediente}
+                        id={item.id}
+                        refresh={setRefresh}
+                        tareacod={item.ruta}
+                        tipo={item.tabla}
+                        consecutivo={item.consecutivo}
+                      /> : null}
 
                 </div>
             )
