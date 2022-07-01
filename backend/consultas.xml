@@ -1341,7 +1341,7 @@ group by dominio) as d
 			where estado_actual in ('RESUELTO','NO APLICA')
 			group by id_expediente) b on a.id_expediente = b.id_expediente) a on a.id_expediente = t.id_expediente 
         where
-        usuario_responsable='juridico1' and estado=1 and visible=true;
+        usuario_responsable=token and estado=1 and visible=true;
         </sql>
     </Consulta>
 
