@@ -3485,9 +3485,13 @@ group by dominio) as d
     </Consulta>
     <Consulta id="get_campos_entregable">
         <sql>
-        select ms.*
+        select ms.*,d.enum
         from entregables_campos ec 
         join modulos_saneamientos ms on ec.id_campo = ms.id_campo 
+        left join (select dominio,
+								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+								  from dominios
+								group by dominio) as d on ms.enum=d.dominio
         where id_entregable = $id_entregable;
         </sql>
     </Consulta>
