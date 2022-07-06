@@ -1326,7 +1326,7 @@ group by dominio) as d
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_responsable)as usuario_responsable
         from tareas.tareas as t
-        join (select a.id_expediente,
+        left join (select a.id_expediente,
 			case
 				when a.c = b.c then true
 				else false
