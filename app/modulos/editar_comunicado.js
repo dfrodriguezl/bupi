@@ -87,7 +87,7 @@ const EditarComunicado = (props) => {
     datos.entregable = entregableSeleccionado.valor;
     datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
     datos.observacion = datos.observacion || "";
-    datos.tipo_respuesta = datos.tipo_respuesta.value || "";
+    datos.tipo_respuesta = datos.tipo_respuesta ? datos.tipo_respuesta.value : "" || "";
     datos.fecha_comunicado = datos.fecha_comunicado || null;
     datos.radicado_invias_comunicado = datos.radicado_invias_comunicado || "";
     datos.objeto_comunicado = datos.objeto_comunicado || "";

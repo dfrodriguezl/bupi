@@ -65,6 +65,7 @@ const Busqueda = () => {
               <p className="item_des">Departamento: {el.departamento}</p>
               <p className="item_des">Municipio: {el.municipio}</p>
               <p className="item_des">Dirección: {el.direccion_actual_igac}</p>
+              <p className="item_des">ORIP: {el.orip}</p>
               <button >
                 <Link to={"/predio/" + el.id_expediente}>
                   <p>Ver registro</p>
