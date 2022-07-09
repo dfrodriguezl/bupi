@@ -416,7 +416,7 @@
     <Consulta id="get_proyectos">
         <sql>
         select distinct ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
-        iic.direccion_actual_igac 
+        iic.direccion_actual_igac, orip.descripcion orip
 		from info1_fuente ig left join info2_adquisicion_vw ip
 		on ig.id_expediente=ip.id_expediente
 		left join info4_informacion_catastral iic
@@ -424,6 +424,7 @@
         left join info42_adquisicion_tradentes iat on ig.id_expediente = iat.id_expediente 
         left join dominios dep on iic.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
         left join dominios mun on iic.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
+        left join dominios orip on ip.orip = orip.valor and orip.dominio = 'DOM_ORIP'
         where 
         upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
         or 
@@ -435,7 +436,7 @@
          or 
         ip.fecha_titulo::text like  ('%' || $filtro || '%')
         order by ig.id_expediente
-        limit 50
+        limit 50;
         </sql>
     </Consulta>
     <Consulta id="get_servidumbres">
@@ -1316,7 +1317,7 @@ group by dominio) as d
 
     <Consulta id="get_tareas">
         <sql>
-        select *,
+        select t.*,
         null as consecutivo,
         null as tabla,
         (select descripcion from tareas.flujo as tf where
@@ -1326,7 +1327,7 @@ group by dominio) as d
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_responsable)as usuario_responsable
         from tareas.tareas as t
-        join (select a.id_expediente,
+        left join (select a.id_expediente,
 			case
 				when a.c = b.c then true
 				else false
