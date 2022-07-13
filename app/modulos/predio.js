@@ -1065,6 +1065,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         {index === 40 ?
                             <Fragment>
                                 {/* <EditarComunicado open={<button className='primmary'>Nuevo comunicado</button>} id_exp={id} index={index} consecutivo={consecutivo} /> */}
+                                
                                 <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado} />
                             </Fragment>
                             : null}

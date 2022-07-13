@@ -11,9 +11,10 @@ const ListaComunicados = (props) => {
   const [items, setItems] = useState([]);
   const [refreshTabla, setRefreshTabla] = useState(false)
   const [listEntregables, setListEntregables] = useState([])
-  const [sanSeleccionado, setSanSeleccionado] = useState("")
+  const [sanSeleccionado, setSanSeleccionado] = useState(tipoSaneamiento)
 
   useEffect(() => {
+    
     const consulta = {
       id_consulta: 'get_comunicados',
       id_expediente: id_expediente,
@@ -38,7 +39,7 @@ const ListaComunicados = (props) => {
 
     setSanSeleccionado(tipoSaneamiento)
 
-  }, [refreshTabla, tipoSaneamiento])
+  }, [refreshTabla, tipoSaneamiento, setListEntregables, setRefreshTabla, setItems])
 
   const onChangeSelect = (e) => {
     setGravamenSeleccionado(e)
