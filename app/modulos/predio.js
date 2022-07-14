@@ -116,7 +116,7 @@ const DatePicker = ({ selected, onChange }) => {
 
 
 
-const Form = ({ tbl, index, refresh, consecutivo }) => {
+const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
 
     const [fields, setFields] = React.useState([]);
@@ -140,9 +140,10 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
     let { id } = useParams();
 
-    const { register, handleSubmit, watch, control, errors, setValue, formState: { isValid } } = useForm({
+    const { register, handleSubmit, watch, control, errors, setValue, formState: { isValid, isDirty} } = useForm({
         mode: 'onChange'
     });
+    const isFormEdited = isDirty;
 
     const registerOptions = {
         titular: { required: "Role is required" }
@@ -735,7 +736,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
             <form onSubmit={handleSubmit(onSubmit)} className="form-container">
 
 
-
+                {isFormEdited ? setPopupForm(true) : setPopupForm(false)}
                 {view ?
 
 
@@ -1064,7 +1065,6 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                         {index === 40 ?
                             <Fragment>
-                                {/* <EditarComunicado open={<button className='primmary'>Nuevo comunicado</button>} id_exp={id} index={index} consecutivo={consecutivo} /> */}
                                 <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado} />
                             </Fragment>
                             : null}
@@ -1226,7 +1226,7 @@ const Alerta = ({ btn, msg, action }) => {
 
 
 
-const FormMultiple = ({ tbl, index, titulo }) => {
+const FormMultiple = ({ tbl, index, titulo, setPopup }) => {
 
     const [activate, setActivate] = React.useState(false)
     const [multiple, setMultiple] = React.useState(false)
@@ -1418,7 +1418,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
                 /> : ''}
             </>}
 
-            {activate && <Form tbl={tbl} index={index} refresh={refresh} consecutivo={consecutivo} />}
+            {activate && <Form tbl={tbl} index={index} refresh={refresh} consecutivo={consecutivo} setPopupForm={setPopup}/>}
 
 
         </div>
@@ -1534,6 +1534,7 @@ const Predio = (props) => {
     const { session } = props;
     const [usuario, setUsuario] = React.useState(session);
     const [tabIndex, setTabIndex] = React.useState(0);
+    const [openPopup, setOpenPopup] = React.useState(false);
 
 
     const getForm = (id, form, descripcion) => {
@@ -1580,9 +1581,8 @@ const Predio = (props) => {
 
                     <h3>Formularios estructuración</h3>
                     <p>A continuación seleccione un formulario para visualizar su información en caso de que tenga datos almacenados en la base de datos.</p>
-
                     <div className="grupo-formularios">
-                        {active === 0 ?
+                        {!openPopup ?
                             <Fragment>
                                 <button onClick={() => getForm(1, "info1_fuente", "Fuente")}
                                     className={active == 1 ? 'active' : ''}  >
@@ -1847,7 +1847,7 @@ const Predio = (props) => {
 
 
 
-            {index > 0 ? <FormMultiple tbl={tbl} index={index} titulo={titulo} /> : ''}
+            {index > 0 ? <FormMultiple tbl={tbl} index={index} titulo={titulo} setPopup={setOpenPopup}/> : ''}
 
             <ToastContainer />
         </div>

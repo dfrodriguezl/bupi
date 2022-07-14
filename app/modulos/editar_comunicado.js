@@ -14,6 +14,7 @@ const EditarComunicado = (props) => {
   const [listEntregables, setListEntregables] = useState([]);
   const [entregableSeleccionado, setEntregableSeleccionado] = useState();
   const [campos, setCampos] = useState([]);
+  const [sanSeleccionado, setSanSeleccionado] = useState(tipoSaneamiento);
 
   useEffect(() => {
 
@@ -30,8 +31,11 @@ const EditarComunicado = (props) => {
     servidorPost("/backend", dataDomain).then((response) => {
       servidorPost("/backend", dataEntregable).then((responseEntregable) => {
         const dataFiltrada = response.data.filter((o) => responseEntregable.data.filter((re) => re.id_entregable === o.valor).length > 0);
-        console.log("DATA FILTRADA", dataFiltrada)
-        setListEntregables(dataFiltrada)
+
+        if (dataFiltrada.length > 0) {
+          setListEntregables(dataFiltrada)
+        }
+
         if (entregable) {
           setEntregableSeleccionado(dataFiltrada.filter((o) => Number(o.valor) === Number(entregable))[0]);
         }
@@ -59,7 +63,7 @@ const EditarComunicado = (props) => {
     }
 
 
-  }, [tipoSaneamiento, entregable, setListEntregables, setDatosForm, setEntregableSeleccionado])
+  }, [sanSeleccionado, tipoSaneamiento, entregable, setListEntregables, setDatosForm, setEntregableSeleccionado])
 
   const onChangeEntregable = (e) => {
     setEntregableSeleccionado(e);
@@ -230,37 +234,37 @@ const EditarComunicado = (props) => {
                             })}
                             rows="4"
                           />
-                          : 
-                        a.form === 'select' ? 
-                        <Controller
-                        name={a.field}
-                        control={control}
-                        defaultValue={a.enum.filter((o) => Number(o.value) === Number(datosForm[a.field]))}
-                        render={(props) =>
-                          <ReactSelect onChange={(e) => {
-                            props.onChange(e);
-                            // onChangeEntregable(e);
-                            // change(e, i.doc);
-                          }}
-                            options={a.enum}
-                            name={props.name}
-                            isClearable={true}
-                            defaultValue={props.value}
-                            getOptionValue={(o) => o.value}
-                            getOptionLabel={(o) => o.label}
-                            value={props.value}
-                            styles={{
-                              menu: (base) => {
-      
+                          :
+                          a.form === 'select' ?
+                            <Controller
+                              name={a.field}
+                              control={control}
+                              defaultValue={a.enum.filter((o) => Number(o.value) === Number(datosForm[a.field]))}
+                              render={(props) =>
+                                <ReactSelect onChange={(e) => {
+                                  props.onChange(e);
+                                  // onChangeEntregable(e);
+                                  // change(e, i.doc);
+                                }}
+                                  options={a.enum}
+                                  name={props.name}
+                                  isClearable={true}
+                                  defaultValue={props.value}
+                                  getOptionValue={(o) => o.value}
+                                  getOptionLabel={(o) => o.label}
+                                  value={props.value}
+                                  styles={{
+                                    menu: (base) => {
+
+                                    }
+                                  }}
+                                />
                               }
-                            }}
-                          />
-                        }
-                        rules={{
-                          required: a.required ? a.message : undefined,
-                        }}
-                      />
-                        : null}
+                              rules={{
+                                required: a.required ? a.message : undefined,
+                              }}
+                            />
+                            : null}
                     {errors[a.field] && <span className="msg-error">{errors[a.field].message}</span>}
                   </div>
                 ) : null}
