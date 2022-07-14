@@ -64,7 +64,6 @@ const ListaComunicados = (props) => {
           {/* <p>Editar</p> */}
           <p>Borrar</p>
         </div>
-        {console.log("ITEMS", items)}
         {items.length > 0 ?
           items.map((e, i) => (
             <div className="item-com" key={e.id}>
