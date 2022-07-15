@@ -212,7 +212,7 @@
     </Consulta>
     <Consulta id="info14_saneamiento_juridico">
         <sql>
-        select * from info14_saneamiento_juridico_vw where id_expediente=$id_expediente
+        select * from info14_saneamiento_juridico where id_expediente=$id_expediente
         </sql>
     </Consulta>
     <Consulta id="info14_infraestructura_servidumbre">
