@@ -1069,8 +1069,6 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                             </Fragment>
                             : null}
 
-                        {index === 7 || index === 8 ?
-                            <ExcelAll titulo="Reporte Completo" descripcion="Reporte completo del sistema" reporte="all" /> : null}
                         {Object.keys(errors).length > 0 ? <span className="msg-error">Existen validaciones pendientes, revise en cual campo falta</span> : null}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
