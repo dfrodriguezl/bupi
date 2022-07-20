@@ -73,7 +73,8 @@ const EditarComunicado = (props) => {
   const actualizarCampos = (entregable) => {
     const dataCampos = {
       id_consulta: "get_campos_entregable",
-      id_entregable: entregable
+      id_entregable: entregable,
+      id_expediente: id_exp
     }
 
     servidorPost("/backend", dataCampos).then((response) => {
@@ -91,12 +92,14 @@ const EditarComunicado = (props) => {
     datos.entregable = entregableSeleccionado.valor;
     datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
     datos.observacion = datos.observacion || "";
-    datos.tipo_respuesta = datos.tipo_respuesta ? datos.tipo_respuesta.value : "" || "";
+    datos.tipo_respuesta = datos.tipo_respuesta.value  || null;
     datos.fecha_comunicado = datos.fecha_comunicado || null;
     datos.radicado_invias_comunicado = datos.radicado_invias_comunicado || "";
     datos.objeto_comunicado = datos.objeto_comunicado || "";
     datos.entidad_comunicado = datos.entidad_comunicado || "";
     datos.saneamiento = tipoSaneamiento;
+    datos.radicado_respuesta = datos.radicado_respuesta || "";
+    datos.oficio_solicitud = datos.oficio_solicitud.value || null;
 
     servidorPost("/backend", datos).then((response) => {
       setRefreshTabla(true)
@@ -204,8 +207,8 @@ const EditarComunicado = (props) => {
                         ref={register({
                           required: a.required ? a.message : undefined,
                           pattern: {
-                            value: a.patron ? /^SS-.*$/ : undefined,
-                            message: a.patron ? "Debe cumplir con SS-" : undefined
+                            value: a.patron ? /^SS .*$/ : undefined,
+                            message: a.patron ? "Debe cumplir con SS " : undefined
                           }
                         })} /> :
                       a.form === 'fecha' ?
@@ -235,7 +238,7 @@ const EditarComunicado = (props) => {
                             rows="4"
                           />
                           :
-                          a.form === 'select' ?
+                          a.form === 'select' && a.enum !== null ?
                             <Controller
                               name={a.field}
                               control={control}

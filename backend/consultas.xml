@@ -3320,7 +3320,8 @@ group by dominio) as d
            INSERT INTO comunicados
             VALUES ($id_expediente, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
                 from comunicados where id_expediente = $id_expediente and consecutivo_saneamiento = $consecutivo_saneamiento),
-                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta, $saneamiento);
+                $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta, $saneamiento,
+                $radicado_respuesta, $oficio_solicitud);
         </sql>
     </Consulta>
 
@@ -3350,7 +3351,8 @@ group by dominio) as d
             update comunicados
             set fecha_comunicado = $fecha_comunicado, radicado_invias_comunicado = $radicado_invias_comunicado, 
             objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado, entregable = $entregable, 
-            enlace = $enlace, observacion = $observacion, tipo_respuesta = $tipo_respuesta
+            enlace = $enlace, observacion = $observacion, tipo_respuesta = $tipo_respuesta,
+            radicado_respuesta = $radicado_respuesta, oficio_solicitud = $oficio_solicitud
             where id_expediente = $id_expediente
             and consecutivo_saneamiento = $consecutivo_saneamiento
             and consecutivo_comunicado = $consecutivo_comunicado
@@ -3486,13 +3488,21 @@ group by dominio) as d
     </Consulta>
     <Consulta id="get_campos_entregable">
         <sql>
-        select ms.*,d.enum
+        select ms.*,
+ 		case
+ 			when ms.id_campo = 10 then da.enum
+ 			else d.enum
+ 		end as enum
         from entregables_campos ec 
         join modulos_saneamientos ms on ec.id_campo = ms.id_campo 
         left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 								  from dominios
 								group by dominio) as d on ms.enum=d.dominio
+		left join (select 'DOM_OFICIOS' dominio,
+		json_agg(json_build_object('value',c.entregable,'label',c.objeto_comunicado,'padre','','padre_valor','')) as enum
+		from comunicados c
+		where c.entregable in (2,7) and c.id_expediente = $id_expediente) as da on 1 = 1
         where id_entregable = $id_entregable;
         </sql>
     </Consulta>
