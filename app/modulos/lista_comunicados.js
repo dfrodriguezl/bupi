@@ -69,7 +69,7 @@ const ListaComunicados = (props) => {
             <div className="item-com" key={e.id}>
               <p>{listEntregables.length > 0 && e.entregable !== null ? listEntregables.filter((o) => Number(o.valor) === Number(e.entregable))[0].descripcion : null}</p>
               <p>{e.fecha_comunicado}</p>
-              <p>{e.radicado_invias_comunicado}</p>
+              <p>{e.radicado_invias_comunicado || e.radicado_respuesta}</p>
               <p>{e.objeto_comunicado}</p>
               <p>{e.entidad_comunicado}</p>
               <p><EditarComunicado open={<EditIcon />} id_exp={e.id_expediente} index={e.tabla} consecutivo={e.consecutivo_saneamiento} setRefreshTabla={setRefreshTabla} tipo="update"
