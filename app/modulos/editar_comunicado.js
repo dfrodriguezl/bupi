@@ -92,14 +92,14 @@ const EditarComunicado = (props) => {
     datos.entregable = entregableSeleccionado.valor;
     datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
     datos.observacion = datos.observacion || "";
-    datos.tipo_respuesta = datos.tipo_respuesta.value  || null;
+    datos.tipo_respuesta = datos.tipo_respuesta ? datos.tipo_respuesta.value : null;
     datos.fecha_comunicado = datos.fecha_comunicado || null;
     datos.radicado_invias_comunicado = datos.radicado_invias_comunicado || "";
     datos.objeto_comunicado = datos.objeto_comunicado || "";
     datos.entidad_comunicado = datos.entidad_comunicado || "";
     datos.saneamiento = tipoSaneamiento;
     datos.radicado_respuesta = datos.radicado_respuesta || "";
-    datos.oficio_solicitud = datos.oficio_solicitud.value || null;
+    datos.oficio_solicitud = datos.oficio_solicitud ? datos.oficio_solicitud.value : null;
 
     servidorPost("/backend", datos).then((response) => {
       setRefreshTabla(true)
