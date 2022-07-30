@@ -35,7 +35,7 @@ module.exports = {
     __dirname: false
   },
   plugins: [
-    new webpack.IgnorePlugin(/^pg-native$/)
+    new webpack.IgnorePlugin({resourceRegExp: /^pg-native$/})
   ],
   
 
