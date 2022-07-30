@@ -36,7 +36,7 @@ const libre = require('libreoffice-convert');
 libre.convertAsync = require('util').promisify(libre.convert);
 // const fs = require("fs");
 const axios = require('axios');
-const FormData = require('form-data');
+// const FormData = require('form-data');
 const fileDownload = require('js-file-download');
 const fileSaver = require('file-saver');
 const Blob = require('buffer');
@@ -1230,8 +1230,8 @@ app.post('/generate-pdf', function (request, response) {
         const buf = doc.getZip().generate({ type: "nodebuffer" });
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
         fs.writeFileSync(path.resolve(__dirname, "../help/output.docx"), buf);
-        const form = new FormData();
-        form.append('file', fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
+        // const form = new FormData();
+        // form.append('file', fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
         // console.log(fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
         response.status(200).send(fs.createReadStream(path.resolve(__dirname, "../help/output.docx")));
         // const toPDF = gotenberg.pipe(
