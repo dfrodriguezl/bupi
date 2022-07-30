@@ -29,19 +29,29 @@ module.exports = {
     publicPath: "/bienes-raices"
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
     hot: true,
-    watchContentBase: true,
-    disableHostCheck: true,
-    historyApiFallback: true,
+    // watchContentBase: true,
+    // disableHostCheck: true,
+    allowedHosts: '*',
+    historyApiFallback: true
   },
 
 
   module: {
     rules: [
-        {test: /\.css?$/,include: /node_modules/,  loaders: ['style-loader', 'css-loader']},
+        {test: /\.css?$/,include: /node_modules/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
+      },
         {
             test: /\.scss?$/,
             
@@ -66,8 +76,8 @@ module.exports = {
 
         },
         
-      { test: /\.json$/, type: 'javascript/auto', loader: 'json-loader' },
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      { test: /\.json$/, type: 'javascript/auto', use: [{loader: 'json-loader' }]  },
+      { test: /\.tsx?$/, use: [{loader: "ts-loader"}] },
       {
         test: /\.jsx?$/,  
         exclude: /node_modules/,
@@ -82,13 +92,13 @@ module.exports = {
 
       },{
           test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+          use: [{loader: 'url-loader?limit=10000&mimetype=application/font-woff'}]
         },
         {
           test: /\.(ttf|otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?|(jpg|gif)$/,
-          loader: "file-loader?name=img/[name].[ext]"
+          use: [{loader: "file-loader?name=img/[name].[ext]"}]
         },
-        {test: /\.(png|jpg)$/, loader: "file-loader?name=img/[name].[ext]"}
+        {test: /\.(png|jpg)$/, use: [{loader: "file-loader?name=img/[name].[ext]"}]}
     ]
   },
   plugins: [
@@ -126,11 +136,25 @@ module.exports = {
         filename: 'css/[name].css',
         template: './app/css/styles.scss'
       }),
-      new CompressionPlugin()
+      new CompressionPlugin(),
+      new webpack.DefinePlugin({
+        process: {env: {}}
+      })
   ],
-  node: {
-    fs: "empty"
+  resolve: {
+    fallback: {
+      fs: false,
+      http: false,
+      https: false,
+      url: false,
+      path: false,
+      stream: false,
+      buffer: require.resolve('buffer/')
+    }
   },
+  // node: {
+  //   fs: "empty"
+  // },
 
   // Default mode for Webpack is production.
   // Depending on mode Webpack will apply different things
