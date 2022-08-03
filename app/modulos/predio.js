@@ -960,7 +960,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                         maxLength={i.doc.size ? i.doc.size : undefined}
                                                         minLength={i.doc.min_size ? i.doc.min_size : undefined}
                                                         ref={register({
-                                                            required: i.doc.required ? { required: true } : undefined,
+                                                            required: i.doc.required ? i.doc.message : undefined,
                                                             pattern: {
                                                                 value: getRegex(i.doc.regex),
                                                                 message: i.doc.message,
@@ -980,7 +980,9 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                 <CurrencyInput
                                                     name={i.doc.field}
                                                     defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                    ref={register}
+                                                    ref={register({
+                                                        required: i.doc.required ? i.doc.message : undefined
+                                                    })}
                                                     prefix="$"
                                                     decimalSeparator=","
                                                     groupSeparator="."
@@ -990,7 +992,9 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                     name={i.doc.field}
                                                     disabled={lectura}
                                                     defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                                    ref={register({ min: 0 })} />
+                                                    ref={register({ 
+                                                        required: i.doc.required ? i.doc.message : undefined,
+                                                        min: 0 })} />
                                             : ''
                                         }
                                         {i.doc.form == 'area' ?
@@ -1027,6 +1031,9 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                 selected={(fields.info[i.doc.field] ? date.parse(fields.info[i.doc.field], 'YYYY-MM-DD') : '')}
                                                 defaultValue={(fields.info[i.doc.field] ? date.parse(fields.info[i.doc.field], 'YYYY-MM-DD') : '')}
                                                 onChange={([selected]) => selected}
+                                                rules={
+                                                    {required: i.doc.required ? i.doc.message : undefined}
+                                                }
                                             />
                                             : ''
 
@@ -1619,8 +1626,8 @@ const Predio = (props) => {
                                 <button onClick={() => getForm(12, "info12_pago", "Relación de pagos parciales")} className={active == 12 ? 'active' : ''}>
                                     Relación de pagos parciales
                                 </button>
-                                <button onClick={() => getForm(15, "info15_areas", "Áreas")} className={active == 15 ? 'active' : ''}>
-                                    Áreas
+                                <button onClick={() => getForm(15, "info15_areas", "Tolerancia áreas")} className={active == 15 ? 'active' : ''}>
+                                    Tolerancia áreas
                                 </button>
                                 <button onClick={() => getForm(7, "info7_control_calidad_juridico", "Validación jurídica")} className={active == 7 ? 'active' : ''}>
                                     Validación jurídica

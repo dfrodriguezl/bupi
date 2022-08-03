@@ -158,7 +158,7 @@ const CargueDocumentos = () => {
             <Help titulo="Metadata" doc='METADATA.xlsx' />
 
             <div className="img-descripcion">
-                <img src="bienes-raices/img/documento-explicacion.svg" alt="" />
+                <img src="predios/img/documento-explicacion.svg" alt="" />
             </div>
 
             {permiso ?

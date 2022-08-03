@@ -26,7 +26,7 @@ module.exports = {
     //publicPath: '/',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    publicPath: "/bienes-raices"
+    publicPath: "/predios"
   },
   devServer: {
     static: path.join(__dirname, 'dist'),

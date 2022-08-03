@@ -178,7 +178,7 @@ const BusquedaAvanzada = () => {
     data.id_consulta = "update_parametros_busqueda";
     servidorPost('/backend', data).then((response) => {
       const vals = response.data.map((v) => {
-        let row = [<a href={"/bienes-raices/web/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
+        let row = [<a href={"/predios/web/predio/" + v.id_expediente} target="_blank">{v.id_expediente}</a>,
         v.departamento, v.municipio, v.matricula_inmobiliaria, v.tradente, v.territorial, v.titular, v.serial_titulo, v.numero_predial_nacional,
         v.codigo_predial_anterior, v.modo_transporte, v.codigo_via, v.tramo, v.administrador];
         return row;
