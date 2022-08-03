@@ -31,7 +31,7 @@ const Tree = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <BrowserRouter basename='/bienes-raices/web'>
+                <BrowserRouter basename='/predios/web'>
                     <Route exact path='/' component={Home} />
                     <Route exact path='/buscar/:id' component={Buscar} />
                     <Route exact path='/buscar' component={Buscar} />

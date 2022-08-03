@@ -82,7 +82,7 @@ const Estructura = ({ children }) => {
     <div id="contenedor">
       <div id="panel_izquierdo">
         <div id="logo">
-          <img src="bienes-raices/img/logo.png" alt="" />
+          <img src="predios/img/logo.png" alt="" />
         </div>
         <div id="items-nav">
           {!isServidumbre ?
