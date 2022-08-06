@@ -7,7 +7,7 @@ const axios = require('axios');
 // const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
 // const destino = "http://192.168.56.10/bienes-raices";
 //const destino="https://nowsoft.app/bienes-raices";
-const destino = "http://bupi.invias.col/bienes-raices";
+const destino = "http://bupi.invias.col/predios";
 
 export function servidorPost(uri,datos){
 
