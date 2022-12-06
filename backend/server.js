@@ -62,11 +62,11 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 
 const pool = new Pool({
-  user: 'docker',
-  host: 'postgis_bupi',//'pg-acueducto',
-  database: 'invias_bupi',
-  password: 'docker',
-  port: 5432,//5432
+  user: 'postgres',
+  host: 'localhost',//'pg-acueducto',
+  database: 'bupi_invias',
+  password: 'yeinerm12',
+  port: 5432,
   timezone: 'utc'
 })
 
@@ -92,6 +92,7 @@ const pool = new Pool({
 //   port: 5433,//5432
 //   // timezone: 'utc'
 // })
+
 
 
 
@@ -601,6 +602,7 @@ app.post('/todoreport/:reporte', function (request, response) {
   var reporte = request.params.reporte;
 
   var data = "";
+
 
   if (reporte == 'all') {
     var consultas = [
