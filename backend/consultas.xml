@@ -3253,7 +3253,7 @@ group by dominio) as d
 
     <Consulta id="get_ultimo_expediente">
         <sql>
-        select max(id_expediente)::int + 1 as expediente
+        select max(id_expediente::int) + 1 as expediente
             from info2_adquisicion ia ;
         </sql>
     </Consulta>
