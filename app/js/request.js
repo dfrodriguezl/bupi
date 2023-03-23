@@ -7,7 +7,7 @@ const destino = "http://localhost:3000";
 // const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
 // const destino = "http://192.168.56.10/bienes-raices";
 //const destino="https://nowsoft.app/bienes-raices";
-// const destino = "http://bupi.invias.col/predios";
+// const destino = "http://172.19.26.22/predios";
 
 export function servidorPost(uri,datos){
 

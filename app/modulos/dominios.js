@@ -43,6 +43,7 @@ const Dominios = () => {
   }
 
     const onChangeSelect = (e) => {
+        console.log(e)
         let dom = e.dominio;
         setDominio(dom);
         getValores(dom);
@@ -129,7 +130,7 @@ const Dominios = () => {
                         <p>Actualizar</p>
                         </div>
                     {values.map((e,i) => (
-                        <div className="item" key={e.id}>
+                        <div className="item" key={i}>
                             <p>{e.valor}</p>
                             <p>{e.descripcion}</p>
                             <ModalForm open={<EditIcon/>} valor={e.valor} descripcion={e.descripcion} dominio={e.dominio}></ModalForm>
@@ -144,7 +145,8 @@ const Dominios = () => {
     
     const ModalForm = ({open,valor,descripcion}) => {
     
-        const submitFormEdit = (datos) => { 
+        const submitFormEdit = (datos) => {
+            console.log 
             createValue(datos,"insert_valor_dominios","ind")
         }
     
@@ -166,20 +168,20 @@ const Dominios = () => {
                             name="dominio"
                             value={dominio}
                             disabled={true} 
-                            ref={register}/>
+                            {...register('dominio')}/>
                         <p className="form_title">Valor</p>
                         <input type="text"
                             className='form_input'
                             name="valor"
                             disabled={true} 
                             value={valor} 
-                            ref={register}/>
+                            {...register('valor')}/>
                             <p className="form_title">Descripción</p>
                         <input type="text"
                             className='form_input'
                             name="descripcion"
                             defaultValue={descripcion} 
-                            ref={register}/>
+                            {...register('descripcion')}/>
                         <button className='primmary' type="submit">Guardar</button>
                     </div>
                 </form>
@@ -217,18 +219,18 @@ const Dominios = () => {
                            name="dominio"
                            value={dominio}
                            disabled={true} 
-                           ref={register}/>
+                           {...register('dominio')}/>
                        <p className="form_title">Valor</p>
                        <input type="text"
                            className='form_input'
                            name="valor" 
-                           ref={register}
+                           {...register('valor')}
                            defaultValue=""/>
                            <p className="form_title">Descripción</p>
                        <input type="text"
                            className='form_input'
                            name="descripcion" 
-                           ref={register}
+                           {...register('descripcion')}
                            defaultValue=""/>     
                    </div>
                     <button className='primmary' type="submit" >Guardar</button>

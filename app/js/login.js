@@ -18,7 +18,7 @@ const Login = () => {
   const recaptchaRef = React.createRef();
 
   const onSubmit = data => {
-    console.log(data)
+    console.log("data login", data)
 
 
     const post = async () => {
@@ -94,9 +94,9 @@ const Login = () => {
               {/* <Typography variant="subtitle1">Bienvenido</Typography> */}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <h3>Nombre de usuario</h3>
-                <input type="text" name="usuario_usuario" ref={register({ required: true, maxLength: 80 })} />
+                <input type="text" name="usuario_usuario" {...register('usuario_usuario',{ required: true, maxLength: 80 })} />
                 <h3>Contraseña</h3>
-                <input type="password" name="usuario_pwd" ref={register({ required: true, maxLength: 100 })} />
+                <input type="password" name="usuario_pwd" {...register('usuario_pwd',{ required: true, maxLength: 100 })} />
                 {msg ? <p>Revise sus credenciales de acceso</p> : ''}
                 <br />
                 <div>

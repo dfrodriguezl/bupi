@@ -2,7 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const WebpackProvideGlobalPlugin=require('webpack-provide-global-plugin');
+// const WebpackProvideGlobalPlugin=require('webpack-provide-global-plugin');
 var webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 // This is main configuration object.
@@ -134,7 +134,7 @@ module.exports = {
       */
       new MiniCSSExtractPlugin({
         filename: 'css/[name].css',
-        template: './app/css/styles.scss'
+        // template: './app/css/styles.scss'
       }),
       new CompressionPlugin(),
       new webpack.DefinePlugin({
