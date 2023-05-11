@@ -129,7 +129,7 @@ const Dominios = () => {
                         <p>Actualizar</p>
                         </div>
                     {values.map((e,i) => (
-                        <div className="item" key={e.id}>
+                        <div className="item" key={i}>
                             <p>{e.valor}</p>
                             <p>{e.descripcion}</p>
                             <ModalForm open={<EditIcon/>} valor={e.valor} descripcion={e.descripcion} dominio={e.dominio}></ModalForm>
@@ -165,13 +165,13 @@ const Dominios = () => {
                             className='form_input'
                             name="dominio"
                             value={dominio}
-                            disabled={true} 
+                            // disabled={true} 
                             ref={register}/>
                         <p className="form_title">Valor</p>
                         <input type="text"
                             className='form_input'
                             name="valor"
-                            disabled={true} 
+                            // disabled={true} 
                             value={valor} 
                             ref={register}/>
                             <p className="form_title">Descripción</p>
@@ -216,7 +216,7 @@ const Dominios = () => {
                            className='form_input'
                            name="dominio"
                            value={dominio}
-                           disabled={true} 
+                        //    disabled={true}
                            ref={register}/>
                        <p className="form_title">Valor</p>
                        <input type="text"

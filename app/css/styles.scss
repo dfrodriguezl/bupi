@@ -1,10 +1,13 @@
 
 
 $color1:#025dc3;
-$color2:#f08f0d;
+$color2:#FF8300;
 $color3:#f08f0d;
 $color4:#40E2CD;
 $color5:#CEF5F9;
+$color6: #3366CC;
+
+
 $color-gris-oscuro:#707070;
 //iconos se traen en css puro
 
@@ -14,7 +17,7 @@ $color-gris-oscuro:#707070;
 body{
     padding: 0px;
     margin: 0px;
-    font-family: 'Work Sans';
+    font-family: 'Work Sans' !important;
     font-size: 12px;
     box-sizing: border-box;
   
@@ -99,13 +102,19 @@ body{
     .elemento.active{
         background-color: black;
         a{
-            color:$color2;
+            color: white;
         }
     }
     .elemento:hover{
-        background-color: black;
+        background-color: $color1;
         a{
-            color:$color2;
+            color: white;
+        }
+    }
+    .elemento:focus{
+        background-color: $color1;
+        a{
+            color: white;
         }
     }
 }
@@ -676,6 +685,9 @@ input[type="file"] {
     p.titulo{
         margin:0px;
         text-align: center;
+        color: black;
+        font-weight: 400;
+        font-size: 12px;
     }
     .green{
         color: $color2;

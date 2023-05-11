@@ -51,6 +51,7 @@ class Barras extends Component {
             text: this.props.titulo,
             style: {
               fontSize: '12px',
+              fontFamily: 'Work Sans',
               fontWeight: '144',
               color: '#263238'
             },
@@ -75,7 +76,7 @@ class Barras extends Component {
             offsetY: -20,
             style: {
               fontSize: '12px',
-              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontFamily: 'Work Sans',
               colors: ["#06357A"]
             },
 
@@ -130,6 +131,7 @@ class Dona extends React.Component {
 
           type: 'pie',
         },
+        colors: ['#FFB527', '#154A8A', '#E31414', '#FF8300', '#003B71', '#9DBEFF', '#6699FF'],
         legend: {
           show: false
         },
@@ -158,20 +160,26 @@ class Dona extends React.Component {
         series: data["data"].map(i => Number(i)),
         options: {
           chart: {
-            type: 'pie'
+            type: 'pie',
+            // width: '100%',
+            // marginLeft: 'auto',
+            // marginRight: 'auto'
           },
           labels: data["categoria"],
           title: {
             text: this.props.titulo,
+            align: 'center',
             style: {
               fontSize: '12px',
-              fontWeight: '144',
+              fontFamily: 'Work Sans', 
+              fontWeight: '400',
               color: '#263238'
             },
           },
           legend: {
             show: true,
-            position: 'bottom'
+            position: 'bottom',
+            fontFamily: 'Work Sans'
           }
         },
       })
@@ -267,6 +275,7 @@ class Date extends React.Component {
             text: this.props.titulo,
             style: {
               fontSize: '12px',
+              fontFamily: 'Work Sans', 
               fontWeight: '144',
               color: '#263238'
             },

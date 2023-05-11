@@ -5,8 +5,14 @@ object-assign
 */
 
 /*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
 
-JSZip v3.10.0 - A JavaScript class for generating and reading zip files
+/*!
+
+JSZip v3.10.1 - A JavaScript class for generating and reading zip files
 <http://stuartk.com/jszip>
 
 (c) 2009-2016 Stuart Knightley <stuart [at] stuartk.com>
@@ -23,14 +29,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 */
 
 /*!
-  Copyright (c) 2018 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-
-/*!
  * 
- *               jsPDF AutoTable plugin v3.5.25
+ *               jsPDF AutoTable plugin v3.5.28
  *
  *               Copyright (c) 2022 Simon Bengtsson, https://github.com/simonbengtsson/jsPDF-AutoTable
  *               Licensed under the MIT License.
@@ -39,8 +39,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  */
 
 /*!
- * ApexCharts v3.35.4
- * (c) 2018-2022 ApexCharts
+ * ApexCharts v3.37.2
+ * (c) 2018-2023 ApexCharts
  * Released under the MIT License.
  */
 

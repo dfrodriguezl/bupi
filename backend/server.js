@@ -78,12 +78,16 @@ const pool = new Pool({
 // const pool = new Pool({
 //   user: 'postgres',
 //   host: 'localhost',//'pg-acueducto',
-//   // database: 'bupi_invias',
-//   database: 'prueba_schema',
+//   database: 'bupi_invias',
+//   // database: 'prueba_schema',
 //   password: 'yeinerm12',
 //   port: 5432,
 //   timezone: 'utc'
 // })
+
+
+
+
 
 // const pool = new Pool({
 //   user: 'docker',

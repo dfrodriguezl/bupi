@@ -152,11 +152,12 @@ const Usuarios = () => {
     
     const ModalForm = ({open,valueEdit,register,handleSubmit,roles}) => {
 
-        // console.log(roles)
+        // console.log("roles",roles)
         // console.log(valueEdit)
-        const [rolSelected, setRolSelected] = useState(roles.filter((r) => r.id_rol === valueEdit.id_rol));
+        const [rolSelected, setRolSelected] = useState(roles.filter((r) => r.id_rol === valueEdit.id_rol)[0]);
     
         const submitFormEdit = (datos) => { 
+            // console.log(datos,"insert_valor_usuario","ind",rolSelected.id_rol)
             createValue(datos,"insert_valor_usuario","ind",rolSelected.id_rol)
         }
 
@@ -179,7 +180,7 @@ const Usuarios = () => {
                             className='form_input'
                             name="usuario_usuario"
                             value={valueEdit.username}
-                            disabled={true} 
+                            // disabled={true} 
                             ref={register}/>
                         <p className="form_title">Nombres</p>
                         <input type="text"
@@ -199,7 +200,6 @@ const Usuarios = () => {
                             placeholder="Seleccione el rol..."
                             onChange={setRolSelected}
                             defaultValue={roles.filter((r) => r.id_rol === valueEdit.id_rol)}
-                            
                         />
                         <p className="form_title">Correo</p>
                         <input type="text"

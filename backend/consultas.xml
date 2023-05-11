@@ -2885,7 +2885,7 @@ group by dominio) as d
         select *
             from dominios
             where dominio = $dominio
-            order by valor::int
+            order by valor
         </sql>
     </Consulta>
 

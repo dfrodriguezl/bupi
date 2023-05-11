@@ -135,6 +135,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
     const [superTec, setSuperTec] = React.useState(false);
     const [superJur, setSuperJur] = React.useState(false);
     const [saneamientoSeleccionado, setSaneamientoSeleccionado] = React.useState(null);
+    // const [inputValue, setInputValue] = useState('');
 
 
 
@@ -730,6 +731,24 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
     }
 
+    // const matchingOptions = (options) => {
+    //     console.log("options", options);
+    //     if (inputValue.length >= 4) {
+    //         const new_options = options.filter(option => {
+    //             if (option.label != null) {
+    //                 option.label.includes(inputValue)
+    //             }
+    //         });
+    //         console.log("options newww", new_options)
+    //         return new_options;
+    //     }
+    // }
+
+    // const handleInputChange = (newValue) => {
+    //     setInputValue(newValue);
+    // }
+
+
     return (
         <>
 
@@ -867,10 +886,15 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                                     // if(i.doc.field === "saneamiento" && index === 40){
                                                                     //     setSaneamientoSeleccionado(e.valor)
                                                                     // }
-                                                                }}
+                                                                    }}
                                                                     options={i.doc.enum}
                                                                     isDisabled={index === 39 && i.doc.rol_edicion === 6 ? superTec ? false : true : index === 40 && i.doc.rol_edicion === 5 ? superJur ? false : true : lectura}
                                                                     name={props.name}
+                                                                    isSearchable ={true}
+                                                                    // onInputChange={(value) => {
+                                                                    //     console.log("value1", value)
+                                                                    // }}
+                                                                    // onInputChange={handleInputChange}
                                                                     isClearable={true}
                                                                     defaultValue={props.value}
                                                                 />

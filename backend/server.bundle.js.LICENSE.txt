@@ -274,7 +274,7 @@ object-assign
 
 /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
 
-/*! pako 2.0.4 https://github.com/nodeca/pako @license (MIT AND Zlib) */
+/*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
 
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
