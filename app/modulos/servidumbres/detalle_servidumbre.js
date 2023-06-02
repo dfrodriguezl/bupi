@@ -20,7 +20,7 @@ const DetalleServidumbre = () => {
 
   useEffect(() => {
 
-    var datos = { "id_consulta": "get_asignacion", "id_expediente": id }
+    var datos = { "id_consulta": "get_asignacion", "codigo_bupi": id }
 
     servidorPost('/backend', datos).then((response) => {
       setData(response.data)

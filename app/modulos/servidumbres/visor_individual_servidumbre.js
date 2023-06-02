@@ -64,7 +64,7 @@ const Mapa = () => {
 
 
       const data = {
-        id_expediente: id_exp,
+        codigo_bupi: id_exp,
         id_consulta: 'get_observacion'
       }
 
@@ -80,7 +80,7 @@ const Mapa = () => {
         lecturaLocal = false;
       } else {
 
-        var data = { id_consulta: 'tengo_predio', id_expediente: id }
+        var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
 
         servidorPost('/backend', data).then((response) => {
           setLectura(!response.data[0].exists)
@@ -100,7 +100,7 @@ const Mapa = () => {
     })
 
 
-    var datos = { "id_consulta": "get_geometria_servidumbre", "id_expediente": id }
+    var datos = { "id_consulta": "get_geometria_servidumbre", "codigo_bupi": id }
 
 
     servidorPost('/backend', datos).then(function (response) {
@@ -242,14 +242,14 @@ const Mapa = () => {
           hitTolerance: 2
         });
 
-        const id_expediente_click = feature.values_.id_expediente;
+        const codigo_bupi_click = feature.values_.codigo_bupi;
         const estado = feature.values_.estado === null || feature.values_.estado === 2 ?
           "Geometria verificada" : "Geometria en revisión";
         const id_geom = feature.values_.id;
 
         if (!lecturaLocal) {
           if (feature) {
-            mensaje = '<p> ' + id_expediente_click + '</p>';
+            mensaje = '<p> ' + codigo_bupi_click + '</p>';
             mensaje = mensaje + '<p>' + estado + '</p>';
             let selectEstados = '<select name="estados" id="estados" >';
             Object.keys(estats).forEach((es) => {
@@ -267,7 +267,7 @@ const Mapa = () => {
               let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
               let dataPredio = {
                 id_consulta: 'update_servidumbre',
-                id_expediente: id_expediente_click,
+                codigo_bupi: codigo_bupi_click,
                 id: id_geom,
                 estado: selectedValue
               }
@@ -363,7 +363,7 @@ const Mapa = () => {
 
       <ToastContainer />
       {!lectura ?
-        <CargaShape id_expediente={id} /> :
+        <CargaShape codigo_bupi={id} /> :
         null
       }
 

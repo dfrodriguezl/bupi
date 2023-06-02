@@ -120,7 +120,7 @@ const Graficos = () => {
     console.log(data)
     const input = e.target.value;
 
-    var result = data.filter(info => info.id_expediente.toUpperCase().includes(input.toUpperCase()))
+    var result = data.filter(info => info.codigo_bupi.toUpperCase().includes(input.toUpperCase()))
 
 
 
@@ -184,16 +184,16 @@ const Graficos = () => {
                 <p style={{ textAlign: 'center' }}> Tareas gestionadas ({tareasGestionadas} tareas)</p>
                 {filtro.map((item, index) =>
                   <div className={"grupo " + color(item.fecha_asignacion, item.ruta)}>
-                    <p className="titulo" style={{ textAlign: 'left' }}>Registro predial: {!item.consecutivo ? item.id_expediente : item.id_expediente + " - Saneamiento " + item.consecutivo}</p>
+                    <p className="titulo" style={{ textAlign: 'left' }}>Registro predial: {!item.consecutivo ? item.codigo_bupi : item.codigo_bupi + " - Saneamiento " + item.consecutivo}</p>
                     <p>Fecha Asignación: {moment.utc(item.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p>
                     <p>Enviado por: {item.usuario_nombre}</p>
                     <p>Descripción: {item.descripcion}</p>
                     <button>
-                      {item.id_expediente.includes("S_") ?
-                        <Link to={"/servidumbres/servidumbre/" + item.id_expediente}>
+                      {item.codigo_bupi.includes("S_") ?
+                        <Link to={"/servidumbres/servidumbre/" + item.codigo_bupi}>
                           Ver servidumbre
                         </Link> :
-                        <Link to={"/predio/" + item.id_expediente}>
+                        <Link to={"/predio/" + item.codigo_bupi}>
                           Ver registro
                         </Link>
                       }
@@ -202,7 +202,7 @@ const Graficos = () => {
 
                     {item.ruta === 17 && item.comp ?
                       <Modal
-                      nombre={item.id_expediente}
+                      nombre={item.codigo_bupi}
                       id={item.id}
                       refresh={setRefresh}
                       tareacod={item.ruta}
@@ -213,7 +213,7 @@ const Graficos = () => {
 
                     {/* {item.ruta === 13 && item.tabla ?
                       <Modal
-                        nombre={item.id_expediente}
+                        nombre={item.codigo_bupi}
                         id={item.id}
                         refresh={setRefresh}
                         tareacod={item.ruta}
@@ -223,7 +223,7 @@ const Graficos = () => {
 
                     {item.ruta !== 17 ?
                       <Modal
-                        nombre={item.id_expediente}
+                        nombre={item.codigo_bupi}
                         id={item.id}
                         refresh={setRefresh}
                         tareacod={item.ruta}

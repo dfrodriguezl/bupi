@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import shp from 'shpjs'
 import { servidorPost } from '../../js/request'
 
-const CargaShape = ({id_expediente}) => {
+const CargaShape = ({codigo_bupi}) => {
 
   const [doc, setDoc] = useState([]);
 
@@ -27,18 +27,18 @@ const CargaShape = ({id_expediente}) => {
           delete shape.bbox;
           let data = {
             id_consulta: "insertar_dibujo_mapa",
-            id_expediente: id_expediente,
+            codigo_bupi: codigo_bupi,
             estado: 1,
             shape: JSON.stringify(shape)
           }
 
-          if(id_expediente.includes("S_")){
+          if(codigo_bupi.includes("S_")){
             data.id_consulta = 'insertar_dibujo_mapa_servidumbre'
           }
           
           servidorPost("/backend",data).then((response) => {
             console.log("RESPONSE", response)
-            toast.success("Poligono cargado al expediente " + response.data[0].id_expediente ? response.data[0].id_expediente : response.data[0].id_expedie);
+            toast.success("Poligono cargado al expediente " + response.data[0].codigo_bupi ? response.data[0].codigo_bupi : response.data[0].id_expedie);
           })
         }
         

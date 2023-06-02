@@ -6,7 +6,7 @@ import variables from '../../variables/var_mapa';
 
 const DescargaSalida = (props) => {
 
-  const { id_expediente } = props;
+  const { codigo_bupi } = props;
 
   const onChange = (e) => {
 
@@ -22,7 +22,7 @@ const DescargaSalida = (props) => {
     //   console.log(response);
     // });
 
-    // const datos = { "id_consulta": "get_geometria_predio", "id_expediente": id_expediente }
+    // const datos = { "id_consulta": "get_geometria_predio", "codigo_bupi": codigo_bupi }
     // let geometria = null;
 
     // servidorPost('/backend', datos).then(function (response) {
@@ -52,14 +52,14 @@ const DescargaSalida = (props) => {
 
     //   const dataDownload = {
     //     geojson: geometria,
-    //     id_expediente: id_expediente
+    //     codigo_bupi: codigo_bupi
     //   }
 
     //   if(geometria != null){
     //     servidorPost('/download-shp', dataDownload).then(function (response) {
     //       const link = document.createElement('a');
-    //       link.href = url + "/help/" + id_expediente + ".zip";
-    //       link.setAttribute('download', id_expediente + '.zip'); //or any other extension
+    //       link.href = url + "/help/" + codigo_bupi + ".zip";
+    //       link.setAttribute('download', codigo_bupi + '.zip'); //or any other extension
     //       document.body.appendChild(link);
     //       link.click();
     //       toast.success("Shape generado");

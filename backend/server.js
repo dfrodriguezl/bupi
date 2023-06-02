@@ -64,26 +64,26 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'postgis_bupi',
-  database: 'invias_bupi',
-  password: 'docker',
-  port: 5432,
-  timezone: 'utc'
-})
-
-//desarrollo
-
 // const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'bupi_invias',
-//   // database: 'prueba_schema',
-//   password: 'yeinerm12',
+//   user: 'docker',
+//   host: 'postgis_bupi',
+//   database: 'invias_bupi',
+//   password: 'docker',
 //   port: 5432,
 //   timezone: 'utc'
 // })
+
+// desarrollo
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',//'pg-acueducto',
+  database: 'bupi_invias',
+  // database: 'prueba_schema',
+  password: 'yeinerm12',
+  port: 5432,
+  timezone: 'utc'
+})
 
 
 
@@ -464,7 +464,7 @@ app.post('/upload/picture/:id', (req, res) => {
     // console.log(datetime)
     // console.log(newDate);
 
-    pool.query("INSERT INTO fotografias(id_fotografia,id_expediente,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file, id, newDate, archivo], (error, results) => {
+    pool.query("INSERT INTO fotografias(id_fotografia,codigo_bupi,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file, id, newDate, archivo], (error, results) => {
       if (error) {
         console.log(error)
         return res.status(500).send({ message: error })
@@ -1198,7 +1198,7 @@ app.post('/download-shp', function (request, response) {
 
         async function convertGeoJSON() {
           const shpresult = await convert(geojson,
-            path.join(__dirname, '../help/' + data.id_expediente + ".zip"),
+            path.join(__dirname, '../help/' + data.codigo_bupi + ".zip"),
             options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'

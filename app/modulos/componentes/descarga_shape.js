@@ -5,10 +5,10 @@ import { servidorPost, url } from '../../js/request'
 
 const DescargaShape = (props) => {
 
-  const { id_expediente } = props;
+  const { codigo_bupi } = props;
 
   const onChange = (e) => {
-    const datos = { "id_consulta": "get_geometria_predio", "id_expediente": id_expediente }
+    const datos = { "id_consulta": "get_geometria_predio", "codigo_bupi": codigo_bupi }
     let geometria = null;
 
     servidorPost('/backend', datos).then(function (response) {
@@ -39,7 +39,7 @@ const DescargaShape = (props) => {
 
       const dataDownload = {
         geojson: geometria,
-        id_expediente: id_expediente
+        codigo_bupi: codigo_bupi
       }
 
       console.log("DATA DOWNLOAD", dataDownload);
@@ -47,8 +47,8 @@ const DescargaShape = (props) => {
       if(geometria != null){
         servidorPost('/download-shp', dataDownload).then(function (response) {
           const link = document.createElement('a');
-          link.href = url + "/help/" + id_expediente + ".zip";
-          link.setAttribute('download', id_expediente + '.zip'); //or any other extension
+          link.href = url + "/help/" + codigo_bupi + ".zip";
+          link.setAttribute('download', codigo_bupi + '.zip'); //or any other extension
           document.body.appendChild(link);
           link.click();
           toast.success("Shape generado");

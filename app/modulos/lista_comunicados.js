@@ -7,7 +7,7 @@ import ReactSelect from 'react-select';
 
 
 const ListaComunicados = (props) => {
-  const { id_expediente, consecutivo, tabla, tipoSaneamiento, gravamen } = props;
+  const { codigo_bupi, consecutivo, tabla, tipoSaneamiento, gravamen } = props;
   const [items, setItems] = useState([]);
   const [refreshTabla, setRefreshTabla] = useState(false)
   const [listEntregables, setListEntregables] = useState([])
@@ -17,7 +17,7 @@ const ListaComunicados = (props) => {
     
     const consulta = {
       id_consulta: 'get_comunicados',
-      id_expediente: id_expediente,
+      codigo_bupi: codigo_bupi,
       consecutivo: consecutivo,
       tabla: tabla,
       saneamiento: tipoSaneamiento
@@ -50,7 +50,7 @@ const ListaComunicados = (props) => {
     <div id="seccion">
       <div id="titulo_seccion">Entregables</div>
       <p id="descripcion_seccion">Sección para visualizar los entregables asociados al saneamiento</p>
-      <EditarComunicado open={<button className='primmary'>Nuevo entregable</button>} id_exp={id_expediente} index={tabla} consecutivo={consecutivo} setRefreshTabla={setRefreshTabla} tipo="save"
+      <EditarComunicado open={<button className='primmary'>Nuevo entregable</button>} id_exp={codigo_bupi} index={tabla} consecutivo={consecutivo} setRefreshTabla={setRefreshTabla} tipo="save"
         tipoSaneamiento={sanSeleccionado} />
       <p className="enfasis">Total: {items.length} </p>
       <div id="documentos">
@@ -72,11 +72,11 @@ const ListaComunicados = (props) => {
               <p>{e.radicado_invias_comunicado || e.radicado_respuesta}</p>
               <p>{e.objeto_comunicado}</p>
               <p>{e.entidad_comunicado}</p>
-              <p><EditarComunicado open={<EditIcon />} id_exp={e.id_expediente} index={e.tabla} consecutivo={e.consecutivo_saneamiento} setRefreshTabla={setRefreshTabla} tipo="update"
+              <p><EditarComunicado open={<EditIcon />} id_exp={e.codigo_bupi} index={e.tabla} consecutivo={e.consecutivo_saneamiento} setRefreshTabla={setRefreshTabla} tipo="update"
                 consecutivo_com={e.consecutivo_comunicado} entregable={e.entregable} tipoSaneamiento={tipoSaneamiento} /></p>
-              <p><ModalDelete id_expediente={e.id_expediente} consec_san={e.consecutivo_saneamiento} consec_com={e.consecutivo_comunicado} tabla={e.tabla} setRefreshTabla={setRefreshTabla} /></p>
+              <p><ModalDelete codigo_bupi={e.codigo_bupi} consec_san={e.consecutivo_saneamiento} consec_com={e.consecutivo_comunicado} tabla={e.tabla} setRefreshTabla={setRefreshTabla} /></p>
               {/* <DescriptionIcon onClick={() => verDocumento(e)} /> */}
-              {/* <Comunicados open={<EditIcon />} id_exp={id_expediente} index={index} consecutivo={consecutivo} setRefreshTablas={setRefreshTablas}/> */}
+              {/* <Comunicados open={<EditIcon />} id_exp={codigo_bupi} index={index} consecutivo={consecutivo} setRefreshTablas={setRefreshTablas}/> */}
               {/* <ModalDelete id={e.id} setRefreshTablas={setReloadTable} /> */}
               {/* <p>{e.fecha}</p> */}
               {/* <Modal  nombre={e.nombre} refresh={setRefresh}/>

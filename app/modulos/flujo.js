@@ -88,10 +88,10 @@ const Flujo = () => {
 
 
 
-    var data = { "id_consulta": "get_flujo", "id_expediente": id }
+    var data = { "id_consulta": "get_flujo", "codigo_bupi": id }
     servidorPost('/backend/', data).then((response) => {
 
-      var data = { "id_consulta": "get_asignaciones", "id_expediente": id }
+      var data = { "id_consulta": "get_asignaciones", "codigo_bupi": id }
       servidorPost('/backend/', data).then((responseUsuarios) => {
         let usuarios = responseUsuarios.data;
         let flujo = response.data;

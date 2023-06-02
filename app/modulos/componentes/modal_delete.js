@@ -7,14 +7,14 @@ import { toast } from 'react-toastify';
 
 
 const ModalDelete = (props) => {
-  const { id_expediente, consec_san, consec_com, tabla,  setRefreshTabla } = props;
+  const { codigo_bupi, consec_san, consec_com, tabla,  setRefreshTabla } = props;
 
   const borrar = () => {
     // close();
 
     const consulta = {
       id_consulta: "delete_comunicado",
-      id_expediente: id_expediente,
+      codigo_bupi: codigo_bupi,
       consecutivo_saneamiento: consec_san,
       consecutivo_comunicado: consec_com,
       tabla: tabla

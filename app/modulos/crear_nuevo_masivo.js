@@ -50,7 +50,7 @@ const CrearPredioMasivo = () => {
     servidorPost('/xls', formData).then((response) => {
       const data = response.data;
       console.log(data.json[0])
-      if (typeof data.json[0].id_expediente != "undefined") {
+      if (typeof data.json[0].codigo_bupi != "undefined") {
         setExps(data.json)
       } else {
         alert("Seleccione un documento csv válido")
@@ -61,7 +61,7 @@ const CrearPredioMasivo = () => {
 
   }
 
-  const crearAsignaciones = (id_expediente, us_tecnico, us_juridico, us_sup_tec, us_sup_jur) => {
+  const crearAsignaciones = (codigo_bupi, us_tecnico, us_juridico, us_sup_tec, us_sup_jur) => {
     Object.keys(asignaciones).forEach((asignacion) => {
 
       const usuarioResponsable = asignacion === "tecnico" ? us_tecnico : asignacion === "juridico" ?
@@ -71,24 +71,24 @@ const CrearPredioMasivo = () => {
 
       const datosAsignacion = {
         "id_consulta": "insertar_asignacion_tecnico",
-        id_expediente: id_expediente,
+        codigo_bupi: codigo_bupi,
         id_tarea: asignaciones[asignacion],
         usuario_responsable: usuarioResponsable
       };
 
       servidorPost('/backend', datosAsignacion).then((responseAsignacion) => {
         if (responseAsignacion.data) {
-          insertarTareas(id_expediente);
+          insertarTareas(codigo_bupi);
         }
       });
     })
 
   }
 
-  const insertarTareas = (id_expediente) => {
+  const insertarTareas = (codigo_bupi) => {
     Object.entries(tareas_iniciales).forEach((tarea) => {
       const datosTarea = {
-        id_expediente: id_expediente,
+        codigo_bupi: codigo_bupi,
         ruta_destino: tarea[1].ruta,
         tarea_next: tarea[1].tarea_next,
         id_consulta: "insertar_notificacion"
@@ -100,9 +100,9 @@ const CrearPredioMasivo = () => {
   }
 
 
-  const insertCalidadJuridica = (id_expediente) => {
+  const insertCalidadJuridica = (codigo_bupi) => {
     const datosCalJur = {
-      id_expediente: id_expediente,
+      codigo_bupi: codigo_bupi,
       id_consulta: "insert_expediente_4"
     }
     servidorPost('/backend', datosCalJur).then((responseTareas) => {
@@ -113,20 +113,20 @@ const CrearPredioMasivo = () => {
 
   const crearExpedientes = () => {
     exps.forEach((exp) => {
-      crearExpediente(parseFloat(expediente) + parseFloat(exp.id_expediente), exp.tec, exp.jur, exp.sup_tec, exp.sup_jur)
+      crearExpediente(parseFloat(expediente) + parseFloat(exp.codigo_bupi), exp.tec, exp.jur, exp.sup_tec, exp.sup_jur)
       console.log("EXP", exp)
     })
   };
 
-  const crearExpediente = (id_expediente, us_tecnico, us_juridico, us_sup_tec, us_sup_jur) => {
-    var datos = { "id_consulta": "insert_expediente_2", id_expediente: id_expediente }
+  const crearExpediente = (codigo_bupi, us_tecnico, us_juridico, us_sup_tec, us_sup_jur) => {
+    var datos = { "id_consulta": "insert_expediente_2", codigo_bupi: codigo_bupi }
     servidorPost('/backend', datos).then((response) => {
-      var datos2 = { "id_consulta": "insert_expediente_1", id_expediente: id_expediente }
+      var datos2 = { "id_consulta": "insert_expediente_1", codigo_bupi: codigo_bupi }
       servidorPost('/backend', datos2).then((responseSan) => {
         if (responseSan.data) {
-          crearAsignaciones(id_expediente, us_tecnico, us_juridico, us_sup_tec, us_sup_jur);
-          insertCalidadJuridica(id_expediente);
-          toast.success("Expediente " + id_expediente + " creado y asignado exitosamente")
+          crearAsignaciones(codigo_bupi, us_tecnico, us_juridico, us_sup_tec, us_sup_jur);
+          insertCalidadJuridica(codigo_bupi);
+          toast.success("Expediente " + codigo_bupi + " creado y asignado exitosamente")
         }
       });
     });

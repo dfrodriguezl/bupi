@@ -45,7 +45,7 @@ const EditarComunicado = (props) => {
     if (tipo === "update") {
       const consulta = {
         id_consulta: "get_comunicado",
-        id_expediente: id_exp,
+        codigo_bupi: id_exp,
         consecutivo: consecutivo,
         consecutivo_com: consecutivo_com,
         tabla: index
@@ -74,7 +74,7 @@ const EditarComunicado = (props) => {
     const dataCampos = {
       id_consulta: "get_campos_entregable",
       id_entregable: entregable,
-      id_expediente: id_exp
+      codigo_bupi: id_exp
     }
 
     servidorPost("/backend", dataCampos).then((response) => {
@@ -87,7 +87,7 @@ const EditarComunicado = (props) => {
 
     datos.id_consulta = tipo === "save" ? "insertar_comunicado" : "editar_comunicado";
     datos.tabla = index;
-    datos.id_expediente = id_exp;
+    datos.codigo_bupi = id_exp;
     datos.consecutivo_saneamiento = consecutivo;
     datos.entregable = entregableSeleccionado.valor;
     datos.consecutivo_comunicado = consecutivo_com ? consecutivo_com : undefined;
@@ -142,7 +142,7 @@ const EditarComunicado = (props) => {
                 <p className="form_title">Código BUPI</p>
                 <input type="text"
                   className='form_input'
-                  name='id_expediente'
+                  name='codigo_bupi'
                   disabled
                   defaultValue={id_exp}
                   ref={register} />

@@ -17,12 +17,12 @@
     </Consulta>
     <Consulta id="info1_general_proyecto">
         <sql>
-        select * from info1_vw_dup where id_expediente=$id_expediente
+        select * from info1_vw_dup where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info1_fuente">
         <sql>
-        select * from info1_fuente where id_expediente=$id_expediente
+        select * from info1_fuente where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info1_general_proyecto_servidumbre">
@@ -32,12 +32,12 @@
     </Consulta>
     <Consulta id="info2_general_predio">
         <sql>
-        select * from info2_general_predio where id_expediente=$id_expediente
+        select * from info2_general_predio where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info2_adquisicion">
         <sql>
-        select * from info2_adquisicion_vw where id_expediente=$id_expediente
+        select * from info2_adquisicion_vw where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info2_general_predio_sirviente">
@@ -47,12 +47,12 @@
     </Consulta>
     <Consulta id="info3_areas_usos">
         <sql>
-        select * from info3_areas_usos_vw where id_expediente=$id_expediente
+        select * from info3_areas_usos_vw where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info3_predios_segregados">
         <sql>
-        select * from info3_predios_segregados_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info3_predios_segregados_vw where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info3_general_predios_derivados">
@@ -62,12 +62,12 @@
     </Consulta>
     <Consulta id="info4_avaluos">
         <sql>
-        select * from info4_avaluos where id_expediente=$id_expediente
+        select * from info4_avaluos where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info4_informacion_catastral">
         <sql>
-        select * from info4_informacion_catastral where id_expediente=$id_expediente
+        select * from info4_informacion_catastral where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info4_areas_y_usos_predio_sirviente">
@@ -77,12 +77,12 @@
     </Consulta>
     <Consulta id="info5_juridicos">
         <sql>
-        select * from info5_juridicos where id_expediente=$id_expediente
+        select * from info5_juridicos where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info5_informacion_invias">
         <sql>
-        select * from info5_informacion_invias where id_expediente=$id_expediente
+        select * from info5_informacion_invias where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info5_servidumbre">
@@ -92,12 +92,12 @@
     </Consulta>
     <Consulta id="info6_propietario_anterior_juridico">
         <sql>
-        select * from info6_propietario_anterior_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info6_propietario_anterior_juridico where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info6_avaluos">
         <sql>
-        select * from info6_avaluos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info6_avaluos where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info6_avaluos_servidumbre">
@@ -107,12 +107,12 @@
     </Consulta>
     <Consulta id="info7_propietario_catastral">
         <sql>
-        select * from info7_propietario_catastral where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info7_propietario_catastral where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info7_control_calidad_juridico">
         <sql>
-        select * from info7_control_calidad_juridico where id_expediente=$id_expediente
+        select * from info7_control_calidad_juridico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info7_orden_de_pago">
@@ -122,12 +122,12 @@
     </Consulta>
     <Consulta id="info8_propietario_juridico">
         <sql>
-        select * from info8_propietario_juridico where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info8_propietario_juridico where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info8_control_calidad_catastral">
         <sql>
-        select * from info8_control_calidad_catastral where id_expediente=$id_expediente
+        select * from info8_control_calidad_catastral where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info8_soportes_pago">
@@ -137,7 +137,7 @@
     </Consulta>
     <Consulta id="info9_zmpa">
         <sql>
-        select * from info9_zmpa where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info9_zmpa where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info9_juridico_servidumbre">
@@ -147,12 +147,12 @@
     </Consulta>
     <Consulta id="info10_sig">
         <sql>
-        select * from info10_sig where id_expediente=$id_expediente
+        select * from info10_sig where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info10_infraestructura">
         <sql>
-        select * from info10_infraestructura where id_expediente=$id_expediente
+        select * from info10_infraestructura where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info10_cons_servidumbre">
@@ -162,12 +162,12 @@
     </Consulta>
     <Consulta id="info11_estudios_detallados">
         <sql>
-        select * from info11_estudios_detallados where id_expediente=$id_expediente
+        select * from info11_estudios_detallados where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info11_adquisicion_escritura">
         <sql>
-        select * from info11_adquisicion_escritura where id_expediente=$id_expediente
+        select * from info11_adquisicion_escritura where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info11_propietario_catastral">
@@ -177,12 +177,12 @@
     </Consulta>
     <Consulta id="info12_control_calidad_tecnico">
         <sql>
-        select * from info12_control_calidad_tecnico where id_expediente=$id_expediente
+        select * from info12_control_calidad_tecnico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info12_pago">
         <sql>
-        select * from info12_pago where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info12_pago where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info12_propietario_juridico_actual">
@@ -192,12 +192,12 @@
     </Consulta>
     <Consulta id="info13_control_calidad_juridico">
         <sql>
-        select * from info13_control_calidad_juridico where id_expediente=$id_expediente
+        select * from info13_control_calidad_juridico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info13_saneamiento_catastral">
         <sql>
-        select * from info13_saneamiento_catastral_vw where id_expediente=$id_expediente
+        select * from info13_saneamiento_catastral_vw where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info13_propietario_constitucion_servidumbre_juridico">
@@ -207,12 +207,12 @@
     </Consulta>
     <Consulta id="info14_saneamiento_basico">
         <sql>
-        select * from info14_saneamiento_basico where id_expediente=$id_expediente
+        select * from info14_saneamiento_basico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info14_saneamiento_juridico">
         <sql>
-        select * from info14_saneamiento_juridico where id_expediente=$id_expediente
+        select * from info14_saneamiento_juridico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info14_infraestructura_servidumbre">
@@ -222,12 +222,12 @@
     </Consulta>
     <Consulta id="info15_saneamiento_juridico">
         <sql>
-        select * from info15_saneamiento_juridico where id_expediente=$id_expediente 
+        select * from info15_saneamiento_juridico where codigo_bupi=$codigo_bupi 
         </sql>
     </Consulta>
     <Consulta id="info15_areas">
         <sql>
-        select * from info15_areas where id_expediente=$id_expediente 
+        select * from info15_areas where codigo_bupi=$codigo_bupi 
         </sql>
     </Consulta>
     <Consulta id="info15_saneamiento_basico_servidumbre">
@@ -237,7 +237,7 @@
     </Consulta>
     <Consulta id="info16_tributaria">
         <sql>
-        select * from info16_tributaria where id_expediente=$id_expediente
+        select * from info16_tributaria where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info16_municipios_intersectados_servidumbre">
@@ -248,7 +248,7 @@
 
     <Consulta id="info17_documentos_requeridos">
         <sql>
-        select * from info17_documentos_requeridos where id_expediente=$id_expediente
+        select * from info17_documentos_requeridos where codigo_bupi=$codigo_bupi
         and consecutivo=$consecutivo
         </sql>
     </Consulta>
@@ -259,7 +259,7 @@
     </Consulta>
     <Consulta id="info18_municipios_intersectados">
         <sql>
-        select * from info18_municipios_intersectados where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info18_municipios_intersectados where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info18_control_calidad_tecnico_servidumbre">
@@ -269,7 +269,7 @@
     </Consulta>
     <Consulta id="info19_mutacion_predial">
         <sql>
-        select * from info19_mutacion_predial where id_expediente=$id_expediente
+        select * from info19_mutacion_predial where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info19_estado_saneamiento_basico_servidumbre">
@@ -279,7 +279,7 @@
     </Consulta>
     <Consulta id="info20_documentos_requeridos_juridico">
         <sql>
-        select * from info20_documentos_requeridos_juridico where id_expediente=$id_expediente
+        select * from info20_documentos_requeridos_juridico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info20_sig_servidumbre">
@@ -289,144 +289,144 @@
     </Consulta>
     <Consulta id="info21_juridicos">
         <sql>
-        select * from info21_juridicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info21_juridicos where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info22_factura_municipio">
         <sql>
-        select * from info22_factura_municipio where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info22_factura_municipio where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info23_sig">
         <sql>
-        select * from info23_sig where id_expediente=$id_expediente
+        select * from info23_sig where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info24_social">
         <sql>
-        select * from info24_social where id_expediente=$id_expediente
+        select * from info24_social where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info25_unidades_sociales">
         <sql>
-        select * from info25_unidades_sociales where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info25_unidades_sociales where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info26_personas_unidad_social">
         <sql>
-        select * from info26_personas_unidad_social where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info26_personas_unidad_social where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info27_servicios_publicos">
         <sql>
-        select * from info27_servicios_publicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info27_servicios_publicos where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info28_avaluo_actividad_economica">
         <sql>
-        select * from info28_avaluo_actividad_economica where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info28_avaluo_actividad_economica where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info29_compensaciones_y_reconocimientos_economicos">
         <sql>
-        select * from info29_compensaciones_y_reconocimientos_economicos where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info29_compensaciones_y_reconocimientos_economicos where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info30_liquidacion_dano_emergente_y_lucrocesante">
         <sql>
-        select * from info30_liquidacion_dano_emergente_y_lucrocesante where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info30_liquidacion_dano_emergente_y_lucrocesante where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info31_acta_de_aceptacion">
         <sql>
-        select * from info31_acta_de_aceptacion where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info31_acta_de_aceptacion where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info32_negociacion_construcciones">
         <sql>
-        select * from info32_negociacion_construcciones where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info32_negociacion_construcciones where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info33_reasentamiento">
         <sql>
-        select * from info33_reasentamiento where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from info33_reasentamiento where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info34_estado_saneamiento_basico">
         <sql>
-        select * from i34_estado_saneamiento_basico_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from i34_estado_saneamiento_basico_vw where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info35_estado_saneamiento_juridico">
         <sql>
-        select * from i35_estado_saneamiento_juridico_vw where id_expediente=$id_expediente and consecutivo=$consecutivo
+        select * from i35_estado_saneamiento_juridico_vw where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info36_documental">
         <sql>
-        select * from info36_documental where id_expediente=$id_expediente
+        select * from info36_documental where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info37_prestamo_expedientes">
         <sql>
-        select * from info37_prestamo_expedientes where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info37_prestamo_expedientes where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo
         </sql>
     </Consulta>
      <Consulta id="info38_financiero">
         <sql>
-        select * from info38_financiero where id_expediente=$id_expediente
+        select * from info38_financiero where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info39_gestion_san_tec">
         <sql>
-        select * from info39_gestion_san_tec_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info39_gestion_san_tec_vw where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info40_san_jur">
         <sql>
-        select * from info40_san_jur where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info40_san_jur where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info41_observaciones_predio">
         <sql>
-        select * from info41_observaciones_predio_vw where id_expediente=$id_expediente
+        select * from info41_observaciones_predio_vw where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info41_adquisicion_matrices">
         <sql>
-        select * from info41_adquisicion_matrices_vw where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info41_adquisicion_matrices_vw where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info42_adquisicion_tradentes">
         <sql>
-        select * from info42_adquisicion_tradentes where id_expediente=$id_expediente and consecutivo = $consecutivo
+        select * from info42_adquisicion_tradentes where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo
         </sql>
     </Consulta>
     <Consulta id="info43_contabilidad">
         <sql>
-        select * from info43_contabilidad where id_expediente=$id_expediente
+        select * from info43_contabilidad where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="info44_asignacion_saneamiento">
         <sql>
-        select * from info44_asignacion_saneamiento where id_expediente=$id_expediente
+        select * from info44_asignacion_saneamiento where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
 
     <Consulta id="get_proyectos">
         <sql>
-        select distinct ig.id_expediente,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
+        select distinct ig.codigo_bupi,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,
         iic.direccion_actual_igac, orip.descripcion orip
 		from info1_fuente ig left join info2_adquisicion_vw ip
-		on ig.id_expediente=ip.id_expediente
+		on ig.codigo_bupi=ip.codigo_bupi
 		left join info4_informacion_catastral iic
-        on ig.id_expediente=iic.id_expediente
-        left join info42_adquisicion_tradentes iat on ig.id_expediente = iat.id_expediente 
+        on ig.codigo_bupi=iic.codigo_bupi
+        left join info42_adquisicion_tradentes iat on ig.codigo_bupi = iat.codigo_bupi 
         left join dominios dep on iic.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
         left join dominios mun on iic.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
         left join dominios orip on ip.orip = orip.valor and orip.dominio = 'DOM_ORIP'
         where 
-        upper(ig.id_expediente) like  upper('%' || $filtro || '%') 
+        upper(ig.codigo_bupi) like  upper('%' || $filtro || '%') 
         or 
         upper(calculo_matricula) like  upper('%' || $filtro || '%') 
         or 
@@ -435,7 +435,7 @@
         upper(ip.serial_titulo) like  upper('%' || $filtro || '%') 
          or 
         ip.fecha_titulo::text like  ('%' || $filtro || '%')
-        order by ig.id_expediente
+        order by ig.codigo_bupi
         limit 50;
         </sql>
     </Consulta>
@@ -467,12 +467,12 @@
     </Consulta>
     <Consulta id="update_info1_general_proyecto">
         <sql>
-            update info1_general_proyecto set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info1_general_proyecto set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info1_fuente">
         <sql>
-            update info1_fuente set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info1_fuente set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info1_general_proyecto_servidumbre">
@@ -482,12 +482,12 @@
     </Consulta>
     <Consulta id="update_info2_general_predio">
         <sql>
-            update info2_general_predio set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info2_general_predio set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info2_adquisicion">
         <sql>
-            update info2_adquisicion set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info2_adquisicion set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info2_general_predio_sirviente">
@@ -497,12 +497,12 @@
     </Consulta>
     <Consulta id="update_info3_areas_usos">
         <sql>
-            update info3_areas_usos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info3_areas_usos set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info3_predios_segregados">
         <sql>
-            update info3_predios_segregados set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info3_predios_segregados set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info3_general_predios_derivados">
@@ -512,12 +512,12 @@
     </Consulta>
     <Consulta id="update_info4_avaluos">
         <sql>
-            update info4_avaluos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info4_avaluos set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info4_informacion_catastral">
         <sql>
-            update info4_informacion_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info4_informacion_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info4_areas_y_usos_predio_sirviente">
@@ -527,12 +527,12 @@
     </Consulta>
     <Consulta id="update_info5_juridicos">
         <sql>
-            update info5_juridicos set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info5_juridicos set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info5_informacion_invias">
         <sql>
-            update info5_informacion_invias set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info5_informacion_invias set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info5_servidumbre">
@@ -542,12 +542,12 @@
     </Consulta>
     <Consulta id="update_info6_propietario_anterior_juridico">
         <sql>
-            update info6_propietario_anterior_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info6_propietario_anterior_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info6_avaluos">
         <sql>
-            update info6_avaluos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info6_avaluos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info6_avaluos_servidumbre">
@@ -557,12 +557,12 @@
     </Consulta>
     <Consulta id="update_info7_propietario_catastral">
         <sql>
-            update info7_propietario_catastral set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info7_propietario_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info7_control_calidad_juridico">
         <sql>
-            update info7_control_calidad_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info7_control_calidad_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info7_orden_de_pago">
@@ -572,12 +572,12 @@
     </Consulta>
     <Consulta id="update_info8_propietario_juridico">
         <sql>
-            update info8_propietario_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info8_propietario_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info8_control_calidad_catastral">
         <sql>
-            update info8_control_calidad_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info8_control_calidad_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info8_soportes_pago">
@@ -587,7 +587,7 @@
     </Consulta>
     <Consulta id="update_info9_zmpa">
         <sql>
-            update info9_zmpa set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info9_zmpa set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info9_juridico_servidumbre">
@@ -597,12 +597,12 @@
     </Consulta>
     <Consulta id="update_info10_infraestructura">
         <sql>
-            update info10_infraestructura set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info10_infraestructura set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info10_sig">
         <sql>
-            update info10_sig set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info10_sig set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info10_cons_servidumbre">
@@ -613,12 +613,12 @@
 
     <Consulta id="update_info11_estudios_detallados">
         <sql>
-            update info11_estudios_detallados set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info11_estudios_detallados set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info11_adquisicion_escritura">
         <sql>
-            update info11_adquisicion_escritura set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info11_adquisicion_escritura set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info11_propietario_catastral">
@@ -628,12 +628,12 @@
     </Consulta>
     <Consulta id="update_info12_control_calidad_tecnico">
         <sql>
-            update info12_control_calidad_tecnico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info12_control_calidad_tecnico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info12_pago">
         <sql>
-            update info12_pago set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info12_pago set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info12_propietario_juridico_actual">
@@ -644,12 +644,12 @@
 
     <Consulta id="update_info13_control_calidad_juridico">
         <sql>
-            update info13_control_calidad_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info13_control_calidad_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info13_saneamiento_catastral">
         <sql>
-            update info13_saneamiento_catastral set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info13_saneamiento_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info13_propietario_constitucion_servidumbre_juridico">
@@ -659,12 +659,12 @@
     </Consulta>
     <Consulta id="update_info14_saneamiento_basico">
         <sql>
-            update info14_saneamiento_basico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info14_saneamiento_basico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info14_saneamiento_juridico">
         <sql>
-            update info14_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info14_saneamiento_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info14_infraestructura_servidumbre">
@@ -674,12 +674,12 @@
     </Consulta>
     <Consulta id="update_info15_saneamiento_juridico">
         <sql>
-            update info15_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info15_saneamiento_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info15_areas">
         <sql>
-            update info15_areas set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info15_areas set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info15_saneamiento_basico_servidumbre">
@@ -689,7 +689,7 @@
     </Consulta>
     <Consulta id="update_info16_tributaria">
         <sql>
-            update info16_tributaria set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info16_tributaria set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info16_municipios_intersectados_servidumbre">
@@ -699,7 +699,7 @@
     </Consulta>
     <Consulta id="update_info17_documentos_requeridos">
         <sql>
-            update info17_documentos_requeridos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info17_documentos_requeridos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info17_documentos_requeridos_servidumbre">
@@ -709,7 +709,7 @@
     </Consulta>
     <Consulta id="update_info18_municipios_intersectados">
         <sql>
-            update info18_municipios_intersectados set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info18_municipios_intersectados set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info18_control_calidad_tecnico_servidumbre">
@@ -719,7 +719,7 @@
     </Consulta>
     <Consulta id="update_info19_mutacion_predial">
         <sql>
-            update info19_mutacion_predial set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info19_mutacion_predial set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info19_estado_saneamiento_basico_servidumbre">
@@ -729,7 +729,7 @@
     </Consulta>
     <Consulta id="update_info20_documentos_requeridos_juridico">
         <sql>
-            update info20_documentos_requeridos_juridico set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info20_documentos_requeridos_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info20_sig_servidumbre">
@@ -739,127 +739,127 @@
     </Consulta>
     <Consulta id="update_info21_juridicos">
         <sql>
-            update info21_juridicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info21_juridicos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info22_factura_municipio">
         <sql>
-            update info22_factura_municipio set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info22_factura_municipio set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info23_sig">
         <sql>
-            update info23_sig set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info23_sig set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info24_social">
         <sql>
-            update info24_social set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info24_social set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info25_unidades_sociales">
         <sql>
-            update info25_unidades_sociales set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info25_unidades_sociales set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info26_personas_unidad_social">
         <sql>
-            update info26_personas_unidad_social set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info26_personas_unidad_social set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info27_servicios_publicos">
         <sql>
-            update info27_servicios_publicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info27_servicios_publicos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info28_avaluo_actividad_economica">
         <sql>
-            update info28_avaluo_actividad_economica set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info28_avaluo_actividad_economica set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
      <Consulta id="update_info29_compensaciones_y_reconocimientos_economicos">
         <sql>
-            update info29_compensaciones_y_reconocimientos_economicos set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info29_compensaciones_y_reconocimientos_economicos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info30_liquidacion_dano_emergente_y_lucrocesante">
         <sql>
-            update info30_liquidacion_dano_emergente_y_lucrocesante set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info30_liquidacion_dano_emergente_y_lucrocesante set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info31_acta_de_aceptacion">
         <sql>
-            update info31_acta_de_aceptacion set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info31_acta_de_aceptacion set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info32_negociacion_construcciones">
         <sql>
-            update info32_negociacion_construcciones set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info32_negociacion_construcciones set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info33_reasentamiento">
         <sql>
-            update info33_reasentamiento set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info33_reasentamiento set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info34_estado_saneamiento_basico">
         <sql>
-            update info34_estado_saneamiento_basico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info34_estado_saneamiento_basico set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info35_estado_saneamiento_juridico">
         <sql>
-            update info35_estado_saneamiento_juridico set upd_query_alpaca where id_expediente=$id_expediente and consecutivo=$consecutivo RETURNING id_expediente
+            update info35_estado_saneamiento_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info36_documental">
         <sql>
-            update info36_documental set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info36_documental set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info37_prestamo_expedientes">
         <sql>
-            update info37_prestamo_expedientes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info37_prestamo_expedientes set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info38_financiero">
         <sql>
-            update info38_financiero set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info38_financiero set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info39_gestion_san_tec">
         <sql>
-            update info39_gestion_san_tec set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info39_gestion_san_tec set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info40_san_jur">
         <sql>
-            update info40_san_jur set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info40_san_jur set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info41_observaciones_predio">
         <sql>
-            update info41_observaciones_predio set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info41_observaciones_predio set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info41_adquisicion_matrices">
         <sql>
-            update info41_adquisicion_matrices set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info42_adquisicion_tradentes">
         <sql>
-            update info42_adquisicion_tradentes set upd_query_alpaca where id_expediente=$id_expediente and consecutivo = $consecutivo RETURNING id_expediente
+            update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info43_contabilidad">
         <sql>
-            update info43_contabilidad set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info43_contabilidad set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info44_asignacion_saneamiento">
         <sql>
-            update info44_asignacion_saneamiento set upd_query_alpaca where id_expediente=$id_expediente RETURNING id_expediente
+            update info44_asignacion_saneamiento set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
 
@@ -888,8 +888,8 @@
     <Consulta id="insertar_repositorio">
         <sql>
            INSERT INTO repositorio_documental 
-            VALUES ($id_expediente, $codigo_documento,$atributos,$doc_nombre)
-            ON CONFLICT (id_expediente, codigo_documento) DO UPDATE
+            VALUES ($codigo_bupi, $codigo_documento,$atributos,$doc_nombre)
+            ON CONFLICT (codigo_bupi, codigo_documento) DO UPDATE
             SET atributos = $atributos,doc_nombre=$doc_nombre
         </sql>
     </Consulta>
@@ -904,7 +904,7 @@
     <Consulta id="get_datos_repositorio">
         <sql>
         select atributos from repositorio_documental
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
         and codigo_documento=$codigo_documento
         </sql>
     </Consulta>
@@ -916,7 +916,7 @@
     </Consulta>
     <Consulta id="get_usuarios_rol_tecnico">
         <sql>
-        select usuario_nombre,usuario_usuario from usuario where usuario_rol in(7,9)
+        select usuario_nombre,usuario_usuario from usuario where usuario_rol in (7,9)
         </sql>
     </Consulta>
     <Consulta id="get_usuarios_rol_juridico">
@@ -997,36 +997,36 @@ group by dominio) as d
         left join (select dominio,
 				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 				  from dominios a join (
-				  select a.id_expediente,a.accion_saneamiento,
+				  select a.codigo_bupi,a.accion_saneamiento,
 				case 
-					when b.id_expediente is not null then 'GESTIONADO'
+					when b.codigo_bupi is not null then 'GESTIONADO'
 					else 'NO GESTIONADO'
 				end as gestion_san
-				from (select id_expediente, UNNEST(saneamientos_catastrales) as accion_saneamiento
+				from (select codigo_bupi, UNNEST(saneamientos_catastrales) as accion_saneamiento
 					from info13_saneamiento_catastral isb 
-					where id_expediente = $id_expediente) as a
+					where codigo_bupi = $codigo_bupi) as a
 					left join 
-				(select id_expediente, accion_saneamiento 
+				(select codigo_bupi, accion_saneamiento 
 				from info39_gestion_san_tec igst 
-				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
-			  		where b.id_expediente = $id_expediente
+				where codigo_bupi = $codigo_bupi) as b on a.codigo_bupi = b.codigo_bupi and a.accion_saneamiento = b.accion_saneamiento) as b on a.valor = b.accion_saneamiento
+			  		where b.codigo_bupi = $codigo_bupi
 					group by a.dominio) as c on m.enum=c.dominio
         left join (select dominio,
 				  json_agg(json_build_object('value',valor,'label',concat(gestion_san,' - ',descripcion),'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 				  from dominios a join (
-				  select a.id_expediente,a.accion_saneamiento,
+				  select a.codigo_bupi,a.accion_saneamiento,
 				case 
-					when b.id_expediente is not null then 'GESTIONADO'
+					when b.codigo_bupi is not null then 'GESTIONADO'
 					else 'NO GESTIONADO'
 				end as gestion_san
-				from (select id_expediente, UNNEST(saneamientos) as accion_saneamiento
+				from (select codigo_bupi, UNNEST(saneamientos) as accion_saneamiento
 					from info14_saneamiento_juridico
-					where id_expediente = $id_expediente) as a
+					where codigo_bupi = $codigo_bupi) as a
 					left join 
-				(select id_expediente, saneamiento 
+				(select codigo_bupi, saneamiento 
 				from info40_san_jur igsj
-				where id_expediente = $id_expediente) as b on a.id_expediente = b.id_expediente and a.accion_saneamiento = b.saneamiento) as b on a.valor = b.accion_saneamiento
-			  		where b.id_expediente = $id_expediente
+				where codigo_bupi = $codigo_bupi) as b on a.codigo_bupi = b.codigo_bupi and a.accion_saneamiento = b.saneamiento) as b on a.valor = b.accion_saneamiento
+			  		where b.codigo_bupi = $codigo_bupi
 					group by a.dominio) as e on m.enum=e.dominio
         where tabla=$tabla order by orden;
         </sql>
@@ -1073,7 +1073,7 @@ group by dominio) as d
     <Consulta id="insertar_asignacion">
         <sql>
         insert into tareas.asignacion values (
-            $id_expediente,
+            $codigo_bupi,
             $id_tarea,
             (select usuario from tareas.grupos 
             where id_tarea=$id_tarea and id_grupo=(select id_grupo from usuario where usuario_usuario=$usuario_responsable))
@@ -1084,21 +1084,21 @@ group by dominio) as d
     <Consulta id="insertar_asignacion_tecnico">
         <sql>
         insert into tareas.asignacion values (
-            $id_expediente,
+            $codigo_bupi,
             $id_tarea,
             $usuario_responsable
         )
-        ON CONFLICT (id_expediente,id_tarea) DO UPDATE
+        ON CONFLICT (codigo_bupi,id_tarea) DO UPDATE
             SET usuario = $usuario_responsable
-            returning id_expediente
+            returning codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_notificacion">
         <sql>
         update tareas.tareas
         set fecha_asignacion = now(), usuario_responsable = $usuario_responsable
-        where ruta = $ruta and id_expediente = $id_expediente and estado = 1
-        returning id_expediente;
+        where ruta = $ruta and codigo_bupi = $codigo_bupi and estado = 1
+        returning codigo_bupi;
         </sql>
     </Consulta>
 
@@ -1106,11 +1106,11 @@ group by dominio) as d
         <sql>
         insert into tareas.tareas values(
             (select max (id)+1 from tareas.tareas),
-            $id_expediente,
+            $codigo_bupi,
             $ruta_destino,
             token,
             (select usuario from tareas.asignacion 
-            where id_expediente=$id_expediente and id_tarea= $tarea_next),
+            where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next),
             now(),
             null,
             1,
@@ -1122,11 +1122,11 @@ group by dominio) as d
         <sql>
         insert into tareas.tareas values(
             (select max (id)+1 from tareas.tareas),
-            $id_expediente,
+            $codigo_bupi,
             $ruta_destino,
             $usuario,
             (select usuario from tareas.asignacion 
-            where id_expediente=$id_expediente and id_tarea= $tarea_next),
+            where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next),
             now(),
             null,
             1,
@@ -1142,14 +1142,14 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT aprobado
             from info7_control_calidad_juridico 
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
         )
         THEN
             (select CASE WHEN aprobado=1 THEN true
                     ELSE false
             END
         from info7_control_calidad_juridico 
-        where id_expediente=$id_expediente)
+        where codigo_bupi=$codigo_bupi)
         ELSE
             false
         END as aprobado
@@ -1160,7 +1160,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT apro_bor_salida_j
             from info40_gestion_san_jur
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1168,7 +1168,7 @@ group by dominio) as d
                     ELSE false
             END
         from info40_gestion_san_jur
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo)
         ELSE
             false
@@ -1180,7 +1180,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT aprobacion_gestion_j
             from info40_gestion_san_jur
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1188,7 +1188,7 @@ group by dominio) as d
                     ELSE false
             END
         from info40_gestion_san_jur
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo)
         ELSE
             false
@@ -1200,14 +1200,14 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT aprobado
             from info8_control_calidad_catastral 
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
         )
         THEN
             (select CASE WHEN aprobado=1 THEN true
                     ELSE false
             END
         from info8_control_calidad_catastral 
-        where id_expediente=$id_expediente)
+        where codigo_bupi=$codigo_bupi)
         ELSE
             false
         END as aprobado
@@ -1218,7 +1218,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT apro_bor_salida_t
             from info39_gestion_san_tec
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1226,7 +1226,7 @@ group by dominio) as d
                     ELSE false
             END
         from info39_gestion_san_tec 
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
         and consecutivo = $consecutivo)
         ELSE
             false
@@ -1238,7 +1238,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT aprobacion_gestion_t 
             from info39_gestion_san_tec
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1246,7 +1246,7 @@ group by dominio) as d
                     ELSE false
             END
         from info39_gestion_san_tec 
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
         and consecutivo = $consecutivo)
         ELSE
             false
@@ -1258,7 +1258,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT proc_san_t 
             from info39_gestion_san_tec
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1266,7 +1266,7 @@ group by dominio) as d
                     ELSE false
             END
         from info39_gestion_san_tec 
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
         and consecutivo = $consecutivo)
         ELSE
             false
@@ -1278,7 +1278,7 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT proc_san_j 
             from info40_gestion_san_jur igsj 
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and consecutivo = $consecutivo
         )
         THEN
@@ -1286,7 +1286,7 @@ group by dominio) as d
                     ELSE false
             END
         from info40_gestion_san_jur 
-        where id_expediente=$id_expediente
+        where codigo_bupi=$codigo_bupi
         and consecutivo = $consecutivo)
         ELSE
             false
@@ -1298,14 +1298,14 @@ group by dominio) as d
         SELECT CASE WHEN EXISTS (
             SELECT aprobado
             from servidumbres.info18_control_calidad_tecnico_servidumbre
-            where id_servidumbre=$id_expediente
+            where id_servidumbre=$codigo_bupi
         )
         THEN
             (select CASE WHEN aprobado=1 THEN true
                     ELSE false
             END
         from servidumbres.info18_control_calidad_tecnico_servidumbre
-        where id_servidumbre=$id_expediente)
+        where id_servidumbre=$codigo_bupi)
         ELSE
             false
         END as aprobado
@@ -1327,20 +1327,20 @@ group by dominio) as d
         (select usuario_nombre from usuario as u where
         u.usuario_usuario=t.usuario_responsable)as usuario_responsable
         from tareas.tareas as t
-        left join (select a.id_expediente,
+        left join (select a.codigo_bupi,
 			case
 				when a.c = b.c then true
 				else false
 			end as comp
 			from 
-			(select id_expediente,count(*) c
+			(select codigo_bupi,count(*) c
 			from estado_san_juridicos esj 
-			group by id_expediente) a
+			group by codigo_bupi) a
 			full join
-			(select id_expediente,count(*) c
+			(select codigo_bupi,count(*) c
 			from estado_san_juridicos esj 
 			where estado_actual in ('RESUELTO','NO APLICA')
-			group by id_expediente) b on a.id_expediente = b.id_expediente) a on a.id_expediente = t.id_expediente 
+			group by codigo_bupi) b on a.codigo_bupi = b.codigo_bupi) a on a.codigo_bupi = t.codigo_bupi 
         where
         usuario_responsable=token and estado=1 and visible=true;
         </sql>
@@ -1350,7 +1350,7 @@ group by dominio) as d
         <sql>
         update tareas.tareas set estado=2, fecha_solucion=now() 
         where id=$id 
-        returning id_expediente
+        returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -1358,16 +1358,16 @@ group by dominio) as d
         <sql>
         update tareas.tareas_saneamientos set estado=2, fecha_solucion=now() 
         where id=$id 
-        returning id_expediente
+        returning codigo_bupi
         </sql>
     </Consulta>
 
     <Consulta id="update_tareas_estado_documental">
         <sql>
         update tareas.tareas set estado=2, fecha_solucion=now() 
-        where id_expediente = $id_expediente and usuario_asigna = $usuario_prestamo 
+        where codigo_bupi = $codigo_bupi and usuario_asigna = $usuario_prestamo 
         and ruta = 13
-        returning id_expediente
+        returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -1393,7 +1393,7 @@ group by dominio) as d
             (select usuario_nombre from usuario u where
             u.usuario_usuario=e.usuario_usuario)
             from seguimiento_expedientes e
-            where id_expediente=$id_expediente order by iteracion
+            where codigo_bupi=$codigo_bupi order by iteracion
         </sql>
     </Consulta>
 
@@ -1401,18 +1401,18 @@ group by dominio) as d
     <Consulta id="asignar_expediente_fisico_paso1">
         <sql>
             update seguimiento_expedientes set fecha_final=now()
-            ,activo=false where id_expediente=$id_expediente
+            ,activo=false where codigo_bupi=$codigo_bupi
             and activo=true;
         </sql>
     </Consulta>
     <Consulta id="asignar_expediente_fisico_paso2">
         <sql>
         insert into 
-        seguimiento_expedientes(id_expediente,iteracion,
+        seguimiento_expedientes(codigo_bupi,iteracion,
 					    usuario_usuario,activo,fecha_inicio)
-            select $id_expediente,
+            select $codigo_bupi,
             (select max(iteracion)+1 from seguimiento_expedientes
-            where id_expediente=$id_expediente ),
+            where codigo_bupi=$codigo_bupi ),
             $id_asignado,true,now();
         </sql>
     </Consulta>
@@ -1443,12 +1443,12 @@ group by dominio) as d
                 'id',         id,
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'id_expediente', id_expediente,
+                    'codigo_bupi', codigo_bupi,
                     'estado', estado,
                     'id',id
                 )
             ) as Feature
-            FROM geometria.lote_asignacion where id_expediente = $id_expediente and (estado is null or estado = 2)
+            FROM geometria.lote_asignacion where codigo_bupi = $codigo_bupi and (estado is null or estado = 2)
             )features
             union
             SELECT 'geometria_revision' as tipo,jsonb_build_object(
@@ -1460,12 +1460,12 @@ group by dominio) as d
                 'id',         id,
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'id_expediente', id_expediente,
+                    'codigo_bupi', codigo_bupi,
                     'estado', estado,
                     'id',id
                 )
             ) as Feature
-            FROM geometria.lote_asignacion where id_expediente = $id_expediente and estado in (1)
+            FROM geometria.lote_asignacion where codigo_bupi = $codigo_bupi and estado in (1)
             )features
         </sql>
     </Consulta>
@@ -1480,12 +1480,12 @@ group by dominio) as d
                 'id',         id,
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'id_expediente', id_expedie,
+                    'codigo_bupi', id_expedie,
                     'estado', estado,
                     'id',id
                 )
             ) as Feature
-            FROM geometria.servidumbre where id_expedie = $id_expediente and (estado is null or estado = 2)
+            FROM geometria.servidumbre where id_expedie = $codigo_bupi and (estado is null or estado = 2)
             )features
             union
             SELECT 'geometria_revision' as tipo,jsonb_build_object(
@@ -1497,12 +1497,12 @@ group by dominio) as d
                 'id',         id,
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'id_expediente', id_expedie,
+                    'codigo_bupi', id_expedie,
                     'estado', estado,
                     'id',id
                 )
             ) as Feature
-            FROM geometria.servidumbre where id_expedie = $id_expediente and estado in (1)
+            FROM geometria.servidumbre where id_expedie = $codigo_bupi and estado in (1)
             )features
         </sql>
     </Consulta>
@@ -1516,7 +1516,7 @@ group by dominio) as d
                 'type',       'Feature',
                 'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
                 'properties', json_build_object(
-                    'id_expediente', id_expediente,
+                    'codigo_bupi', codigo_bupi,
                     'cod_dup', cod_dup,
 					'nom_proy', nom_proy,
 					'chip_cat', chip_cat,
@@ -1525,25 +1525,25 @@ group by dominio) as d
 					'dir_act', dir_act
                 )
             ) as Feature
-			FROM (select pr.id_expediente, 
+			FROM (select pr.codigo_bupi, 
 			dup.cod_dup,dup.nom_proy, pr.chip_cat, pr.num_mi,
 			pr.ced_cat, pr.dir_act, lote.geom
 			from info1_vw_dup dup 
-			join info2_general_predio pr on dup.id_expediente = pr.id_expediente
-			join geometria.lote_asignacion lote on pr.id_expediente = lote.id_expediente) as consulta) as features;
+			join info2_general_predio pr on dup.codigo_bupi = pr.codigo_bupi
+			join geometria.lote_asignacion lote on pr.codigo_bupi = lote.codigo_bupi) as consulta) as features;
         </sql>
     </Consulta>
    <Consulta id="insertar_dibujo_mapa">
         <sql>
-            insert into geometria.lote_asignacion (id,id_expediente,geom,estado)
-            values((select max(id) + 1 from geometria.lote_asignacion),$id_expediente,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
-            returning id_expediente
+            insert into geometria.lote_asignacion (id,codigo_bupi,geom,estado)
+            values((select max(id) + 1 from geometria.lote_asignacion),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
+            returning codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="insertar_dibujo_mapa_servidumbre">
         <sql>
             insert into geometria.servidumbre (id,id_expedie,geom,estado)
-            values((select max(id) + 1 from geometria.servidumbre),$id_expediente,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
+            values((select max(id) + 1 from geometria.servidumbre),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
             returning id_expedie
         </sql>
     </Consulta>
@@ -1563,8 +1563,8 @@ group by dominio) as d
     <Consulta id="expediente_asignado">
         <sql>
         select exists (
-        select id_expediente from tareas.tareas 
-        where usuario_responsable=token and estado=1 and id_expediente=$id_expediente)
+        select codigo_bupi from tareas.tareas 
+        where usuario_responsable=token and estado=1 and codigo_bupi=$codigo_bupi)
         </sql>
     </Consulta>   
 
@@ -1585,13 +1585,13 @@ group by dominio) as d
                 join (
                     SELECT *
                         FROM crosstab(
-                            'select id_expediente,id_tarea,usuario_nombre
+                            'select codigo_bupi,id_tarea,usuario_nombre
                             from tareas.asignacion t 
                             left join usuario u
                             on t.usuario=u.usuario_usuario
-                            order by id_expediente,id_tarea'
-                        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-                ) sub on i1.id_servidumbre = sub.id_expediente;
+                            order by codigo_bupi,id_tarea'
+                        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+                ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta> 
     <Consulta id="reporte_info2_servidumbres">
@@ -1601,13 +1601,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta> 
      <Consulta id="reporte_info3_servidumbres">
@@ -1617,13 +1617,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta> 
     <Consulta id="reporte_info4_servidumbres">
@@ -1633,13 +1633,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta> 
     <Consulta id="reporte_info5_servidumbres">
@@ -1649,174 +1649,174 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info3_predios_segregados">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.fmi_segregado, "Técnico" estructurador, "Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.consecutivo, i1.fmi_segregado, "Técnico" estructurador, "Sup. Técnico" control_calidad
             from info3_predios_segregados i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info6_avaluos">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.avaluo, i1.vigencia, "Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.consecutivo, i1.avaluo, i1.vigencia, "Técnico" estructurador,"Sup. Técnico" control_calidad
             from info6_avaluos i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info7_control_calidad_juridico">
         <sql>
-            select i1.id_expediente codigo_bupi, get_dominio('DOM_BINARIO'::text,i1.aprobado::text) aprobado, i1.observacion, "Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, get_dominio('DOM_BINARIO'::text,i1.aprobado::text) aprobado, i1.observacion, "Técnico" estructurador,"Sup. Técnico" control_calidad
             from info7_control_calidad_juridico i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info8_control_calidad_catastral">
         <sql>
-            select i1.id_expediente codigo_bupi, get_dominio('DOM_BINARIO'::text,i1.aprobado::text) aprobado, i1.observacion,"Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, get_dominio('DOM_BINARIO'::text,i1.aprobado::text) aprobado, i1.observacion,"Técnico" estructurador,"Sup. Técnico" control_calidad
             from info8_control_calidad_catastral i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info42_adquisicion_tradentes">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.consecutivo, i1.tradente, get_dominio('DOM_TIPO_DOC'::text,i1.tipo_documento_tradente::text) tipo_documento_tradente, i1.numero_documento_tradente,"Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.consecutivo, i1.tradente, get_dominio('DOM_TIPO_DOC'::text,i1.tipo_documento_tradente::text) tipo_documento_tradente, i1.numero_documento_tradente,"Técnico" estructurador,"Sup. Técnico" control_calidad
             from info42_adquisicion_tradentes i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info41_adquisicion_matrices">
         <sql>
-             select i1.id_expediente codigo_bupi, i1.consecutivo, i1.orip_matriz, i1.fmi_matriz, i1.calculo_fmi_matriz,"Técnico" estructurador,"Sup. Técnico" control_calidad
+             select i1.codigo_bupi codigo_bupi, i1.consecutivo, i1.orip_matriz, i1.fmi_matriz, i1.calculo_fmi_matriz,"Técnico" estructurador,"Sup. Técnico" control_calidad
             from info41_adquisicion_matrices i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info14_saneamiento_juridico">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.saneamientos,"Técnico" estructurador, "Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.saneamientos,"Técnico" estructurador, "Sup. Técnico" control_calidad
             from info14_saneamiento_juridico i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info13_saneamiento_catastral">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.saneamientos_catastrales ,"Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.saneamientos_catastrales ,"Técnico" estructurador,"Sup. Técnico" control_calidad
             from info13_saneamiento_catastral i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info11_adquisicion_escritura">
         <sql>
-           select i1.id_expediente codigo_bupi, i1.escritura , i1.caja , i1.carpeta ,i1.fecha_entrega_carpeta ,i1.proyecto_vial ,i1.convenio_contrato ,
+           select i1.codigo_bupi codigo_bupi, i1.escritura , i1.caja , i1.carpeta ,i1.fecha_entrega_carpeta ,i1.proyecto_vial ,i1.convenio_contrato ,
            i1.fecha_cargue_teams , get_dominio('DOM_ESTADO_BUSQUEDA'::text,i1.estado_busqueda::text) estado_busqueda, i1.enlace_teams , i1.observacion_documental ,"Técnico" estructurador,"Sup. Técnico" control_calidad
             from info11_adquisicion_escritura i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info12_pago">
         <sql>
-            select i1.id_expediente codigo_bupi, i1.consecutivo , i1.no_ficha_predial , i1.valor_pago , "Técnico" estructurador,"Sup. Técnico" control_calidad
+            select i1.codigo_bupi codigo_bupi, i1.consecutivo , i1.no_ficha_predial , i1.valor_pago , "Técnico" estructurador,"Sup. Técnico" control_calidad
             from info12_pago i1
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info15_areas">
@@ -1826,13 +1826,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_expediente = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.codigo_bupi = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info6_servidumbres">
@@ -1842,13 +1842,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta> 
     <Consulta id="reporte_info7_servidumbres">
@@ -1858,13 +1858,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info8_servidumbres">
@@ -1874,13 +1874,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info9_servidumbres">
@@ -1890,13 +1890,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>  
     <Consulta id="reporte_info10_servidumbres">
@@ -1906,13 +1906,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info11_servidumbres">
@@ -1922,13 +1922,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info12_servidumbres">
@@ -1938,13 +1938,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info13_servidumbres">
@@ -1954,13 +1954,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info14_servidumbres">
@@ -1970,13 +1970,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info15_servidumbres">
@@ -1986,13 +1986,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info16_servidumbres">
@@ -2002,13 +2002,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
 
         </sql>
     </Consulta>
@@ -2019,13 +2019,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info18_servidumbres">
@@ -2035,13 +2035,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="reporte_info19_servidumbres">
@@ -2051,13 +2051,13 @@ group by dominio) as d
             join (
                 SELECT *
                     FROM crosstab(
-                        'select id_expediente,id_tarea,usuario_nombre
+                        'select codigo_bupi,id_tarea,usuario_nombre
                         from tareas.asignacion t 
                         left join usuario u
                         on t.usuario=u.usuario_usuario
-                        order by id_expediente,id_tarea'
-                    ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
-            ) sub on i1.id_servidumbre = sub.id_expediente;
+                        order by codigo_bupi,id_tarea'
+                    ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            ) sub on i1.id_servidumbre = sub.codigo_bupi;
         </sql>
     </Consulta>
 
@@ -2068,17 +2068,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info6">
@@ -2087,17 +2087,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info7">
@@ -2106,17 +2106,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info8">
@@ -2125,17 +2125,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info9">
@@ -2144,17 +2144,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info10">
@@ -2163,17 +2163,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info11">
@@ -2182,17 +2182,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info12">
@@ -2201,17 +2201,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info13">
@@ -2220,17 +2220,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info14">
@@ -2239,17 +2239,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info15">
@@ -2258,17 +2258,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
         <Consulta id="reporte_info17">
@@ -2277,17 +2277,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info18">
@@ -2296,17 +2296,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info19">
@@ -2315,17 +2315,17 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_info22">
@@ -2334,43 +2334,43 @@ group by dominio) as d
         natural join(
         SELECT *
         FROM crosstab(
-            'select id_expediente,id_tarea,usuario_nombre
+            'select codigo_bupi,id_tarea,usuario_nombre
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            order by id_expediente,id_tarea'
-        ) AS ct(id_expediente TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
+            order by codigo_bupi,id_tarea'
+        ) AS ct(codigo_bupi TEXT, "Técnico" TEXT, "Jurídico" TEXT, "Sup. Juridico" TEXT, "Sup. Técnico" TEXT)
         )sub
         natural join (
-        select id_expediente,nivel_prior as "Nivel de prioridad" from info2_general_predio
+        select codigo_bupi,nivel_prior as "Nivel de prioridad" from info2_general_predio
         )sub1
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="reporte_documental">
         <sql>
-        select i2.id_expediente, i2.chip_cat, i2.num_mi, i2.dir_act,
+        select i2.codigo_bupi, i2.chip_cat, i2.num_mi, i2.dir_act,
         d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, i37.consecutivo, i37.fecha_sol_usu_prestamo,
         i37.fecha_ent_usu_prestamo, i37.fecha_dev_usu_prestamo, 
         (select usuario_nombre from usuario where usuario_usuario = i37.usuario_prestamo) as usuario_prestamo
         from info2_general_predio i2
-        left join info36_documental i36 on i2.id_expediente = i36.id_expediente
-        left join info37_prestamo_expedientes i37 on i36.id_expediente = i37.id_expediente
+        left join info36_documental i36 on i2.codigo_bupi = i36.codigo_bupi
+        left join info37_prestamo_expedientes i37 on i36.codigo_bupi = i37.codigo_bupi
         left join dominios d on d.dominio = 'Ubi_exp' and d.valor::real = i36.ubicacion::real
-        order by i2.id_expediente, i37.consecutivo;
+        order by i2.codigo_bupi, i37.consecutivo;
         </sql>
     </Consulta>
     <Consulta id="reporte_carga_documental">
         <sql>
-        select i2.id_expediente, i2.chip_cat, i2.num_mi, i2.dir_act,
+        select i2.codigo_bupi, i2.chip_cat, i2.num_mi, i2.dir_act,
         d.descripcion as ubicacion, i36.fecha_ubicacion, i36.tomos, u.usuario_usuario as usuario_carga,
 		doc.fecha as fecha_carga
         from info2_general_predio i2
-        left join info36_documental i36 on i2.id_expediente = i36.id_expediente
-		left join (select distinct identificador,usuario,fecha::date from documentos doc) doc on i2.id_expediente = doc.identificador
+        left join info36_documental i36 on i2.codigo_bupi = i36.codigo_bupi
+		left join (select distinct identificador,usuario,fecha::date from documentos doc) doc on i2.codigo_bupi = doc.identificador
 		left join usuario u on doc.usuario = u.usuario_usuario and u.usuario_rol in (4,8)
         left join dominios d on d.dominio = 'Ubi_exp' and d.valor::real = i36.ubicacion::real
-        order by i2.id_expediente;
+        order by i2.codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="get_asignacion">
@@ -2379,7 +2379,7 @@ group by dominio) as d
             from tareas.asignacion t 
             left join usuario u
             on t.usuario=u.usuario_usuario
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="get_tipologia">
@@ -2388,14 +2388,14 @@ group by dominio) as d
             from info5_juridicos ij
             left join dominios d on ij.tipologia_impuesto_2021::text = d.valor
             and d.dominio = 'Tip_Impuestos_V'
-            where ij.id_expediente=$id_expediente
+            where ij.codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="get_estados_depuracion">
         <sql>
-             select t.id_expediente, dep_tec, f_tec
+             select t.codigo_bupi, dep_tec, f_tec
             from estado_aprobacion_tecnico t
-            where t.id_expediente=$id_expediente
+            where t.codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="get_estados_depuracion_servidumbres">
@@ -2421,7 +2421,7 @@ group by dominio) as d
     <Consulta id="tributaria_principal">
         <sql>
         select
-            I.id_expediente,
+            I.codigo_bupi,
             CHIP_CAT,
             NUM_MI,
             (select split_part(descripcion,'-',2) AS MPIO from dominios where dominio='TABLA_MUNICIPIO' and valor=I.MPIO),
@@ -2448,14 +2448,14 @@ group by dominio) as d
             VAL_TOT_AV_CAT
             from info2_general_predio I 
             LEFT JOIN info1_general_proyecto J 
-            on I.id_expediente=J.id_expediente
+            on I.codigo_bupi=J.codigo_bupi
             LEFT JOIN info3_areas_usos K
-            on I.id_expediente=K.id_expediente	  
+            on I.codigo_bupi=K.codigo_bupi	  
             LEFT JOIN info5_juridicos L
-            on I.id_expediente=L.id_expediente
+            on I.codigo_bupi=L.codigo_bupi
             LEFT JOIN info4_avaluos M	  
-            on I.id_expediente=M.id_expediente
-            order by id_expediente
+            on I.codigo_bupi=M.codigo_bupi
+            order by codigo_bupi
         </sql>
     </Consulta>
 
@@ -2463,21 +2463,21 @@ group by dominio) as d
     <Consulta id="tributaria_zmpa">
         <sql>
         select
-        id_expediente,
+        codigo_bupi,
         consecutivo,
         ACTADM_ZMPA 
         from info9_zmpa
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="tributaria_juridico">
         <sql>
         select 
-        id_expediente,
+        codigo_bupi,
         consecutivo,
         porcent_prop 
         from info21_juridicos
-        order by id_expediente
+        order by codigo_bupi
         </sql>
     </Consulta>
 
@@ -2574,15 +2574,15 @@ group by dominio) as d
         select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
         select caso as grupo, count(caso)as cuenta from (
 
-        select sub1.id_expediente,
+        select sub1.codigo_bupi,
         (case when aprobado=1 then 'APROBADO' 
          when aprobado=2 then 
-            CASE WHEN COALESCE(sub3.id_expediente, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
-        ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+            CASE WHEN COALESCE(sub3.codigo_bupi, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
+        ELSE  (case when coalesce(sub3.codigo_bupi,'') = '' then (case when sum=12 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
         END) as caso
         from (
         select 
-        I.id_expediente,
+        I.codigo_bupi,
         (case when coalesce(ESTADO_FOLIO,0) = 0 then 0 else 1 end)+
         (case when coalesce(PRED_ADQ,0) = 0 then 0 else 1 end)+
         (case when coalesce(DOC_NUM,0) = 0 then 0 else 1 end)+
@@ -2597,20 +2597,20 @@ group by dominio) as d
         (case when coalesce(L.PORCENT_COPROP,0) = 0 then 0 else 1 end) AS sum
         from info5_juridicos I
         LEFT JOIN (select * from info21_juridicos where consecutivo=1) J
-        on I.id_expediente=J.id_expediente
+        on I.codigo_bupi=J.codigo_bupi
         LEFT JOIN (select * from info8_propietario_juridico where consecutivo=1) K
-        on I.id_expediente=K.id_expediente
+        on I.codigo_bupi=K.codigo_bupi
         LEFT JOIN (select * from info6_propietario_anterior_juridico where consecutivo=1) L
-        on I.id_expediente=L.id_expediente
+        on I.codigo_bupi=L.codigo_bupi
         )sub1
         LEFT JOIN info13_control_calidad_juridico sub2
-        on sub1.id_expediente=sub2.id_expediente
+        on sub1.codigo_bupi=sub2.codigo_bupi
         LEFT JOIN (
-        select distinct id_expediente 
+        select distinct codigo_bupi 
         from tareas.tareas
         where estado=1 and ruta=4
         )sub3
-        on sub1.id_expediente=sub3.id_expediente
+        on sub1.codigo_bupi=sub3.codigo_bupi
 
         )sub1
         group by caso)sub	  
@@ -2624,15 +2624,15 @@ group by dominio) as d
             select array_agg(grupo) as categoria,array_agg(cuenta)as data from(
             select caso as grupo, count(caso)as cuenta from
             (
-            select sub1.id_expediente,
+            select sub1.codigo_bupi,
             (case when aprobado=1 then 'APROBADO' 
              when aprobado=2 then 
-                CASE WHEN COALESCE(sub3.id_expediente, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
-            ELSE  (case when coalesce(sub3.id_expediente,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
+                CASE WHEN COALESCE(sub3.codigo_bupi, '') != '' THEN 'EN REVISIÓN' ELSE 'DEVUELTO' END
+            ELSE  (case when coalesce(sub3.codigo_bupi,'') = '' then (case when sum=13 then 'EN GESTIÓN' ELSE 'ASIGNADO' END) else 'EN REVISIÓN' end)
             END) as caso
             from (	  
             select
-            I.id_expediente,
+            I.codigo_bupi,
             (case when coalesce(ID_PROYECTO,'') = '' then 0 else 1 end)+
             (case when coalesce(PORCENTAJE_AREA_EN_DUP,0) = 0 then 0 else 1 end)+  
             (case when coalesce(AREA_EN_DUP,0) = 0 then 0 else 1 end)+	 
@@ -2648,20 +2648,20 @@ group by dominio) as d
             (case when coalesce(TIP_INFRA,'{}') = '{}' then 0 else 1 end) as sum	  
             from info1_general_proyecto I
             LEFT JOIN info2_general_predio J
-            on I.id_expediente=J.id_expediente
+            on I.codigo_bupi=J.codigo_bupi
             LEFT JOIN info4_avaluos	K
-            on I.id_expediente=K.id_expediente	
+            on I.codigo_bupi=K.codigo_bupi	
             LEFT JOIN info10_infraestructura L
-            on I.id_expediente=L.id_expediente
+            on I.codigo_bupi=L.codigo_bupi
             )sub1
             LEFT JOIN info12_control_calidad_tecnico sub2
-            on sub1.id_expediente=sub2.id_expediente	
+            on sub1.codigo_bupi=sub2.codigo_bupi	
             LEFT JOIN (
-            select distinct id_expediente 
+            select distinct codigo_bupi 
             from tareas.tareas
             where estado=1 and ruta=3
             )sub3
-            on sub1.id_expediente=sub3.id_expediente		
+            on sub1.codigo_bupi=sub3.codigo_bupi		
             )sub1
             group by caso)sub
         </sql>
@@ -2713,15 +2713,15 @@ group by dominio) as d
                 estado,
                 fecha_asignacion,
                 fecha_solucion,
-                (select aprobado from info12_control_calidad_tecnico where id_expediente = t.id_expediente) as tec,
-				(select aprobado from info13_control_calidad_juridico where id_expediente = t.id_expediente) as jur
+                (select aprobado from info12_control_calidad_tecnico where codigo_bupi = t.codigo_bupi) as tec,
+				(select aprobado from info13_control_calidad_juridico where codigo_bupi = t.codigo_bupi) as jur
             from tareas.tareas t left join (
             select id_tarea_next,concat(id_tarea,'-',id_tarea_next)as path,ruta,descripcion
             from tareas.flujo
             ) f
             on t.ruta=f.ruta 
             inner join tareas.actividades ta on f.id_tarea_next=ta.id_tarea
-            where id_expediente=$id_expediente order by fecha_asignacion
+            where codigo_bupi=$codigo_bupi order by fecha_asignacion
         </sql>
     </Consulta>
 
@@ -2738,15 +2738,15 @@ group by dominio) as d
                 estado,
                 fecha_asignacion,
                 fecha_solucion,
-                (select aprobado from info12_control_calidad_tecnico where id_expediente = t.id_expediente) as tec,
-				(select aprobado from info13_control_calidad_juridico where id_expediente = t.id_expediente) as jur
+                (select aprobado from info12_control_calidad_tecnico where codigo_bupi = t.codigo_bupi) as tec,
+				(select aprobado from info13_control_calidad_juridico where codigo_bupi = t.codigo_bupi) as jur
             from tareas.tareas_saneamientos t left join (
             select id_tarea_next,concat(id_tarea,'-',id_tarea_next)as path,ruta,descripcion
             from tareas.flujo_saneamientos
             ) f
             on t.ruta=f.ruta 
             inner join tareas.actividades ta on f.id_tarea_next=ta.id_tarea
-            where id_expediente=$id_expediente
+            where codigo_bupi=$codigo_bupi
             and tabla = $tabla
             and consecutivo = $consecutivo
             order by fecha_asignacion
@@ -2757,8 +2757,8 @@ group by dominio) as d
     <Consulta id="insertar_vacio">
         <sql>
            
-           insert into insert-dinamico(id_expediente) values ($id_expediente)
-            returning id_expediente;
+           insert into insert-dinamico(codigo_bupi) values ($codigo_bupi)
+            returning codigo_bupi;
         </sql>
     </Consulta>
 
@@ -2772,7 +2772,7 @@ group by dominio) as d
     <Consulta id="get_consecutivos">
         <sql>
            
-           select consecutivo from insert-dinamico where id_expediente=$id_expediente
+           select consecutivo from insert-dinamico where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="get_consecutivos_servidumbres">
@@ -2788,7 +2788,7 @@ group by dominio) as d
         <sql>
         select exists(
            select * from tareas.tareas
-            where id_expediente=$id_expediente 
+            where codigo_bupi=$codigo_bupi 
             and usuario_responsable=token and estado=1)
         </sql>
     </Consulta>
@@ -2797,7 +2797,7 @@ group by dominio) as d
         <sql>
         select exists(
            select * from tareas.tareas_saneamientos
-            where id_expediente=$id_expediente 
+            where codigo_bupi=$codigo_bupi 
             and usuario_responsable=token and estado=1)
         </sql>
     </Consulta>
@@ -2811,10 +2811,10 @@ group by dominio) as d
     <Consulta id="insert_consecutivo">
         <sql>
 
-       insert into insert-dinamico(id_expediente,consecutivo)
-        values ($id_expediente,coalesce((select max(consecutivo)+1 
-		from insert-dinamico where id_expediente=$id_expediente),1)
-	  	)returning id_expediente
+       insert into insert-dinamico(codigo_bupi,consecutivo)
+        values ($codigo_bupi,coalesce((select max(consecutivo)+1 
+		from insert-dinamico where codigo_bupi=$codigo_bupi),1)
+	  	)returning codigo_bupi
 
 
         </sql>
@@ -2823,10 +2823,10 @@ group by dominio) as d
     <Consulta id="insert_prestamo">
         <sql>
 
-       insert into insert-dinamico(id_expediente,consecutivo,usuario_prestamo, fecha_sol_usu_prestamo)
-        values ($id_expediente,coalesce((select max(consecutivo)+1 
-		from insert-dinamico where id_expediente=$id_expediente),1),token, now()
-	  	)returning id_expediente
+       insert into insert-dinamico(codigo_bupi,consecutivo,usuario_prestamo, fecha_sol_usu_prestamo)
+        values ($codigo_bupi,coalesce((select max(consecutivo)+1 
+		from insert-dinamico where codigo_bupi=$codigo_bupi),1),token, now()
+	  	)returning codigo_bupi
 
 
         </sql>
@@ -2847,7 +2847,7 @@ group by dominio) as d
     <Consulta id="delete_consecutivo">
         <sql>
 
-        delete from insert-dinamico where id_expediente=$id_expediente and consecutivo=$consecutivo returning id_expediente
+        delete from insert-dinamico where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo returning codigo_bupi
 
 
         </sql>
@@ -2857,8 +2857,8 @@ group by dominio) as d
         <sql>
    select ad.calculo_matricula as num_mi, iic.numero_predial_nacional 
     from info2_adquisicion ad
-    left join info4_informacion_catastral iic on ad.id_expediente = iic.id_expediente 
-        where ad.id_expediente=$id_expediente;
+    left join info4_informacion_catastral iic on ad.codigo_bupi = iic.codigo_bupi 
+        where ad.codigo_bupi=$codigo_bupi;
         </sql>
     </Consulta>
 
@@ -2959,20 +2959,20 @@ group by dominio) as d
     <Consulta id="insert_calidad_tecnico">
         <sql>
         INSERT INTO info8_control_calidad_catastral
-            VALUES ($id_expediente,$aprobado, $obs)
-            ON CONFLICT (id_expediente) DO UPDATE
+            VALUES ($codigo_bupi,$aprobado, $obs)
+            ON CONFLICT (codigo_bupi) DO UPDATE
             SET aprobado = $aprobado, observacion = $obs
-            returning id_expediente
+            returning codigo_bupi
         </sql>
     </Consulta>
 
     <Consulta id="insert_calidad_juridico">
         <sql>
         INSERT INTO info13_control_calidad_juridico
-            VALUES ($id_expediente,$aprobado, null,$obs, null, now())
-            ON CONFLICT (id_expediente) DO UPDATE
+            VALUES ($codigo_bupi,$aprobado, null,$obs, null, now())
+            ON CONFLICT (codigo_bupi) DO UPDATE
             SET aprobado = $aprobado, obs = $obs, fecha_aprob = now()
-            returning id_expediente
+            returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -2980,8 +2980,8 @@ group by dominio) as d
         <sql>
         UPDATE tareas.tareas
             SET estado = 2,fecha_solucion = now()
-            WHERE id_expediente = $id_expediente and ruta = 3 and estado = 1
-            returning id_expediente
+            WHERE codigo_bupi = $codigo_bupi and ruta = 3 and estado = 1
+            returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -2989,16 +2989,16 @@ group by dominio) as d
         <sql>
         UPDATE tareas.tareas
             SET estado = 2,fecha_solucion = now()
-            WHERE id_expediente = $id_expediente and ruta = 4 and estado = 1
-            returning id_expediente
+            WHERE codigo_bupi = $codigo_bupi and ruta = 4 and estado = 1
+            returning codigo_bupi
         </sql>
     </Consulta>
 
     <Consulta id="borrar_tarea">
         <sql>
         DELETE from tareas.tareas
-        WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[])
-        returning id_expediente
+        WHERE codigo_bupi = $codigo_bupi and ruta = ANY($ruta_close::int[])
+        returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -3006,8 +3006,8 @@ group by dominio) as d
         <sql>
         UPDATE tareas.tareas
             SET estado = 2,fecha_solucion = now()
-            WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[]) and estado = 1
-            returning id_expediente
+            WHERE codigo_bupi = $codigo_bupi and ruta = ANY($ruta_close::int[]) and estado = 1
+            returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -3015,8 +3015,8 @@ group by dominio) as d
         <sql>
         UPDATE tareas.tareas
             SET estado = 1,fecha_solucion = null
-            WHERE id_expediente = $id_expediente and ruta = ANY($ruta_close::int[]) and estado = 2
-            returning id_expediente
+            WHERE codigo_bupi = $codigo_bupi and ruta = ANY($ruta_close::int[]) and estado = 2
+            returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -3026,7 +3026,7 @@ group by dominio) as d
             from info23_sig igp
             left join dominios d on igp.observacion_sig::text = d.valor
             and d.dominio = 'Observ_SIG'
-            where igp.id_expediente=$id_expediente
+            where igp.codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
 
@@ -3042,7 +3042,7 @@ group by dominio) as d
             select *
             from resultados_validacion rv
             join validadores v on rv.id_validador = v.id_validador
-            where rv.id_expediente = $expediente
+            where rv.codigo_bupi = $expediente
             and rv.estado = false
             and v.id_formulario = $formulario
             order by estado, id_condicion ;
@@ -3086,19 +3086,19 @@ group by dominio) as d
     <Consulta id="insert_valor_validacion">
         <sql>
             INSERT INTO resultados_validacion
-            VALUES ($id_validador,$id_condicion,$estado,$id_expediente)
-            ON CONFLICT (id_validador,id_condicion,id_expediente) DO UPDATE
+            VALUES ($id_validador,$id_condicion,$estado,$codigo_bupi)
+            ON CONFLICT (id_validador,id_condicion,codigo_bupi) DO UPDATE
             SET estado = $estado
-            returning id_validador,id_condicion,id_expediente
+            returning id_validador,id_condicion,codigo_bupi
         </sql>
     </Consulta>
 
     <Consulta id="validacion_masiva">
         <sql>
-            select eval_validadores(va.id_formulario::integer,pr.id_expediente)
+            select eval_validadores(va.id_formulario::integer,pr.codigo_bupi)
                 from info2_general_predio pr, 
                 (select distinct id_formulario from validadores) va
-                order by pr.id_expediente, va.id_formulario;
+                order by pr.codigo_bupi, va.id_formulario;
         </sql>
     </Consulta>
 
@@ -3111,25 +3111,25 @@ group by dominio) as d
 
     <Consulta id="get_asignaciones">
         <sql>
-            select id_expediente, 
+            select codigo_bupi, 
 			(select usuario_nombre from usuario where usuario_usuario=asg.usuario),
 			ac.id_tarea,
 			ac.descripcion
 			from tareas.asignacion asg join 
 			tareas.actividades ac on asg.id_tarea = ac.id_tarea
-			where id_expediente = $id_expediente;
+			where codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
 
     <Consulta id="get_asignaciones_saneamientos">
         <sql>
-            select id_expediente, 
+            select codigo_bupi, 
 			(select usuario_nombre from usuario where usuario_usuario=asg.usuario),
 			ac.id_tarea,
 			ac.descripcion
 			from tareas.asignacion_saneamientos asg join 
 			tareas.actividades ac on asg.id_tarea = ac.id_tarea
-			where id_expediente = $id_expediente;
+			where codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3137,8 +3137,8 @@ group by dominio) as d
         <sql>
         UPDATE geometria.lote_asignacion
             SET estado = $estado
-            WHERE id=$id and id_expediente = $id_expediente
-            returning id_expediente
+            WHERE id=$id and codigo_bupi = $codigo_bupi
+            returning codigo_bupi
         </sql>
     </Consulta>
 
@@ -3146,7 +3146,7 @@ group by dominio) as d
         <sql>
         UPDATE geometria.servidumbre
             SET estado = $estado
-            WHERE id=$id and id_expedie = $id_expediente
+            WHERE id=$id and id_expedie = $codigo_bupi
             returning id_expedie
         </sql>
     </Consulta>
@@ -3155,7 +3155,7 @@ group by dominio) as d
         <sql>
         select count(*)
         from info37_prestamo_expedientes
-        where id_expediente = $id_expediente 
+        where codigo_bupi = $codigo_bupi 
         and fecha_dev_usu_prestamo is null
         and fecha_ent_usu_prestamo is not null;
         </sql>
@@ -3166,12 +3166,12 @@ group by dominio) as d
         select exists (
             select *
             from tareas.tareas
-            where id_expediente = $id_expediente
+            where codigo_bupi = $codigo_bupi
             and ruta = $ruta_destino
             and usuario_asigna = $usuario
             and estado = 1
             and usuario_responsable = (select usuario from tareas.asignacion 
-            where id_expediente=$id_expediente and id_tarea= $tarea_next));
+            where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next));
         </sql>
     </Consulta>
 
@@ -3195,7 +3195,7 @@ group by dominio) as d
         <sql>
             select *
             from reporte_tecnico
-            where id_expediente=$id_expediente;
+            where codigo_bupi=$codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3203,7 +3203,7 @@ group by dominio) as d
         <sql>
             select *
             from reporte_juridico
-            where id_expediente=$id_expediente;
+            where codigo_bupi=$codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3211,7 +3211,7 @@ group by dominio) as d
         <sql>
             select *
             from reporte_juridico_propietarios
-            where id_expediente=$id_expediente;
+            where codigo_bupi=$codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3219,7 +3219,7 @@ group by dominio) as d
         <sql>
             select *
             from reporte_juridico_segregados
-            where id_expediente=$id_expediente;
+            where codigo_bupi=$codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3236,11 +3236,11 @@ group by dominio) as d
         <sql>
         insert into tareas.tareas_saneamientos values(
             (select max (id)+1 from tareas.tareas_saneamientos),
-            $id_expediente,
+            $codigo_bupi,
             $ruta_destino,
             token,
             (select usuario from tareas.asignacion_saneamientos
-            where id_expediente=$id_expediente and id_tarea= $tarea_next),
+            where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next),
             now(),
             null,
             1,
@@ -3253,47 +3253,47 @@ group by dominio) as d
 
     <Consulta id="get_ultimo_expediente">
         <sql>
-        select max(id_expediente::int) + 1 as expediente
+        select max(codigo_bupi::int) + 1 as expediente
             from info2_adquisicion ia ;
         </sql>
     </Consulta>
 
     <Consulta id="insert_expediente_2">
         <sql>
-        insert into info2_adquisicion (id_expediente) values ($id_expediente);
+        insert into info2_adquisicion (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
 
     <Consulta id="insert_expediente_1">
         <sql>
-        insert into info4_informacion_catastral (id_expediente) values ($id_expediente);
+        insert into info4_informacion_catastral (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
 
     <Consulta id="insert_expediente_4">
         <sql>
-        insert into info1_fuente (id_expediente) values ($id_expediente);
+        insert into info1_fuente (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
      <Consulta id="insert_expediente_5">
         <sql>
-        insert into info7_control_calidad_juridico (id_expediente) values ($id_expediente);
+        insert into info7_control_calidad_juridico (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
      <Consulta id="insert_expediente_6">
         <sql>
-        insert into info8_control_calidad_catastral (id_expediente) values ($id_expediente);
+        insert into info8_control_calidad_catastral (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
     <Consulta id="insert_expediente_7">
         <sql>
-        insert into info5_informacion_invias (id_expediente) values ($id_expediente);
+        insert into info5_informacion_invias (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
 
     <Consulta id="insert_info5_juridicos">
         <sql>
-        insert into info5_juridicos (id_expediente) values ($id_expediente);
+        insert into info5_juridicos (codigo_bupi) values ($codigo_bupi);
         </sql>
     </Consulta>
 
@@ -3308,7 +3308,7 @@ group by dominio) as d
         <sql>
             select *
             from comunicados
-            where id_expediente = $id_expediente
+            where codigo_bupi = $codigo_bupi
             and consecutivo_saneamiento = $consecutivo
             and tabla = $tabla
             and saneamiento = $saneamiento
@@ -3318,8 +3318,8 @@ group by dominio) as d
     <Consulta id="insertar_comunicado">
         <sql>
            INSERT INTO comunicados
-            VALUES ($id_expediente, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
-                from comunicados where id_expediente = $id_expediente and consecutivo_saneamiento = $consecutivo_saneamiento),
+            VALUES ($codigo_bupi, $consecutivo_saneamiento,(select coalesce(max(consecutivo_comunicado) + 1,1)
+                from comunicados where codigo_bupi = $codigo_bupi and consecutivo_saneamiento = $consecutivo_saneamiento),
                 $fecha_comunicado, $radicado_invias_comunicado, $objeto_comunicado, $entidad_comunicado, $tabla, $entregable, $enlace, $observacion, $tipo_respuesta, $saneamiento,
                 $radicado_respuesta, $oficio_solicitud);
         </sql>
@@ -3329,7 +3329,7 @@ group by dominio) as d
         <sql>
             select *
             from comunicados
-            where id_expediente = $id_expediente
+            where codigo_bupi = $codigo_bupi
             and consecutivo_saneamiento = $consecutivo
             and consecutivo_comunicado = $consecutivo_com
             and tabla = $tabla
@@ -3339,7 +3339,7 @@ group by dominio) as d
     <Consulta id="delete_comunicado">
         <sql>
             delete from comunicados
-            where id_expediente = $id_expediente
+            where codigo_bupi = $codigo_bupi
             and consecutivo_saneamiento = $consecutivo_saneamiento
             and consecutivo_comunicado = $consecutivo_comunicado
             and tabla = $tabla
@@ -3353,7 +3353,7 @@ group by dominio) as d
             objeto_comunicado = $objeto_comunicado, entidad_comunicado = $entidad_comunicado, entregable = $entregable, 
             enlace = $enlace, observacion = $observacion, tipo_respuesta = $tipo_respuesta,
             radicado_respuesta = $radicado_respuesta, oficio_solicitud = $oficio_solicitud
-            where id_expediente = $id_expediente
+            where codigo_bupi = $codigo_bupi
             and consecutivo_saneamiento = $consecutivo_saneamiento
             and consecutivo_comunicado = $consecutivo_comunicado
             and tabla = $tabla
@@ -3364,7 +3364,7 @@ group by dominio) as d
         <sql>
         select *
         from estado_saneamientos_tecnicos
-        where id_expediente = $id_expediente
+        where codigo_bupi = $codigo_bupi
         and consecutivo = $consecutivo
         </sql>
     </Consulta>
@@ -3373,7 +3373,7 @@ group by dominio) as d
         <sql>
         select *
         from estado_saneamientos_juridicos
-        where id_expediente = $id_expediente
+        where codigo_bupi = $codigo_bupi
         and consecutivo = $consecutivo
         </sql>
     </Consulta>
@@ -3383,7 +3383,7 @@ group by dominio) as d
         select t.*,u.usuario_nombre usuario
         from tareas.tareas t 
         left join usuario u on t.usuario_responsable = u.usuario_usuario 
-        where id_expediente = $id_expediente
+        where codigo_bupi = $codigo_bupi
         and ruta = 1
         limit 1;
         </sql>
@@ -3397,10 +3397,10 @@ group by dominio) as d
 
     <Consulta id="validacion_expediente">
         <sql>
-            select eval_validadores(va.id_formulario::integer,ia.id_expediente)
+            select eval_validadores(va.id_formulario::integer,ia.codigo_bupi)
                from info2_adquisicion ia,
                (select distinct id_formulario from validadores) va
-               where ia.id_expediente = $id_expediente;
+               where ia.codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
 
@@ -3409,7 +3409,7 @@ group by dominio) as d
             select *, v.campo 
                 from resultados_validacion rv 
                 join validadores v on rv.id_validador = v.id_validador
-                where rv.id_expediente = $id_expediente and estado = false
+                where rv.codigo_bupi = $codigo_bupi and estado = false
                 order by estado, rv.id_validador,rv.id_condicion;
         </sql>
     </Consulta>
@@ -3476,7 +3476,7 @@ group by dominio) as d
         <sql>
         update info12_control_calidad_tecnico
         set aprobado = $aprobado
-        where id_expediente = $id_expediente;
+        where codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="get_entregables_saneamiento">
@@ -3502,32 +3502,32 @@ group by dominio) as d
 		left join (select 'DOM_OFICIOS' dominio,
 		json_agg(json_build_object('value',c.entregable,'label',c.objeto_comunicado,'padre','','padre_valor','')) as enum
 		from comunicados c
-		where c.entregable in (2,7) and c.id_expediente = $id_expediente) as da on 1 = 1
+		where c.entregable in (2,7) and c.codigo_bupi = $codigo_bupi) as da on 1 = 1
         where id_entregable = $id_entregable;
         </sql>
     </Consulta>
     <Consulta id="get_estado_contabilidad">
         <sql>
-        select ic.id_expediente, d.descripcion 
+        select ic.codigo_bupi, d.descripcion 
         from info43_contabilidad ic 
         left join dominios d on ic.clasificacion_contable::text = d.valor and d.dominio = 'DOM_CLAS_CONTABLE'
-        where ic.id_expediente = $id_expediente;
+        where ic.codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="get_estado_documental">
         <sql>
-        select iae.id_expediente, d.descripcion 
+        select iae.codigo_bupi, d.descripcion 
         from info11_adquisicion_escritura iae 
         left join dominios d on iae.estado_busqueda::text = d.valor and d.dominio = 'DOM_ESTADO_BUSQUEDA'
-        where iae.id_expediente = $id_expediente;
+        where iae.codigo_bupi = $codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="get_estado_san_juridico">
         <sql>
         select *
         from estado_san_juridicos
-        where id_expediente = $id_expediente
-        order by id_expediente;
+        where codigo_bupi = $codigo_bupi
+        order by codigo_bupi;
         </sql>
     </Consulta>
     <Consulta id="get_tareas_gestionadas">

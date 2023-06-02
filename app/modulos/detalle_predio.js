@@ -30,49 +30,49 @@ const DetallePredio = () => {
 
   useEffect(() => {
 
-    // var datosTipologia = { "id_consulta": "get_tipologia", "id_expediente": id }
+    // var datosTipologia = { "id_consulta": "get_tipologia", "codigo_bupi": id }
 
     // servidorPost('/backend', datosTipologia).then((response) => {
     //   setTopologia(response.data[0])
     // });
 
-    var datosTecnico = { "id_consulta": "get_estados_depuracion", "id_expediente": id }
+    var datosTecnico = { "id_consulta": "get_estados_depuracion", "codigo_bupi": id }
 
     servidorPost('/backend', datosTecnico).then((response) => {
       setEstadoTecnico(response.data[0])
     });
 
-    const datosTarea = { "id_consulta": "get_tarea_activa", "id_expediente": id }
+    const datosTarea = { "id_consulta": "get_tarea_activa", "codigo_bupi": id }
 
     servidorPost('/backend', datosTarea).then((response) => {
       setTareaActiva(response.data[0])
     });
 
-    var datosContabilidad = { "id_consulta": "get_estado_contabilidad", "id_expediente": id }
+    var datosContabilidad = { "id_consulta": "get_estado_contabilidad", "codigo_bupi": id }
 
     servidorPost('/backend', datosContabilidad).then((response) => {
       setEstadoContabilidad(response.data[0])
     });
 
-    var datosDocumental = { "id_consulta": "get_estado_documental", "id_expediente": id }
+    var datosDocumental = { "id_consulta": "get_estado_documental", "codigo_bupi": id }
 
     servidorPost('/backend', datosDocumental).then((response) => {
       setEstadoDocumental(response.data[0])
     });
 
-    var datosJuridico = { "id_consulta": "get_estado_san_juridico", "id_expediente": id }
+    var datosJuridico = { "id_consulta": "get_estado_san_juridico", "codigo_bupi": id }
 
     servidorPost('/backend', datosJuridico).then((response) => {
       setSaneamientosJuridicos(response.data)
     });
 
-    // var observacion = { "id_consulta": "get_observacion", "id_expediente": id }
+    // var observacion = { "id_consulta": "get_observacion", "codigo_bupi": id }
 
     // servidorPost('/backend', observacion).then((response) => {
     //   setObservacionSIG(response.data[0])
     // });
 
-    // var prestamo = { "id_consulta": "get_estado_prestamo", "id_expediente": id }
+    // var prestamo = { "id_consulta": "get_estado_prestamo", "codigo_bupi": id }
 
     // servidorPost('/backend', prestamo).then((response) => {
     //   const count = response.data[0].count;
@@ -148,13 +148,13 @@ const DetallePredio = () => {
       </div>
 
       {/* <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
-        <DescargaShape id_expediente={expediente} />
+        <DescargaShape codigo_bupi={expediente} />
       </div>
       <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
-        <DescargaSalida id_expediente={expediente} />
+        <DescargaSalida codigo_bupi={expediente} />
       </div>
       <div class="opciones" style={{ display: 'inline-block', paddingLeft: 50, paddingTop: 20 }}>
-        <DescargaReportePredio id_expediente={expediente} />
+        <DescargaReportePredio codigo_bupi={expediente} />
       </div> */}
 
 

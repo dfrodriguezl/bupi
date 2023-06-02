@@ -159,7 +159,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
 
             const data = {
-                id_expediente: id_exp,
+                codigo_bupi: id_exp,
                 id_consulta: 'get_observacion'
             }
 
@@ -168,7 +168,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
         var data = {
             "id_consulta": "info_header_form",
-            "id_expediente": id,
+            "codigo_bupi": id,
         }
 
         // console.log(data)
@@ -181,7 +181,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
         //     var data = {
         //         "id_consulta": "info_header_form",
-        //         "id_expediente": id,
+        //         "codigo_bupi": id,
         //     }
 
         //     // console.log(data)
@@ -200,7 +200,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
             var data = {
                 "id_consulta": tbl,
-                "id_expediente": id,
+                "codigo_bupi": id,
                 "consecutivo": consecutivo
             }
 
@@ -209,7 +209,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                 var data = {
                     "tabla": index,
                     "id_consulta": "get_formulario",
-                    "id_expediente": id
+                    "codigo_bupi": id
                 }
                 // console.log("datos primero")
                 // console.log(response1)
@@ -258,13 +258,13 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
                             let responseUp = response;
 
-                            var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', id_expediente: id }
+                            var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
 
-                            var data = { id_consulta: 'tengo_predio', id_expediente: id }
+                            var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
 
                             // servidorPost('/backend', data).then((response) => {
                             //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
-                            //         let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                            //         let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
                             //         servidorPost('/backend', data2).then((responseSan) => {
                             //             if (responseSan.data[0].exists) {
 
@@ -288,7 +288,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                     setLectura(false)
                                                 } else {
                                                     if (!response.data[0].exists) {
-                                                        let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                                                        let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
                                                         servidorPost('/backend', data2).then((responseSan) => {
                                                             setLectura(!responseSan.data[0].exists)
                                                         })
@@ -307,7 +307,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                 setLectura(false)
                                             } else {
                                                 if (!response.data[0].exists) {
-                                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', id_expediente: id };
+                                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
                                                     servidorPost('/backend', data2).then((responseSan) => {
                                                         setLectura(!responseSan.data[0].exists)
                                                     })
@@ -477,12 +477,12 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                     tarea_next: 8,
                     ruta_destino: 13,
                     usuario: usuario_prestamo,
-                    id_expediente: id
+                    codigo_bupi: id
                 }).then(function (response) {
                     const exists = response.data[0].exists;
                     if (!exists) {
                         notificacion({
-                            id_expediente: id,
+                            codigo_bupi: id,
                             usuario_prestamo: usuario_prestamo,
                             ruta: -2
                         });
@@ -524,7 +524,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
         key = key.replace(/,\s*$/, "");
         data.upd = key
         data.id_consulta = "update_" + tbl;
-        data.id_expediente = id;
+        data.codigo_bupi = id;
 
         let data_guardar = data;
 
@@ -534,9 +534,9 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                 toast.error("Hubo un error al almacenar");
 
             } else {
-                toast.success("Información almacenada de: " + result[0].id_expediente);
-                validar(index, result[0].id_expediente, data_guardar)
-                // validar(index,result[0].id_expediente)
+                toast.success("Información almacenada de: " + result[0].codigo_bupi);
+                validar(index, result[0].codigo_bupi, data_guardar)
+                // validar(index,result[0].codigo_bupi)
             }
         });
 
@@ -596,7 +596,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
         var data = {
             "tabla": tbl,
             "id_consulta": "insertar_vacio",
-            "id_expediente": id
+            "codigo_bupi": id
         }
 
 
@@ -604,7 +604,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
             var datos = response.data;
 
-            toast.success("Registro creado: " + datos[0].id_expediente);
+            toast.success("Registro creado: " + datos[0].codigo_bupi);
             setReload(Math.random())
         })
 
@@ -670,7 +670,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
         //                 let dataValServ = {
         //                     id_validador: dr.id_validador,
         //                     id_condicion: dr.id_servicio,
-        //                     id_expediente: id_exp,
+        //                     codigo_bupi: id_exp,
         //                     estado: features.length > 0 ? true : false,
         //                     id_consulta: 'insert_valor_validacion'
         //                 }
@@ -765,7 +765,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                         <Fragment>
                             {index === 39 || index === 40 ?
                                 <Fragment>
-                                    <EncabezadoSaneamiento tipo={index} id_expediente={id} consecutivo={consecutivo} />
+                                    <EncabezadoSaneamiento tipo={index} codigo_bupi={id} consecutivo={consecutivo} />
                                     {/* <FlujoSan tipo={index} consecutivo={consecutivo} /> */}
                                 </Fragment>
                                 : null}
@@ -1096,7 +1096,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
                         {index === 40 ?
                             <Fragment>
-                                <ListaComunicados id_expediente={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado} />
+                                <ListaComunicados codigo_bupi={id} consecutivo={consecutivo} tabla={index} tipoSaneamiento={saneamientoSeleccionado} />
                             </Fragment>
                             : null}
 
@@ -1297,7 +1297,7 @@ const FormMultiple = ({ tbl, index, titulo, setPopup }) => {
 
             var data = {
                 "id_consulta": "get_consecutivos",
-                "id_expediente": id,
+                "codigo_bupi": id,
                 "tabla": tbl
             }
 
@@ -1343,20 +1343,20 @@ const FormMultiple = ({ tbl, index, titulo, setPopup }) => {
 
         var data = {
             "id_consulta": "insert_consecutivo",
-            "id_expediente": id,
+            "codigo_bupi": id,
             "tabla": tbl
         };
 
         if (index === 37) {
             data.id_consulta = "insert_prestamo";
-            data.id_expediente = id;
+            data.codigo_bupi = id;
             data.tabla = tbl;
         }
 
         // if (index === 39 || index === 40) {
         //     const dataSaneamiento = {
         //         id_consulta: "insertar_notificacion_saneamiento",
-        //         id_expediente: id,
+        //         codigo_bupi: id,
         //         ruta_destino: index === 39 ? 1 : 2,
         //         tarea_next: index === 39 ? 2 : 3,
         //         consecutivo: opciones.length + 1,
@@ -1395,7 +1395,7 @@ const FormMultiple = ({ tbl, index, titulo, setPopup }) => {
 
         var data = {
             "id_consulta": "delete_consecutivo",
-            "id_expediente": id,
+            "codigo_bupi": id,
             "tabla": tbl,
             "consecutivo": con
         }
@@ -1468,7 +1468,7 @@ const Ayuda = () => {
 
         var data = {
             "id_consulta": "info_header_form",
-            "id_expediente": id,
+            "codigo_bupi": id,
         }
 
         // console.log(data)
