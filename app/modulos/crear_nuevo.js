@@ -39,7 +39,7 @@ const CrearPredio = () => {
   const [supJur, setSupJur] = useState();
   const [usuarioSIG, setUsuarioSIG] = useState("jbartolo");
   const [usuarioDoc, setUsuarioDoc] = useState("documental");
-  const [usuarioCoord, setUsuarioCoord] = useState("msanchezr");
+  const [usuarioCoord, setUsuarioCoord] = useState("coordinador");
   const [usuarioContabilidad, setUsuarioContabilidad] = useState("contabilidad");
   const history = useHistory();
 

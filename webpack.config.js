@@ -98,7 +98,8 @@ module.exports = {
           test: /\.(ttf|otf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?|(jpg|gif)$/,
           use: [{loader: "file-loader?name=img/[name].[ext]"}]
         },
-        {test: /\.(png|jpg)$/, use: [{loader: "file-loader?name=img/[name].[ext]"}]}
+        {test: /\.(png|jpg)$/, use: [{loader: "file-loader?name=img/[name].[ext]"}]},
+        {test: /\.(ico)$/, use: [{loader: "file-loader?name=[name].[ext]"}]}
     ]
   },
   plugins: [
