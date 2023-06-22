@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { servidorPost } from './request'
 import { Redirect } from 'react-router'
 import HomeDialogo from '../modulos/componentes/HomeDialogo';
+import OlvidoClave from '../modulos/componentes/OlvidoClave';
 import { Grid, Typography, Link } from '@material-ui/core';
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -107,6 +108,7 @@ const Login = () => {
                   {msg2 ? '' : <p>Por favor validar captcha</p>}
                 </div>   
                 <button type="submit" className="primmary">Iniciar sesión</button>
+                <OlvidoClave/>
               </form>
             </Grid>
           </Grid>
