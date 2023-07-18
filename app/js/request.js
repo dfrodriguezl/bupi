@@ -38,7 +38,7 @@ export function servidorGetAbs(uri){
 
 export function redireccionar(error){
     if(error.response.status==403){
-        window.location.href = 'bienes-raices/web/login';
+        window.location.href = 'predios/web/login';
     }
 }
 
