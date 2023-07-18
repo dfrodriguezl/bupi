@@ -109,6 +109,12 @@ const Estructura = ({ children }) => {
                 </Link>
               </div>
               <div className="elemento">
+                <Link to="/buscar_mar">
+                  <Search />
+                  <p>Consulta Concesiones Portuarias</p>
+                </Link>
+              </div>
+              <div className="elemento">
                 <Link to="/buscarAvanzado">
                   <FilterList />
                   <p>Consulta avanzada</p>

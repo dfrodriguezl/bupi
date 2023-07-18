@@ -14,6 +14,7 @@ import Reportes from './reportes'
 import Home from './home'
 import Predio from './predio'
 import Buscar from './buscar'
+import Buscar_mar from './buscar_mar'
 import Asignar from './asignar'
 import User from './usuario'
 import Administracion from './administracion';
@@ -35,6 +36,7 @@ const Tree = () => {
                     <Route exact path='/' component={Home} />
                     <Route exact path='/buscar/:id' component={Buscar} />
                     <Route exact path='/buscar' component={Buscar} />
+                    <Route exact path='/buscar_mar' component={Buscar_mar} />
                     <Route exact path='/buscarAvanzado' component={BusquedaAvanzada} />
                     <Route exact path='/documentos' component={Documentos} />
                     <Route exact path='/login' component={Login} />

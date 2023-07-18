@@ -236,7 +236,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
                     var tipo_permiso = gestionPermisos(index);
 
-
+                    console.log("tipo_permiso", tipo_permiso)
 
                     getPermisos().then((response) => {
 
@@ -253,33 +253,56 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                             setpermiso(true)
                             setLectura(false)
                         } else {
+                            console.log("res", response.some(r => tipo_permiso.includes(r)))
+
                             setpermiso(response.some(r => tipo_permiso.includes(r)))
 
+                            if (response.some(r => r === 17) || response.some(r => r === 12) && response.some(r => tipo_permiso.includes(r)) == true){
+                                setLectura(false)
+                            } else {
+                                let responseUp = response;
 
-                            let responseUp = response;
+                                var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
 
-                            var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
+                                var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
 
-                            var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
+                                // servidorPost('/backend', data).then((response) => {
+                                //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
+                                //         let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
+                                //         servidorPost('/backend', data2).then((responseSan) => {
+                                //             if (responseSan.data[0].exists) {
 
-                            // servidorPost('/backend', data).then((response) => {
-                            //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
-                            //         let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
-                            //         servidorPost('/backend', data2).then((responseSan) => {
-                            //             if (responseSan.data[0].exists) {
+                                //             } else {
 
-                            //             } else {
+                                //             }
+                                //         });
+                                //     }
+                                // })
 
-                            //             }
-                            //         });
-                            //     }
-                            // })
+                                servidorPost('/backend', data).then((response) => {
+                                    getBloqueo(id).then((r) => {
+                                        if (r.data.length > 0) {
+                                            if (r.data[0].bloqueo_predio) {
+                                                setLectura(true)
+                                            } else {
+                                                if (index === 37 && responseUp.some(r => r == 14)) {
+                                                    setLectura(false)
+                                                } else {
+                                                    if (responseUp.some(r => r == 13)) {
+                                                        setLectura(false)
+                                                    } else {
+                                                        if (!response.data[0].exists) {
+                                                            let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
+                                                            servidorPost('/backend', data2).then((responseSan) => {
+                                                                setLectura(!responseSan.data[0].exists)
+                                                            })
+                                                        } else {
+                                                            setLectura(!response.data[0].exists)
+                                                        }
 
-                            servidorPost('/backend', data).then((response) => {
-                                getBloqueo(id).then((r) => {
-                                    if (r.data.length > 0) {
-                                        if (r.data[0].bloqueo_predio) {
-                                            setLectura(true)
+                                                    }
+                                                }
+                                            }
                                         } else {
                                             if (index === 37 && responseUp.some(r => r == 14)) {
                                                 setLectura(false)
@@ -299,30 +322,84 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                                                 }
                                             }
                                         }
-                                    } else {
-                                        if (index === 37 && responseUp.some(r => r == 14)) {
-                                            setLectura(false)
-                                        } else {
-                                            if (responseUp.some(r => r == 13)) {
-                                                setLectura(false)
-                                            } else {
-                                                if (!response.data[0].exists) {
-                                                    let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
-                                                    servidorPost('/backend', data2).then((responseSan) => {
-                                                        setLectura(!responseSan.data[0].exists)
-                                                    })
-                                                } else {
-                                                    setLectura(!response.data[0].exists)
-                                                }
 
-                                            }
-                                        }
-                                    }
+                                    })
 
-                                })
+                                    // console.log("lectura")
+                                });
+                            }
 
-                                // console.log("lectura")
-                            });
+                            // if (response.some(r => tipo_permiso.includes(r)) == false) {
+                            //     let responseUp = response;
+
+                            //     var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
+
+                            //     var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
+
+                            //     // servidorPost('/backend', data).then((response) => {
+                            //     //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
+                            //     //         let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
+                            //     //         servidorPost('/backend', data2).then((responseSan) => {
+                            //     //             if (responseSan.data[0].exists) {
+
+                            //     //             } else {
+
+                            //     //             }
+                            //     //         });
+                            //     //     }
+                            //     // })
+
+                            //     servidorPost('/backend', data).then((response) => {
+                            //         getBloqueo(id).then((r) => {
+                            //             if (r.data.length > 0) {
+                            //                 if (r.data[0].bloqueo_predio) {
+                            //                     setLectura(true)
+                            //                 } else {
+                            //                     if (index === 37 && responseUp.some(r => r == 14)) {
+                            //                         setLectura(false)
+                            //                     } else {
+                            //                         if (responseUp.some(r => r == 13)) {
+                            //                             setLectura(false)
+                            //                         } else {
+                            //                             if (!response.data[0].exists) {
+                            //                                 let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
+                            //                                 servidorPost('/backend', data2).then((responseSan) => {
+                            //                                     setLectura(!responseSan.data[0].exists)
+                            //                                 })
+                            //                             } else {
+                            //                                 setLectura(!response.data[0].exists)
+                            //                             }
+
+                            //                         }
+                            //                     }
+                            //                 }
+                            //             } else {
+                            //                 if (index === 37 && responseUp.some(r => r == 14)) {
+                            //                     setLectura(false)
+                            //                 } else {
+                            //                     if (responseUp.some(r => r == 13)) {
+                            //                         setLectura(false)
+                            //                     } else {
+                            //                         if (!response.data[0].exists) {
+                            //                             let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
+                            //                             servidorPost('/backend', data2).then((responseSan) => {
+                            //                                 setLectura(!responseSan.data[0].exists)
+                            //                             })
+                            //                         } else {
+                            //                             setLectura(!response.data[0].exists)
+                            //                         }
+
+                            //                     }
+                            //                 }
+                            //             }
+
+                            //         })
+
+                            //         // console.log("lectura")
+                            //     });
+                            // } else {
+                            //     setLectura(false)
+                            // }                            
 
 
                         }
@@ -389,8 +466,8 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
     const onSubmit = datos => {
 
-        // console.log("datos-------")
-        // console.log(datos)
+        console.log("datos-------")
+        console.log(datos)
         var data = datos;
         // console.log("TBL", index)
 
@@ -1101,6 +1178,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                             : null}
 
                         {Object.keys(errors).length > 0 ? <span className="msg-error">Existen validaciones pendientes, revise en cual campo falta</span> : null}
+                        {console.log("cosas", permiso, lectura)}
                         {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}

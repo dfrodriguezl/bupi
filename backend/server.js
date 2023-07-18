@@ -42,6 +42,8 @@ const fileSaver = require('file-saver');
 const Blob = require('buffer');
 const gotenberg = require('gotenberg-js-client');
 
+const ExcelJS = require('exceljs');
+
 const urlPdf = "http://192.168.56.10:3000/forms/libreoffice/convert";
 
 
@@ -144,7 +146,6 @@ app.use(
 )
 // app.use(bodyParser.json({limit: '100mb'}));
 app.use(express.json({ limit: '100mb' }));
-
 
 
 
@@ -1008,6 +1009,268 @@ app.post('/excel', function (request, response) {
           response.end(Buffer.from(buffer));
 
         })
+
+      }
+    });
+  } else {
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
+
+
+
+
+
+  /*
+ res.setHeader('Content-type', "text/csv");
+
+ res.setHeader('Content-disposition', 'attachment; filename=file.xls');
+ 
+ res.send(text);
+  */
+
+
+});
+
+app.post('/excel_conciliacion', function (request, response) {
+
+  var data = request.body;
+  var id_consulta = request.body.id_consulta;
+
+  var consultas = {
+    G66: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 9'},
+    G42: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 11'},
+    G35: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 1'},
+    G37: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 2'}
+    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
+  }  
+  
+
+  var query_text = get_sql(id_consulta);
+
+  var token = request.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });
+      } else {
+        request.decoded = decoded;
+        console.log(decoded)
+
+        if (query_text.includes("token")) {
+
+          query_text = query_text.replace(/token/g, "'" + decoded.usuario_usuario + "'");
+        }
+
+        async function processTasks() {
+          let resultsList = []
+          let keys = Object.keys(consultas)
+          console.log(keys)
+          // let keys = Object.keys(consultas).map((key, idx) => {
+          //   console.log(key)
+
+          // })
+          keys.forEach(element => {
+            try {
+              const promise = pool.query(consultas[element].query)
+                .then(results => {
+                  return results.rows;
+                })
+                .catch(err => {
+                  console.log(err)
+                  response.status(200).json("error")
+                  throw error
+                })
+  
+              resultsList.push(promise)
+            }
+            catch (err) {
+              console.log(err)
+              response.status(200).json("error")
+            }
+          });
+          
+          const array = await Promise.all(resultsList);
+          // console.log(array)
+          return array;
+          // response.status(200).send(array);
+        }
+
+        processTasks().then(result => {
+          consultas['resultados'] = result;
+          console.log(result)
+        });
+
+        // console.log(resultados)
+
+
+        pool.query(query_text, data, (error, results) => {
+          if (error) {
+            response.status(403).json({ mensaje: 'error de consulta' });
+            throw error
+          }
+
+          var jsn = results.rows
+          var data = []
+          var result = []
+          for (var j in jsn[0]) {
+            result.push(j);
+
+          }
+          data.push(result)
+
+          for (var i = 0; i < jsn.length; i++) {
+            var obj = jsn[i];
+            var result = []
+            for (var j in obj) {
+              if (moment.isMoment(obj[j])) {
+                result.push(moment.utc(obj[j]).format("YYYY-MM-DD"));
+
+              } else {
+                result.push(obj[j]);
+              }
+
+            }
+            data.push(result)
+          }
+
+          /*
+          const filePath = __dirname + "/conciliacion.xlsx";
+          // const filePath = '/conciliacion.xlsx';
+
+          const workbook = new ExcelJS.Workbook();
+
+          // Load the existing Excel file
+          // workbook.xlsx.readFile('C:/Users/Yeiner Mendivelso/Documents/invias/bupi/bupi/backend/conciliacion.xlsx')
+          workbook.xlsx.readFile(__dirname + "/conciliacion.xlsx")
+          .then(() => {
+            // const worksheet = workbook.getWorksheet('Hoja1');
+            const worksheet = workbook.getWorksheet('CONCILIACION de');
+            
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1; // Months are zero-based, so we add 1
+            const day = today.getDate();
+
+            const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
+
+            worksheet.getCell('F4').value = currentDate;
+            // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
+
+            workbook.xlsx.writeBuffer()
+            .then((buffer) => {
+              // Set the response headers for file download
+              response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+              response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+              response.setHeader('Content-Length', buffer.length);
+
+              // Send the Excel file as the response
+              response.send(buffer);
+            })
+            .catch((error) => {
+              console.error('Error generating Excel file:', error);
+              res.status(500).send('Error generating Excel file');
+            });
+          })
+          .catch((error) => {
+            console.error('Error generating Excel file:', error);
+            res.status(500).send('Error generating Excel file');
+          });
+          */
+
+          // Access the worksheet you want to manipulate
+          // const worksheet = workbook.getWorksheet('Hoja1');
+
+          // const sheet = workbook.addWorksheet('My Sheet');
+
+          // const worksheet = workbook.getWorksheet(1);
+
+          // Modify the desired data, such as cell values or formulas
+          // sheet.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
+
+          // // Save the modified workbook
+          // await workbook.xlsx.writeFile('path/to/save/modified.xlsx');
+
+          // workbook.xlsx.writeBuffer()
+          // .then((buffer) => {
+          //   // Set the response headers for file download
+          //   response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+          //   response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+          //   response.setHeader('Content-Length', buffer.length);
+
+          //   // Send the Excel file as the response
+          //   response.send(buffer);
+          // })
+          // .catch((error) => {
+          //   console.error('Error generating Excel file:', error);
+          //   res.status(500).send('Error generating Excel file');
+          // });
+
+          // const workbook = xlsx.parse(filePath);
+
+          // var buffer = xlsx.build(workbook); // Returns a buffer
+
+          // response.setHeader('Content-disposition', 'attachment; filename=conciliacion.xlsx');
+
+          // // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+
+          // response.end(Buffer.from(buffer));
+
+        })
+
+        const filePath = __dirname + "/conciliacion.xlsx";
+          // const filePath = '/conciliacion.xlsx';
+
+        const workbook = new ExcelJS.Workbook();
+
+          // Load the existing Excel file
+          // workbook.xlsx.readFile('C:/Users/Yeiner Mendivelso/Documents/invias/bupi/bupi/backend/conciliacion.xlsx')
+        workbook.xlsx.readFile(__dirname + "/conciliacion.xlsx")
+        .then(() => {
+            // const worksheet = workbook.getWorksheet('Hoja1');
+          const worksheet = workbook.getWorksheet('CONCILIACION de');
+            
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = today.getMonth() + 1; // Months are zero-based, so we add 1
+          const day = today.getDate();
+
+          const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
+
+          worksheet.getCell('F4').value = currentDate;
+
+          worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
+
+          worksheet.getCell('G42').value = consultas['resultados'][1][0].count;
+
+          worksheet.getCell('G35').value = consultas['resultados'][2][0].count;
+
+          console.log("pruebas", consultas['resultados'])
+            // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
+
+          workbook.xlsx.writeBuffer()
+          .then((buffer) => {
+              // Set the response headers for file download
+            response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+            response.setHeader('Content-Length', buffer.length);
+
+              // Send the Excel file as the response
+            response.send(buffer);
+          })
+          .catch((error) => {
+            console.error('Error generating Excel file:', error);
+            res.status(500).send('Error generating Excel file');
+          });
+        })
+        .catch((error) => {
+          console.error('Error generating Excel file:', error);
+          res.status(500).send('Error generating Excel file');
+        });
+
+        
+
+
 
       }
     });

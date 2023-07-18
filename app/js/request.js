@@ -63,5 +63,26 @@ export function servidorDocs(uri, datos) {
     });
 }
 
+export function servidorDocs2(uri, datos) {
+
+    // console.log(datos)
+    
+    return axios({
+        method: 'post',
+        url: destino+uri,
+        data: datos,
+        withCredentials: true,
+        responseType: 'blob',
+        }).then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download','conciliacion.xlsx'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            return response;
+    });
+}
+
 
 export const url = destino;
