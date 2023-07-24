@@ -1740,6 +1740,9 @@ const Predio = (props) => {
                                 <button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
                                     Contabilidad
                                 </button>
+                                <button onClick={() => getForm(45, "info43_contabilidad", "Conciliación Contabilidad")} className={active == 45 ? 'active' : ''}>
+                                    Conciliación Contabilidad
+                                </button>
                             </Fragment> :
                             <Fragment>
                                 <PopupAdvertencia open={<button onClick={() => getForm(1, "info1_fuente", "Fuente")}
@@ -1791,6 +1794,9 @@ const Predio = (props) => {
                                 <PopupAdvertencia open={<button onClick={() => getForm(43, "info43_contabilidad", "Contabilidad")} className={active == 43 ? 'active' : ''}>
                                     Contabilidad
                                 </button>} getForm={getForm} active={43} tbl="info43_contabilidad" descripcion="Contabilidad" />
+                                <PopupAdvertencia open={<button onClick={() => getForm(45, "info43_contabilidad", "Conciliación Contabilidad")} className={active == 45 ? 'active' : ''}>
+                                    Conciliación Contabilidad
+                                </button>} getForm={getForm} active={45} tbl="info43_contabilidad" descripcion="Contabilidad" />
                             </Fragment>
                         }
 

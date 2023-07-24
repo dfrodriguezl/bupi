@@ -412,7 +412,11 @@
         select * from info44_asignacion_saneamiento where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
-
+    <!-- <Consulta id="info45_conciliacion">
+        <sql>
+        select * from info45_conciliacion where codigo_bupi=$codigo_bupi
+        </sql>
+    </Consulta> -->
     <Consulta id="get_proyectos">
         <sql>
         select distinct ig.codigo_bupi,calculo_matricula, mun.descripcion as departamento, dep.descripcion as municipio,

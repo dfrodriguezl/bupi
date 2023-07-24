@@ -1038,9 +1038,17 @@ app.post('/excel_conciliacion', function (request, response) {
 
   var consultas = {
     G66: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 9'},
-    G42: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 11'},
     G35: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 1'},
-    G37: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 2'}
+    G36: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 6'},
+    G37: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 5'},    
+    G38: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 2'},
+    G40: {query: 'select count(*) from info43_contabilidad where clasificacion_contable in (4,10)'},
+    G41: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 8'},
+    G42: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 11'},
+    G43: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 12'},
+    G44: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 7'},    
+    
+
     // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
   }  
   
@@ -1241,9 +1249,24 @@ app.post('/excel_conciliacion', function (request, response) {
 
           worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
 
-          worksheet.getCell('G42').value = consultas['resultados'][1][0].count;
+          worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
 
-          worksheet.getCell('G35').value = consultas['resultados'][2][0].count;
+          worksheet.getCell('G36').value = consultas['resultados'][2][0].count;
+
+          worksheet.getCell('G37').value = consultas['resultados'][3][0].count;
+
+          worksheet.getCell('G38').value = consultas['resultados'][4][0].count;
+          
+          worksheet.getCell('G40').value = consultas['resultados'][5][0].count;
+
+          worksheet.getCell('G41').value = consultas['resultados'][6][0].count;
+          
+          worksheet.getCell('G42').value = consultas['resultados'][7][0].count;
+
+          worksheet.getCell('G43').value = consultas['resultados'][8][0].count;
+
+          worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
+
 
           console.log("pruebas", consultas['resultados'])
             // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
