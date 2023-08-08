@@ -82,7 +82,7 @@ const Estructura = ({ children }) => {
     <div id="contenedor">
       <div id="panel_izquierdo">
         <div id="logo">
-          <img src="predios/img/logo.png" alt="" />
+          <img src="https://www.invias.gov.co//images/logos/logo_invias_nuevo.jpg" className="login-logo-invias" alt="Logo INVIAS" />
         </div>
         <div id="items-nav">
           {!isServidumbre ?
