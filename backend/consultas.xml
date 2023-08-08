@@ -25,6 +25,26 @@
         select * from info1_fuente where codigo_bupi=$codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="concesion">
+        <sql>
+        select * from maritima.concesion where id_concesion=$id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="predios">
+        <sql>
+        select * from maritima.predios where id_concesion=$id_concesion and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
+    <Consulta id="infraestructura">
+        <sql>
+        select * from maritima.infraestructura where id_concesion=$id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="aledanos">
+        <sql>
+        select * from maritima.aledanos where id_concesion=$id_concesion and consecutivo=$consecutivo
+        </sql>
+    </Consulta>
     <Consulta id="info1_general_proyecto_servidumbre">
         <sql>
         select * from servidumbres.info1_general_proyecto_servidumbre where id_servidumbre=$id_servidumbre
@@ -443,6 +463,26 @@
         limit 50;
         </sql>
     </Consulta>
+    <Consulta id="get_concesiones">
+        <sql>
+        select distinct mc.id_concesion, mc.nombre_concesionario,mc.direccion_nomenclatura_concesion, mun.descripcion as departamento, dep.descripcion as municipio,
+        mc.numero_documento_contrato, mp.codigo_bupi
+		from maritima.concesion mc left join maritima.predios mp
+		on mc.nombre_concesionario=mp.nombre_concesion
+        left join dominios dep on mc.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
+        left join dominios mun on mc.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
+        where 
+        upper(mc.nombre_concesionario) like  upper('%' || $filtro || '%') 
+        or 
+        upper(mp.matricula_inmobiliaria) like  upper('%' || $filtro || '%') 
+        or 
+        upper(mp.codigo_bupi) like  upper('%' || $filtro || '%') 
+        or 
+        upper(mc.numero_documento_contrato) like  upper('%' || $filtro || '%') 
+        order by mc.nombre_concesionario
+        limit 50;
+        </sql>
+    </Consulta>
     <Consulta id="get_servidumbres">
         <sql>
         select ig.id_servidumbre,id_proyecto_s,nom_proy_res,chip_cat,direccion,bar_ver, matricula from servidumbres.info1_general_proyecto_servidumbre ig 
@@ -477,6 +517,26 @@
     <Consulta id="update_info1_fuente">
         <sql>
             update info1_fuente set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_concesion">
+        <sql>
+            update maritima.concesion set upd_query_alpaca where id_concesion=$id_concesion RETURNING id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="update_predios">
+        <sql>
+        update maritima.predios set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="update_infraestructura">
+        <sql>
+        update maritima.infraestructura set upd_query_alpaca where id_concesion=$id_concesion RETURNING id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="update_aledanos">
+        <sql>
+        update maritima.aledanos set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
         </sql>
     </Consulta>
     <Consulta id="update_info1_general_proyecto_servidumbre">
@@ -1060,6 +1120,37 @@ group by dominio) as d
             'enum_name',m.enum
             ) as doc
         from servidumbres.modulos m left join (select dominio,
+								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
+								  from dominios
+group by dominio) as d
+        on m.enum=d.dominio
+        where tabla=$tabla order by orden
+        </sql>
+    </Consulta>
+    <Consulta id="get_formulario_concesion">
+        <sql>
+        select
+        json_build_object(
+            'field',field,
+            'form',form,
+            'label', label,
+            'type', type,
+            'size', size,
+            'helper',helper,
+            'enum',d.enum,
+            'editable',editable,
+            'regex',regex,
+            'message',message,
+            'listener',listener,
+            'id_consulta',id_consulta,
+            'external_field',external_field,
+            'field_child', field_child,
+			'child_domain',child_domain,
+			'field_father',field_father,
+			'father_domain',father_domain,
+            'enum_name',m.enum
+            ) as doc
+        from maritima.modulos m left join (select dominio,
 								  json_agg(json_build_object('value',valor,'label',descripcion,'padre',dominio_padre,'padre_valor',dominio_padre_valor)) as enum
 								  from dominios
 group by dominio) as d
@@ -2765,7 +2856,13 @@ group by dominio) as d
             returning codigo_bupi;
         </sql>
     </Consulta>
-
+    <Consulta id="insertar_vacio_concesiones">
+        <sql>
+           
+           insert into insert-dinamico(id_concesion) values ($id_concesion)
+            returning id_concesion;
+        </sql>
+    </Consulta>
     <Consulta id="insertar_vacio_servidumbres">
         <sql>
            
@@ -2785,7 +2882,11 @@ group by dominio) as d
            select consecutivo from insert-dinamico where id_servidumbre=$id_servidumbre
         </sql>
     </Consulta>
-
+    <Consulta id="get_consecutivos_concesiones">
+        <sql>           
+           select consecutivo from insert-dinamico where id_concesion=$id_concesion
+        </sql>
+    </Consulta>
 
 
     <Consulta id="tengo_predio">
@@ -2819,6 +2920,17 @@ group by dominio) as d
         values ($codigo_bupi,coalesce((select max(consecutivo)+1 
 		from insert-dinamico where codigo_bupi=$codigo_bupi),1)
 	  	)returning codigo_bupi
+
+
+        </sql>
+    </Consulta>
+    <Consulta id="insert_consecutivo_concesiones">
+        <sql>
+
+       insert into insert-dinamico(id_concesion,consecutivo)
+        values ($id_concesion,coalesce((select max(consecutivo)+1 
+		from insert-dinamico where id_concesion=$id_concesion),1)
+	  	)returning id_concesion
 
 
         </sql>

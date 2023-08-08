@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import Estructura from './page'
-import  Busqueda from '../modulos/buscar'
+import  Busqueda_mar from '../modulos/buscar_mar'
 
 
 const Buscar_mar = () => {
     
     return (
         <Estructura>
-            <Busqueda />
+            <Busqueda_mar />
         </Estructura>
     )
 

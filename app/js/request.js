@@ -2,13 +2,13 @@ const axios = require('axios');
 
 
 
-const destino = "http://localhost:3000";
+// const destino = "http://localhost:3000";
 // const destino = "http://172.19.26.22/predios";
 // const destino = "http://161.35.107.85/bienes-raices";
 // const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
 // const destino = "http://192.168.56.10/bienes-raices";
 //const destino="https://nowsoft.app/bienes-raices";
-// const destino = "http://bupi.invias.col/predios";
+const destino = "http://bupi.invias.col/predios";
 
 export function servidorPost(uri,datos){
 
@@ -38,7 +38,7 @@ export function servidorGetAbs(uri){
 
 export function redireccionar(error){
     if(error.response.status==403){
-        window.location.href = 'bienes-raices/web/login';
+        window.location.href = 'predios/web/login';
     }
 }
 

@@ -70,10 +70,11 @@ body{
 }
 
 #logo{
+    display: flex;
     background-color: #fff;
     padding: 10px 0;
     img{
-        // width: 100%;
+        width: 100%;
         display:block;
         margin: auto auto;
     }
@@ -991,7 +992,8 @@ input[type="file"] {
 .container-images{
     align-items: flex-start;
     padding-top: 15px;
-    padding-left: 30px;
+    padding-left: 100px;
+    padding-right: 100px;
 }
 
 .contenedor-superior {
@@ -1004,6 +1006,17 @@ input[type="file"] {
 .login-container{
     height: '100%';
     margin-top: 60px;
+    margin-left: 100px;
+}
+
+.login-logo-invias{
+    max-height: 90px;
+    float: left;
+}
+
+.login-logo-Colombia-Potencia-Vida{
+    max-height: 90px;
+    float: right;
 }
 
 .texto-azul {

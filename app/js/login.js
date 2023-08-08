@@ -70,14 +70,15 @@ const Login = () => {
         <Grid container className="container-images">
           <Grid item xs={6}>
           <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
-            <img src="https://www.invias.gov.co/images/0logo.png" alt="logo invias" />
+            {/* <img src="https://www.invias.gov.co/images/0logo.png" alt="logo invias" /> */}
+            <img src="https://www.invias.gov.co//images/logos/logo_invias_nuevo.jpg" className="login-logo-invias" alt="Logo INVIAS" />            
           </Link> 
           </Grid>
           <Grid item xs={6}>
           <Link href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
-          <img src="https://www.invias.gov.co/images/Photos/2022/070822_logo_mintransporte.jpg" alt="logo ministerio de transporte" />
+          {/* <img src="https://www.invias.gov.co/images/Photos/2022/070822_logo_mintransporte.jpg" alt="logo ministerio de transporte" /> */}
+          <img src="https://www.invias.gov.co/images/logos/colombia_potencia_vida.png" className="login-logo-Colombia-Potencia-Vida" alt="Logo Colombia Potencia Vida" />   
           </Link>
-            
           </Grid>
         </Grid>
         <Grid container className="login-container">
@@ -85,7 +86,7 @@ const Login = () => {
             <img src="https://crucecordilleracentral.invias.gov.co/img/galeria/foto_01.jpg" alt="inicio" width="100%" />
           </Grid>
           <Grid xs={6} item container alignItems='center' alignContent='center' justify="center">
-            <Grid item container direction="column" justify="center" alignContent='center' style={{paddingLeft: 50, paddingRight: 50}}>
+            <Grid item container direction="column" justify="center" alignContent='center' style={{paddingLeft: 50, paddingRight: 100}}>
               <HomeDialogo open={open} user={user} />
               {ok ? <Redirect to="/" /> : ''}
               <h1 className="texto-azul">Registro y Administración de Predios de Uso Público - BUPI</h1>

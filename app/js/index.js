@@ -20,6 +20,7 @@ import User from './usuario'
 import Administracion from './administracion';
 import Actualizacion from './actualizacion';
 import BusquedaServ from './servidumbres/Busqueda'
+import Concesion from './concesion'
 import Servidumbre from './servidumbres/servidumbre'
 import ReporteServidumbre from './servidumbres/reportes'
 import BusquedaAvanzada from './busqueda_avanzada';
@@ -48,6 +49,7 @@ const Tree = () => {
                     <Route exact path='/admin' component={Administracion} />
                     <Route exact path='/actualizar' component={Actualizacion} />
                     <Route exact path='/servidumbres/buscar' component={BusquedaServ} />
+                    <Route exact path='/concesiones/concesion/:id' component={Concesion} />
                     <Route exact path='/servidumbres/servidumbre/:id' component={Servidumbre} />
                     <Route exact path='/servidumbres/reportes' component={ReporteServidumbre} />
                     <Route exact path='/consulta' component={HomeConsulta} />
