@@ -66,14 +66,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-// const pool = new Pool({
-//   user: 'docker',
-//   host: 'postgis_bupi',
-//   database: 'invias_bupi',
-//   password: 'docker',
-//   port: 5432,
-//   timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'docker',
+  host: 'postgis_bupi',
+  database: 'invias_bupi',
+  password: 'docker',
+  port: 5432,
+  timezone: 'utc'
+})
 
 // desarrollo
 
@@ -87,15 +87,18 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //   timezone: 'utc'
 // })
 
-const pool = new Pool({
-  user: 'docker',
-  host: '172.19.26.22',//'pg-acueducto',
-  database: 'invias_bupi',
-  // database: 'prueba_schema',
-  password: 'docker',
-  port: 25432,
-  timezone: 'utc'
-})
+
+// const pool = new Pool({
+//   user: 'docker',
+//   host: '172.19.26.22',//'pg-acueducto',
+//   database: 'invias_bupi',
+//   // database: 'prueba_schema',
+//   password: 'docker',
+//   port: 25432,
+//   timezone: 'utc'
+// })
+
+
 
 
 
@@ -1056,7 +1059,31 @@ app.post('/excel_conciliacion', function (request, response) {
     G41: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 8'},
     G42: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 11'},
     G43: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 12'},
-    G44: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 7'},    
+    G44: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 7'},   
+    F53: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%171014%'"},    
+    F54: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%170516%'"},    
+    F55: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%834706%'"},  
+    G13: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%834706%'"},    
+    G14: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%BOSA GIRARDOT%'"},    
+    G15: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad = 'R. RUTA DEL SOL'"},    
+    G16: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. PEREIRA - LA VICTORIA%'"},
+    G17: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. TRANSVERSAL DE LAS AMERICAS%'"},    
+    G18: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. TRANSV, AMERICAS TAMALAMEQUE%'"},    
+    G19: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. RUMICHACA - PASTO- CHACHAGUI-AEROPUERTO - DESARROLLO VIAL DE NARIÑO%'"},    
+    G20: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad = '2020-20 R. RUTA DEL SOL'"},    
+    G21: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%ZIPAQUIRA - PALENQUE%'"},    
+    G22: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. ZONA METROPOLITANA DE BUCARAMANGA%'"},    
+    G23: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. NEIVA -CASTILLA - GIRADOT%'"},    
+    G24: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%devimed%'"},    
+    G25: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%MALLA VIAL DEL VALLE Y CAUCA%'"},    
+    G26: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. ZONA METROP. CUCUTA%'"},    
+    G27: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%Norte de Santander%'"},    
+    G28: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. BOGOTA (CALLE 236) - ZIPAQUIRA - DEVINORTE%'"},    
+    G29: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%S.%'"},    
+    G30: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%1111111111%'"},    
+    G31: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%M.83469 del%'"},    
+    G32: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%RECLASIFICACION  SUBDIRECCION ADMINISTRATIVA%'"},    
+    G33: {query: "select count(*) from info43_contabilidad where LOWER(anotacion_contabilidad) like '%otro%'"}
     
 
     // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
@@ -1097,7 +1124,7 @@ app.post('/excel_conciliacion', function (request, response) {
                 .catch(err => {
                   console.log(err)
                   response.status(200).json("error")
-                  throw error
+                  throw err
                 })
   
               resultsList.push(promise)
@@ -1257,6 +1284,15 @@ app.post('/excel_conciliacion', function (request, response) {
 
           worksheet.getCell('F4').value = currentDate;
 
+          // for (let index = 0; index < Object.keys(consultas).length; index++) {
+          //   // const element = array[index];
+          //   console.log(Object.keys(consultas)[index])
+          //   console.log(index, consultas['resultados'][0][0].count, consultas['resultados'][index][0].count)
+
+          //   worksheet.getCell(Object.keys(consultas)[index]).value = consultas['resultados'][index][0].count;
+            
+          // }
+
           worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
 
           worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
@@ -1277,6 +1313,53 @@ app.post('/excel_conciliacion', function (request, response) {
 
           worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
 
+          worksheet.getCell('F53').value = consultas['resultados'][10][0].count;
+
+          worksheet.getCell('F54').value = consultas['resultados'][11][0].count;
+
+          worksheet.getCell('F55').value = consultas['resultados'][12][0].count;
+
+          worksheet.getCell('G13').value = consultas['resultados'][13][0].count;
+
+          worksheet.getCell('G14').value = consultas['resultados'][14][0].count;
+
+          worksheet.getCell('G15').value = consultas['resultados'][15][0].count;
+
+          worksheet.getCell('G16').value = consultas['resultados'][16][0].count;
+
+          worksheet.getCell('G17').value = consultas['resultados'][17][0].count;
+
+          worksheet.getCell('G18').value = consultas['resultados'][18][0].count;
+
+          worksheet.getCell('G19').value = consultas['resultados'][19][0].count;
+
+          worksheet.getCell('G20').value = consultas['resultados'][20][0].count;
+
+          worksheet.getCell('G21').value = consultas['resultados'][21][0].count;
+
+          worksheet.getCell('G22').value = consultas['resultados'][22][0].count;
+
+          worksheet.getCell('G23').value = consultas['resultados'][23][0].count;
+
+          worksheet.getCell('G24').value = consultas['resultados'][24][0].count;
+
+          worksheet.getCell('G25').value = consultas['resultados'][25][0].count;
+
+          worksheet.getCell('G26').value = consultas['resultados'][26][0].count;
+
+          worksheet.getCell('G27').value = consultas['resultados'][27][0].count;
+
+          worksheet.getCell('G28').value = consultas['resultados'][28][0].count;
+          
+          worksheet.getCell('G29').value = consultas['resultados'][29][0].count;
+
+          worksheet.getCell('G30').value = consultas['resultados'][30][0].count;
+
+          worksheet.getCell('G31').value = consultas['resultados'][31][0].count;
+
+          worksheet.getCell('G32').value = consultas['resultados'][32][0].count;
+
+          worksheet.getCell('G33').value = consultas['resultados'][33][0].count;
 
           console.log("pruebas", consultas['resultados'])
             // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
@@ -1284,21 +1367,27 @@ app.post('/excel_conciliacion', function (request, response) {
           workbook.xlsx.writeBuffer()
           .then((buffer) => {
               // Set the response headers for file download
-            response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
-            response.setHeader('Content-Length', buffer.length);
+            // response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            // response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+            // response.setHeader('Content-Length', buffer.length);
 
               // Send the Excel file as the response
-            response.send(buffer);
+            // response.send(buffer);
+
+            response.setHeader('Content-disposition', 'attachment; filename=conciliacion.xlsx');
+          // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+
+            response.end(new Buffer.from(buffer, 'base64'));
+
           })
           .catch((error) => {
             console.error('Error generating Excel file:', error);
-            res.status(500).send('Error generating Excel file');
+            response.status(500).send('Error generating Excel file');
           });
         })
         .catch((error) => {
           console.error('Error generating Excel file:', error);
-          res.status(500).send('Error generating Excel file');
+          response.status(500).send('Error generating Excel file');
         });
 
         
