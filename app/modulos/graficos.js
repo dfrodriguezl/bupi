@@ -109,6 +109,166 @@ class Barras extends Component {
   }
 }
 
+class Bar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      options: {
+        chart: {
+          id: "basic-bar"
+        },
+        xaxis: {
+          categories: []
+        },
+        dataLabels: {
+          style: {
+            fontSize: '12px',
+            fontFamily: 'Work Sans',
+            fontWeight: 'bold'
+          }            
+        },
+      },
+      series: [
+        {
+          name: "",
+          data: []
+        }
+      ]
+    };
+  }
+
+  componentDidMount() {
+
+    var datos = { "id_consulta": this.props.id_consulta }
+
+    servidorPost('/backend', datos).then((response) => {
+      const data = response.data[0];
+
+      console.log(data)
+      this.setState({
+        options: {
+          chart: {
+            id: "basic-bar",
+            fontFamily: 'Work Sans',
+          },
+          xaxis: {
+            categories: data["categoria"]
+          },
+          title: {
+            text: this.props.titulo,
+            align: 'center',
+            style: {
+              fontSize: '12px',
+              fontFamily: 'Work Sans', 
+              fontWeight: '400',
+              color: '#263238'
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              // fontFamily: 'Work Sans',
+              colors: {
+                backgroundBarColors: ['#FFB527', '#154A8A', '#FF8300', '#003B71', '#9DBEFF', '#6699FF'],
+              },
+              dataLabels: {
+                total: {
+                  style: {
+                    color: '#000000',
+                    fontSize: '12px',
+                    fontFamily: 'Work Sans',
+                    // fontWeight: 600
+                  }
+                }
+              }, 
+            }
+          }
+        },
+        series: [
+          {
+            name: "",
+            data: data["data"]
+          }
+        ]
+        // options: {
+        //   chart: {
+        //     id: 'apexchart-example'
+        //   },
+        //   xaxis: {
+        //     categories: data["categoria"]
+        //   },
+
+        //   title: {
+        //     text: this.props.titulo,
+        //     style: {
+        //       fontSize: '12px',
+        //       fontFamily: 'Work Sans',
+        //       fontWeight: '144',
+        //       color: '#263238'
+        //     },
+        //   },
+        //   plotOptions: {
+        //     bar: {
+        //       distributed: true,
+        //       dataLabels: {
+        //         position: 'top'
+        //       },
+        //     }
+        //   },
+        //   dataLabels: {
+        //     enabled: true,
+        //     enabledOnSeries: undefined,
+        //     formatter: function (val, opts) {
+        //       return val
+        //     },
+        //     textAnchor: 'middle',
+        //     distributed: false,
+        //     offsetX: 0,
+        //     offsetY: -20,
+        //     style: {
+        //       fontSize: '12px',
+        //       fontFamily: 'Work Sans',
+        //       colors: ["#06357A"]
+        //     },
+
+        //   },
+        //   theme: {
+
+        //     palette: this.props.paleta,
+
+        //   }
+        // },
+        // series: [{
+        //   name: 'series-1',
+        //   data: data["data"]
+        // }],
+
+      })
+
+
+    });
+
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <div className="row">
+          <div className="mixed-chart">
+            <Chart
+              options={this.state.options}
+              series={this.state.series}
+              type="bar"
+              width="100%"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 
 /*
 var component = ReactDOM.render(<App id_consulta="grafico1" titulo="Avalúos por cliente" />, document.getElementById('grafico1'));
@@ -133,7 +293,7 @@ class Dona extends React.Component {
         },
         colors: ['#FFB527', '#154A8A', '#E31414', '#FF8300', '#003B71', '#9DBEFF', '#6699FF'],
         legend: {
-          show: false
+          show: true
         },
         labels: [],
         theme: {
@@ -142,6 +302,7 @@ class Dona extends React.Component {
 
         }
       },
+      width: "400px"
 
 
     };
@@ -161,7 +322,7 @@ class Dona extends React.Component {
         options: {
           chart: {
             type: 'pie',
-            // width: '100%',
+            width: '100%',
             // marginLeft: 'auto',
             // marginRight: 'auto'
           },
@@ -178,10 +339,11 @@ class Dona extends React.Component {
           },
           legend: {
             show: true,
-            position: 'bottom',
+            position: 'right',
             fontFamily: 'Work Sans'
           }
         },
+        width: "400px"
       })
 
 
@@ -196,7 +358,7 @@ class Dona extends React.Component {
     return (
 
       <div id="chart">
-        <Chart options={this.state.options} series={this.state.series} type="pie" width="300" />
+        <Chart options={this.state.options} series={this.state.series} type="pie" />
       </div>
 
     );
@@ -344,10 +506,14 @@ const Form = (props) => {
     <>
       <div id="seccion" className="sec2">
         <Dona id_consulta="grafico_departamento" titulo="Número de predios por departamento" paleta="palette1" />
+        {/* <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" /> */}
+      </div>
+      <div id="seccion" className="sec2">
+        {/* <Dona id_consulta="grafico_departamento" titulo="Número de predios por departamento" paleta="palette1" /> */}
         <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
       </div>
       <div id="seccion" className="sec2">
-        <Dona id_consulta="grafico_publico" titulo="Número de predios uso público/fiscal" paleta="palette1" />
+        <Dona id_consulta="grafico_titularidad" titulo="Número de predios uso público/fiscal" paleta="palette1" />
         <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" />
       </div>
       <div id="seccion" className="sec2">
@@ -355,7 +521,12 @@ const Form = (props) => {
         {estadistica1}
         {/* <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" /> */}
       </div>
-
+      <div>
+        <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
+      </div>
+      <div>
+        <Bar id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
+      </div>
       {/* <div id="seccion" className="sec2">
 
         <Dona id_consulta="grafico2" titulo="Número de predios por clase de suelo" paleta="palette10" />
