@@ -70,6 +70,7 @@ body{
 }
 
 #logo{
+    display: flex;
     background-color: #fff;
     padding: 10px 0;
     img{
@@ -1020,6 +1021,11 @@ input[type="file"] {
 
 .texto-azul {
     color: $color1;
+}
+
+.contenedor-botones-tareas {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .enlace {
