@@ -74,10 +74,12 @@ export function servidorDocs2(uri, datos) {
         withCredentials: true,
         responseType: 'blob',
         }).then(response => {
+            console.log("response excel", response, response.data)
             const url = window.URL.createObjectURL(new Blob([response.data]));
+            // const url = window.URL.createObjectURL(new File(new Blob([response.data, "application/vnd.ms-excel"])));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download','conciliacion.xlsx'); //or any other extension
+            link.setAttribute('download','test56.xlsx'); //or any other extension
             document.body.appendChild(link);
             link.click();
             return response;
