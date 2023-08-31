@@ -101,6 +101,7 @@ function ExcelAll({ titulo, descripcion, data, reporte }) {
     servidorDocs2('/excel_conciliacion').then(response => {
       setShow(false)
       toast.success("Conciliación descargada exitosamente");
+      window.open(`${url}/help/conciliacion.xlsx`,'_blank')
     }).catch(err => {
       setShow(false)
       toast.error("Error al descargar el reporte, vuelva a intentarlo más tarde");

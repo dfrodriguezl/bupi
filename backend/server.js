@@ -67,26 +67,26 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
-// const pool = new Pool({
-//   user: 'docker',
-//   host: 'postgis_bupi',
-//   database: 'invias_bupi',
-//   password: 'docker',
-//   port: 5432,
-//   timezone: 'utc'
-// })
-
-// desarrollo
-
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',//'pg-acueducto',
-  database: 'bupi_invias',
-  // database: 'prueba_schema',
-  password: 'yeinerm12',
+  user: 'docker',
+  host: 'postgis_bupi',
+  database: 'invias_bupi',
+  password: 'docker',
   port: 5432,
   timezone: 'utc'
 })
+
+// desarrollo
+
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',//'pg-acueducto',
+//   database: 'bupi_invias',
+//   // database: 'prueba_schema',
+//   password: 'yeinerm12',
+//   port: 5432,
+//   timezone: 'utc'
+// })
 
 
 // const pool = new Pool({
@@ -1064,7 +1064,7 @@ app.post('/excel_conciliacion', function (request, response) {
     F53: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%171014%'"},    
     F54: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%170516%'"},    
     F55: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%834706%'"},  
-    G13: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%834706%'"},    
+    G13: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%2018%' or anotacion_contabilidad like '%HALL%' or anotacion_contabilidad like '%2019%' or anotacion_contabilidad like '%31/12/2022%' or SUBSTRING(anotacion_contabilidad FROM LENGTH(anotacion_contabilidad)) = 'N' or anotacion_contabilidad in ('2021-N 31', '2021-N 32', '2021-N 33', '2021-N 34', '2021-N 37 ')"},
     G14: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%BOSA GIRARDOT%'"},    
     G15: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad = 'R. RUTA DEL SOL'"},    
     G16: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. PEREIRA - LA VICTORIA%'"},
@@ -1084,9 +1084,10 @@ app.post('/excel_conciliacion', function (request, response) {
     G30: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%1111111111%'"},    
     G31: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%M.83469 del%'"},    
     G32: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%RECLASIFICACION  SUBDIRECCION ADMINISTRATIVA%'"},    
-    G33: {query: "select count(*) from info43_contabilidad where LOWER(anotacion_contabilidad) like '%otro%'"}
-    
-
+    G33: {query: "select count(*) from info43_contabilidad where LOWER(anotacion_contabilidad) like '%otro%'"},
+    G53: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%171014%'"},
+    G54: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%170516%'"},
+    G55: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%834706%'"}
     // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
   }  
   
@@ -1107,6 +1108,8 @@ app.post('/excel_conciliacion', function (request, response) {
 
           query_text = query_text.replace(/token/g, "'" + decoded.usuario_usuario + "'");
         }
+
+        let respuestas = [];
 
         async function processTasks() {
           let resultsList = []
@@ -1144,29 +1147,185 @@ app.post('/excel_conciliacion', function (request, response) {
 
         // processTasks().then(result => {
         //   consultas['resultados'] = result;
-        //   console.log(result)
+        //   result.forEach((res)=> {
+        //     console.log(Object.values(res[0])[0])
+        //     respuestas.push(Object.values(res[0])[0])
+        //   });
+        //   console.log(respuestas)
         // });
 
-        fs.readFile(path.resolve(__dirname, "../help/pruebas.xlsx"), (err, temp) => {
-          var template = new XlsxTemplate(temp);
-          var sheetNumber = 1;
-          // var values = {
-          //   name: "yeiner mendi"
-          // };
-          template.substitute(sheetNumber, {name: "yeiner mendi"});
+        // console.log(respuestas)
+        // const workbook = new ExcelJS.Workbook();
 
-          var output = template.generate();
-          fs.writeFileSync(
-            path.resolve(__dirname, "../help/test.xlsx"),
-            output,
-            'binary',
-            (err) => {
-              console.log("ERROR", err)
+        // workbook.xlsx.readFile(path.resolve(__dirname, "../help/pruebas.xlsx"))
+        // .then(() => {
+        //     // const worksheet = workbook.getWorksheet('Hoja1');
+        //   const worksheet = workbook.getWorksheet('CONCILIACION de');
+            
+        //   const today = new Date();
+        //   const year = today.getFullYear();
+        //   const month = today.getMonth() + 1; // Months are zero-based, so we add 1
+        //   const day = today.getDate();
+
+        //   const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
+
+        //   worksheet.getCell('F4').value = currentDate;
+
+        //   for (let index = 0; index < Object.keys(consultas).length - 1; index++) {
+        //     // const element = array[index];
+        //     // console.log(Object.keys(consultas)[index])
+        //     // console.log(index, consultas['resultados'][0][0].count, consultas['resultados'][index][0].count)
+
+        //     worksheet.getCell(Object.keys(consultas)[index]).value = consultas['resultados'][index][0].count;
+            
+        //   }
+
+        //   // worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
+
+        //   // worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
+
+        //   // worksheet.getCell('G36').value = consultas['resultados'][2][0].count;
+
+        //   // worksheet.getCell('G37').value = consultas['resultados'][3][0].count;
+
+        //   // worksheet.getCell('G38').value = consultas['resultados'][4][0].count;
+          
+        //   // worksheet.getCell('G40').value = consultas['resultados'][5][0].count;
+
+        //   // worksheet.getCell('G41').value = consultas['resultados'][6][0].count;
+          
+        //   // worksheet.getCell('G42').value = consultas['resultados'][7][0].count;
+
+        //   // worksheet.getCell('G43').value = consultas['resultados'][8][0].count;
+
+        //   // worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
+
+        //   // worksheet.getCell('F53').value = consultas['resultados'][10][0].count;
+
+        //   // worksheet.getCell('F54').value = consultas['resultados'][11][0].count;
+
+        //   // worksheet.getCell('F55').value = consultas['resultados'][12][0].count;
+
+        //   // worksheet.getCell('G13').value = consultas['resultados'][13][0].count;
+
+        //   // worksheet.getCell('G14').value = consultas['resultados'][14][0].count;
+
+        //   // worksheet.getCell('G15').value = consultas['resultados'][15][0].count;
+
+        //   // worksheet.getCell('G16').value = consultas['resultados'][16][0].count;
+
+        //   // worksheet.getCell('G17').value = consultas['resultados'][17][0].count;
+
+        //   // worksheet.getCell('G18').value = consultas['resultados'][18][0].count;
+
+        //   // worksheet.getCell('G19').value = consultas['resultados'][19][0].count;
+
+        //   // worksheet.getCell('G20').value = consultas['resultados'][20][0].count;
+
+        //   // worksheet.getCell('G21').value = consultas['resultados'][21][0].count;
+
+        //   // worksheet.getCell('G22').value = consultas['resultados'][22][0].count;
+
+        //   // worksheet.getCell('G23').value = consultas['resultados'][23][0].count;
+
+        //   // worksheet.getCell('G24').value = consultas['resultados'][24][0].count;
+
+        //   // worksheet.getCell('G25').value = consultas['resultados'][25][0].count;
+
+        //   // worksheet.getCell('G26').value = consultas['resultados'][26][0].count;
+
+        //   // worksheet.getCell('G27').value = consultas['resultados'][27][0].count;
+
+        //   // worksheet.getCell('G28').value = consultas['resultados'][28][0].count;
+          
+        //   // worksheet.getCell('G29').value = consultas['resultados'][29][0].count;
+
+        //   // worksheet.getCell('G30').value = consultas['resultados'][30][0].count;
+
+        //   // worksheet.getCell('G31').value = consultas['resultados'][31][0].count;
+
+        //   // worksheet.getCell('G32').value = consultas['resultados'][32][0].count;
+
+        //   // worksheet.getCell('G33').value = consultas['resultados'][33][0].count;
+
+        // //   console.log("pruebas", consultas['resultados'])
+        // //     // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
+
+        //   workbook.xlsx.writeBuffer()
+        //   .then((buffer) => {
+        //       // Set the response headers for file download
+        //     // response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        //     // response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
+        //     // response.setHeader('Content-Length', buffer.length);
+
+        //       // Send the Excel file as the response
+        //     // response.send(buffer);
+
+        //     response.setHeader('Content-disposition', 'attachment; filename=conciliacion.xlsx');
+        //   // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
+
+        //     response.end(new Buffer.from(buffer, 'base64'));
+
+        //   })
+        //   .catch((error) => {
+        //     console.error('Error generating Excel file:', error);
+        //     response.status(500).send('Error generating Excel file');
+        //   });
+        // })
+        // .catch((error) => {
+        //   console.error('Error generating Excel file:', error);
+        //   response.status(500).send('Error generating Excel file');
+        // });
+
+        async function writeToExistingExcel() {
+          await processTasks().then(result => {
+            // consultas['resultados'] = result;
+            result.forEach((res)=> {
+              console.log(Object.values(res[0])[0])
+              respuestas.push(Object.values(res[0])[0])
+            });
+            console.log(respuestas)
+          });
+          fs.readFile(path.resolve(__dirname, "../help/conciliacion_plantilla.xlsx"), (err, temp) => {
+            var template = new XlsxTemplate(temp);
+            var sheetNumber = 1;
+            // var values = {
+            //   name: "yeiner mendi"
+            // };
+
+            const llaves = Object.keys(consultas);
+            const result = {};
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1; // Months are zero-based, so we add 1
+            const day = today.getDate();
+
+            const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
+            result["F4"] = currentDate;            
+
+            for (let i = 0; i < llaves.length; i++) {
+              result[llaves[i]] = parseFloat(respuestas[i]);
             }
-          )
-          response.status(200).json({ message: "success", result: "success" })
-        })
 
+            console.log(respuestas,"respuestas", result, Object.keys(result).length)
+            // template.substitute(sheetNumber, {name: "yeiner mendi233"});
+            template.substitute(sheetNumber, result);
+  
+            var output = template.generate();
+            fs.writeFileSync(
+              path.resolve(__dirname, "../help/conciliacion.xlsx"),
+              output,
+              'binary',
+              (err) => {
+                console.log("ERROR", err)
+              }
+            )
+            response.status(200).json({ message: "success", result: "success" })
+          });
+        }
+        
+        writeToExistingExcel();
         // async function writeToExistingExcel() {
         //   await processTasks().then(result => {
         //     consultas['resultados'] = result;
@@ -1216,7 +1375,7 @@ app.post('/excel_conciliacion', function (request, response) {
 
         // writeToExistingExcel();
         
-        // workbook.xlsx.readFile(path.resolve(__dirname, "../help/pruebas.xlsx"))
+        // workbook.xlsx.readFile(path.resolve(__dirname, "pruebas.xlsx"))
         // .then(() => {
         //       // const worksheet = workbook.getWorksheet('Hoja1');
         //       const worksheet = workbook.getWorksheet('CONCILIACION de');
@@ -1229,6 +1388,74 @@ app.post('/excel_conciliacion', function (request, response) {
         //       const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
   
         //       worksheet.getCell('A1').value = currentDate;
+
+        //       worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
+
+        //       worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
+
+        //       worksheet.getCell('G36').value = consultas['resultados'][2][0].count;
+
+        //       worksheet.getCell('G37').value = consultas['resultados'][3][0].count;
+
+        //       worksheet.getCell('G38').value = consultas['resultados'][4][0].count;
+              
+        //       worksheet.getCell('G40').value = consultas['resultados'][5][0].count;
+
+        //       worksheet.getCell('G41').value = consultas['resultados'][6][0].count;
+              
+        //       worksheet.getCell('G42').value = consultas['resultados'][7][0].count;
+
+        //       worksheet.getCell('G43').value = consultas['resultados'][8][0].count;
+
+        //       worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
+
+        //       worksheet.getCell('F53').value = consultas['resultados'][10][0].count;
+
+        //       worksheet.getCell('F54').value = consultas['resultados'][11][0].count;
+
+        //       worksheet.getCell('F55').value = consultas['resultados'][12][0].count;
+
+        //       worksheet.getCell('G13').value = consultas['resultados'][13][0].count;
+
+        //       worksheet.getCell('G14').value = consultas['resultados'][14][0].count;
+
+        //       worksheet.getCell('G15').value = consultas['resultados'][15][0].count;
+
+        //       worksheet.getCell('G16').value = consultas['resultados'][16][0].count;
+
+        //       worksheet.getCell('G17').value = consultas['resultados'][17][0].count;
+
+        //       worksheet.getCell('G18').value = consultas['resultados'][18][0].count;
+
+        //       worksheet.getCell('G19').value = consultas['resultados'][19][0].count;
+
+        //       worksheet.getCell('G20').value = consultas['resultados'][20][0].count;
+
+        //       worksheet.getCell('G21').value = consultas['resultados'][21][0].count;
+
+        //       worksheet.getCell('G22').value = consultas['resultados'][22][0].count;
+
+        //       worksheet.getCell('G23').value = consultas['resultados'][23][0].count;
+
+        //       worksheet.getCell('G24').value = consultas['resultados'][24][0].count;
+
+        //       worksheet.getCell('G25').value = consultas['resultados'][25][0].count;
+
+        //       worksheet.getCell('G26').value = consultas['resultados'][26][0].count;
+
+        //       worksheet.getCell('G27').value = consultas['resultados'][27][0].count;
+
+        //       worksheet.getCell('G28').value = consultas['resultados'][28][0].count;
+              
+        //       worksheet.getCell('G29').value = consultas['resultados'][29][0].count;
+
+        //       worksheet.getCell('G30').value = consultas['resultados'][30][0].count;
+
+        //       worksheet.getCell('G31').value = consultas['resultados'][31][0].count;
+
+        //       worksheet.getCell('G32').value = consultas['resultados'][32][0].count;
+
+        //       worksheet.getCell('G33').value = consultas['resultados'][33][0].count;
 
         //       return workbook;
         //     }).then((res) => {
