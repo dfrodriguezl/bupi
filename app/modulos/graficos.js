@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Chart from 'react-apexcharts'
+import Chart from 'react-apexcharts';
 
 import { servidorPost } from '../js/request'
 
+import PieChart from './piechart';
 
 class Barras extends Component {
 
@@ -316,7 +317,7 @@ class Dona extends React.Component {
     servidorPost('/backend', datos).then((response) => {
       const data = response.data[0];
 
-      console.log(data)
+      console.log(data, "graficos", Number(data["data"][0]))
       this.setState({
         series: data["data"].map(i => Number(i)),
         options: {
@@ -505,27 +506,17 @@ const Form = (props) => {
   return (
     <>
       <div id="seccion" className="sec2">
-        <Dona id_consulta="grafico_departamento" titulo="Número de predios por departamento" paleta="palette1" />
-        {/* <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" /> */}
+        <PieChart id_consulta="grafico_departamento" titulo="Número de predios por departamento" />
+        <PieChart id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
       </div>
       <div id="seccion" className="sec2">
-        {/* <Dona id_consulta="grafico_departamento" titulo="Número de predios por departamento" paleta="palette1" /> */}
-        <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
+        <PieChart id_consulta="grafico_publico" titulo="Número de predios uso público/fiscal" />
+        <PieChart id_consulta="grafico_administrador" titulo="Número de predios por administrador" />
       </div>
       <div id="seccion" className="sec2">
-        <Dona id_consulta="grafico_titularidad" titulo="Número de predios uso público/fiscal" paleta="palette1" />
-        <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" />
-      </div>
-      <div id="seccion" className="sec2">
-        <Dona id_consulta="grafico_transporte" titulo="Número de predios por modo de transporte" paleta="palette1" />
+        <PieChart id_consulta="grafico_transporte" titulo="Número de predios por modo de transporte" />
         {estadistica1}
-        {/* <Dona id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" /> */}
-      </div>
-      <div>
-        <Dona id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
-      </div>
-      <div>
-        <Bar id_consulta="grafico_titularidad" titulo="Número de predios por titularidad" paleta="palette1" />
+        {/* <PieChart id_consulta="grafico_administrador" titulo="Número de predios por administrador" paleta="palette1" /> */}
       </div>
       {/* <div id="seccion" className="sec2">
 

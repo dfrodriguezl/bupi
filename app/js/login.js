@@ -70,15 +70,14 @@ const Login = () => {
         </Grid>
         <Grid container className="container-images">
           <Grid item xs={6}>
-          <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
-            <img src="https://www.invias.gov.co//images/logos/logo_invias_nuevo.jpg" className="login-logo-invias" alt="Logo INVIAS" />
-          </Link> 
-          </Grid>
-          <Grid item xs={6}>
           <Link href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
             <img src="https://www.invias.gov.co/images/logos/colombia_potencia_vida.png" className="login-logo-Colombia-Potencia-Vida" alt="Logo Colombia Potencia Vida" />   
           </Link>
-            
+          </Grid>
+          <Grid item xs={6}>
+          <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
+            <img src="predios/img/LOGO-INVIAS-Simplificado.png" className="login-logo-invias" alt="Logo INVIAS" />
+          </Link> 
           </Grid>
         </Grid>
         <Grid container className="login-container">

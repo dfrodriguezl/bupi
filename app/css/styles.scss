@@ -255,7 +255,7 @@ body{
         border-left: 5px solid #CE3800;
     }
     p{
-        margin:0px;
+        margin:3px;
         font-size: 10pt;
         color:black;
     }
@@ -332,7 +332,7 @@ button{
     border: 1px solid black;
     border-radius: 3px;
     padding:5px;
-    margin-top: 5px;
+    margin: 3px;
     font-family: 'Work Sans';
     a{
         text-decoration: none;
@@ -1005,18 +1005,18 @@ input[type="file"] {
 
 .login-container{
     height: '100%';
-    margin-top: 60px;
+    margin-top: 40px;
     margin-left: 100px;
 }
 
 .login-logo-invias{
     max-height: 90px;
-    float: left;
+    float: right;
 }
 
 .login-logo-Colombia-Potencia-Vida{
     max-height: 90px;
-    float: right;
+    float: left;
 }
 
 .texto-azul {
@@ -1032,4 +1032,13 @@ input[type="file"] {
     color: #1877f2;
     text-decoration: underline;
     cursor: pointer;
+}
+
+// .charts {
+//     max-height: 50vh;
+// }
+
+canvas{
+    max-width: 400px;
+    max-height: 400px;
 }
