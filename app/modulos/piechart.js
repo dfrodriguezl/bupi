@@ -248,10 +248,10 @@ const PieChart = ({id_consulta, titulo}) => {
                             fontColor: 'black',
                             fontSize: 12,
                             filter: (v1,v2) => {
-                                console.log("ob1",v1,"ob2",v2,"ind",v2.labels.indexOf(v1.text))
+                                // console.log("ob1",v1,"ob2",v2,"ind",v2.labels.indexOf(v1.text))
                                 let position = v2.labels.indexOf(v1.text);
                                 let valor = v2.datasets[0].data[position];
-                                console.log("val",v2.datasets[0].data[position])
+                                // console.log("val",v2.datasets[0].data[position])
                                 if(valor > 10) {
                                     return v1;
                                 }                            
