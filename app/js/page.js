@@ -33,7 +33,7 @@ const Estructura = ({ children }) => {
 
       var datos = response.data[0]
       setSession(datos)
-      setIsConsulta(datos.usuario_rol === 0 ? true : false);
+      // setIsConsulta(datos.usuario_rol === 0 ? true : false);
       setIsEstructurador(datos.usuario_rol === 9 ? true : false);
       setIsControlCalidad(datos.usuario_rol === 6 ? true : false);
       setIsCoordinador(datos.usuario_rol === 1 ? true : false);

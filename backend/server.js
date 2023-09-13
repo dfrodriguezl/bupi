@@ -1304,6 +1304,13 @@ app.post('/excel_conciliacion', function (request, response) {
             const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
             result["F4"] = currentDate;            
 
+            const Meses = [
+              'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+              'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+
+            result["I4"] = `${Meses[today.getMonth()]} de ${year}`; 
+
             for (let i = 0; i < llaves.length; i++) {
               result[llaves[i]] = parseFloat(respuestas[i]);
             }
