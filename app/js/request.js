@@ -63,5 +63,20 @@ export function servidorDocs(uri, datos) {
     });
 }
 
+export function servidorDocs2(uri, datos) {
+
+    // console.log(datos)
+    
+    return axios({
+        method: 'post',
+        url: destino+uri,
+        data: datos,
+        withCredentials: true,
+        responseType: 'blob',
+        }).then(response => {
+            return response;
+    });
+}
+
 
 export const url = destino;

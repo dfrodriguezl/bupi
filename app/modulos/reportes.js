@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { url } from '../js/request'
 
-import { servidorDocs, servidorPost } from '../js/request'
+import { servidorDocs, servidorDocs2, servidorPost } from '../js/request'
 
 import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
@@ -96,7 +96,17 @@ function ExcelAll({ titulo, descripcion, data, reporte }) {
 
   }
 
-
+  const download2 = () => {
+    setShow(true)
+    servidorDocs2('/excel_conciliacion').then(response => {
+      setShow(false)
+      toast.success("Conciliación descargada exitosamente");
+      window.open(`${url}/help/conciliacion.xlsx`,'_blank')
+    }).catch(err => {
+      setShow(false)
+      toast.error("Error al descargar el reporte, vuelva a intentarlo más tarde");
+    })
+  }
 
   return (
     <div>
@@ -104,6 +114,7 @@ function ExcelAll({ titulo, descripcion, data, reporte }) {
         <p className="titulo">{titulo}</p>
         <p className="descripcion">{descripcion}</p>
         <button className="primmary" onClick={() => download()}>Descargar Reporte</button>
+        <button className="primmary" onClick={() => download2()}>Descargar Conciliación Contable</button>
       </div>
       <div className="cargando">
         <Loader

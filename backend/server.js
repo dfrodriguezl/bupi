@@ -42,6 +42,8 @@ const fileSaver = require('file-saver');
 const Blob = require('buffer');
 const gotenberg = require('gotenberg-js-client');
 
+const XlsxTemplate = require('xlsx-template');
+
 const urlPdf = "http://192.168.56.10:3000/forms/libreoffice/convert";
 
 
@@ -1034,6 +1036,169 @@ app.post('/excel', function (request, response) {
  
  res.send(text);
   */
+
+
+});
+
+app.post('/excel_conciliacion', function (request, response) {
+
+  var data = request.body;
+  var id_consulta = request.body.id_consulta;
+
+  var consultas = {
+    G66: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 9'},
+    G35: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 1'},
+    G36: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 6'},
+    G37: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 5'},    
+    G38: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 2'},
+    G40: {query: 'select count(*) from info43_contabilidad where clasificacion_contable in (4,10)'},
+    G41: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 8'},
+    G42: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 11'},
+    G43: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 12'},
+    G44: {query: 'select count(*) from info43_contabilidad where clasificacion_contable = 7'},   
+    F53: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%171014%'"},    
+    F54: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%170516%'"},    
+    F55: {query: "select count(*) from info43_contabilidad where cuenta_contable like '%834706%'"},  
+    G13: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%2018%' or anotacion_contabilidad like '%HALL%' or anotacion_contabilidad like '%2019%' or anotacion_contabilidad like '%31/12/2022%' or SUBSTRING(anotacion_contabilidad FROM LENGTH(anotacion_contabilidad)) = 'N' or anotacion_contabilidad in ('2021-N 31', '2021-N 32', '2021-N 33', '2021-N 34', '2021-N 37 ')"},
+    G14: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%BOSA GIRARDOT%'"},    
+    G15: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad = 'R. RUTA DEL SOL'"},    
+    G16: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. PEREIRA - LA VICTORIA%'"},
+    G17: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. TRANSVERSAL DE LAS AMERICAS%'"},    
+    G18: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. TRANSV, AMERICAS TAMALAMEQUE%'"},    
+    G19: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. RUMICHACA - PASTO- CHACHAGUI-AEROPUERTO - DESARROLLO VIAL DE NARIÑO%'"},    
+    G20: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad = '2020-20 R. RUTA DEL SOL'"},    
+    G21: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%ZIPAQUIRA - PALENQUE%'"},    
+    G22: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. ZONA METROPOLITANA DE BUCARAMANGA%'"},    
+    G23: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. NEIVA -CASTILLA - GIRADOT%'"},    
+    G24: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%devimed%'"},    
+    G25: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%MALLA VIAL DEL VALLE Y CAUCA%'"},    
+    G26: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. ZONA METROP. CUCUTA%'"},    
+    G27: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%Norte de Santander%'"},    
+    G28: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%R. BOGOTA (CALLE 236) - ZIPAQUIRA - DEVINORTE%'"},    
+    G29: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%S.%'"},    
+    G30: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%1111111111%'"},    
+    G31: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%M.83469 del%'"},    
+    G32: {query: "select count(*) from info43_contabilidad where anotacion_contabilidad like '%RECLASIFICACION  SUBDIRECCION ADMINISTRATIVA%'"},    
+    G33: {query: "select count(*) from info43_contabilidad where LOWER(anotacion_contabilidad) like '%otro%'"},
+    G53: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%171014%'"},
+    G54: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%170516%'"},
+    G55: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%834706%'"}
+    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
+  }  
+  
+
+  var query_text = get_sql(id_consulta);
+
+  var token = request.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, accessTokenSecret, (err, decoded) => {
+      if (err) {
+        response.json({ mensaje: 'Token inválida' });
+      } else {
+        request.decoded = decoded;
+        console.log(decoded)
+
+        if (query_text.includes("token")) {
+
+          query_text = query_text.replace(/token/g, "'" + decoded.usuario_usuario + "'");
+        }
+
+        let respuestas = [];
+
+        async function processTasks() {
+          let resultsList = []
+          let keys = Object.keys(consultas)
+          console.log(keys)
+          // let keys = Object.keys(consultas).map((key, idx) => {
+          //   console.log(key)
+
+          // })
+          keys.forEach(element => {
+            try {
+              const promise = pool.query(consultas[element].query)
+                .then(results => {
+                  return results.rows;
+                })
+                .catch(err => {
+                  console.log(err)
+                  response.status(200).json("error")
+                  throw err
+                })
+  
+              resultsList.push(promise)
+            }
+            catch (err) {
+              console.log(err)
+              response.status(200).json("error")
+            }
+          });
+          
+          const array = await Promise.all(resultsList);
+          // console.log(array)
+          return array;
+          // response.status(200).send(array);
+        }
+
+        async function writeToExistingExcel() {
+          await processTasks().then(result => {
+            // consultas['resultados'] = result;
+            result.forEach((res)=> {
+              console.log(Object.values(res[0])[0])
+              respuestas.push(Object.values(res[0])[0])
+            });
+            console.log(respuestas)
+          });
+          fs.readFile(path.resolve(__dirname, "../help/conciliacion_plantilla.xlsx"), (err, temp) => {
+            var template = new XlsxTemplate(temp);
+            var sheetNumber = 1;
+
+            const llaves = Object.keys(consultas);
+            const result = {};
+
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = today.getMonth() + 1; // Months are zero-based, so we add 1
+            const day = today.getDate();
+
+            const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
+            result["F4"] = currentDate;            
+
+            const Meses = [
+              'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+              'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+
+            result["I4"] = `${Meses[today.getMonth()]} de ${year}`; 
+
+            for (let i = 0; i < llaves.length; i++) {
+              result[llaves[i]] = parseFloat(respuestas[i]);
+            }
+
+            console.log(respuestas,"respuestas", result, Object.keys(result).length)
+            template.substitute(sheetNumber, result);
+  
+            var output = template.generate();
+            fs.writeFileSync(
+              path.resolve(__dirname, "../help/conciliacion.xlsx"),
+              output,
+              'binary',
+              (err) => {
+                console.log("ERROR", err)
+              }
+            )
+            response.status(200).json({ message: "success", result: "success" })
+          });
+        }
+        
+        writeToExistingExcel();
+
+
+      }
+    });
+  } else {
+    response.status(403).json({ mensaje: 'sin permisos' });
+  }
 
 
 });
