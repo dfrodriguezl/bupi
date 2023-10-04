@@ -135,7 +135,7 @@ const onChange = (e) =>{
   // servidorPost('/xls',formData).then((response) =>{
   //   const data = response.data;
   //   console.log(data.json[0])
-  //   if( typeof  data.json[0].id_expediente!="undefined"){
+  //   if( typeof  data.json[0].codigo_bupi!="undefined"){
   //     setdoc(data.json)
   //   }else{
   //     alert("Seleccione un documento csv válido")
@@ -161,7 +161,7 @@ const asignar=e=>{
       for (var i = 0; i < doc.length; i++){
         
         var datos={
-          "id_expediente":doc[i].id_expediente,
+          "codigo_bupi":doc[i].codigo_bupi,
           "ruta": 0,
           "usuario_responsable":usuario_responsable
         }
@@ -204,19 +204,19 @@ const aprobar = (e) => {
     for(var i = 0; i < doc.length; i++){
       let tec = doc[i].tec
       let jur = doc[i].jur
-      let expediente = doc[i].id_expediente
+      let expediente = doc[i].codigo_bupi
 
       // console.log(tec)
       if(tec !== ''){
         let datosTec = {
-          id_expediente: expediente
+          codigo_bupi: expediente
         }
         let rutas = estadosTecnico[tec.toLowerCase()];
         // console.log(rutas);
 
         if(tec.toLowerCase() != "aprobado"){
           let datosClose = {
-                    id_expediente: expediente,
+                    codigo_bupi: expediente,
                     id_consulta: 'insert_calidad_tecnico',
                     aprobado: null,
                     obs: 'CAMBIO DE ESTADO'
@@ -227,7 +227,7 @@ const aprobar = (e) => {
             })
         }else if(tec.toLowerCase() == "aprobado"){
           let datosTec = {
-                id_expediente: expediente,
+                codigo_bupi: expediente,
                 id_consulta: "update_tareas_calidad_tecnico"
               }
               // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -236,7 +236,7 @@ const aprobar = (e) => {
                 // console.log(response)
                 if(response.data.length > 0){
                   let datosClose = {
-                    id_expediente: expediente,
+                    codigo_bupi: expediente,
                     id_consulta: 'insert_calidad_tecnico',
                     aprobado: 1,
                     obs: 'APROBACIÓN MASIVA'
@@ -254,7 +254,7 @@ const aprobar = (e) => {
           let datosDel = {
             id_consulta: 'borrar_tarea',
             ruta_close: rutas.rutas_next,
-            id_expediente: expediente
+            codigo_bupi: expediente
           }
 
           sendRequest(datosDel).then((response) => {
@@ -279,13 +279,13 @@ const aprobar = (e) => {
 
       if(jur !== ''){
         let datosJur = {
-          id_expediente: expediente
+          codigo_bupi: expediente
         }
         let rutas = estadosJuridico[jur.toLowerCase()];
 
         if(jur.toLowerCase() != "aprobado"){
           let datosClose = {
-                    id_expediente: expediente,
+                    codigo_bupi: expediente,
                     id_consulta: 'insert_calidad_juridico',
                     aprobado: null,
                     obs: 'CAMBIO DE ESTADO'
@@ -296,7 +296,7 @@ const aprobar = (e) => {
             })
         }else if(jur.toLowerCase() == "aprobado"){
           let datosJur = {
-                id_expediente: expediente,
+                codigo_bupi: expediente,
                 id_consulta: "update_tareas_calidad_juridico"
               }
               // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -305,7 +305,7 @@ const aprobar = (e) => {
                 console.log(response)
                 if(response.data.length > 0){
                   let datosClose = {
-                    id_expediente: expediente,
+                    codigo_bupi: expediente,
                     id_consulta: 'insert_calidad_juridico',
                     aprobado: 1,
                     obs: 'APROBACIÓN MASIVA'
@@ -323,7 +323,7 @@ const aprobar = (e) => {
           let datosDel = {
             id_consulta: 'borrar_tarea',
             ruta_close: rutas.rutas_next,
-            id_expediente: expediente
+            codigo_bupi: expediente
           }
           sendRequest(datosDel).then((response) => {
             // console.log(response)
@@ -349,12 +349,12 @@ const aprobar = (e) => {
       
 
       // let datos = {}
-      // datos.id_expediente = expediente
+      // datos.codigo_bupi = expediente
       
 
       // if(tec === "SI"){ 
       //   let datosTec = {
-      //     id_expediente: expediente,
+      //     codigo_bupi: expediente,
       //     id_consulta: "update_tareas_calidad_tecnico"
       //   }
       //   // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -363,7 +363,7 @@ const aprobar = (e) => {
       //     console.log(response)
       //     if(response.data.length > 0){
       //       let datosClose = {
-      //         id_expediente: expediente,
+      //         codigo_bupi: expediente,
       //         id_consulta: 'insert_calidad_tecnico',
       //         aprobado: 1,
       //         obs: 'APROBACIÓN MASIVA'
@@ -379,7 +379,7 @@ const aprobar = (e) => {
 
       // if(jur === "SI"){
       //   let datosJur = {
-      //     id_expediente: expediente,
+      //     codigo_bupi: expediente,
       //     id_consulta: "update_tareas_calidad_juridico"
       //   }
       //   // datos.id_consulta = "update_tareas_calidad_juridico"
@@ -388,7 +388,7 @@ const aprobar = (e) => {
       //     console.log(response)
       //     if(response.data.length > 0){
       //       let datosClose = {
-      //         id_expediente: expediente,
+      //         codigo_bupi: expediente,
       //         id_consulta: 'insert_calidad_juridico',
       //         aprobado: 1,
       //         obs: 'APROBACIÓN MASIVA'
@@ -415,7 +415,7 @@ const aprobar = (e) => {
     //     for (var i = 0; i < doc.length; i++){
           
     //       var datos={
-    //         "id_expediente":doc[i].id_expediente,
+    //         "codigo_bupi":doc[i].codigo_bupi,
     //         "ruta": 0,
     //         "usuario_responsable":usuario_responsable
     //       }
@@ -485,7 +485,7 @@ const select=e=>{
    
       {doc.map((item,key)=>
           <div className="col-12 mb-1" key={key}>
-            <p> 📁{item.id_expediente}</p>
+            <p> 📁{item.codigo_bupi}</p>
           </div>
         
       )

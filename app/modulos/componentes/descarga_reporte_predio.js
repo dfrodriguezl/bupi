@@ -18,7 +18,7 @@ import fileDownload from 'js-file-download';
 
 const DescargaReportePredio = (props) => {
 
-  const { id_expediente } = props;
+  const { codigo_bupi } = props;
   const [dataSend, setDataSend] = useState({});
   // const urlPdf = "http://192.168.56.10/gotenberg/forms/libreoffice/convert";
   // const urlPdf = "http://192.168.56.10/bienes-raices/gotenberg/forms/libreoffice/convert";
@@ -26,24 +26,24 @@ const DescargaReportePredio = (props) => {
 
   useEffect(() => {
     const data = {
-      id_expediente: id_expediente,
+      codigo_bupi: codigo_bupi,
       id_consulta: "get_reporte_tecnico"
     }
 
     servidorPost('/backend', data).then(function (response) {
       console.log(response);
       const dataJuridico = {
-        id_expediente: id_expediente,
+        codigo_bupi: codigo_bupi,
         id_consulta: "get_reporte_juridico"
       }
       servidorPost('/backend', dataJuridico).then(function (response1) {
         const dataSegregados = {
-          id_expediente: id_expediente,
+          codigo_bupi: codigo_bupi,
           id_consulta: "get_reporte_segregados"
         }
         servidorPost('/backend', dataSegregados).then(function (response2) {
           const dataPropietarios = {
-            id_expediente: id_expediente,
+            codigo_bupi: codigo_bupi,
             id_consulta: "get_reporte_propietarios"
           }
           servidorPost('/backend', dataPropietarios).then(function (response3) {

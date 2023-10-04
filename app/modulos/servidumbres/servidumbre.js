@@ -113,7 +113,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
             const data = {
-                id_expediente: id_exp,
+                codigo_bupi: id_exp,
                 id_consulta: 'get_observacion'
             }
 
@@ -135,7 +135,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
         //     var data = {
         //         "id_consulta": "info_header_form",
-        //         "id_expediente": id,
+        //         "codigo_bupi": id,
         //     }
 
         //     // console.log(data)
@@ -203,7 +203,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
 
 
-                            var data = { id_consulta: 'tengo_predio', id_expediente: id }
+                            var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
 
                             servidorPost('/backend', data).then((response) => {
                                 setLectura(!response.data[0].exists)
@@ -349,8 +349,8 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             } else {
                 toast.success("Información almacenada de: " + result[0].id_servidumbre);
-                validar(index, result[0].id_expediente, data_guardar)
-                // validar(index,result[0].id_expediente)
+                validar(index, result[0].codigo_bupi, data_guardar)
+                // validar(index,result[0].codigo_bupi)
             }
         });
 
@@ -391,7 +391,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
             var datos = response.data;
 
-            toast.success("Registro creado: " + datos[0].id_expediente);
+            toast.success("Registro creado: " + datos[0].codigo_bupi);
             setReload(Math.random())
         })
 
@@ -451,7 +451,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                         let dataValServ = {
                             id_validador: dr.id_validador,
                             id_condicion: dr.id_servicio,
-                            id_expediente: id_exp,
+                            codigo_bupi: id_exp,
                             estado: features.length > 0 ? true : false,
                             id_consulta: 'insert_valor_validacion'
                         }
@@ -930,7 +930,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
 
         var data = {
             "id_consulta": "delete_consecutivo",
-            "id_expediente": id,
+            "codigo_bupi": id,
             "tabla": tbl,
             "consecutivo": con
         }

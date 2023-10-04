@@ -21,13 +21,13 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
     const data = {
       id_consulta: 'validacion_expediente',
-      id_expediente: id_exp
+      codigo_bupi: id_exp
     };
 
     servidorPost("/backend", data).then((r) => {
       const dataGet = {
         id_consulta: 'get_validadores_expediente',
-        id_expediente: id_exp
+        codigo_bupi: id_exp
       }
       servidorPost('/backend', dataGet).then(response => {
         const lista = response.data;
@@ -54,7 +54,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
     var datos = {
-      "id_expediente": nombre,
+      "codigo_bupi": nombre,
       "ruta": tareacod,
     }
     notificacion(datos)
@@ -95,7 +95,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
                     var datos = {
-                      "id_expediente": nombre,
+                      "codigo_bupi": nombre,
                       "ruta": tareacod,
                     }
 
@@ -114,7 +114,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
                       // var datos = {
-                      //   "id_expediente": nombre,
+                      //   "codigo_bupi": nombre,
                       //   "ruta": tareacod,
                       // }
                       // notificacion(datos)
@@ -127,7 +127,7 @@ const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
 
 
                       var datos = {
-                        "id_expediente": nombre,
+                        "codigo_bupi": nombre,
                         "ruta": tareacod,
                       }
                       notificacion(datos)

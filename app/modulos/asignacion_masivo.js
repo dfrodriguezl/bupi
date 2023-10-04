@@ -91,7 +91,7 @@ const asignar=e=>{
 
         if(tipo.toLowerCase() === 'saneamiento'){
           const dataJur = {
-            id_expediente: expediente,
+            codigo_bupi: expediente,
             ruta: 14,
             usuario_jur: usuario1,
             usuario_cat: usuario2
@@ -100,7 +100,7 @@ const asignar=e=>{
 
           const dataCerrar = {
             id_consulta: 'cerrar_tarea',
-            id_expediente: expediente,
+            codigo_bupi: expediente,
             ruta_close: [14]
           }
 
@@ -121,15 +121,15 @@ const asignar=e=>{
       //   let jur = doc[i].jur;
       //   let sup_tec = doc[i].sup_tec;
       //   let sup_jur = doc[i].sup_jur;
-      //   let expediente = doc[i].id_expediente;
+      //   let expediente = doc[i].codigo_bupi;
 
       //   let datos = {};
-      //   datos.id_expediente = expediente;
+      //   datos.codigo_bupi = expediente;
       //   datos.id_consulta = 'insertar_asignacion_tecnico';
 
       //   if(tec != ''){
       //     let dataTec ={
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'insertar_asignacion_tecnico',
       //       id_tarea: 2,
       //       usuario_responsable: doc[i].tec
@@ -137,7 +137,7 @@ const asignar=e=>{
       //     sendRequest(dataTec);
 
       //     let dataNotTec = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 1,
       //       usuario_responsable: doc[i].tec
@@ -145,7 +145,7 @@ const asignar=e=>{
       //     sendRequest(dataNotTec);
 
       //     let dataNotTec2 = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 7,
       //       usuario_responsable: doc[i].tec
@@ -155,7 +155,7 @@ const asignar=e=>{
 
       //   if(jur != ''){
       //     let dataJur ={
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'insertar_asignacion_tecnico',
       //       id_tarea: 3,
       //       usuario_responsable: doc[i].jur
@@ -163,7 +163,7 @@ const asignar=e=>{
       //     sendRequest(dataJur);
 
       //     let dataNotJur = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 2,
       //       usuario_responsable: doc[i].jur
@@ -171,7 +171,7 @@ const asignar=e=>{
       //     sendRequest(dataNotJur);
 
       //     let dataNotJur2 = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 5,
       //       usuario_responsable: doc[i].jur
@@ -181,7 +181,7 @@ const asignar=e=>{
 
       //   if(sup_jur != ''){
       //     let dataSupJur ={
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'insertar_asignacion_tecnico',
       //       id_tarea: 4,
       //       usuario_responsable: doc[i].sup_jur
@@ -189,7 +189,7 @@ const asignar=e=>{
       //     sendRequest(dataSupJur);
 
       //     let dataNotSupJur = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 4,
       //       usuario_responsable: doc[i].sup_jur
@@ -199,7 +199,7 @@ const asignar=e=>{
 
       //   if(sup_tec != ''){
       //     let dataSupTec ={
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'insertar_asignacion_tecnico',
       //       id_tarea: 5,
       //       usuario_responsable: doc[i].sup_tec
@@ -208,7 +208,7 @@ const asignar=e=>{
       //     sendRequest(dataSupTec);
 
       //     let dataNotSupTec = {
-      //       id_expediente: expediente,
+      //       codigo_bupi: expediente,
       //       id_consulta: 'update_notificacion',
       //       ruta: 3,
       //       usuario_responsable: doc[i].sup_tec
@@ -217,7 +217,7 @@ const asignar=e=>{
       //   }
         
       //   // var datos={
-      //   //   "id_expediente":doc[i].id_expediente,
+      //   //   "codigo_bupi":doc[i].codigo_bupi,
       //   //   "ruta": 0,
       //   //   "usuario_responsable":usuario_responsable
       //   // }

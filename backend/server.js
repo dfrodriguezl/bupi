@@ -66,14 +66,14 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-// const pool = new Pool({
-//   user: 'docker',
-//   host: 'postgis_bupi',
-//   database: 'invias_bupi',
-//   password: 'docker',
-//   port: 5432,
-//   timezone: 'utc'
-// })
+const pool = new Pool({
+  user: 'docker',
+  host: 'postgis_bupi',
+  database: 'invias_bupi',
+  password: 'docker',
+  port: 5432,
+  timezone: 'utc'
+})
 
 //desarrollo
 
@@ -87,15 +87,15 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //   timezone: 'utc'
 // })
 
-const pool = new Pool({
-  user: 'docker',
-  host: '172.19.26.22',//'pg-acueducto',
-  database: 'invias_bupi',
-  // database: 'prueba_schema',
-  password: 'docker',
-  port: 25432,
-  timezone: 'utc'
-})
+// const pool = new Pool({
+//   user: 'docker',
+//   host: '172.19.26.22',//'pg-acueducto',
+//   database: 'invias_bupi',
+//   // database: 'prueba_schema',
+//   password: 'docker',
+//   port: 25432,
+//   timezone: 'utc'
+// })
 
 
 
@@ -474,7 +474,7 @@ app.post('/upload/picture/:id', (req, res) => {
     // console.log(datetime)
     // console.log(newDate);
 
-    pool.query("INSERT INTO fotografias(id_fotografia,id_expediente,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file, id, newDate, archivo], (error, results) => {
+    pool.query("INSERT INTO fotografias(id_fotografia,codigo_bupi,fecha_captura,ruta) VALUES ($1,$2,$3,$4)", [uuid_file, id, newDate, archivo], (error, results) => {
       if (error) {
         console.log(error)
         return res.status(500).send({ message: error })
@@ -1083,7 +1083,7 @@ app.post('/excel_conciliacion', function (request, response) {
     G53: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%171014%'"},
     G54: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%170516%'"},
     G55: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%834706%'"}
-    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
+    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.codigo_bupi = ia.codigo_bupi where clasificacion_contable = 9 and titular = 6'}
   }  
   
 
@@ -1320,7 +1320,7 @@ app.post("/actualizacionMasiva", function (request, response) {
                       .catch(err => {
                         console.log(err)
                         response.status(200).json("error")
-                        throw error
+                        throw err
                       })
 
                     resultsList.push(promise)
@@ -1371,7 +1371,7 @@ app.post('/download-shp', function (request, response) {
 
         async function convertGeoJSON() {
           const shpresult = await convert(geojson,
-            path.join(__dirname, '../help/' + data.id_expediente + ".zip"),
+            path.join(__dirname, '../help/' + data.codigo_bupi + ".zip"),
             options);
           response.status(200).json({
             mensaje: 'Shape generado correctamente'

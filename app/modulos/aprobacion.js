@@ -130,7 +130,7 @@ const Aprobacion = () => {
         for (var i = 0; i < doc.length; i++) {
 
           var datos = {
-            "id_expediente": doc[i].codigo_bupi,
+            "codigo_bupi": doc[i].codigo_bupi,
             "ruta": 0,
             "usuario_responsable": usuario_responsable
           }
@@ -178,14 +178,14 @@ const Aprobacion = () => {
       // console.log(tec)
       if (tec !== '') {
         let datosTec = {
-          id_expediente: expediente
+          codigo_bupi: expediente
         }
         let rutas = estadosTecnico[tec.toLowerCase()];
         // console.log(rutas);
 
         if (tec.toLowerCase() != "aprobado") {
           let datosClose = {
-            id_expediente: expediente,
+            codigo_bupi: expediente,
             id_consulta: 'insert_calidad_tecnico',
             aprobado: null,
             obs: 'CAMBIO DE ESTADO'
@@ -196,7 +196,7 @@ const Aprobacion = () => {
           })
         } else if (tec.toLowerCase() == "aprobado") {
           let datosTec = {
-            id_expediente: expediente,
+            codigo_bupi: expediente,
             id_consulta: "update_tareas_calidad_tecnico"
           }
           // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -205,7 +205,7 @@ const Aprobacion = () => {
             // console.log(response)
             if (response.data.length > 0) {
               let datosClose = {
-                id_expediente: expediente,
+                codigo_bupi: expediente,
                 id_consulta: 'insert_calidad_tecnico',
                 aprobado: 1,
                 obs: 'APROBACIÓN MASIVA'
@@ -215,7 +215,7 @@ const Aprobacion = () => {
                 toast.success("Registro predial " + expediente + " aprobado ");
                 var datos={
                   ruta: 3,
-                  id_expediente: expediente
+                  codigo_bupi: expediente
                 }
               
                 notificacion(datos)
@@ -225,7 +225,7 @@ const Aprobacion = () => {
           })
 
           // let datosAprob = {
-          //   id_expediente: expediente,
+          //   codigo_bupi: expediente,
           //   id_consulta: "aprobar_tecnico",
           //   aprobado: 1
           // }
@@ -239,7 +239,7 @@ const Aprobacion = () => {
           let datosDel = {
             id_consulta: 'borrar_tarea',
             ruta_close: rutas.rutas_next,
-            id_expediente: expediente
+            codigo_bupi: expediente
           }
 
           sendRequest(datosDel).then((response) => {
@@ -264,13 +264,13 @@ const Aprobacion = () => {
 
       // if(jur !== ''){
       //   let datosJur = {
-      //     id_expediente: expediente
+      //     codigo_bupi: expediente
       //   }
       //   let rutas = estadosJuridico[jur.toLowerCase()];
 
       //   if(jur.toLowerCase() != "aprobado"){
       //     let datosClose = {
-      //               id_expediente: expediente,
+      //               codigo_bupi: expediente,
       //               id_consulta: 'insert_calidad_juridico',
       //               aprobado: null,
       //               obs: 'CAMBIO DE ESTADO'
@@ -281,7 +281,7 @@ const Aprobacion = () => {
       //       })
       //   }else if(jur.toLowerCase() == "aprobado"){
       //     let datosJur = {
-      //           id_expediente: expediente,
+      //           codigo_bupi: expediente,
       //           id_consulta: "update_tareas_calidad_juridico"
       //         }
       //         // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -290,7 +290,7 @@ const Aprobacion = () => {
       //           console.log(response)
       //           if(response.data.length > 0){
       //             let datosClose = {
-      //               id_expediente: expediente,
+      //               codigo_bupi: expediente,
       //               id_consulta: 'insert_calidad_juridico',
       //               aprobado: 1,
       //               obs: 'APROBACIÓN MASIVA'
@@ -308,7 +308,7 @@ const Aprobacion = () => {
       //     let datosDel = {
       //       id_consulta: 'borrar_tarea',
       //       ruta_close: rutas.rutas_next,
-      //       id_expediente: expediente
+      //       codigo_bupi: expediente
       //     }
       //     sendRequest(datosDel).then((response) => {
       //       // console.log(response)
@@ -334,12 +334,12 @@ const Aprobacion = () => {
 
 
       // let datos = {}
-      // datos.id_expediente = expediente
+      // datos.codigo_bupi = expediente
 
 
       // if(tec === "SI"){ 
       //   let datosTec = {
-      //     id_expediente: expediente,
+      //     codigo_bupi: expediente,
       //     id_consulta: "update_tareas_calidad_tecnico"
       //   }
       //   // datos.id_consulta = "update_tareas_calidad_tecnico"
@@ -348,7 +348,7 @@ const Aprobacion = () => {
       //     console.log(response)
       //     if(response.data.length > 0){
       //       let datosClose = {
-      //         id_expediente: expediente,
+      //         codigo_bupi: expediente,
       //         id_consulta: 'insert_calidad_tecnico',
       //         aprobado: 1,
       //         obs: 'APROBACIÓN MASIVA'
@@ -364,7 +364,7 @@ const Aprobacion = () => {
 
       // if(jur === "SI"){
       //   let datosJur = {
-      //     id_expediente: expediente,
+      //     codigo_bupi: expediente,
       //     id_consulta: "update_tareas_calidad_juridico"
       //   }
       //   // datos.id_consulta = "update_tareas_calidad_juridico"
@@ -373,7 +373,7 @@ const Aprobacion = () => {
       //     console.log(response)
       //     if(response.data.length > 0){
       //       let datosClose = {
-      //         id_expediente: expediente,
+      //         codigo_bupi: expediente,
       //         id_consulta: 'insert_calidad_juridico',
       //         aprobado: 1,
       //         obs: 'APROBACIÓN MASIVA'
@@ -400,7 +400,7 @@ const Aprobacion = () => {
     //     for (var i = 0; i < doc.length; i++){
 
     //       var datos={
-    //         "id_expediente":doc[i].id_expediente,
+    //         "codigo_bupi":doc[i].codigo_bupi,
     //         "ruta": 0,
     //         "usuario_responsable":usuario_responsable
     //       }

@@ -21,25 +21,25 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
     //alert(ruta);
     var info = {
       id_consulta: "insertar_asignacion_tecnico",
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       id_tarea: 3,
       usuario_responsable: data.usuario_responsable
     };
     var info1 = {
       id_consulta: "insertar_asignacion_tecnico",
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       id_tarea: 4,
       usuario_responsable: data.usuario_responsable
     };
     var info2 = {
       id_consulta: "insertar_asignacion_tecnico",
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       id_tarea: 5,
       usuario_responsable: data.usuario_responsable
     };
     var info3 = {
       id_consulta: "insertar_asignacion_tecnico",
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       id_tarea: 2,
       usuario_responsable: data.usuario_responsable
     };
@@ -55,14 +55,14 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
         id_consulta: "insertar_notificacion",
         tarea_next: 2,
         ruta_destino: 1,
-        id_expediente: data.id_expediente
+        codigo_bupi: data.codigo_bupi
       };
 
       var not2 = {
         id_consulta: "insertar_notificacion",
         tarea_next: 3,
         ruta_destino: 2,
-        id_expediente: data.id_expediente
+        codigo_bupi: data.codigo_bupi
       };
 
 
@@ -97,7 +97,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
           tarea_next: 5,
           ruta_destino: 10,
           opcion: 1,
-          id_expediente: data.id_expediente,
+          codigo_bupi: data.codigo_bupi,
           consecutivo: consecutivo,
           tabla: tipo
         }
@@ -110,7 +110,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
           tarea_next: 5,
           ruta_destino: 3,
           opcion: 1,
-          id_expediente: data.id_expediente,
+          codigo_bupi: data.codigo_bupi,
           consecutivo: consecutivo,
           tabla: tipo
         }
@@ -146,7 +146,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
           tarea_next: 4,
           ruta_destino: 11,
           opcion: 1,
-          id_expediente: data.id_expediente,
+          codigo_bupi: data.codigo_bupi,
           consecutivo: consecutivo,
           tabla: tipo
         }
@@ -159,7 +159,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
           tarea_next: 4,
           ruta_destino: 4,
           opcion: 1,
-          id_expediente: data.id_expediente,
+          codigo_bupi: data.codigo_bupi,
           consecutivo: consecutivo,
           tabla: tipo
         }
@@ -220,7 +220,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
 
 
 
-    // if (data.id_expediente.includes("S_")) {
+    // if (data.codigo_bupi.includes("S_")) {
     //   data.id_consulta = "aprobado_tecnico_servidumbre";
     // } else {
     //   data.id_consulta = "aprobado_tecnico";
@@ -244,7 +244,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
             tarea_next: 2,
             ruta_destino: 7,
             opcion: 1,
-            id_expediente: data.id_expediente,
+            codigo_bupi: data.codigo_bupi,
             consecutivo: consecutivo,
             tabla: tipo
           }
@@ -280,7 +280,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
         tarea_next: 5,
         ruta_destino: 10,
         opcion: 1,
-        id_expediente: data.id_expediente,
+        codigo_bupi: data.codigo_bupi,
         consecutivo: consecutivo,
         tabla: tipo
       }
@@ -311,7 +311,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
             tarea_next: 2,
             ruta_destino: 12,
             opcion: 1,
-            id_expediente: data.id_expediente,
+            codigo_bupi: data.codigo_bupi,
             consecutivo: consecutivo,
             tabla: tipo
           }
@@ -347,7 +347,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
         tarea_next: 4,
         ruta_destino: 11,
         opcion: 1,
-        id_expediente: data.id_expediente,
+        codigo_bupi: data.codigo_bupi,
         consecutivo: consecutivo,
         tabla: tipo
       }
@@ -380,7 +380,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
             tarea_next: 3,
             ruta_destino: 13,
             opcion: 1,
-            id_expediente: data.id_expediente,
+            codigo_bupi: data.codigo_bupi,
             consecutivo: consecutivo,
             tabla: tipo
           }
@@ -423,7 +423,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
       tarea_next: 8,
       ruta_destino: 13,
       opcion: 1,
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       usuario: data.usuario_prestamo
     };
 
@@ -437,7 +437,7 @@ export const notificacion_saneamientos = (data, tipo, consecutivo) => {
 
     let post = {
       id_consulta: "update_tareas_estado_documental",
-      id_expediente: data.id_expediente,
+      codigo_bupi: data.codigo_bupi,
       usuario_prestamo: data.usuario_prestamo
     };
 

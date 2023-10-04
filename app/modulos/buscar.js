@@ -60,14 +60,14 @@ const Busqueda = () => {
         {data.map((el, key) => (
           <div className="item" key={key} >
             <div>
-              <p className="item_titulo"> {el.id_expediente}</p>
+              <p className="item_titulo"> {el.codigo_bupi}</p>
               <p className="item_des">Matrícula inmobiliaria: {el.calculo_matricula}</p>
               <p className="item_des">Departamento: {el.departamento}</p>
               <p className="item_des">Municipio: {el.municipio}</p>
               <p className="item_des">Dirección: {el.direccion_actual_igac}</p>
               <p className="item_des">ORIP: {el.orip}</p>
               <button >
-                <Link to={"/predio/" + el.id_expediente}>
+                <Link to={"/predio/" + el.codigo_bupi}>
                   <p>Ver registro</p>
                 </Link>
               </button>

@@ -30,7 +30,7 @@ const HomeConsulta = () => {
             <SearchIcon />
           </button>
         </div>
-        <p>Puede buscar predios con el id_expediente, identificador de proyecto, nombre de proyecto, chip catastral, número de matricula inmobiliaria, código catastral, barrio/vereda, UPZ ó dirección (se muestran 50 resultados)</p>
+        <p>Puede buscar predios con el codigo_bupi, identificador de proyecto, nombre de proyecto, chip catastral, número de matricula inmobiliaria, código catastral, barrio/vereda, UPZ ó dirección (se muestran 50 resultados)</p>
       </Grid>
       <Grid xs={1} />
       <Grid xs={5}>

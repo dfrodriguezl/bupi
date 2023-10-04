@@ -84,9 +84,9 @@ const CrearPredio = () => {
   }
 
   const crearExpediente = () => {
-    var datos = { "id_consulta": "insert_expediente_2", id_expediente: expediente }
+    var datos = { "id_consulta": "insert_expediente_2", codigo_bupi: expediente }
     servidorPost('/backend', datos).then((response) => {
-      var datos2 = { "id_consulta": "insert_expediente_1", id_expediente: expediente }
+      var datos2 = { "id_consulta": "insert_expediente_1", codigo_bupi: expediente }
       servidorPost('/backend', datos2).then((responseSan) => {
         if (responseSan.data) {
           crearAsignaciones(expediente);
@@ -113,7 +113,7 @@ const CrearPredio = () => {
     setSupJur(e.usuario_usuario)
   }
 
-  const crearAsignaciones = (id_expediente) => {
+  const crearAsignaciones = (codigo_bupi) => {
     Object.keys(asignaciones).forEach((asignacion) => {
 
       const usuarioResponsable = asignacion === "tecnico" ? tecnico : asignacion === "juridico" ?
@@ -128,7 +128,7 @@ const CrearPredio = () => {
 
       const datosAsignacion = {
         "id_consulta": "insertar_asignacion_tecnico",
-        id_expediente: id_expediente,
+        codigo_bupi: codigo_bupi,
         id_tarea: asignaciones[asignacion],
         usuario_responsable: usuarioResponsable
       };
@@ -148,7 +148,7 @@ const CrearPredio = () => {
   const insertarTareas = () => {
     Object.entries(tareas_iniciales).forEach((tarea) => {
       const datosTarea = {
-        id_expediente: expediente,
+        codigo_bupi: expediente,
         ruta_destino: tarea[1].ruta,
         tarea_next: tarea[1].tarea_next,
         id_consulta: "insertar_notificacion"
@@ -162,22 +162,22 @@ const CrearPredio = () => {
 
   const insertCalidadJuridica = () => {
     const datosCalJur = {
-      id_expediente: expediente,
+      codigo_bupi: expediente,
       id_consulta: "insert_expediente_4"
     }
     servidorPost('/backend', datosCalJur).then((responseTareas) => {
       const datosCalJur = {
-        id_expediente: expediente,
+        codigo_bupi: expediente,
         id_consulta: "insert_expediente_5"
       }
       servidorPost('/backend', datosCalJur).then((responseTareas) => {
         const datosCalJur = {
-          id_expediente: expediente,
+          codigo_bupi: expediente,
           id_consulta: "insert_expediente_6"
         }
         servidorPost('/backend', datosCalJur).then((responseTareas) => {
           const datosCalJur = {
-            id_expediente: expediente,
+            codigo_bupi: expediente,
             id_consulta: "insert_expediente_7"
           }
           servidorPost('/backend', datosCalJur).then((responseTareas) => {
