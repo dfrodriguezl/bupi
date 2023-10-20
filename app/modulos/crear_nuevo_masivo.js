@@ -126,7 +126,7 @@ const CrearPredioMasivo = () => {
         if (responseSan.data) {
           crearAsignaciones(codigo_bupi, us_tecnico, us_juridico, us_sup_tec, us_sup_jur);
           insertCalidadJuridica(codigo_bupi);
-          toast.success("Expediente " + codigo_bupi + " creado y asignado exitosamente")
+          toast.success("Codigo BUPI "  + codigo_bupi + " creado y asignado exitosamente")
         }
       });
     });

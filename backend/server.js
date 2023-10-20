@@ -42,6 +42,8 @@ const fileSaver = require('file-saver');
 const Blob = require('buffer');
 const gotenberg = require('gotenberg-js-client');
 
+const { format } = require('date-fns');
+
 const XlsxTemplate = require('xlsx-template');
 
 const urlPdf = "http://192.168.56.10:3000/forms/libreoffice/convert";
@@ -66,26 +68,26 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'postgis_bupi',
-  database: 'invias_bupi',
-  password: 'docker',
-  port: 5432,
-  timezone: 'utc'
-})
-
-//desarrollo
-
 // const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'bupi_invias',
-//   // database: 'prueba_schema',
-//   password: 'yeinerm12',
+//   user: 'docker',
+//   host: 'postgis_bupi',
+//   database: 'invias_bupi',
+//   password: 'docker',
 //   port: 5432,
 //   timezone: 'utc'
 // })
+
+//desarrollo
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',//'pg-acueducto',
+  database: 'bupi_invias',
+  // database: 'prueba_schema',
+  password: 'yeinerm12',
+  port: 5432,
+  timezone: 'utc'
+})
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -288,6 +290,7 @@ app.use(function (req, res, next) {
 
 const xml2js = require('xml2js');
 const fs = require('fs');
+const { filter } = require('compression');
 const parser = new xml2js.Parser({ attrkey: "attr" });
 let xml_string = fs.readFileSync(__dirname + "/consultas.xml", "utf8");
 var json = "";
@@ -1207,15 +1210,21 @@ app.post("/actualizacionMasiva", function (request, response) {
   var token = request.cookies.jwt;
   let data = request.body;
 
+  // console.log("data[TABLA]", Object.keys(data)[0]); 
+
   var consultas = [
     'update_info1_fuente',
     'update_info2_adquisicion',
+    'update2_info42_adquisicion_tradentes',
+    'update2_info41_adquisicion_matrices',    
     'update_info4_informacion_catastral',
     'update_info5_informacion_invias',
-    'update_info10_sig',
+    'update_info6_avaluos',
     'update_info11_adquisicion_escritura',
+    'update_info12_pago',
     'update_info13_saneamiento_catastral',
     'update_info14_saneamiento_juridico'
+    // 'update_info10_sig',
     // 'update_info2_general_predio',
     // 'update_info3_areas_usos',
     // 'update_info4_avaluos',
@@ -1239,12 +1248,16 @@ app.post("/actualizacionMasiva", function (request, response) {
   var hojas = [
     'fuente',
     'info2_adquisicion',
+    'adquisicion_tradentes', 
+    'adquisicion_matrices',       
     'informacion_catastral',
     'informacion_invias',
-    'sig',
-    'adquisicion_escritura',
+    'avaluos',
+    'adquisicion_escritura',    
+    'pago',
     'saneamiento_catastral',
     'saneamiento_juridico'
+    // 'sig',
     // 'general_predio',
     // 'areas_usos',
     // 'avaluos',
@@ -1276,32 +1289,70 @@ app.post("/actualizacionMasiva", function (request, response) {
         let totalData = 0;
         let counter = 0;
 
+        async function dominios() {
+
+        }
+
+        // const promise2 = pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
+        //               .then(results => {
+        //                 console.log("yei pruebas", results.rows)
+        //                 return results.rows;
+        //               })
+
         Object.keys(data).map((key, idx) => {
           let hoja_nombre = data[key];
+          // console.log("hoja_nombre", hoja_nombre);
           if (hoja_nombre.length > 0) {
             totalData = totalData + hoja_nombre.length;
           }
-
         });
 
 
         // console.log(resultsList)
 
         async function processTasks() {
+          let domains = await pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
+          .then(results => {
+            // console.log("yei pruebas", results.rows)
+            return results.rows;
+          })
+
+          // console.log(domains);
+
           let resultsList = []
           Object.keys(data).map((key, idx) => {
             let hoja_nombre = data[key];
             if (hoja_nombre.length > 0) {
               if (hojas.includes(key)) {
                 hoja_nombre.forEach(element => {
+                  // console.log("element yei",element)
                   counter = counter + 1;
                   let id_consulta = consultas[idx];
                   var query_text = get_sql(id_consulta);
                   var upd = ""
                   for (var k in element) {
-                    upd = upd + k + "=$" + k + ","
+                    console.log("ka",k,element[`${k}`]);
+                    let domainK = domains.filter( obj => { return obj.field == k && obj.descripcion == element[`${k}`]})
+                    if (domainK.length > 0) {
+                      console.log("dom yei", domainK)
+                      element[`${k}`] = domainK[0]["valor"]
+                    }
+                    if (k.includes("fecha")) {
+                      let newDateValue = new Date(element[`${k}`] * 1000);
+                      const formattedDate = format(newDateValue, 'yyyy-MM-dd');
+                      // console.log("newDateValue", new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue))
+                      console.log("formattedDate",formattedDate);
+                      // element[`${k}`] = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue);
+                      element[`${k}`] = formattedDate;
+                    }
+                    k2 = k.replace(' ', '');
+                    upd = upd + k2 + "=$" + k2 + ","
                   }
                   upd = upd.replace(/,\s*$/, "");
+
+
+                  console.log ("upd", upd);
+                  console.log("element yei2",element)
 
                   if (query_text.includes("upd_query_alpaca")) {
                     query_text = query_text.replace("upd_query_alpaca", upd);
@@ -1312,7 +1363,7 @@ app.post("/actualizacionMasiva", function (request, response) {
                   }
 
                   try {
-                    console.log(counter)
+                    console.log(counter, query_text);
                     const promise = pool.query(query_text, element)
                       .then(results => {
                         return results.rows;

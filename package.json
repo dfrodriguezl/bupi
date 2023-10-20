@@ -53,6 +53,7 @@
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
     "date-and-time": "^0.14.2",
+    "date-fns": "^2.30.0",
     "docxtemplater": "^3.28.2",
     "express": "^4.17.1",
     "express-fileupload": "^1.4.0",

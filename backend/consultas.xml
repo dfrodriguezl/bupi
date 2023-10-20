@@ -847,9 +847,19 @@
             update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update2_info41_adquisicion_matrices">
+        <sql>
+            update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info42_adquisicion_tradentes">
         <sql>
             update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update2_info42_adquisicion_tradentes">
+        <sql>
+            update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info43_contabilidad">
