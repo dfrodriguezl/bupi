@@ -30,11 +30,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 
 /*!
  * 
-<<<<<<< HEAD
  *               jsPDF AutoTable plugin v3.5.31
-=======
- *               jsPDF AutoTable plugin v3.6.0
->>>>>>> master
  *
  *               Copyright (c) 2023 Simon Bengtsson, https://github.com/simonbengtsson/jsPDF-AutoTable
  *               Licensed under the MIT License.
@@ -43,9 +39,6 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  */
 
 /*!
-<<<<<<< HEAD
- * ApexCharts v3.41.1
-=======
  * @kurkle/color v0.2.1
  * https://github.com/kurkle/color#readme
  * (c) 2022 Jukka Kurkela
@@ -53,8 +46,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  */
 
 /*!
- * ApexCharts v3.42.0
->>>>>>> master
+ * ApexCharts v3.41.1
  * (c) 2018-2023 ApexCharts
  * Released under the MIT License.
  */

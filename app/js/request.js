@@ -2,8 +2,8 @@ const axios = require('axios');
 
 
 
-const destino = "http://localhost:3000";
-// const destino = "http://172.19.26.105/predios";
+// const destino = "http://localhost:3000";
+const destino = "http://172.19.26.105/predios";
 // const destino = "http://172.19.26.22/predios";
 // const destino = "http://161.35.107.85/bienes-raices";
 // const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";

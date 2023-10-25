@@ -405,6 +405,67 @@ export const notificacion = (data) => {
             await back(post)
 
         })()
+    } else if (ruta === 100) {
+
+        var info = {
+            id_consulta: "insertar_asignacion_tecnico",
+            codigo_bupi: data.codigo_bupi,
+            id_tarea: 2,
+            usuario_responsable: data.usuario_tecnico
+        };
+
+        var info1 = {
+            id_consulta: "insertar_asignacion_tecnico",
+            codigo_bupi: data.codigo_bupi,
+            id_tarea: 5,
+            usuario_responsable: data.usuario_calidad
+        };
+
+        var info2 = {
+            id_consulta: "insertar_asignacion_tecnico",
+            codigo_bupi: data.codigo_bupi,
+            id_tarea: 10,
+            usuario_responsable: "coordinador"
+        };
+
+        var info3 = {
+            id_consulta: "insertar_asignacion_tecnico",
+            codigo_bupi: data.codigo_bupi,
+            id_tarea: 8,
+            usuario_responsable: "documental"
+        };
+
+        var info4 = {
+            id_consulta: "insertar_asignacion_tecnico",
+            codigo_bupi: data.codigo_bupi,
+            id_tarea: 11,
+            usuario_responsable: "contabilidad"
+        };
+
+        (async () => {
+            await back(info);
+            await back(info1);
+            await back(info2);
+            await back(info3);
+            await back(info4);
+
+            var not1 = {
+                id_consulta: "insertar_notificacion",
+                tarea_next: 2,
+                ruta_destino: 1,
+                codigo_bupi: data.codigo_bupi
+            };
+
+            (async () => {
+
+                await back(not1)
+
+            })()
+
+
+
+        })()
+
     }
 
 

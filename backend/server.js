@@ -69,39 +69,36 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 //produccion
 
 
-// const pool = new Pool({
-//   user: 'docker',
-//   host: 'postgis_bupi',
-//   database: 'invias_bupi',
-//   password: 'docker',
-//   port: 5432,
-//   timezone: 'utc'
-// })
-
-// desarrollo
-
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',//'pg-acueducto',
-  database: 'bupi_invias',
-  // database: 'prueba_schema',
-  password: 'yeinerm12',
+  user: 'docker',
+  host: 'postgis_bupi',
+  database: 'invias_bupi',
+  password: 'docker',
   port: 5432,
   timezone: 'utc'
 })
 
+// desarrollo
+
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',//'pg-acueducto',
+//   database: 'bupi_invias',
+//   // database: 'prueba_schema',
+//   password: 'yeinerm12',
+//   port: 5432,
+//   timezone: 'utc'
+// })
+
 // const pool = new Pool({
 //   user: 'docker',
-//   host: '172.19.26.22',//'pg-acueducto',
+//   host: '172.19.26.105',//'pg-acueducto',
 //   database: 'invias_bupi',
 //   // database: 'prueba_schema',
 //   password: 'docker',
 //   port: 25432,
 //   timezone: 'utc'
 // })
-
-
-
 
 
 
