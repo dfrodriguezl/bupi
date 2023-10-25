@@ -95,9 +95,7 @@ export const notificacion = (data) => {
                 codigo_bupi: data.codigo_bupi
             }
 
-
             await back(post2)
-
 
         })()
 

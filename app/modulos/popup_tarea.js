@@ -10,6 +10,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
 const Modal = ({ nombre, id, refresh, tareacod, tipo, consecutivo }) => {
+  console.log("yeinerm", nombre, id, refresh, tareacod, tipo, consecutivo);
 
   const toastId = React.useRef(null);
 

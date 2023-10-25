@@ -88,6 +88,7 @@ const asignar=e=>{
         let tipo = doc[i].tipo;
         let usuario1 = doc[i].usuario1;
         let usuario2 = doc[i].usuario2;
+        let usuarioTec = doc[i].usuario;
 
         if(tipo.toLowerCase() === 'saneamiento'){
           const dataJur = {
@@ -108,7 +109,22 @@ const asignar=e=>{
             console.log("RESPONSE", res);
           })
 
-        } else if(tipo.toLowerCase() === 'predio' ){
+        } else if(tipo.toLowerCase() === 'predio' ) { 
+          console.log(doc[i].codigo_bupi, doc[i].usuario)
+
+          const dataTec = {
+            codigo_bupi: expediente,
+            ruta: 1,
+            usuario_tecnico: usuarioTec
+          }
+          notificacion(dataTec);
+          // const datosAsignacion = {
+          //   "id_consulta": "insertar_asignacion_tecnico",
+          //   codigo_bupi: doc[i].codigo_bupi,
+          //   id_tarea: 1,
+          //   usuario_responsable: doc[i].usuario
+          // };
+
           //TO DO PREDIO
         }
       }
