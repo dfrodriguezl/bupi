@@ -43,13 +43,15 @@ const CheckMultiple = (props) => {
 return (
   <form>
     {options.map((o, idx) => {
-      return (
-        <Fragment>
-          <input type="checkbox" name={name} value={o.value} onChange={(e) => {onHandleChange(e,idx)}} disabled={isDisabled ? true : false} 
-          defaultChecked={defaultValue ? defaultValue.length > 0 ? defaultValue.filter((f) => f.value !== null && f.value === o.value).length === 1 ? true : false : false: false} />
-          <label htmlFor={"saneamiento" + idx}> {o.label}</label><br />
-        </Fragment>
-      )
+      if(o.label != null) {
+        return (
+          <Fragment key={idx}>
+            <input type="checkbox" name={name} value={o.value} onChange={(e) => {onHandleChange(e,idx)}} disabled={isDisabled ? true : false} 
+            defaultChecked={defaultValue ? defaultValue.length > 0 ? defaultValue.filter((f) => f.value !== null && f.value === o.value).length === 1 ? true : false : false: false} />
+            <label htmlFor={"saneamiento" + idx}> {o.label}</label><br />
+          </Fragment>
+        )
+      }      
     }, [])}
   </form>
 )

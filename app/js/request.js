@@ -4,6 +4,7 @@ const axios = require('axios');
 
 const destino = "http://localhost:3000";
 // const destino = "http://172.19.26.105/predios";
+// const destino = "http://172.19.26.22/predios";
 // const destino = "http://161.35.107.85/bienes-raices";
 // const destino = "https://www.acueducto.com.co/depuracionpredial/bienes-raices";
 // const destino = "http://192.168.56.10/bienes-raices";
@@ -18,7 +19,7 @@ export function servidorPost(uri,datos){
         data: datos,
         withCredentials: true
         })
-
+        
 }
 
 export function servidorGet(uri){
@@ -74,17 +75,6 @@ export function servidorDocs2(uri, datos) {
         withCredentials: true,
         responseType: 'blob',
         }).then(response => {
-            // console.log("response excel", response, response.data)
-            // const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            // // const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
-            // // const url = window.URL.createObjectURL(new File(new Blob([response.data, "application/vnd.ms-excel"])));
-            // const url = window.URL.createObjectURL(blob);
-            // const link = document.createElement('a');
-            // link.href = url;
-            // link.setAttribute('download','test.xlsx'); //or any other extension
-            // document.body.appendChild(link);
-            // link.click();
-            // window.URL.revokeObjectURL(url);
             return response;
     });
 }

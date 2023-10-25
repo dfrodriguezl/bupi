@@ -87,6 +87,11 @@ const ActualizacionMasiva = () => {
             data[sh] = XLSX.utils.sheet_to_json(sh_data,{header:0});
           })
 
+          // ajustes actualización masiva
+          // let first_name = wb.Sheets[wb.SheetNames[0]]
+          // let datas = XLSX.utils.sheet_to_json(first_name,{header:0});
+          // console.log(datas, "datayei")
+
           servidorPost('/actualizacionMasiva',data).then((response) => {
             // console.log(response)
             if (response.status==200) {

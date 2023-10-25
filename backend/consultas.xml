@@ -247,7 +247,7 @@
     </Consulta>
     <Consulta id="info15_areas">
         <sql>
-        select * from info15_areas where codigo_bupi=$codigo_bupi 
+        select * from info15_areas_vw where codigo_bupi=$codigo_bupi 
         </sql>
     </Consulta>
     <Consulta id="info15_saneamiento_basico_servidumbre">
@@ -911,9 +911,19 @@
             update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update2_info41_adquisicion_matrices">
+        <sql>
+            update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info42_adquisicion_tradentes">
         <sql>
             update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update2_info42_adquisicion_tradentes">
+        <sql>
+            update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info43_contabilidad">
@@ -3369,7 +3379,7 @@ group by dominio) as d
 
     <Consulta id="get_ultimo_expediente">
         <sql>
-        select max(codigo_bupi::int) + 10000 as expediente
+        select max(codigo_bupi::int) + 1 as expediente
             from info2_adquisicion ia ;
         </sql>
     </Consulta>

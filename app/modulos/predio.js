@@ -327,79 +327,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
                                     // console.log("lectura")
                                 });
-                            }
-
-                            // if (response.some(r => tipo_permiso.includes(r)) == false) {
-                            //     let responseUp = response;
-
-                            //     var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
-
-                            //     var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
-
-                            //     // servidorPost('/backend', data).then((response) => {
-                            //     //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {
-                            //     //         let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
-                            //     //         servidorPost('/backend', data2).then((responseSan) => {
-                            //     //             if (responseSan.data[0].exists) {
-
-                            //     //             } else {
-
-                            //     //             }
-                            //     //         });
-                            //     //     }
-                            //     // })
-
-                            //     servidorPost('/backend', data).then((response) => {
-                            //         getBloqueo(id).then((r) => {
-                            //             if (r.data.length > 0) {
-                            //                 if (r.data[0].bloqueo_predio) {
-                            //                     setLectura(true)
-                            //                 } else {
-                            //                     if (index === 37 && responseUp.some(r => r == 14)) {
-                            //                         setLectura(false)
-                            //                     } else {
-                            //                         if (responseUp.some(r => r == 13)) {
-                            //                             setLectura(false)
-                            //                         } else {
-                            //                             if (!response.data[0].exists) {
-                            //                                 let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
-                            //                                 servidorPost('/backend', data2).then((responseSan) => {
-                            //                                     setLectura(!responseSan.data[0].exists)
-                            //                                 })
-                            //                             } else {
-                            //                                 setLectura(!response.data[0].exists)
-                            //                             }
-
-                            //                         }
-                            //                     }
-                            //                 }
-                            //             } else {
-                            //                 if (index === 37 && responseUp.some(r => r == 14)) {
-                            //                     setLectura(false)
-                            //                 } else {
-                            //                     if (responseUp.some(r => r == 13)) {
-                            //                         setLectura(false)
-                            //                     } else {
-                            //                         if (!response.data[0].exists) {
-                            //                             let data2 = { id_consulta: 'tengo_predio_saneamiento', codigo_bupi: id };
-                            //                             servidorPost('/backend', data2).then((responseSan) => {
-                            //                                 setLectura(!responseSan.data[0].exists)
-                            //                             })
-                            //                         } else {
-                            //                             setLectura(!response.data[0].exists)
-                            //                         }
-
-                            //                     }
-                            //                 }
-                            //             }
-
-                            //         })
-
-                            //         // console.log("lectura")
-                            //     });
-                            // } else {
-                            //     setLectura(false)
-                            // }                            
+                            }                            
 
 
                         }
@@ -1796,7 +1724,7 @@ const Predio = (props) => {
                                 </button>} getForm={getForm} active={43} tbl="info43_contabilidad" descripcion="Contabilidad" />
                                 <PopupAdvertencia open={<button onClick={() => getForm(45, "info43_contabilidad", "Conciliación Contabilidad")} className={active == 45 ? 'active' : ''}>
                                     Conciliación Contabilidad
-                                </button>} getForm={getForm} active={45} tbl="info43_contabilidad" descripcion="Contabilidad" />
+                                </button>} getForm={getForm} active={45} tbl="info43_contabilidad" descripcion="Conciliación Contabilidad" />
                             </Fragment>
                         }
 

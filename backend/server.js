@@ -43,6 +43,7 @@ const Blob = require('buffer');
 const gotenberg = require('gotenberg-js-client');
 
 const ExcelJS = require('exceljs');
+const { format } = require('date-fns');
 
 const XlsxTemplate = require('xlsx-template');
 
@@ -67,15 +68,15 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
-/* const pool = new Pool({
-  user: 'docker',
-  host: 'postgis_bupi',
-  database: 'invias_bupi',
-  password: 'docker',
-  port: 5432,
-  timezone: 'utc'
-}) */
 
+// const pool = new Pool({
+//   user: 'docker',
+//   host: 'postgis_bupi',
+//   database: 'invias_bupi',
+//   password: 'docker',
+//   port: 5432,
+//   timezone: 'utc'
+// })
 
 // desarrollo
 
@@ -88,7 +89,6 @@ const pool = new Pool({
   port: 5432,
   timezone: 'utc'
 })
-
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -294,6 +294,7 @@ app.use(function (req, res, next) {
 
 const xml2js = require('xml2js');
 const fs = require('fs');
+const { filter } = require('compression');
 const parser = new xml2js.Parser({ attrkey: "attr" });
 let xml_string = fs.readFileSync(__dirname + "/consultas.xml", "utf8");
 var json = "";
@@ -1089,7 +1090,7 @@ app.post('/excel_conciliacion', function (request, response) {
     G53: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%171014%'"},
     G54: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%170516%'"},
     G55: {query: "select sum(valor_contabilidad) from info43_contabilidad where cuenta_contable like '%834706%'"}
-    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.id_expediente = ia.id_expediente where clasificacion_contable = 9 and titular = 6'}
+    // G65: {query: 'select count(*) from info43_contabilidad left join info2_adquisicion ia on info43_contabilidad.codigo_bupi = ia.codigo_bupi where clasificacion_contable = 9 and titular = 6'}
   }  
   
 
@@ -1146,138 +1147,6 @@ app.post('/excel_conciliacion', function (request, response) {
           // response.status(200).send(array);
         }
 
-        // processTasks().then(result => {
-        //   consultas['resultados'] = result;
-        //   result.forEach((res)=> {
-        //     console.log(Object.values(res[0])[0])
-        //     respuestas.push(Object.values(res[0])[0])
-        //   });
-        //   console.log(respuestas)
-        // });
-
-        // console.log(respuestas)
-        // const workbook = new ExcelJS.Workbook();
-
-        // workbook.xlsx.readFile(path.resolve(__dirname, "../help/pruebas.xlsx"))
-        // .then(() => {
-        //     // const worksheet = workbook.getWorksheet('Hoja1');
-        //   const worksheet = workbook.getWorksheet('CONCILIACION de');
-            
-        //   const today = new Date();
-        //   const year = today.getFullYear();
-        //   const month = today.getMonth() + 1; // Months are zero-based, so we add 1
-        //   const day = today.getDate();
-
-        //   const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
-
-        //   worksheet.getCell('F4').value = currentDate;
-
-        //   for (let index = 0; index < Object.keys(consultas).length - 1; index++) {
-        //     // const element = array[index];
-        //     // console.log(Object.keys(consultas)[index])
-        //     // console.log(index, consultas['resultados'][0][0].count, consultas['resultados'][index][0].count)
-
-        //     worksheet.getCell(Object.keys(consultas)[index]).value = consultas['resultados'][index][0].count;
-            
-        //   }
-
-        //   // worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
-
-        //   // worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
-
-        //   // worksheet.getCell('G36').value = consultas['resultados'][2][0].count;
-
-        //   // worksheet.getCell('G37').value = consultas['resultados'][3][0].count;
-
-        //   // worksheet.getCell('G38').value = consultas['resultados'][4][0].count;
-          
-        //   // worksheet.getCell('G40').value = consultas['resultados'][5][0].count;
-
-        //   // worksheet.getCell('G41').value = consultas['resultados'][6][0].count;
-          
-        //   // worksheet.getCell('G42').value = consultas['resultados'][7][0].count;
-
-        //   // worksheet.getCell('G43').value = consultas['resultados'][8][0].count;
-
-        //   // worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
-
-        //   // worksheet.getCell('F53').value = consultas['resultados'][10][0].count;
-
-        //   // worksheet.getCell('F54').value = consultas['resultados'][11][0].count;
-
-        //   // worksheet.getCell('F55').value = consultas['resultados'][12][0].count;
-
-        //   // worksheet.getCell('G13').value = consultas['resultados'][13][0].count;
-
-        //   // worksheet.getCell('G14').value = consultas['resultados'][14][0].count;
-
-        //   // worksheet.getCell('G15').value = consultas['resultados'][15][0].count;
-
-        //   // worksheet.getCell('G16').value = consultas['resultados'][16][0].count;
-
-        //   // worksheet.getCell('G17').value = consultas['resultados'][17][0].count;
-
-        //   // worksheet.getCell('G18').value = consultas['resultados'][18][0].count;
-
-        //   // worksheet.getCell('G19').value = consultas['resultados'][19][0].count;
-
-        //   // worksheet.getCell('G20').value = consultas['resultados'][20][0].count;
-
-        //   // worksheet.getCell('G21').value = consultas['resultados'][21][0].count;
-
-        //   // worksheet.getCell('G22').value = consultas['resultados'][22][0].count;
-
-        //   // worksheet.getCell('G23').value = consultas['resultados'][23][0].count;
-
-        //   // worksheet.getCell('G24').value = consultas['resultados'][24][0].count;
-
-        //   // worksheet.getCell('G25').value = consultas['resultados'][25][0].count;
-
-        //   // worksheet.getCell('G26').value = consultas['resultados'][26][0].count;
-
-        //   // worksheet.getCell('G27').value = consultas['resultados'][27][0].count;
-
-        //   // worksheet.getCell('G28').value = consultas['resultados'][28][0].count;
-          
-        //   // worksheet.getCell('G29').value = consultas['resultados'][29][0].count;
-
-        //   // worksheet.getCell('G30').value = consultas['resultados'][30][0].count;
-
-        //   // worksheet.getCell('G31').value = consultas['resultados'][31][0].count;
-
-        //   // worksheet.getCell('G32').value = consultas['resultados'][32][0].count;
-
-        //   // worksheet.getCell('G33').value = consultas['resultados'][33][0].count;
-
-        // //   console.log("pruebas", consultas['resultados'])
-        // //     // worksheet2.getCell('J2').value = 'Yeiner Mendivelso Ochoa';
-
-        //   workbook.xlsx.writeBuffer()
-        //   .then((buffer) => {
-        //       // Set the response headers for file download
-        //     // response.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        //     // response.setHeader('Content-Disposition', 'attachment; filename=example.xlsx');
-        //     // response.setHeader('Content-Length', buffer.length);
-
-        //       // Send the Excel file as the response
-        //     // response.send(buffer);
-
-        //     response.setHeader('Content-disposition', 'attachment; filename=conciliacion.xlsx');
-        //   // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
-
-        //     response.end(new Buffer.from(buffer, 'base64'));
-
-        //   })
-        //   .catch((error) => {
-        //     console.error('Error generating Excel file:', error);
-        //     response.status(500).send('Error generating Excel file');
-        //   });
-        // })
-        // .catch((error) => {
-        //   console.error('Error generating Excel file:', error);
-        //   response.status(500).send('Error generating Excel file');
-        // });
-
         async function writeToExistingExcel() {
           await processTasks().then(result => {
             // consultas['resultados'] = result;
@@ -1290,9 +1159,6 @@ app.post('/excel_conciliacion', function (request, response) {
           fs.readFile(path.resolve(__dirname, "../help/conciliacion_plantilla.xlsx"), (err, temp) => {
             var template = new XlsxTemplate(temp);
             var sheetNumber = 1;
-            // var values = {
-            //   name: "yeiner mendi"
-            // };
 
             const llaves = Object.keys(consultas);
             const result = {};
@@ -1317,7 +1183,6 @@ app.post('/excel_conciliacion', function (request, response) {
             }
 
             console.log(respuestas,"respuestas", result, Object.keys(result).length)
-            // template.substitute(sheetNumber, {name: "yeiner mendi233"});
             template.substitute(sheetNumber, result);
   
             var output = template.generate();
@@ -1334,146 +1199,6 @@ app.post('/excel_conciliacion', function (request, response) {
         }
         
         writeToExistingExcel();
-        // async function writeToExistingExcel() {
-        //   await processTasks().then(result => {
-        //     consultas['resultados'] = result;
-        //     console.log(result)
-        //   });
-
-        //   const existingFilePath = __dirname + "/conciliacion.xlsx";
-
-          // const options = {
-          //   filename: existingFilePath,
-          //   useStyles: true,
-          //   useSharedStrings: true
-          // };
-        
-          // const workbook = new ExcelJS.stream.xlsx.WorkbookWriter(options);
-
-        // const workbook = new ExcelJS.Workbook();
-
-        //   await workbook.xlsx.readFile(path.resolve(__dirname, "../help/pruebas.xlsx"));
-        //   // await workbook.xlsx.readFile(existingFilePath);
-
-
-        //   // const worksheet = workbook.getWorksheet('CONCILIACION de');
-            
-        //   // const today = new Date();
-        //   // const year = today.getFullYear();
-        //   // const month = today.getMonth() + 1; // Months are zero-based, so we add 1
-        //   // const day = today.getDate();
-
-        //   // const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
-
-        //   // worksheet.getCell('F1').value = currentDate;
-
-        //   // await workbook.commit();
-
-        //   const buffer = await workbook.xlsx.writeBuffer();
-
-
-        //   response.setHeader('Content-disposition', 'attachment; filename=conciliacion.xlsx');
-        //   // response.writeHead(200, [['Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']]);
-
-        //   response.end(new Buffer.from(buffer, 'base64'));
-          
-          
-
-        // }
-
-        // writeToExistingExcel();
-        
-        // workbook.xlsx.readFile(path.resolve(__dirname, "pruebas.xlsx"))
-        // .then(() => {
-        //       // const worksheet = workbook.getWorksheet('Hoja1');
-        //       const worksheet = workbook.getWorksheet('CONCILIACION de');
-              
-        //       const today = new Date();
-        //       const year = today.getFullYear();
-        //       const month = today.getMonth() + 1; // Months are zero-based, so we add 1
-        //       const day = today.getDate();
-  
-        //       const currentDate = `${year}/${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}`;
-  
-        //       worksheet.getCell('A1').value = currentDate;
-
-        //       worksheet.getCell('G66').value = consultas['resultados'][0][0].count;
-
-        //       worksheet.getCell('G35').value = consultas['resultados'][1][0].count;
-
-        //       worksheet.getCell('G36').value = consultas['resultados'][2][0].count;
-
-        //       worksheet.getCell('G37').value = consultas['resultados'][3][0].count;
-
-        //       worksheet.getCell('G38').value = consultas['resultados'][4][0].count;
-              
-        //       worksheet.getCell('G40').value = consultas['resultados'][5][0].count;
-
-        //       worksheet.getCell('G41').value = consultas['resultados'][6][0].count;
-              
-        //       worksheet.getCell('G42').value = consultas['resultados'][7][0].count;
-
-        //       worksheet.getCell('G43').value = consultas['resultados'][8][0].count;
-
-        //       worksheet.getCell('G44').value = consultas['resultados'][9][0].count;
-
-        //       worksheet.getCell('F53').value = consultas['resultados'][10][0].count;
-
-        //       worksheet.getCell('F54').value = consultas['resultados'][11][0].count;
-
-        //       worksheet.getCell('F55').value = consultas['resultados'][12][0].count;
-
-        //       worksheet.getCell('G13').value = consultas['resultados'][13][0].count;
-
-        //       worksheet.getCell('G14').value = consultas['resultados'][14][0].count;
-
-        //       worksheet.getCell('G15').value = consultas['resultados'][15][0].count;
-
-        //       worksheet.getCell('G16').value = consultas['resultados'][16][0].count;
-
-        //       worksheet.getCell('G17').value = consultas['resultados'][17][0].count;
-
-        //       worksheet.getCell('G18').value = consultas['resultados'][18][0].count;
-
-        //       worksheet.getCell('G19').value = consultas['resultados'][19][0].count;
-
-        //       worksheet.getCell('G20').value = consultas['resultados'][20][0].count;
-
-        //       worksheet.getCell('G21').value = consultas['resultados'][21][0].count;
-
-        //       worksheet.getCell('G22').value = consultas['resultados'][22][0].count;
-
-        //       worksheet.getCell('G23').value = consultas['resultados'][23][0].count;
-
-        //       worksheet.getCell('G24').value = consultas['resultados'][24][0].count;
-
-        //       worksheet.getCell('G25').value = consultas['resultados'][25][0].count;
-
-        //       worksheet.getCell('G26').value = consultas['resultados'][26][0].count;
-
-        //       worksheet.getCell('G27').value = consultas['resultados'][27][0].count;
-
-        //       worksheet.getCell('G28').value = consultas['resultados'][28][0].count;
-              
-        //       worksheet.getCell('G29').value = consultas['resultados'][29][0].count;
-
-        //       worksheet.getCell('G30').value = consultas['resultados'][30][0].count;
-
-        //       worksheet.getCell('G31').value = consultas['resultados'][31][0].count;
-
-        //       worksheet.getCell('G32').value = consultas['resultados'][32][0].count;
-
-        //       worksheet.getCell('G33').value = consultas['resultados'][33][0].count;
-
-        //       return workbook;
-        //     }).then((res) => {
-        //       res.xlsx.writeBuffer().then((buffer) => {
-        //         console.log(buffer);
-        //         response.setHeader('Content-disposition', 'attachment; filename=test56.xlsx');
-        //         response.end(new Buffer.from(buffer, 'base64'));
-        //       })            
-        //     })
-      
 
 
       }
@@ -1483,33 +1208,27 @@ app.post('/excel_conciliacion', function (request, response) {
   }
 
 
-
-
-
-  /*
- res.setHeader('Content-type', "text/csv");
-
- res.setHeader('Content-disposition', 'attachment; filename=file.xls');
- 
- res.send(text);
-  */
-
-
 });
 
 app.post("/actualizacionMasiva", function (request, response) {
   var token = request.cookies.jwt;
   let data = request.body;
 
+  // console.log("data[TABLA]", Object.keys(data)[0]); 
+
   var consultas = [
     'update_info1_fuente',
     'update_info2_adquisicion',
+    'update2_info42_adquisicion_tradentes',
+    'update2_info41_adquisicion_matrices',    
     'update_info4_informacion_catastral',
     'update_info5_informacion_invias',
-    'update_info10_sig',
+    'update_info6_avaluos',
     'update_info11_adquisicion_escritura',
+    'update_info12_pago',
     'update_info13_saneamiento_catastral',
     'update_info14_saneamiento_juridico'
+    // 'update_info10_sig',
     // 'update_info2_general_predio',
     // 'update_info3_areas_usos',
     // 'update_info4_avaluos',
@@ -1533,12 +1252,16 @@ app.post("/actualizacionMasiva", function (request, response) {
   var hojas = [
     'fuente',
     'info2_adquisicion',
+    'adquisicion_tradentes', 
+    'adquisicion_matrices',       
     'informacion_catastral',
     'informacion_invias',
-    'sig',
-    'adquisicion_escritura',
+    'avaluos',
+    'adquisicion_escritura',    
+    'pago',
     'saneamiento_catastral',
     'saneamiento_juridico'
+    // 'sig',
     // 'general_predio',
     // 'areas_usos',
     // 'avaluos',
@@ -1570,32 +1293,70 @@ app.post("/actualizacionMasiva", function (request, response) {
         let totalData = 0;
         let counter = 0;
 
+        async function dominios() {
+
+        }
+
+        // const promise2 = pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
+        //               .then(results => {
+        //                 console.log("yei pruebas", results.rows)
+        //                 return results.rows;
+        //               })
+
         Object.keys(data).map((key, idx) => {
           let hoja_nombre = data[key];
+          // console.log("hoja_nombre", hoja_nombre);
           if (hoja_nombre.length > 0) {
             totalData = totalData + hoja_nombre.length;
           }
-
         });
 
 
         // console.log(resultsList)
 
         async function processTasks() {
+          let domains = await pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
+          .then(results => {
+            // console.log("yei pruebas", results.rows)
+            return results.rows;
+          })
+
+          // console.log(domains);
+
           let resultsList = []
           Object.keys(data).map((key, idx) => {
             let hoja_nombre = data[key];
             if (hoja_nombre.length > 0) {
               if (hojas.includes(key)) {
                 hoja_nombre.forEach(element => {
+                  // console.log("element yei",element)
                   counter = counter + 1;
                   let id_consulta = consultas[idx];
                   var query_text = get_sql(id_consulta);
                   var upd = ""
                   for (var k in element) {
-                    upd = upd + k + "=$" + k + ","
+                    console.log("ka",k,element[`${k}`]);
+                    let domainK = domains.filter( obj => { return obj.field == k && obj.descripcion == element[`${k}`]})
+                    if (domainK.length > 0) {
+                      console.log("dom yei", domainK)
+                      element[`${k}`] = domainK[0]["valor"]
+                    }
+                    if (k.includes("fecha")) {
+                      let newDateValue = new Date(element[`${k}`] * 1000);
+                      const formattedDate = format(newDateValue, 'yyyy-MM-dd');
+                      // console.log("newDateValue", new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue))
+                      console.log("formattedDate",formattedDate);
+                      // element[`${k}`] = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue);
+                      element[`${k}`] = formattedDate;
+                    }
+                    k2 = k.replace(' ', '');
+                    upd = upd + k2 + "=$" + k2 + ","
                   }
                   upd = upd.replace(/,\s*$/, "");
+
+
+                  console.log ("upd", upd);
+                  console.log("element yei2",element)
 
                   if (query_text.includes("upd_query_alpaca")) {
                     query_text = query_text.replace("upd_query_alpaca", upd);
@@ -1606,7 +1367,7 @@ app.post("/actualizacionMasiva", function (request, response) {
                   }
 
                   try {
-                    console.log(counter)
+                    console.log(counter, query_text);
                     const promise = pool.query(query_text, element)
                       .then(results => {
                         return results.rows;
@@ -1614,7 +1375,7 @@ app.post("/actualizacionMasiva", function (request, response) {
                       .catch(err => {
                         console.log(err)
                         response.status(200).json("error")
-                        throw error
+                        throw err
                       })
 
                     resultsList.push(promise)

@@ -188,53 +188,58 @@ const Graficos = () => {
                     <p>Fecha Asignación: {moment.utc(item.fecha_asignacion).format("dddd, MMMM D YYYY, h:mm:ss a")}</p>
                     <p>Enviado por: {item.usuario_nombre}</p>
                     <p>Descripción: {item.descripcion}</p>
-                    <button>
-                      {item.codigo_bupi.includes("S_") ?
-                        <Link to={"/servidumbres/servidumbre/" + item.codigo_bupi}>
-                          Ver servidumbre
-                        </Link> :
-                        <Link to={"/predio/" + item.codigo_bupi}>
-                          Ver registro
-                        </Link>
-                      }
+                    <div className="contenedor-botones-tareas">
+                      <button>
+                        {item.codigo_bupi.includes("S_") ?
+                          <Link to={"/servidumbres/servidumbre/" + item.codigo_bupi}>
+                            Ver servidumbre
+                          </Link> :
+                          <Link to={"/predio/" + item.codigo_bupi}>
+                            Ver registro
+                          </Link>
+                        }
 
-                    </button>
+                      </button>
 
-                    {item.ruta === 17 && item.comp ?
-                      <Modal
-                      nombre={item.codigo_bupi}
-                      id={item.id}
-                      refresh={setRefresh}
-                      tareacod={item.ruta}
-                      tipo={item.tabla}
-                      consecutivo={item.consecutivo} /> :
-                      null
-                  }
-
-                    {/* {item.ruta === 13 && item.tabla ?
-                      <Modal
+                      {item.ruta === 17 && item.comp ?
+                        <Modal
                         nombre={item.codigo_bupi}
                         id={item.id}
                         refresh={setRefresh}
                         tareacod={item.ruta}
                         tipo={item.tabla}
-                        consecutivo={item.consecutivo} />
-                      : null} */}
+                        consecutivo={item.consecutivo} /> :
+                        null
+                    }
 
-                    {item.ruta !== 17 ?
-                      <Modal
-                        nombre={item.codigo_bupi}
-                        id={item.id}
-                        refresh={setRefresh}
-                        tareacod={item.ruta}
-                        tipo={item.tabla}
-                        consecutivo={item.consecutivo}
-                      /> : null}
+                      {/* {item.ruta === 13 && item.tabla ?
+                        <Modal
+                          nombre={item.codigo_bupi}
+                          id={item.id}
+                          refresh={setRefresh}
+                          tareacod={item.ruta}
+                          tipo={item.tabla}
+                          consecutivo={item.consecutivo} />
+                        : null} */}
+
+                      {item.ruta !== 17 ?
+                        <Modal
+                          nombre={item.codigo_bupi}
+                          id={item.id}
+                          refresh={setRefresh}
+                          tareacod={item.ruta}
+                          tipo={item.tabla}
+                          consecutivo={item.consecutivo}
+                        /> : null}
 
                   </div>
-                )
+                  </div>
+                )                
                 }
+
+                
                 {filtro.length == 0 ? <p>Sin resultados</p> : ''}
+                
               </div>
             </div>
           </Grid>

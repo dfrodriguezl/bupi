@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { servidorPost } from './request'
 import { Redirect } from 'react-router'
 import HomeDialogo from '../modulos/componentes/HomeDialogo';
+import OlvidoClave from '../modulos/componentes/OlvidoClave';
 import { Grid, Typography, Link } from '@material-ui/core';
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -69,16 +70,14 @@ const Login = () => {
         </Grid>
         <Grid container className="container-images">
           <Grid item xs={6}>
-          <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
-            {/* <img src="https://www.invias.gov.co/images/0logo.png" alt="logo invias" /> */}
-            <img src="https://www.invias.gov.co//images/logos/logo_invias_nuevo.jpg" className="login-logo-invias" alt="Logo INVIAS" />            
-          </Link> 
+          <Link href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
+            <img src="https://www.invias.gov.co/images/logos/colombia_potencia_vida.png" className="login-logo-Colombia-Potencia-Vida" alt="Logo Colombia Potencia Vida" />   
+          </Link>
           </Grid>
           <Grid item xs={6}>
-          <Link href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
-          {/* <img src="https://www.invias.gov.co/images/Photos/2022/070822_logo_mintransporte.jpg" alt="logo ministerio de transporte" /> */}
-          <img src="https://www.invias.gov.co/images/logos/colombia_potencia_vida.png" className="login-logo-Colombia-Potencia-Vida" alt="Logo Colombia Potencia Vida" />   
-          </Link>
+          <Link href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
+            <img src="predios/img/LOGO-INVIAS-Simplificado.png" className="login-logo-invias" alt="Logo INVIAS" />
+          </Link> 
           </Grid>
         </Grid>
         <Grid container className="login-container">
@@ -108,6 +107,7 @@ const Login = () => {
                   {msg2 ? '' : <p>Por favor validar captcha</p>}
                 </div>   
                 <button type="submit" className="primmary">Iniciar sesión</button>
+                <OlvidoClave/>
               </form>
             </Grid>
           </Grid>

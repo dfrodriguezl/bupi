@@ -9,6 +9,8 @@ import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import PublishIcon from '@material-ui/icons/Publish';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Grid } from '@material-ui/core';
+import { Link as Link2} from '@material-ui/core';
 import { Notifi } from '../modulos/encabezado'
 import { getPermisos } from '../variables/permisos'
 import { useHistory } from 'react-router-dom'
@@ -80,10 +82,22 @@ const Estructura = ({ children }) => {
 
   return (
     <div id="contenedor">
+      <Grid container className="container-images encabezado-app">
+          <Grid item xs={6}>
+          <Link2 href="https://www.mintransporte.gov.co/" target="_blank" rel="noreferrer">
+            <img src="https://www.invias.gov.co/images/logos/colombia_potencia_vida.png" className="encabezado-logo-Colombia-Potencia-Vida" alt="Logo Colombia Potencia Vida" />   
+          </Link2>
+          </Grid>
+          <Grid item xs={6}>
+          <Link2 href="https://www.invias.gov.co/" target="_blank" rel="noreferrer">
+            <img src="predios/img/LOGO-INVIAS-Simplificado.png" className="encabezado-logo-invias" alt="Logo INVIAS" />
+          </Link2> 
+          </Grid>
+      </Grid>
       <div id="panel_izquierdo">
-        <div id="logo">
-          <img src="https://www.invias.gov.co//images/logos/logo_invias_nuevo.jpg" className="login-logo-invias" alt="" />
-        </div>
+        {/* <div id="logo">
+          <img src="predios/img/LOGO-INVIAS-Simplificado.png" className="login-logo-invias" alt="Logo INVIAS" />
+        </div> */}
         <div id="items-nav">
           {!isServidumbre ?
             <div className="elemento">
@@ -200,7 +214,7 @@ const Estructura = ({ children }) => {
       </div>
       <div id="panel_superior">
 
-        <div id="toggle" onClick={click}><MenuIcon /></div>
+        {/* <div id="toggle" onClick={click}><MenuIcon /></div> */}
 
         <p id="titulo_sistema">
           BUPI
