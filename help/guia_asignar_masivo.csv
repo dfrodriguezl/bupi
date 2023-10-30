@@ -1,4 +1,3 @@
-codigo_bupi,tipo,usuario
-16151,saneamiento juridico,juridico1
-16152,saneamiento catastral,sc
-16153,predio,catastral1
+codigo_bupi,tipo,usuario,usuariocalidad
+15934,predio,cecorrea,mydiaz
+29456,predio,cecorrea,mydiaz

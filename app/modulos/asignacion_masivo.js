@@ -88,6 +88,8 @@ const asignar=e=>{
         let tipo = doc[i].tipo;
         let usuario1 = doc[i].usuario1;
         let usuario2 = doc[i].usuario2;
+        let usuarioTec = doc[i].usuario;
+        let usuarioCali = doc[i].usuariocalidad;
 
         if(tipo.toLowerCase() === 'saneamiento'){
           const dataJur = {
@@ -109,7 +111,16 @@ const asignar=e=>{
           })
 
         } else if(tipo.toLowerCase() === 'predio' ){
-          //TO DO PREDIO
+
+          const dataTec = {
+            codigo_bupi: expediente,
+            ruta: 100,
+            usuario_tecnico: usuarioTec,
+            usuario_calidad: usuarioCali
+          }
+
+          notificacion(dataTec);
+          
         }
       }
 
