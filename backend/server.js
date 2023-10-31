@@ -1214,15 +1214,17 @@ app.post("/actualizacionMasiva", function (request, response) {
   var consultas = [
     'update_info1_fuente',
     'update_info2_adquisicion',
-    'update2_info42_adquisicion_tradentes',
-    'update2_info41_adquisicion_matrices',    
+    'update_info42_adquisicion_tradentes',
+    'update_info41_adquisicion_matrices', 
+    'update_info3_predios_segregados',
     'update_info4_informacion_catastral',
     'update_info5_informacion_invias',
     'update_info6_avaluos',
     'update_info11_adquisicion_escritura',
     'update_info12_pago',
     'update_info13_saneamiento_catastral',
-    'update_info14_saneamiento_juridico'
+    'update_info14_saneamiento_juridico',
+    'update_info43_contabilidad'
     // 'update_info10_sig',
     // 'update_info2_general_predio',
     // 'update_info3_areas_usos',
@@ -1248,14 +1250,16 @@ app.post("/actualizacionMasiva", function (request, response) {
     'fuente',
     'info2_adquisicion',
     'adquisicion_tradentes', 
-    'adquisicion_matrices',       
+    'adquisicion_matrices',   
+    'predios_segregados',    
     'informacion_catastral',
     'informacion_invias',
     'avaluos',
     'adquisicion_escritura',    
     'pago',
     'saneamiento_catastral',
-    'saneamiento_juridico'
+    'saneamiento_juridico',
+    'contabilidad'
     // 'sig',
     // 'general_predio',
     // 'areas_usos',
@@ -1310,7 +1314,7 @@ app.post("/actualizacionMasiva", function (request, response) {
         // console.log(resultsList)
 
         async function processTasks() {
-          let domains = await pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
+          let domains = await pool.query(`select d.*, m."enum", m.tabla, m.field, m.form from dominios d inner join modulos m on d.dominio = m."enum"`)
           .then(results => {
             // console.log("yei pruebas", results.rows)
             return results.rows;
@@ -1331,18 +1335,31 @@ app.post("/actualizacionMasiva", function (request, response) {
                   var upd = ""
                   for (var k in element) {
                     console.log("ka",k,element[`${k}`]);
-                    let domainK = domains.filter( obj => { return obj.field == k && obj.descripcion == element[`${k}`]})
+                    let domainK = domains.filter( obj => { return obj.field == k && (obj.descripcion == element[`${k}`] || element[`${k}`].includes(obj.descripcion)) })
+                    // let domainKM = domains.filter( obj => { return obj.field == k && obj.form == })
                     if (domainK.length > 0) {
                       console.log("dom yei", domainK)
-                      element[`${k}`] = domainK[0]["valor"]
+                      if (domainK[0]["form"] == 'select_multiple') {
+                        let valor = element[`${k}`];
+                        if(element[`${k}`].includes(",")){
+                          let valores = element[`${k}`].split(",");
+                          valores.forEach(e => {
+                            let dominio = domains.filter( obj => { return obj.descripcion == e })
+                            valor = valor.replace(e, dominio[0]["valor"]);
+                          });
+                          element[`${k}`] = `{${valor}}`;
+                        } else {
+                          element[`${k}`] = `{${domainK[0]["valor"]}}`;
+                        }
+                      } else {
+                        element[`${k}`] = domainK[0]["valor"]
+                      }                      
                     }
                     if (k.includes("fecha")) {
-                      let newDateValue = new Date(element[`${k}`] * 1000);
-                      const formattedDate = format(newDateValue, 'yyyy-MM-dd');
-                      // console.log("newDateValue", new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue))
-                      console.log("formattedDate",formattedDate);
-                      // element[`${k}`] = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(newDateValue);
-                      element[`${k}`] = formattedDate;
+                      const utcDate = new Date(Date.UTC(0, 0, element[`${k}`] - 1));
+                      const formattedDate2 = utcDate.toISOString().split('T')[0];
+                      console.log("formattedDate2",formattedDate2);
+                      element[`${k}`] = formattedDate2;
                     }
                     k2 = k.replace(' ', '');
                     upd = upd + k2 + "=$" + k2 + ","
