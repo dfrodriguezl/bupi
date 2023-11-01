@@ -6,6 +6,7 @@ import Aprobacion from '../modulos/aprobacion'
 import ActualizacionMasiva from '../modulos/actualizacion_masiva'
 import CrearPredio from '../modulos/crear_nuevo';
 import CrearPredioMasivo from '../modulos/crear_nuevo_masivo';
+import CrearConcesion from '../modulos/crear_nueva_concesion';
 
 
 const Actualizacion = () => {
@@ -25,6 +26,7 @@ const Actualizacion = () => {
                         <Tab>Cambio de estados</Tab>
                         <Tab>Crear nuevo predio</Tab>
                         <Tab>Creación masiva de predios</Tab>
+                        <Tab>Crear nueva concesión</Tab>
                     </TabList>
                     <TabPanel>
                         <ActualizacionMasiva />
@@ -37,6 +39,9 @@ const Actualizacion = () => {
                     </TabPanel>
                     <TabPanel>
                         <CrearPredioMasivo />
+                    </TabPanel>
+                    <TabPanel>
+                        <CrearConcesion />
                     </TabPanel>
                 </Tabs>
             </div>      

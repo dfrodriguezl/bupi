@@ -174,7 +174,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         // console.log(data)
 
         servidorPost('/backend', data).then((response) => {
-            setChip(response.data[0].chip_cat)
+            // setChip(response.data[0].chip_cat)
         })
 
         // useEffect(() => {
@@ -608,11 +608,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
         servidorPost('/backend', data).then(function (response) {
             var result = response.data;
             if (result == "error") {
+                console.log(response, "respuesta");
                 toast.error("Hubo un error al almacenar");
 
             } else {
-                toast.success("Información almacenada de: " + result[0].codigo_bupi);
-                validar(index, result[0].codigo_bupi, data_guardar)
+                toast.success("Información almacenada de: " + result[0].id_concesion);
+                // validar(index, result[0].codigo_bupi, data_guardar)
                 // validar(index,result[0].codigo_bupi)
             }
         });
@@ -1440,9 +1441,9 @@ const FormMultiple = ({ tbl, index, titulo }) => {
     const delete_registro = (con) => {
 
         var data = {
-            "id_consulta": "delete_consecutivo",
-            "codigo_bupi": id,
-            "tabla": tbl,
+            "id_consulta": "delete_consecutivo_maritima",
+            "id_concesion": id,
+            "tabla": "maritima." + tbl,
             "consecutivo": con
         }
 

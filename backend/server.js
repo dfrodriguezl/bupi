@@ -42,7 +42,7 @@ const fileSaver = require('file-saver');
 const Blob = require('buffer');
 const gotenberg = require('gotenberg-js-client');
 
-const ExcelJS = require('exceljs');
+// const ExcelJS = require('exceljs');
 const { format } = require('date-fns');
 
 const XlsxTemplate = require('xlsx-template');

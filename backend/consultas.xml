@@ -32,7 +32,7 @@
     </Consulta>
     <Consulta id="predios">
         <sql>
-        select * from maritima.predios where id_concesion=$id_concesion and consecutivo=$consecutivo
+        select * from maritima.predios_vw where id_concesion=$id_concesion and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="infraestructura">
@@ -467,11 +467,13 @@
         <sql>
         select distinct mc.id_concesion, mc.nombre_concesionario,mc.direccion_nomenclatura_concesion, mun.descripcion as departamento, dep.descripcion as municipio,
         mc.numero_documento_contrato, mp.codigo_bupi
-		from maritima.concesion mc left join maritima.predios mp
-		on mc.nombre_concesionario=mp.nombre_concesion
+		from maritima.concesion mc left join maritima.predios_vw mp
+		on mc.id_concesion=mp.id_concesion
         left join dominios dep on mc.departamento = dep.valor and dep.dominio = 'DOM_DEPTO'
         left join dominios mun on mc.municipio = mun.valor and mun.dominio = 'DOM_MUNICIPIO'
         where 
+        upper(mc.id_concesion) like  upper('%' || $filtro || '%') 
+        or 
         upper(mc.nombre_concesionario) like  upper('%' || $filtro || '%') 
         or 
         upper(mp.matricula_inmobiliaria) like  upper('%' || $filtro || '%') 
@@ -993,6 +995,11 @@
         select usuario_nombre,usuario_usuario from usuario where usuario_rol in (7,9)
         </sql>
     </Consulta>
+    <Consulta id="get_usuarios_rol_tecnico_concesion">
+        <sql>
+        select usuario_nombre,usuario_usuario from usuario where usuario_rol in (15)
+        </sql>
+    </Consulta>
     <Consulta id="get_usuarios_rol_juridico">
         <sql>
         select usuario_nombre,usuario_usuario from usuario where usuario_rol=10
@@ -1198,6 +1205,18 @@ group by dominio) as d
             returning codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="insertar_asignacion_tecnico_maritima">
+        <sql>
+        insert into tareas.asignacion_maritima values (
+            $id_concesion,
+            $id_tarea,
+            $usuario_responsable
+        )
+        ON CONFLICT (id_concesion,id_tarea) DO UPDATE
+            SET usuario = $usuario_responsable
+            returning id_concesion
+        </sql>
+    </Consulta>
     <Consulta id="update_notificacion">
         <sql>
         update tareas.tareas
@@ -1216,6 +1235,22 @@ group by dominio) as d
             token,
             (select usuario from tareas.asignacion 
             where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next),
+            now(),
+            null,
+            1,
+            true
+        )ON CONFLICT DO NOTHING RETURNING usuario_responsable
+        </sql>
+    </Consulta>
+    <Consulta id="insertar_notificacion_maritima">
+        <sql>
+        insert into tareas.tareas_maritima values(
+            (select max (id)+1 from tareas.tareas_maritima),
+            $id_concesion,
+            $ruta_destino,
+            token,
+            (select usuario from tareas.asignacion_maritima 
+            where id_concesion=$id_concesion and id_tarea= $tarea_next),
             now(),
             null,
             1,
@@ -2978,7 +3013,13 @@ group by dominio) as d
 
         </sql>
     </Consulta>
+    <Consulta id="delete_consecutivo_maritima">
+        <sql>
 
+        delete from insert-dinamico where id_concesion=$id_concesion and consecutivo=$consecutivo returning id_concesion
+
+        </sql>
+    </Consulta>
     <Consulta id="info_header_form">
         <sql>
    select ad.calculo_matricula as num_mi, iic.numero_predial_nacional 
@@ -3383,7 +3424,22 @@ group by dominio) as d
             from info2_adquisicion ia ;
         </sql>
     </Consulta>
-
+    <Consulta id="get_ultima_concesion">
+        <sql>
+        select max(id_concesion::int) + 1 as concesion
+            from maritima.concesion;
+        </sql>
+    </Consulta>
+    <Consulta id="insert_concesion_1">
+        <sql>
+        insert into maritima.concesion (id_concesion) values ($id_concesion);
+        </sql>
+    </Consulta>
+    <Consulta id="insert_concesion_3">
+        <sql>
+        insert into maritima.infraestructura (id_concesion) values ($id_concesion);
+        </sql>
+    </Consulta>
     <Consulta id="insert_expediente_2">
         <sql>
         insert into info2_adquisicion (codigo_bupi) values ($codigo_bupi);
