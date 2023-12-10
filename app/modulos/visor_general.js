@@ -305,7 +305,8 @@ var base = new TileLayer({
     
     <div id="titulo_seccion">Visor Geográfico</div>
       <p id="descripcion_seccion">En esta sección usted puede visualizar la información cartográfica de los predios</p>
-      <div id="visor" ></div>
+      {/* <div id="visor" ></div> */}
+      <iframe id="visor" width="100%" src="https://invias.maps.arcgis.com/apps/webappviewer/index.html?id=1f01022ffc7a4e61943a37c3c60875f0"></iframe>
   </div>
 
   )

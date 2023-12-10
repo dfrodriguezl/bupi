@@ -48,8 +48,6 @@ const XlsxTemplate = require('xlsx-template');
 
 const urlPdf = "http://192.168.56.10:3000/forms/libreoffice/convert";
 
-
-
 // var sess;
 //conexión a la base de datos en postgresql
 const { Pool, types } = require('pg')
@@ -67,26 +65,26 @@ types.setTypeParser(1114, str => moment.utc(str).local());
 
 //produccion
 
-const pool = new Pool({
-  user: 'docker',
-  host: 'postgis_bupi',
-  database: 'invias_bupi',
-  password: 'docker',
-  port: 5432,
-  timezone: 'utc'
-})
-
-//desarrollo
-
 // const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',//'pg-acueducto',
-//   database: 'bupi_invias',
-//   // database: 'prueba_schema',
-//   password: 'yeinerm12',
+//   user: 'docker',
+//   host: 'postgis_bupi',
+//   database: 'invias_bupi',
+//   password: 'docker',
 //   port: 5432,
 //   timezone: 'utc'
 // })
+
+//desarrollo
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',//'pg-acueducto',
+  database: 'bupi_invias',
+  // database: 'prueba_schema',
+  password: 'yeinerm12',
+  port: 5432,
+  timezone: 'utc'
+})
 
 // const pool = new Pool({
 //   user: 'docker',
@@ -1209,7 +1207,7 @@ app.post("/actualizacionMasiva", function (request, response) {
   var token = request.cookies.jwt;
   let data = request.body;
 
-  // console.log("data[TABLA]", Object.keys(data)[0]); 
+  console.log("data[TABLA]", Object.keys(data)); 
 
   var consultas = [
     'update_info1_fuente',
@@ -1226,25 +1224,6 @@ app.post("/actualizacionMasiva", function (request, response) {
     'update_info14_saneamiento_juridico',
     'update_info43_contabilidad'
     // 'update_info10_sig',
-    // 'update_info2_general_predio',
-    // 'update_info3_areas_usos',
-    // 'update_info4_avaluos',
-    // 'update_info5_juridicos',
-    // 'update_info21_juridicos',
-    // 'update_info7_propietario_catastral',
-    // 'update_info8_propietario_juridico',
-    // 'update_info6_propietario_anterior_juridico',
-    // 'update_info9_zmpa',
-    // 'update_info10_infraestructura',
-    // 'update_info14_saneamiento_basico',
-    // 'update_info15_saneamiento_juridico',
-    // 'update_info18_municipios_intersectados',
-    // 'update_info19_mutacion_predial',
-    // 'update_info11_estudios_detallados',
-    // 'update_info17_documentos_requeridos',
-    // 'update_info12_control_calidad_tecnico',
-    // 'update_info13_control_calidad_juridico',
-    // 'update_info22_factura_municipio',
   ]
   var hojas = [
     'fuente',
@@ -1261,25 +1240,6 @@ app.post("/actualizacionMasiva", function (request, response) {
     'saneamiento_juridico',
     'contabilidad'
     // 'sig',
-    // 'general_predio',
-    // 'areas_usos',
-    // 'avaluos',
-    // 'juridico',
-    // 'adquisicion',
-    // 'propietario_catastral',
-    // 'propietario_juridico',
-    // 'propietario_anterior_juridico',
-    // 'zmpa',
-    // 'infraestructura',
-    // 'saneamiento_basico',
-    // 'saneamiento_juridico',
-    // 'municipios_intersectados',
-    // 'mutacion_predial',
-    // 'estudios_detallados',
-    // 'documentos_requeridos',
-    // 'control_calidad_tecnico',
-    // 'control_calidad_juridico',
-    // 'factura_municipio',
   ]
 
   if (token) {
@@ -1292,9 +1252,6 @@ app.post("/actualizacionMasiva", function (request, response) {
         let totalData = 0;
         let counter = 0;
 
-        async function dominios() {
-
-        }
 
         // const promise2 = pool.query(`select d.*, m."enum", m.tabla, m.field from dominios d inner join modulos m on d.dominio = m."enum"`)
         //               .then(results => {
@@ -1325,12 +1282,14 @@ app.post("/actualizacionMasiva", function (request, response) {
           let resultsList = []
           Object.keys(data).map((key, idx) => {
             let hoja_nombre = data[key];
+            console.log("hoja_nombre", hoja_nombre, hojas.includes(key));
             if (hoja_nombre.length > 0) {
               if (hojas.includes(key)) {
                 hoja_nombre.forEach(element => {
                   // console.log("element yei",element)
                   counter = counter + 1;
-                  let id_consulta = consultas[idx];
+                  let posicion = hojas.indexOf(key);
+                  let id_consulta = consultas[posicion];
                   var query_text = get_sql(id_consulta);
                   var upd = ""
                   for (var k in element) {
@@ -1348,11 +1307,12 @@ app.post("/actualizacionMasiva", function (request, response) {
                             valor = valor.replace(e, dominio[0]["valor"]);
                           });
                           element[`${k}`] = `{${valor}}`;
-                        } else {
+                        } else {                          
                           element[`${k}`] = `{${domainK[0]["valor"]}}`;
                         }
                       } else {
-                        element[`${k}`] = domainK[0]["valor"]
+                        let dominioCorrecto = domainK.filter( obj => { return obj.descripcion == element[`${k}`]})
+                        element[`${k}`] = dominioCorrecto[0]["valor"]
                       }                      
                     }
                     if (k.includes("fecha")) {
