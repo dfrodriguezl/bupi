@@ -6,6 +6,7 @@ import { servidorPost } from './request'
 import { Home, Search, InsertDriveFile, Public, AttachFile, GroupAdd, FilterList } from '@material-ui/icons';
 
 import FaceIcon from '@material-ui/icons/Face';
+import HelpIcon from '@material-ui/icons/Help';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import PublishIcon from '@material-ui/icons/Publish';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -209,7 +210,12 @@ const Estructura = ({ children }) => {
                 </div>
                 : null
           }
-
+          <div className="elemento">
+            <Link to="/ayuda">
+              <HelpIcon />
+              <p>Ayuda</p>
+            </Link>
+          </div>
         </div>
       </div>
       <div id="panel_superior">

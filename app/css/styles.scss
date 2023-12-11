@@ -173,7 +173,7 @@ body{
 }
 #tareas {
     position: absolute;
-    top: 50px;
+    top: 120px;
     right: 0;
     z-index: 100;
     background-color: #ECECEC;
@@ -1057,4 +1057,24 @@ input[type="file"] {
 canvas{
     max-width: 400px;
     max-height: 400px;
+}
+
+.HelpList {
+    list-style: none;
+    margin: 5px auto;
+    padding: 0;
+    width: 100%;
+}
+
+.HelpItem {
+    margin: 6px 5px;
+}
+
+.HelpLink {
+    text-decoration: none;
+    color: #025dc3;
+    text-align: center;
+    line-height: 2em;
+    display: flex;
+    flex-wrap: wrap;
 }

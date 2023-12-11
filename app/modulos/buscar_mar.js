@@ -20,6 +20,7 @@ const Busqueda_mar = () => {
       setFiltro(id)
       ver_expediente(id);
     }
+    ver_expediente();
   }, [])
 
   const ver_expediente = (filter) => {
@@ -49,7 +50,7 @@ const Busqueda_mar = () => {
     <div id="seccion">
 
       <div id="titulo_seccion">Consulta</div>
-      <p id="descripcion_seccion">Sección para la busqueda de registros, puede hacer busquedas con nombre concesión, contrato o matricula. (Se muestran máximo 50 resultados)</p>
+      <p id="descripcion_seccion">Sección para la busqueda de registros, puede hacer busquedas por nombre del concesionario, número de contrato de concesión portuaria o matricula inmobiliaria asociada a zonas de uso público. (Se muestran máximo 50 resultados)</p>
       <div className="search">
         <input type="text" className="searchTerm" onChange={onChangeHandler} value={filtro} />
         <button type="submit" className="searchButton primmary" onClick={() => ver_expediente()}>
