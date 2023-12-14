@@ -1239,7 +1239,10 @@ group by dominio) as d
             null,
             1,
             true
-        )ON CONFLICT DO NOTHING RETURNING usuario_responsable
+        ) ON CONFLICT (codigo_bupi,ruta,estado) DO UPDATE
+            SET usuario_asigna = token, usuario_responsable = (select usuario from tareas.asignacion 
+            where codigo_bupi=$codigo_bupi and id_tarea= $tarea_next), fecha_asignacion = now()            
+            RETURNING usuario_responsable
         </sql>
     </Consulta>
     <Consulta id="insertar_notificacion_maritima">
@@ -3566,7 +3569,8 @@ group by dominio) as d
         from tareas.tareas t 
         left join usuario u on t.usuario_responsable = u.usuario_usuario 
         where codigo_bupi = $codigo_bupi
-        and ruta = 1
+        and ruta = 1 and fecha_asignacion = (select max(fecha_asignacion) from tareas.tareas
+            where codigo_bupi=$codigo_bupi)
         limit 1;
         </sql>
     </Consulta>

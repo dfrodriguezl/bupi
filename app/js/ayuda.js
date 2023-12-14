@@ -18,7 +18,7 @@ const Ayuda = () => {
                         </a>
                     </li>
                     <li class="HelpItem">
-                        <a rel="noreferrer" title="Descarga de manual de usuario estructuración de predios" alt="Descarga manual de usuario estructuración de predios" href="/servicios/descarga-y-metadatos/descarga-divipola" target="_blank" class="HelpLink">
+                        <a rel="noreferrer" title="Descarga de manual de usuario estructuración de predios" alt="Descarga manual de usuario estructuración de predios" href={`${url}/help/manual_estructuracion.pdf`} target="_blank" class="HelpLink">
                             <DescriptionIcon />Manual de usuario estructuración de predios
                         </a>
                     </li>

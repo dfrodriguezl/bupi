@@ -25,9 +25,11 @@ const tareas_iniciales = {
 const CrearPredio = () => {
 
   const [expediente, setExpediente] = useState();
-  const [listTecnicos, setListTecnicos] = useState([]);
+  // const [listTecnicos, setListTecnicos] = useState([]);
+  const [listTecnicos, setListTecnicos] = useState([{ usuario_nombre:"aleatorio", usuario_usuario:"aleatorio" }]);
   const [listJuridicos, setListJuridicos] = useState([]);
-  const [listSupTec, setListSupTec] = useState([]);
+  // const [listSupTec, setListSupTec] = useState([]);
+  const [listSupTec, setListSupTec] = useState([{ usuario_nombre:"aleatorio", usuario_usuario:"aleatorio" }]);
   const [listSupJur, setListSupJur] = useState([]);
   const [isLoadingTec, setIsLoadingTec] = useState(true);
   const [isLoadingJur, setIsLoadingJur] = useState(true);
@@ -35,6 +37,8 @@ const CrearPredio = () => {
   const [isLoadingSupJur, setIsLoadingSupJur] = useState(true);
   const [tecnico, setTecnico] = useState();
   const [juridico, setJuridico] = useState();
+  const [aleatorioT, setAleatorioT] = useState();
+  const [aleatorioSt, setAleatorioSt] = useState();
   const [supTec, setSupTec] = useState();
   const [supJur, setSupJur] = useState();
   const [usuarioSIG, setUsuarioSIG] = useState("jbartolo");
@@ -48,7 +52,7 @@ const CrearPredio = () => {
     const datosTec = { "id_consulta": "get_usuarios_rol_tecnico", }
     servidorPost('/backend', datosTec).then((responseTec) => {
       if (responseTec.data) {
-        setListTecnicos(responseTec.data)
+        setListTecnicos([...listTecnicos, ...responseTec.data])
         setIsLoadingTec(false);
       }
     });
@@ -62,7 +66,7 @@ const CrearPredio = () => {
     const datosSupTec = { "id_consulta": "get_usuarios_rol", usuario_rol: "6" }
     servidorPost('/backend', datosSupTec).then((responseSupTec) => {
       if (responseSupTec.data) {
-        setListSupTec(responseSupTec.data)
+        setListSupTec([...listSupTec, ...responseSupTec.data]);
         setIsLoadingSupTec(false);
       }
     });
@@ -98,7 +102,12 @@ const CrearPredio = () => {
   }
 
   const onChangeSelectTecnico = (e) => {
-    setTecnico(e.usuario_usuario)
+    if (e.usuario_usuario == "aleatorio") {
+      let usuario = asignacionAleatoria(listTecnicos);
+      setTecnico(usuario);
+    } else {
+      setTecnico(e.usuario_usuario);
+    }    
   }
 
   const onChangeSelectJuridico = (e) => {
@@ -106,11 +115,34 @@ const CrearPredio = () => {
   }
 
   const onChangeSelectSupTec = (e) => {
-    setSupTec(e.usuario_usuario)
+    if (e.usuario_usuario == "aleatorio") {
+      let usuario = asignacionAleatoria(listSupTec);
+      setSupTec(usuario);
+    } else {
+      setSupTec(e.usuario_usuario);
+    } 
   }
 
   const onChangeSelectSupJur = (e) => {
     setSupJur(e.usuario_usuario)
+  }
+
+  const asignacionAleatoria = (personal) => {
+
+    const indiceAleatorio = Math.floor(Math.random() * (personal.length - 1)) + 1;
+
+    const usuarioAleatorio = personal[indiceAleatorio];
+
+    // if (tipo == "tecnico") {
+    //   setAleatorioT(usuarioAleatorio.usuario_usuario);
+    // } else if (tipo == "sup_tec") {
+    //   setAleatorioSt(usuarioAleatorio.usuario_usuario);
+    // }
+ 
+    console.log("usuarioAleatorio.usuario_usuario", usuarioAleatorio.usuario_usuario)
+
+    return usuarioAleatorio.usuario_usuario;
+
   }
 
   const crearAsignaciones = (codigo_bupi) => {
@@ -119,6 +151,40 @@ const CrearPredio = () => {
       const usuarioResponsable = asignacion === "tecnico" ? tecnico : asignacion === "juridico" ?
         juridico : asignacion === "sup_tec" ?
           supTec : asignacion === "sup_jur" ?
+            supJur : asignacion === "sig" ?
+              usuarioSIG : asignacion === "coord" ?
+                usuarioCoord : asignacion === "contabilidad" ?
+                  usuarioContabilidad :
+                  asignacion === "doc" ?
+                    usuarioDoc : null;
+
+      console.log(usuarioResponsable, "usuarioResponsable");
+
+      const datosAsignacion = {
+        "id_consulta": "insertar_asignacion_tecnico",
+        codigo_bupi: codigo_bupi,
+        id_tarea: asignaciones[asignacion],
+        usuario_responsable: usuarioResponsable
+      };
+
+      servidorPost('/backend', datosAsignacion).then((responseAsignacion) => {
+        if (responseAsignacion.data) {
+          if (asignacion === "tecnico") {
+            insertarTareas();
+          }
+        }
+      });
+
+    })
+
+  }
+
+  const crearAsignaciones2 = (codigo_bupi) => {
+    Object.keys(asignaciones).forEach((asignacion) => {
+
+      const usuarioResponsable = asignacion === "tecnico" ? tecnico == "aleatorio" ? asignacionAleatoria("tecnico",listTecnicos) : tecnico : asignacion === "juridico" ?
+        juridico : asignacion === "sup_tec" ?
+          supTec == "aleatorio" ? asignacionAleatoria("sup_tec",listSupTec) : supTec : asignacion === "sup_jur" ?
             supJur : asignacion === "sig" ?
               usuarioSIG : asignacion === "coord" ?
                 usuarioCoord : asignacion === "contabilidad" ?
@@ -266,7 +332,7 @@ const CrearPredio = () => {
             <div className="header"> Confirmación </div>
             <div className="content">
               Antes de crear el registro predial verifique si ya existe la matrícula en el sistema mediante las herramientas de consulta avanzada o 
-              consulta código BUPI. ¿Se encuentra seguro de crear el registro correspondiente al código BUPI : {expediente}?
+              consulta código BUPI. ¿Se encuentra seguro de crear el registro correspondiente al código BUPI : {expediente}? Estructurador : {tecnico}, Control de calidad : {supTec}
             </div>
             <div className="actions">
               <button
