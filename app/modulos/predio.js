@@ -118,6 +118,8 @@ const DatePicker = ({ selected, onChange }) => {
 
 const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
 
+    console.log( "Form",tbl, index, refresh, consecutivo, setPopupForm )
+
 
     const [fields, setFields] = React.useState([]);
     const [info, setInfo] = React.useState([]);
@@ -1104,7 +1106,7 @@ const Form = ({ tbl, index, refresh, consecutivo, setPopupForm }) => {
                             : null}
 
                         {Object.keys(errors).length > 0 ? <span className="msg-error">Existen validaciones pendientes, revise en cual campo falta</span> : null}
-                        {permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
+                        {index === 15 ? <p className="no-permiso">Valores calculados desde los datos formularios Adquisición e Información catastral</p> : permiso && !lectura ? <ModalValidacion open={<button className='primmary' type="submit">Guardar</button>} lista={listaValidacion} ></ModalValidacion> : <p className="no-permiso">No cuentas con permisos para editar la información</p>}
                     </>
                     : ''}
 

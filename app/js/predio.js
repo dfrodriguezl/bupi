@@ -35,7 +35,7 @@ const Predio = () => {
             {/* <CustomizedTimeline/> */}
             {/* <Flujo /> */}
             <Pred session={session}/>
-            {/* <Mapa /> */}
+            <Mapa />
             {/* <Documentos /> */}
 
         </Estructura>

@@ -43,17 +43,17 @@ export default {
     },
     pred1: {
         id: 'pred1',
-        titulo: "Geometria verificada",
+        titulo: "Geometria código BUPI",
         stroke: 'rgb(59, 246, 12)',
         fill: 'rgba(59, 246, 12,0.5)',
-        id_html: 'geometria_verificada'
+        id_html: 'geometria_codigo_bupi'
     },
-    pred2: {
-        id: 'pred2',
-        titulo: "Geometria en revisión",
-        stroke: 'rgb(129, 1, 146 )',
-        fill: 'rgba(129, 1, 146,0.5)',
-        id_html: 'geometria_revision'
-    },
+    // pred2: {
+    //     id: 'pred2',
+    //     titulo: "Geometria en revisión",
+    //     stroke: 'rgb(129, 1, 146 )',
+    //     fill: 'rgba(129, 1, 146,0.5)',
+    //     id_html: 'geometria_revision'
+    // },
     exportar: null
 }

@@ -1479,6 +1479,25 @@ group by dominio) as d
             )features
         </sql>
     </Consulta>
+    <Consulta id="get_geometria_bupi">
+        <sql>
+            SELECT 'geometria_codigo_bupi' as tipo,jsonb_build_object(
+                'type',     'FeatureCollection',
+                'features', jsonb_agg(features.Feature)
+            )as geojson from (
+            SELECT json_build_object(
+                'type',       'Feature',
+                'id',         id,
+                'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
+                'properties', json_build_object(
+                    'codigo_bupi', codigo_bupi,
+                    'id',id
+                )
+            ) as Feature
+            FROM geometria.bupi_estandarizada where codigo_bupi = $codigo_bupi
+            )features            
+        </sql>
+    </Consulta>
     <Consulta id="get_geometria_servidumbre">
         <sql>
             SELECT 'geometria_verificada' as tipo,jsonb_build_object(
@@ -1547,6 +1566,13 @@ group by dominio) as d
         <sql>
             insert into geometria.lote_asignacion (id,codigo_bupi,geom,estado)
             values((select max(id) + 1 from geometria.lote_asignacion),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
+            returning codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="insertar_dibujo_mapa_bupi">
+        <sql>
+            insert into geometria.bupi_estandarizada (id,codigo_bupi,geom)
+            values((select max(id) + 1 from geometria.bupi_estandarizada),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326))
             returning codigo_bupi
         </sql>
     </Consulta>
