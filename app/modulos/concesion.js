@@ -57,9 +57,9 @@ const gestionPermisos = (index) => {
     } else if (index == 19) {
         tipo_permiso = [6, 7, 11];
     }
-    else if ([1, 2, 42, 41, 3, 4, 13, 5, 6, 12, 15].includes(index)) {
+    else if ([1, 2, 3, 4].includes(index)) {
 
-        tipo_permiso = [6];//editar formulario técnico  
+        tipo_permiso = [18];//editar formulario técnico  
     } else if ([5, 6, 15, 16, 20, 21, 22, 14].includes(index)) {
 
         tipo_permiso = [7];//editar formulario juridico  
@@ -264,7 +264,7 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
 
                                 var data = { id_consulta: index === 39 || index === 40 ? 'tengo_predio_saneamiento' : 'tengo_predio', codigo_bupi: id }
 
-                                var data = { id_consulta: 'tengo_predio', codigo_bupi: id }
+                                var data = { id_consulta: 'tengo_concesion', id_concesion: id }
 
                                 // servidorPost('/backend', data).then((response) => {
                                 //     if (data.id_consulta === "tengo_predio" && !response.data[0].exists) {

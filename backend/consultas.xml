@@ -2946,6 +2946,15 @@ group by dominio) as d
         </sql>
     </Consulta>
 
+    <Consulta id="tengo_concesion">
+        <sql>
+        select exists(
+           select * from tareas.tareas_maritima
+            where id_concesion=$id_concesion 
+            and usuario_responsable=token and estado=1)
+        </sql>
+    </Consulta>
+
     <Consulta id="tengo_predio_saneamiento">
         <sql>
         select exists(
@@ -3571,6 +3580,18 @@ group by dominio) as d
         where codigo_bupi = $codigo_bupi
         and ruta = 1 and fecha_asignacion = (select max(fecha_asignacion) from tareas.tareas
             where codigo_bupi=$codigo_bupi)
+        limit 1;
+        </sql>
+    </Consulta>
+
+    <Consulta id="get_tarea_activa_concesion">
+        <sql>
+        select t.*,u.usuario_nombre usuario
+        from tareas.tareas_maritima t 
+        left join usuario u on t.usuario_responsable = u.usuario_usuario 
+        where id_concesion=$id_concesion
+        and ruta = 20 and fecha_asignacion = (select max(fecha_asignacion) from tareas.tareas_maritima
+            where id_concesion=$id_concesion)
         limit 1;
         </sql>
     </Consulta>

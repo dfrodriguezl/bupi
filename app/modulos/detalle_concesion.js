@@ -19,7 +19,7 @@ const DetalleConcesion = () => {
   const [expediente, setExpediente] = useState(id);
   // const [tipologia, setTopologia] = useState({});
   // const [estadoTecnico, setEstadoTecnico] = useState({});
-  // const [tareaActiva, setTareaActiva] = useState({});
+  const [tareaActiva, setTareaActiva] = useState({});
   // const [estadoContabilidad, setEstadoContabilidad] = useState({});
   // const [estadoDocumental, setEstadoDocumental] = useState({});
   // const [saneamientosJuridicos, setSaneamientosJuridicos] = useState([]);
@@ -42,11 +42,11 @@ const DetalleConcesion = () => {
     //   setEstadoTecnico(response.data[0])
     // });
 
-    // const datosTarea = { "id_consulta": "get_tarea_activa", "codigo_bupi": id }
+    const datosTarea = { "id_consulta": "get_tarea_activa_concesion", "id_concesion": id }
 
-    // servidorPost('/backend', datosTarea).then((response) => {
-    //   setTareaActiva(response.data[0])
-    // });
+    servidorPost('/backend', datosTarea).then((response) => {
+      setTareaActiva(response.data[0])
+    });
 
     // var datosContabilidad = { "id_consulta": "get_estado_contabilidad", "codigo_bupi": id }
 
@@ -101,17 +101,17 @@ const DetalleConcesion = () => {
               <br />Observación SIG: {observacionSIG.descripcion}
             </Fragment> : null : null
         } */}
-        {/* <Grid container justify="center" xs={12}>
+        <Grid container justify="center" xs={12}>
           <Grid item container xs={12} justify="center">
             <Typography variant="h6">ESTADOS</Typography>
           </Grid>
           <Grid item container xs={3} direction="column" alignItems="center">
             <Typography variant="subtitle1">Estructuración</Typography>
-            <p id="title-estados">Estado: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
+            {/* <p id="title-estados">Estado: {estadoTecnico ? estadoTecnico.dep_tec : null}</p> */}
             <p id="title-estados">Usuario: {tareaActiva ? tareaActiva.usuario : null}</p>
             <p id="title-estados">Fecha de asignación: {tareaActiva ? new Date(tareaActiva.fecha_asignacion).toLocaleDateString() + " " + new Date(tareaActiva.fecha_asignacion).toLocaleTimeString() : null}</p>
           </Grid>
-          <Grid item container xs={3} direction="column" alignItems="center">
+          {/* <Grid item container xs={3} direction="column" alignItems="center">
             <Typography variant="subtitle1">Registro contable</Typography>
             <p id="title-estados">Estado: {estadoContabilidad ? estadoContabilidad.descripcion : null}</p>
           </Grid>
@@ -134,8 +134,8 @@ const DetalleConcesion = () => {
                 <Typography variant="caption">Saneamientos catastrales</Typography>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid> */}
+          </Grid> */}
+        </Grid>
 
         {/* <Fragment>
           <p id="title-estados">Estado Estructuración: {estadoTecnico ? estadoTecnico.dep_tec : null}</p>
