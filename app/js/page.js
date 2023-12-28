@@ -190,7 +190,7 @@ const Estructura = ({ children }) => {
               <div className="elemento">
                 <Link to="/admin">
                   <SupervisorAccountIcon />
-                  <p>Administracion</p>
+                  <p>Administración</p>
                 </Link>
               </div>
             </Fragment> :

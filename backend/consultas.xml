@@ -528,17 +528,24 @@
     </Consulta>
     <Consulta id="update_predios">
         <sql>
-        update maritima.predios set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
+            update maritima.predios set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
         </sql>
     </Consulta>
     <Consulta id="update_infraestructura">
         <sql>
-        update maritima.infraestructura set upd_query_alpaca where id_concesion=$id_concesion RETURNING id_concesion
+            update maritima.infraestructura set upd_query_alpaca where id_concesion=$id_concesion RETURNING id_concesion
         </sql>
     </Consulta>
     <Consulta id="update_aledanos">
         <sql>
-        update maritima.aledanos set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
+            update maritima.aledanos set upd_query_alpaca where id_concesion=$id_concesion and consecutivo=$consecutivo RETURNING id_concesion
+        </sql>
+    </Consulta>
+    <Consulta id="update_info1_fuente2">
+        <sql>
+            insert into info1_fuente (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info1_general_proyecto_servidumbre">
@@ -556,6 +563,13 @@
             update info2_adquisicion set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info2_adquisicion2">
+        <sql>
+            insert into info2_adquisicion (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info2_general_predio_sirviente">
         <sql>
             update servidumbres.info2_general_predio_sirviente set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
@@ -569,6 +583,13 @@
     <Consulta id="update_info3_predios_segregados">
         <sql>
             update info3_predios_segregados set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info3_predios_segregados2">
+        <sql>
+            insert into info3_predios_segregados (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info3_general_predios_derivados">
@@ -586,11 +607,18 @@
             update info4_informacion_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info4_informacion_catastral2">
+        <sql>
+            insert into info4_informacion_catastral (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info4_areas_y_usos_predio_sirviente">
         <sql>
             update servidumbres.info4_areas_y_usos_predio_sirviente set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
         </sql>
-    </Consulta>
+    </Consulta>    
     <Consulta id="update_info5_juridicos">
         <sql>
             update info5_juridicos set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -599,6 +627,13 @@
     <Consulta id="update_info5_informacion_invias">
         <sql>
             update info5_informacion_invias set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info5_informacion_invias2">
+        <sql>
+            insert into info5_informacion_invias (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info5_servidumbre">
@@ -614,6 +649,13 @@
     <Consulta id="update_info6_avaluos">
         <sql>
             update info6_avaluos set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info6_avaluos2">
+        <sql>
+            insert into info6_avaluos (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info6_avaluos_servidumbre">
@@ -687,6 +729,13 @@
             update info11_adquisicion_escritura set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info11_adquisicion_escritura2">
+        <sql>
+            insert into info11_adquisicion_escritura (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info11_propietario_catastral">
         <sql>
             update servidumbres.info11_propietario_catastral set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
@@ -702,12 +751,18 @@
             update info12_pago set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo=$consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info12_pago2">
+        <sql>
+            insert into info12_pago (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update_info12_propietario_juridico_actual">
         <sql>
             update servidumbres.info12_propietario_juridico_actual set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
         </sql>
     </Consulta>
-
     <Consulta id="update_info13_control_calidad_juridico">
         <sql>
             update info13_control_calidad_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -716,6 +771,13 @@
     <Consulta id="update_info13_saneamiento_catastral">
         <sql>
             update info13_saneamiento_catastral set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info13_saneamiento_catastral2">
+        <sql>
+            insert into info13_saneamiento_catastral (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info13_propietario_constitucion_servidumbre_juridico">
@@ -731,6 +793,13 @@
     <Consulta id="update_info14_saneamiento_juridico">
         <sql>
             update info14_saneamiento_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info14_saneamiento_juridico2">
+        <sql>
+            insert into info14_saneamiento_juridico (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info14_infraestructura_servidumbre">
@@ -913,6 +982,13 @@
             update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info41_adquisicion_matrices2">
+        <sql>
+            insert into info41_adquisicion_matrices (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>
     <Consulta id="update2_info41_adquisicion_matrices">
         <sql>
             update info41_adquisicion_matrices set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -923,6 +999,13 @@
             update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi and consecutivo = $consecutivo RETURNING codigo_bupi
         </sql>
     </Consulta>
+    <Consulta id="update_info42_adquisicion_tradentes2">
+        <sql>
+            insert into info42_adquisicion_tradentes (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+        </sql>
+    </Consulta>    
     <Consulta id="update2_info42_adquisicion_tradentes">
         <sql>
             update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -931,6 +1014,13 @@
     <Consulta id="update_info43_contabilidad">
         <sql>
             update info43_contabilidad set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="update_info43_contabilidad2">
+        <sql>
+            insert into info43_contabilidad (ins_query_alpaca) 
+            VALUES (inse_query_alpaca) 
+            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info44_asignacion_saneamiento">
@@ -1612,6 +1702,25 @@ group by dominio) as d
             )features
         </sql>
     </Consulta>
+    <Consulta id="get_geometria_bupi">
+        <sql>
+            SELECT 'geometria_codigo_bupi' as tipo,jsonb_build_object(
+                'type',     'FeatureCollection',
+                'features', jsonb_agg(features.Feature)
+            )as geojson from (
+            SELECT json_build_object(
+                'type',       'Feature',
+                'id',         id,
+                'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::json,
+                'properties', json_build_object(
+                    'codigo_bupi', codigo_bupi,
+                    'id',id
+                )
+            ) as Feature
+            FROM geometria.bupi_estandarizada where codigo_bupi = $codigo_bupi
+            )features            
+        </sql>
+    </Consulta>
     <Consulta id="get_geometria_servidumbre">
         <sql>
             SELECT 'geometria_verificada' as tipo,jsonb_build_object(
@@ -1680,6 +1789,13 @@ group by dominio) as d
         <sql>
             insert into geometria.lote_asignacion (id,codigo_bupi,geom,estado)
             values((select max(id) + 1 from geometria.lote_asignacion),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326),$estado)
+            returning codigo_bupi
+        </sql>
+    </Consulta>
+    <Consulta id="insertar_dibujo_mapa_bupi">
+        <sql>
+            insert into geometria.bupi_estandarizada (id,codigo_bupi,geom)
+            values((select max(id) + 1 from geometria.bupi_estandarizada),$codigo_bupi,ST_SetSRID(ST_Multi(ST_GeomFromGeoJSON($shape)),4326))
             returning codigo_bupi
         </sql>
     </Consulta>
@@ -3433,6 +3549,12 @@ group by dominio) as d
     <Consulta id="get_ultimo_expediente">
         <sql>
         select max(codigo_bupi::int) + 1 as expediente
+            from info2_adquisicion ia ;
+        </sql>
+    </Consulta>
+    <Consulta id="get_ultimo_expediente_masivo">
+        <sql>
+        select max(codigo_bupi::int) as expediente
             from info2_adquisicion ia ;
         </sql>
     </Consulta>

@@ -36,8 +36,8 @@ const Mapa = () => {
   const [lectura, setLectura] = React.useState(true);
   const [data, setData] = React.useState({ variables });
   const [layers, setLayers] = React.useState({
-    "geometria_verificada": true,
-    "geometria_revision": false
+    "geometria_codigo_bupi": true,
+    // "geometria_revision": false
   })
   const [mapSize, setMapSize] = React.useState({});
   let lecturaLocal = true;
@@ -62,7 +62,7 @@ const Mapa = () => {
     const valor = e.target.name;
     const check = e.target.checked;
 
-    if (valor === "geometria_verificada") {
+    if (valor === "geometria_codigo_bupi") {
       vectorLayer.setVisible(check)
     } else if (valor === "geometria_revision") {
       vectorLayerRev.setVisible(check)
@@ -75,7 +75,7 @@ const Mapa = () => {
 
     let vLay, vLayRev;
 
-    const dataSession = { "id_consulta": "info2_general_predio", codigo_bupi: id };
+    const dataSession = { "id_consulta": "info2_adquisicion", codigo_bupi: id };
 
     servidorPost('/backend', dataSession).then(function (response) {
 
@@ -123,7 +123,7 @@ const Mapa = () => {
     })
 
 
-    var datos = { "id_consulta": "get_geometria_predio", "codigo_bupi": id }
+    var datos = { "id_consulta": "get_geometria_bupi", "codigo_bupi": id }
 
 
     servidorPost('/backend', datos).then(function (response) {
@@ -134,7 +134,7 @@ const Mapa = () => {
       var vectorSourceRev = new VectorSource();
 
       data.forEach((d) => {
-        if (d.tipo === 'geometria_verificada') {
+        if (d.tipo === 'geometria_codigo_bupi') {
           if (d.geojson.features != null) {
             vectorSource = new VectorSource({
               features: new GeoJSON().readFeatures(d.geojson, {
@@ -241,12 +241,14 @@ const Mapa = () => {
 
       setMapa(map);
 
-      setLayerExtent(vLay !== undefined ?
-        vLay.getSource().getExtent() :
-        vLayRev.getSource().getExtent());
+      if (vLayRev !== undefined) {
+        setLayerExtent(vLay !== undefined ?
+          vLay.getSource().getExtent() :
+          vLayRev.getSource().getExtent());
+      }      
 
       let estats = {
-        "Geometria verificada": [2],
+        "Geometria código BUPI": [2],
         "Geometria en revisión": [1]
       };
 
@@ -265,44 +267,49 @@ const Mapa = () => {
           hitTolerance: 2
         });
 
+        if (feature == undefined) {
+          return;
+        }
+
         const codigo_bupi_click = feature.values_.codigo_bupi;
         const estado = feature.values_.estado === null || feature.values_.estado === 2 ?
-          "Geometria verificada" : "Geometria en revisión";
+          "Geometria código BUPI" : "Geometria en revisión";
         const id_geom = feature.values_.id;
 
         if (!lecturaLocal) {
           if (feature) {
-            mensaje = '<p> ' + codigo_bupi_click + '</p>';
-            mensaje = mensaje + '<p>' + estado + '</p>';
-            let selectEstados = '<select name="estados" id="estados" >';
-            Object.keys(estats).forEach((es) => {
-              selectEstados = selectEstados + '<option value="' + estats[es][0] + '">' + es + '</option>';
-            })
-            selectEstados = selectEstados + '</select>';
-            mensaje = mensaje + selectEstados;
-            mensaje = mensaje + '<button class="primmary" id="estado_button" type="submit">Cambiar estado</button>';
+            mensaje = '<p> código BUPI: ' + codigo_bupi_click + '</p>';
+            // mensaje = mensaje + '<p>' + estado + '</p>';
+            // let selectEstados = '<select name="estados" id="estados" >';
+            // Object.keys(estats).forEach((es) => {
+            //   selectEstados = selectEstados + '<option value="' + estats[es][0] + '">' + es + '</option>';
+            // })
+            // selectEstados = selectEstados + '</select>';
+            // mensaje = mensaje + selectEstados;
+            // mensaje = mensaje + '<button class="primmary" id="estado_button" type="submit">Cambiar estado</button>';
             content.innerHTML = mensaje;
             overlay.setPosition(coordinate);
             container.style.visibility = "visible";
-            const selectEstadosComponent = document.getElementById("estados");
-            const cambioEstado = document.getElementById("estado_button");
-            cambioEstado.onclick = () => {
-              let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
-              let dataPredio = {
-                id_consulta: 'update_predio',
-                codigo_bupi: codigo_bupi_click,
-                id: id_geom,
-                estado: selectedValue
-              }
+            // const selectEstadosComponent = document.getElementById("estados");
+            // const cambioEstado = document.getElementById("estado_button");
+            // cambioEstado.onclick = () => {
+            //   let selectedValue = selectEstadosComponent.options[selectEstadosComponent.selectedIndex].value;
+            //   let dataPredio = {
+            //     id_consulta: 'update_predio',
+            //     codigo_bupi: codigo_bupi_click,
+            //     id: id_geom,
+            //     estado: selectedValue
+            //   }
 
-              servidorPost('/backend', dataPredio).then((response) => {
-                if (response.data.length > 0) {
-                  const id_exp_return = response.data[0].codigo_bupi;
-                  toast.success("Poligono actualizado para el expediente " + id_exp_return)
-                }
-              })
-            }
+            //   servidorPost('/backend', dataPredio).then((response) => {
+            //     if (response.data.length > 0) {
+            //       const id_exp_return = response.data[0].codigo_bupi;
+            //       toast.success("Poligono actualizado para el expediente " + id_exp_return)
+            //     }
+            //   })
+            // }
           }
+
         }
 
 

@@ -16,7 +16,7 @@ import Predio from './predio'
 import Buscar from './buscar'
 import Buscar_mar from './buscar_mar'
 import Asignar from './asignar'
-import User from './usuario'
+import User from './usuario';
 import Ayuda from './ayuda';
 import Administracion from './administracion';
 import Actualizacion from './actualizacion';

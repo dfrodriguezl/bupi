@@ -26,9 +26,8 @@ const CargaShape = ({codigo_bupi}) => {
           let shape = features[0].geometry;
           delete shape.bbox;
           let data = {
-            id_consulta: "insertar_dibujo_mapa",
+            id_consulta: "insertar_dibujo_mapa_bupi",
             codigo_bupi: codigo_bupi,
-            estado: 1,
             shape: JSON.stringify(shape)
           }
 
@@ -38,7 +37,7 @@ const CargaShape = ({codigo_bupi}) => {
           
           servidorPost("/backend",data).then((response) => {
             console.log("RESPONSE", response)
-            toast.success("Poligono cargado al expediente " + response.data[0].codigo_bupi ? response.data[0].codigo_bupi : response.data[0].id_expedie);
+            toast.success("Poligono cargado al código BUPI " + response.data[0].codigo_bupi ? response.data[0].codigo_bupi : response.data[0].id_expedie);
           })
         }
         

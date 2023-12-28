@@ -80,7 +80,7 @@ const CrearPredio = () => {
   }, [])
 
   const getUltimoExpediente = () => {
-    var datos = { "id_consulta": "get_ultimo_expediente", }
+    var datos = { "id_consulta": "get_ultimo_expediente_masivo", }
     servidorPost('/backend', datos).then((response) => {
       const data = response.data;
       setExpediente(data[0].expediente);

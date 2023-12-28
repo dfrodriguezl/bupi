@@ -87,7 +87,6 @@ const pool = new Pool({
 //   timezone: 'utc'
 // })
 
-//desarrollo
 
 // const pool = new Pool({
 //   user: 'postgres',
@@ -1223,20 +1222,21 @@ app.post("/actualizacionMasiva", function (request, response) {
   console.log("data[TABLA]", Object.keys(data)); 
 
   var consultas = [
-    'update_info1_fuente',
-    'update_info2_adquisicion',
-    'update_info42_adquisicion_tradentes',
-    'update_info41_adquisicion_matrices', 
-    'update_info3_predios_segregados',
-    'update_info4_informacion_catastral',
-    'update_info5_informacion_invias',
-    'update_info6_avaluos',
-    'update_info11_adquisicion_escritura',
-    'update_info12_pago',
-    'update_info13_saneamiento_catastral',
-    'update_info14_saneamiento_juridico',
-    'update_info43_contabilidad'
+    'update_info1_fuente2',
+    'update_info2_adquisicion2',
+    'update_info42_adquisicion_tradentes2',
+    'update_info41_adquisicion_matrices2', 
+    'update_info3_predios_segregados2',
+    'update_info4_informacion_catastral2',
+    'update_info5_informacion_invias2',
+    'update_info6_avaluos2',
+    'update_info11_adquisicion_escritura2',
+    'update_info12_pago2',
+    'update_info13_saneamiento_catastral2',
+    'update_info14_saneamiento_juridico2',
+    'update_info43_contabilidad2'
     // 'update_info10_sig',
+
   ]
   var hojas = [
     'fuente',
@@ -1304,14 +1304,16 @@ app.post("/actualizacionMasiva", function (request, response) {
                   let posicion = hojas.indexOf(key);
                   let id_consulta = consultas[posicion];
                   var query_text = get_sql(id_consulta);
-                  var upd = ""
+                  var upd = "";
+                  var ins = "";
+                  var ins2 = "";
                   for (var k in element) {
                     console.log("ka",k,element[`${k}`]);
                     let domainK = domains.filter( obj => { return obj.field == k && (obj.descripcion == element[`${k}`] || element[`${k}`].includes(obj.descripcion)) })
                     // let domainKM = domains.filter( obj => { return obj.field == k && obj.form == })
                     if (domainK.length > 0) {
                       console.log("dom yei", domainK)
-                      if (domainK[0]["form"] == 'select_multiple') {
+                      if (domainK[0]["form"] == 'select_multiple' || domainK[0]["form"] == 'check_multiple') {
                         let valor = element[`${k}`];
                         if(element[`${k}`].includes(",")){
                           let valores = element[`${k}`].split(",");
@@ -1334,14 +1336,24 @@ app.post("/actualizacionMasiva", function (request, response) {
                       console.log("formattedDate2",formattedDate2);
                       element[`${k}`] = formattedDate2;
                     }
-                    k2 = k.replace(' ', '');
+                    let k2 = k.replace(' ', '');
                     upd = upd + k2 + "=$" + k2 + ","
+                    ins = ins + k2 + ",";
+                    ins2 = ins2 + "$" + k2 + ",";
                   }
                   upd = upd.replace(/,\s*$/, "");
+                  ins = ins.replace(/,\s*$/, "");
+                  ins2 = ins2.replace(/,\s*$/, "");
 
-
-                  console.log ("upd", upd);
+                  console.log ("upd", upd, ins, ins2);
                   console.log("element yei2",element)
+
+                  if (query_text.includes("ins_query_alpaca")) {
+                    query_text = query_text.replace("ins_query_alpaca", ins);
+                  } 
+                  if (query_text.includes("inse_query_alpaca")) {
+                    query_text = query_text.replace("inse_query_alpaca", ins2);
+                  }                   
 
                   if (query_text.includes("upd_query_alpaca")) {
                     query_text = query_text.replace("upd_query_alpaca", upd);

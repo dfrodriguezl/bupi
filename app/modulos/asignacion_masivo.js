@@ -49,15 +49,9 @@ const Asignacion = () => {
           setUser(data)
       });
     
-      var datos={"id_consulta":"get_usuarios_rol_juridico",}
-      servidorPost('/backend',datos).then((response) =>{
-          const data = response.data;
-          setJuridico(data)
-      });
-     
 
-      getPermisos().then((response) => {
-        setpermiso(response.some(r=> [1,2].includes(r)))
+    getPermisos().then((response) => {
+      setpermiso(response.some(r=> [1,2].includes(r)))
     })
     
     
