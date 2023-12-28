@@ -241,9 +241,11 @@ const Mapa = () => {
 
       setMapa(map);
 
-      setLayerExtent(vLay !== undefined ?
-        vLay.getSource().getExtent() :
-        vLayRev.getSource().getExtent());
+      if (vLayRev !== undefined) {
+        setLayerExtent(vLay !== undefined ?
+          vLay.getSource().getExtent() :
+          vLayRev.getSource().getExtent());
+      }      
 
       let estats = {
         "Geometria código BUPI": [2],
