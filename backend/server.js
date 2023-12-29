@@ -1226,7 +1226,6 @@ app.post("/actualizacionMasiva", function (request, response) {
     'update_info14_saneamiento_juridico2',
     'update_info43_contabilidad2'
     // 'update_info10_sig',
-
   ]
   var hojas = [
     'fuente',
@@ -1328,14 +1327,14 @@ app.post("/actualizacionMasiva", function (request, response) {
                     }
                     let k2 = k.replace(' ', '');
                     upd = upd + k2 + "=$" + k2 + ","
-                    ins = ins + k2 + ",";
-                    ins2 = ins2 + "$" + k2 + ",";
+                    ins = ins + k2 + ","
+                    ins2 = ins2 + "$" + k2 + ","
                   }
                   upd = upd.replace(/,\s*$/, "");
                   ins = ins.replace(/,\s*$/, "");
                   ins2 = ins2.replace(/,\s*$/, "");
 
-                  console.log ("upd", upd, ins, ins2);
+                  console.log ("upd", upd);
                   console.log("element yei2",element)
 
                   if (query_text.includes("ins_query_alpaca")) {
@@ -1343,8 +1342,7 @@ app.post("/actualizacionMasiva", function (request, response) {
                   } 
                   if (query_text.includes("inse_query_alpaca")) {
                     query_text = query_text.replace("inse_query_alpaca", ins2);
-                  }                   
-
+                  }        
                   if (query_text.includes("upd_query_alpaca")) {
                     query_text = query_text.replace("upd_query_alpaca", upd);
                     var usuario = decoded.usuario_usuario;

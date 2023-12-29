@@ -475,6 +475,7 @@
             update info1_fuente set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
         </sql>
     </Consulta>
+
     <Consulta id="update_info1_fuente2">
         <sql>
             insert into info1_fuente (ins_query_alpaca) 
@@ -523,7 +524,7 @@
         <sql>
             insert into info3_predios_segregados (ins_query_alpaca) 
             VALUES (inse_query_alpaca) 
-            ON CONFLICT (codigo_bupi) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
+            ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
     </Consulta>
     <Consulta id="update_info3_general_predios_derivados">
@@ -552,7 +553,7 @@
         <sql>
             update servidumbres.info4_areas_y_usos_predio_sirviente set upd_query_alpaca where id_servidumbre=$id_servidumbre RETURNING id_servidumbre
         </sql>
-    </Consulta>    
+    </Consulta>
     <Consulta id="update_info5_juridicos">
         <sql>
             update info5_juridicos set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -697,6 +698,7 @@
             update servidumbres.info12_propietario_juridico_actual set upd_query_alpaca where id_servidumbre=$id_servidumbre and consecutivo=$consecutivo RETURNING id_servidumbre
         </sql>
     </Consulta>
+
     <Consulta id="update_info13_control_calidad_juridico">
         <sql>
             update info13_control_calidad_juridico set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -939,7 +941,7 @@
             VALUES (inse_query_alpaca) 
             ON CONFLICT (codigo_bupi, consecutivo) DO UPDATE SET upd_query_alpaca RETURNING codigo_bupi
         </sql>
-    </Consulta>    
+    </Consulta>
     <Consulta id="update2_info42_adquisicion_tradentes">
         <sql>
             update info42_adquisicion_tradentes set upd_query_alpaca where codigo_bupi=$codigo_bupi RETURNING codigo_bupi
@@ -3383,6 +3385,7 @@ group by dominio) as d
             from info2_adquisicion ia ;
         </sql>
     </Consulta>
+
     <Consulta id="get_ultimo_expediente_masivo">
         <sql>
         select max(codigo_bupi::int) as expediente
