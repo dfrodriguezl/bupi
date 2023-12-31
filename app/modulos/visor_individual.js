@@ -108,13 +108,8 @@ const Mapa = () => {
 
         servidorPost('/backend', data).then((response) => {
           getBloqueo(id).then((r) => {
-            if (r.data[0].bloqueo_predio) {
-              setLectura(true)
-              lecturaLocal = true;
-            } else {
-              setLectura(!response.data[0].exists)
-              lecturaLocal = !response.data[0].exists;
-            }
+            setLectura(!response.data[0].exists)
+            lecturaLocal = !response.data[0].exists;            
           })
 
         });
@@ -508,9 +503,9 @@ const Mapa = () => {
       <a id="image-download" download="map.png"></a>
 
       <ToastContainer />
-      {!lectura ?
+      {/*!lectura ?
         <CargaShape codigo_bupi={id} /> :
-        null
+        null*/
       }
 
     </div>
