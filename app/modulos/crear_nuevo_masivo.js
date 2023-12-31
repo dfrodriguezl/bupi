@@ -24,6 +24,8 @@ const CrearPredioMasivo = () => {
   const [expediente, setExpediente] = useState();
   const [exps, setExps] = React.useState([]);
   const [permiso, setPermiso] = React.useState(false);
+  const [listTecnicos, setListTecnicos] = useState([]);
+  const [listSupTec, setListSupTec] = useState([]);
 
   useEffect(() => {
     getUltimoExpediente();
@@ -31,6 +33,21 @@ const CrearPredioMasivo = () => {
       console.log("PERMISOS", response.data)
       setPermiso(response.some(r => [1,2].includes(r)))
     })
+
+    const datosTec = { "id_consulta": "get_usuarios_rol_tecnico", }
+    servidorPost('/backend', datosTec).then((responseTec) => {
+      if (responseTec.data) {
+        setListTecnicos(responseTec.data);
+      }
+    });
+
+    const datosSupTec = { "id_consulta": "get_usuarios_rol", usuario_rol: "6" }
+    servidorPost('/backend', datosSupTec).then((responseSupTec) => {
+      if (responseSupTec.data) {
+        setListSupTec(responseSupTec.data);
+      }
+    });
+
   }, [])
 
   const getUltimoExpediente = () => {
@@ -50,7 +67,7 @@ const CrearPredioMasivo = () => {
     servidorPost('/xls', formData).then((response) => {
       const data = response.data;
       console.log(data.json[0])
-      if (typeof data.json[0].codigo_bupi != "undefined") {
+      if (typeof data.json[0].consecutivo != "undefined") {
         setExps(data.json)
       } else {
         alert("Seleccione un documento csv válido")
@@ -110,10 +127,42 @@ const CrearPredioMasivo = () => {
     });
   }
 
+  const asignacionAleatoria = (personal) => {
+
+    const indiceAleatorio = Math.floor(Math.random() * personal.length);
+  
+    const usuarioAleatorio = personal[indiceAleatorio];
+  
+    // if (tipo == "tecnico") {
+    //   setAleatorioT(usuarioAleatorio.usuario_usuario);
+    // } else if (tipo == "sup_tec") {
+    //   setAleatorioSt(usuarioAleatorio.usuario_usuario);
+    // }
+  
+    console.log("usuarioAleatorio.usuario_usuario", usuarioAleatorio.usuario_usuario)
+  
+    return usuarioAleatorio.usuario_usuario;
+  
+  }
 
   const crearExpedientes = () => {
     exps.forEach((exp) => {
-      crearExpediente(parseFloat(expediente) + parseFloat(exp.codigo_bupi), exp.tec, exp.jur, exp.sup_tec, exp.sup_jur)
+      let usuarioTec;
+      let usuarioCali;
+      if (exp.estructurador == "aleatorio") {
+        usuarioTec = asignacionAleatoria(listTecnicos);
+        console.log(usuarioTec, "usuarioTec")
+      } else {
+        usuarioTec = exp.estructurador;
+      }
+
+      if (exp.calidad == "aleatorio") {
+        usuarioCali = asignacionAleatoria(listSupTec);
+        console.log(usuarioCali, "usuarioCali")
+      } else {
+        usuarioCali = exp.calidad;
+      }
+      crearExpediente(parseFloat(expediente) + parseFloat(exp.consecutivo), usuarioTec, exp.jur, usuarioCali, exp.sup_jur)
       console.log("EXP", exp)
     })
   };

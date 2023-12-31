@@ -32,15 +32,22 @@ const Asignacion = () => {
     var datos={"id_consulta":"get_usuarios_rol_tecnico",}
     servidorPost('/backend',datos).then((response) =>{
         const data = response.data;
+        console.log(data)
         setUser(data)
+    });
+
+    const datosSupTec = { "id_consulta": "get_usuarios_rol", usuario_rol: "6" }
+    servidorPost('/backend', datosSupTec).then((responseSupTec) => {
+      if (responseSupTec.data) {
+        setCalidad(responseSupTec.data)
+      }
     });
   
     var datos={"id_consulta":"get_usuarios_rol_juridico",}
     servidorPost('/backend',datos).then((response) =>{
         const data = response.data;
         setJuridico(data)
-    });
-    
+    });    
 
     getPermisos().then((response) => {
       setpermiso(response.some(r=> [1,2].includes(r)))
@@ -72,6 +79,27 @@ const onChange=e=>{
   });
 
 }
+
+const asignacionAleatoria = (personal) => {
+
+  const indiceAleatorio = Math.floor(Math.random() * personal.length);
+
+  const usuarioAleatorio = personal[indiceAleatorio];
+
+  // if (tipo == "tecnico") {
+  //   setAleatorioT(usuarioAleatorio.usuario_usuario);
+  // } else if (tipo == "sup_tec") {
+  //   setAleatorioSt(usuarioAleatorio.usuario_usuario);
+  // }
+
+  console.log("usuarioAleatorio.usuario_usuario", usuarioAleatorio.usuario_usuario)
+
+  return usuarioAleatorio.usuario_usuario;
+
+}
+
+
+
 const asignar=e=>{
 
   var usuario_asigna='dangarita';
@@ -89,8 +117,22 @@ const asignar=e=>{
         let tipo = doc[i].tipo;
         let usuario1 = doc[i].usuario1;
         let usuario2 = doc[i].usuario2;
-        let usuarioTec = doc[i].usuario;
-        let usuarioCali = doc[i].usuariocalidad;
+        let usuarioTec;
+        let usuarioCali;
+
+        if (doc[i].usuario == "aleatorio") {
+          usuarioTec = asignacionAleatoria(user);
+          console.log(usuarioTec, "usuarioTec")
+        } else {
+          usuarioTec = doc[i].usuario;
+        }
+
+        if (doc[i].usuariocalidad == "aleatorio") {
+          usuarioCali = asignacionAleatoria(calidad);
+          console.log(usuarioCali, "usuarioCali")
+        } else {
+          usuarioCali = doc[i].usuariocalidad;
+        }
 
         if(tipo.toLowerCase() === 'saneamiento'){
           const dataJur = {
