@@ -37,12 +37,12 @@
     </Consulta>
     <Consulta id="infraestructura">
         <sql>
-        select * from maritima.infraestructura where id_concesion=$id_concesion
+        select * from maritima.infraestructura where id_concesion=$id_concesion and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="aledanos">
         <sql>
-        select * from maritima.aledanos where id_concesion=$id_concesion and consecutivo=$consecutivo
+        select * from maritima.aledanos_vw where id_concesion=$id_concesion and consecutivo=$consecutivo
         </sql>
     </Consulta>
     <Consulta id="info1_general_proyecto_servidumbre">

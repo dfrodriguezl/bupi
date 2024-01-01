@@ -1158,12 +1158,12 @@ const Form = ({ tbl, index, refresh, consecutivo }) => {
                                         {errors[i.doc.field] && <span className="msg-error">{errors[i.doc.field].message}</span>}
                                         {/* <ErrorMessage errors={errors} name={i.doc.field} /> */}
                                     </>
-                                    : <input type={i.doc.type}
-                                        className='form_input_static'
-                                        name={i.doc.field}
-                                        readOnly={false}
-                                        defaultValue={defecto ? fields.info[i.doc.field] : ''}
-                                        ref={register} />}
+                                    :  i.doc.field == 'codigo_bupi' ? fields.info[i.doc.field] ? <a href={`/predios/web/predio/${defecto ? fields.info[i.doc.field] : ''}`} target="_blank">{defecto ? fields.info[i.doc.field] : ''}</a> : <p className="no-permiso">No hay predios de la Base de Datos BUPI asociados</p> : <input type={i.doc.type}
+                                            className='form_input_static'
+                                            name={i.doc.field}
+                                            readOnly={true}
+                                            defaultValue={defecto ? fields.info[i.doc.field] : ''}
+                                            ref={register} />}
 
                                 {i.doc.type === "hidden" ? null : <p className="form_helper">{i.doc.helper}</p>}
                             </div>
@@ -1368,7 +1368,7 @@ const FormMultiple = ({ tbl, index, titulo }) => {
         })
 
         // if ([17, 18, 6, 7, 8, 9, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 39, 40].includes(index)) {
-        if ([2, 4].includes(index)) {
+        if ([2, 3, 4].includes(index)) {
             setMultiple(true)
 
 
