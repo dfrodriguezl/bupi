@@ -52,7 +52,7 @@ const CrearPredio = () => {
     const datosTec = { "id_consulta": "get_usuarios_rol_tecnico", }
     servidorPost('/backend', datosTec).then((responseTec) => {
       if (responseTec.data) {
-        setListTecnicos([...listTecnicos, ...responseTec.data])
+        setListTecnicos([...listTecnicos, ...responseTec.data]);
         setIsLoadingTec(false);
       }
     });

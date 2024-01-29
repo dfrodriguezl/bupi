@@ -29,26 +29,25 @@ const Asignacion = () => {
 
 
   React.useEffect(() => {
-      var datos={"id_consulta":"get_usuarios_rol_tecnico",}
-      servidorPost('/backend',datos).then((response) =>{
-          const data = response.data;
-          console.log(data)
-          setUser(data)
-      });
+    var datos={"id_consulta":"get_usuarios_rol_tecnico",}
+    servidorPost('/backend',datos).then((response) =>{
+        const data = response.data;
+        console.log(data)
+        setUser(data)
+    });
 
-      const datosSupTec = { "id_consulta": "get_usuarios_rol", usuario_rol: "6" }
-      servidorPost('/backend', datosSupTec).then((responseSupTec) => {
-        if (responseSupTec.data) {
-          setCalidad(responseSupTec.data)
-        }
-      });
-
-      var datos={"id_consulta":"get_usuarios_rol_tecnico",}
-      servidorPost('/backend',datos).then((response) =>{
-          const data = response.data;
-          setUser(data)
-      });
-    
+    const datosSupTec = { "id_consulta": "get_usuarios_rol", usuario_rol: "6" }
+    servidorPost('/backend', datosSupTec).then((responseSupTec) => {
+      if (responseSupTec.data) {
+        setCalidad(responseSupTec.data)
+      }
+    });
+  
+    var datos={"id_consulta":"get_usuarios_rol_juridico",}
+    servidorPost('/backend',datos).then((response) =>{
+        const data = response.data;
+        setJuridico(data)
+    });    
 
     getPermisos().then((response) => {
       setpermiso(response.some(r=> [1,2].includes(r)))
